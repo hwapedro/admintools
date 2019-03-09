@@ -2,7 +2,8 @@ import request from "superagent";
 
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI2NmNmMjIwMzgyMWFjYjM5MjUwOSIsImlhdCI6MTU1MjA1Njk2Nn0.FQbPc-Es3jaFXhaIu40ltwow3lk1vbok_FqXTnY-0sY'
-class AdminService {
+
+export default class AdminService {
 
   async register(username, password) {
     let response = await request
@@ -20,8 +21,7 @@ class AdminService {
       .post(`${_apiBase}/auth/login`)
       .set("Content-Type", "application/json")
       .send({ login: login, password: password })
-      .catch(error => (response = error.response));
-    return response.body;
+    return response;
   }
 
   async getAllCourses() {

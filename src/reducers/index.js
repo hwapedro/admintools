@@ -1,15 +1,40 @@
 import {
   ADD_COURSE_ELEMENT,
   DELETE_COURSE_ELEMENT,
-  CHANGE_COURSE_ELEMENT
+  CHANGE_COURSE_ELEMENT,
+  FETCH_LOGIN_REQUEST,
+  FETCH_LOGIN_SUCCESS,
+  FETCH_LOGIN_FAILURE
 } from "../constants";
 
 const initialState = {
+  token: null,
+  loading: false,
+  error: null,
   courses: []
 };
 
 function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case FETCH_LOGIN_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+    case FETCH_LOGIN_SUCCESS:
+      return {
+        ...state,
+        token: action.token,
+        loading: false,
+        error: false,
+      };
+
+    case FETCH_LOGIN_FAILURE:
+      return {
+        ...state,
+        error: true,
+        loading: false
+      };
     case ADD_COURSE_ELEMENT:
       return {
         ...state,
