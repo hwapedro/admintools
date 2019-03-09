@@ -5,11 +5,14 @@ class SetCourse extends Component {
     title: "",
     description: ""
   };
-
-  onSubmit = (event) => {
+ 
+  onSubmit = event => {
     event.preventDefault();
     const { title, description } = this.state;
-    this.props.newCourse(title, description);
+    let token = localStorage.getItem("userId");
+    this.props.addCourses(title, description, token);
+ 
+    this.props.getAllCourses(token);
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });

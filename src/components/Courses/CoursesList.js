@@ -5,14 +5,14 @@ class CourseList extends Component {
     title: "",
     description: "",
     changeFlag: false,
-    id: null
+    courseIndex: null
   };
 
-  getParams = (id, title, description) => {
-    console.log(id);
+  getParams = (courseIndex, title, description) => {
+    console.log(courseIndex);
     this.setState({
       changeFlag: true,
-      id: id,
+      courseIndex: courseIndex,
       title: title,
       description: description
     });
@@ -21,15 +21,15 @@ class CourseList extends Component {
   setParams = event => {
     event.preventDefault();
     this.props.changeCourse(
-      this.state.id,
+      this.state.courseIndex,
       this.state.title,
       this.state.description
     );
-    this.setState({ changeFlag: false, id: null });
+    this.setState({ changeFlag: false, courseIndex: null });
   };
 
-  deleteItem = id => {
-    this.props.deleteCourse(id)
+  deleteItem = courseIndex => {
+    this.props.deleteCourse(courseIndex)
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -37,9 +37,9 @@ class CourseList extends Component {
 
   render() {
     let list = this.props.courses.map(course => {
-      if (this.state.changeFlag && course.id === this.state.id) {
+      if (this.state.changeFlag && course.courseIndex === this.state.courseIndex) {
         return (
-          <li key={course.id}>
+          <li key={course.courseIndex}>
             <form onSubmit={this.setParams}>
               <input
                 name="title"
@@ -57,17 +57,17 @@ class CourseList extends Component {
         );
       } else {
         return (
-          <li key={course.id}>
+          <li key={course.courseIndex}>
             <span>{course.title}</span>
             <span> {course.description}</span>
             <button
               onClick={() =>
-                this.getParams(course.id, course.title, course.description)
+                this.getParams(course.courseIndex, course.title, course.description)
               }
             >
               Изменить курс
             </button>
-            <button onClick={() => this.deleteItem(course.id)}>
+            <button onClick={() => this.deleteItem(course.courseIndex)}>
               Удалить курс
             </button>
           </li>
