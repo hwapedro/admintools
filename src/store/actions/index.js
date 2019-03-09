@@ -17,7 +17,7 @@ import {
   CHANGE_COURSE_FAILURE
 } from "../constants";
 
-import AdminService from "../service/";
+import AdminService from "../../service";
 
 const adminService = new AdminService();
 

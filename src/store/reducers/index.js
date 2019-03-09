@@ -18,6 +18,8 @@ import {
   CHANGE_COURSE_FAILURE
 } from "../constants";
 
+import { startLoading, stopLoading } from "../utils";
+
 const initialState = {
   token: null,
   loading: false,
@@ -50,10 +52,7 @@ function reducer(state = initialState, action = {}) {
 
     //ADD BLOCK
     case ADD_COURSE_REQUEST:
-      return {
-        ...state,
-        loading: true
-      };
+      return startLoading(state, action);
 
     case ADD_COURSE_SUCCESS:
       return {
@@ -64,18 +63,12 @@ function reducer(state = initialState, action = {}) {
       };
 
     case ADD_COURSE_FAILURE:
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
+      return stopLoading(state, action);
 
     //GET COURSES BLOCK
     case FETCH_COURSE_REQUEST:
-      return {
-        ...state,
-        loading: true
-      };
+      return startLoading(state, action);
+
     case FETCH_COURSE_SUCCESS:
       return {
         ...state,
@@ -85,11 +78,7 @@ function reducer(state = initialState, action = {}) {
       };
 
     case FETCH_COURSE_FAILURE:
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
+      return stopLoading(state, action);
 
     case ADD_COURSE_ELEMENT:
       return {
@@ -106,10 +95,7 @@ function reducer(state = initialState, action = {}) {
 
     //DELETE COURSES BLOCK
     case DELETE_COURSE_REQUEST:
-      return {
-        ...state,
-        loading: true
-      };
+      return startLoading(state, action);
 
     case DELETE_COURSE_SUCCESS:
       return {
@@ -122,27 +108,20 @@ function reducer(state = initialState, action = {}) {
       };
 
     case DELETE_COURSE_FAILURE:
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
+      return stopLoading(state, action);
 
     //DELETE COURSES BLOCK
     case CHANGE_COURSE_REQUEST:
-      return {
-        ...state,
-        loading: true
-      };
+      return startLoading(state, action);
 
     case CHANGE_COURSE_SUCCESS:
-    console.log(action.course)
+      console.log(action.course);
       const todoId = action.course.courseIndex;
-      console.log(todoId)
+      console.log(todoId);
       const itemIndex = state.courses.findIndex(
         ({ courseIndex }) => courseIndex === todoId
       );
-      console.log(itemIndex)
+      console.log(itemIndex);
       const before = state.courses.slice(0, itemIndex);
       const after = state.courses.slice(itemIndex + 1);
       return {
@@ -162,11 +141,7 @@ function reducer(state = initialState, action = {}) {
       };
 
     case CHANGE_COURSE_FAILURE:
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
+      return stopLoading(state, action);
 
     default:
       return {

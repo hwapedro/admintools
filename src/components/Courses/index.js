@@ -5,7 +5,7 @@ import {
   getAllCourses,
   addCourses,
   delCourse
-} from "../../actions";
+} from "../../store/actions";
 
 import SetCourse from "../Courses/SetCourse";
 import CoursesList from "../Courses/CoursesList";

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { login } from "../../actions";
+import { login } from "../../store/actions";
 import { withRouter } from "react-router-dom";
 
 class LoginScreen extends React.Component {
