@@ -1,14 +1,21 @@
 import {
   ADD_COURSE_ELEMENT,
-  DELETE_COURSE_ELEMENT,
   CHANGE_COURSE_ELEMENT,
+  FETCH_LOGIN_REQUEST,
   FETCH_LOGIN_SUCCESS,
   FETCH_LOGIN_FAILURE,
-  FETCH_LOGIN_REQUEST,
   FETCH_COURSE_SUCCESS,
   FETCH_COURSE_FAILURE,
   FETCH_COURSE_REQUEST,
-  ADD_COURSE_SUCCESS
+  ADD_COURSE_REQUEST,
+  ADD_COURSE_SUCCESS,
+  ADD_COURSE_FAILURE,
+  DELETE_COURSE_SUCCESS,
+  DELETE_COURSE_FAILURE,
+  DELETE_COURSE_REQUEST,
+  CHANGE_COURSE_REQUEST,
+  CHANGE_COURSE_SUCCESS,
+  CHANGE_COURSE_FAILURE
 } from "../constants";
 
 const initialState = {
@@ -20,6 +27,7 @@ const initialState = {
 
 function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    //LOGIN BLOCK
     case FETCH_LOGIN_REQUEST:
       return {
         ...state,
@@ -40,13 +48,29 @@ function reducer(state = initialState, action = {}) {
         loading: false
       };
 
-      case ADD_COURSE_SUCCESS:
+    //ADD BLOCK
+    case ADD_COURSE_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case ADD_COURSE_SUCCESS:
       return {
         ...state,
         error: false,
+        loading: false,
+        courses: [...state.courses, action.courses]
+      };
+
+    case ADD_COURSE_FAILURE:
+      return {
+        ...state,
+        error: true,
         loading: false
       };
 
+    //GET COURSES BLOCK
     case FETCH_COURSE_REQUEST:
       return {
         ...state,
@@ -66,6 +90,7 @@ function reducer(state = initialState, action = {}) {
         error: true,
         loading: false
       };
+
     case ADD_COURSE_ELEMENT:
       return {
         ...state,
@@ -78,30 +103,69 @@ function reducer(state = initialState, action = {}) {
           }
         ]
       };
-    case DELETE_COURSE_ELEMENT:
+
+    //DELETE COURSES BLOCK
+    case DELETE_COURSE_REQUEST:
       return {
         ...state,
-        courses: state.courses.filter(courses => courses.courseIndex !== action.courseIndex)
+        loading: true
       };
 
-    case CHANGE_COURSE_ELEMENT:
-      const todoId = action.courseIndex;
-      const itemIndex = state.courses.findIndex(({ courseIndex }) => courseIndex === todoId);
+    case DELETE_COURSE_SUCCESS:
+      return {
+        ...state,
+        courses: state.courses.filter(
+          courses => courses.courseIndex !== action.courseIndex
+        ),
+        loading: false,
+        error: false
+      };
+
+    case DELETE_COURSE_FAILURE:
+      return {
+        ...state,
+        error: true,
+        loading: false
+      };
+
+    //DELETE COURSES BLOCK
+    case CHANGE_COURSE_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case CHANGE_COURSE_SUCCESS:
+    console.log(action.course)
+      const todoId = action.course.courseIndex;
+      console.log(todoId)
+      const itemIndex = state.courses.findIndex(
+        ({ courseIndex }) => courseIndex === todoId
+      );
+      console.log(itemIndex)
       const before = state.courses.slice(0, itemIndex);
       const after = state.courses.slice(itemIndex + 1);
-      console.log(itemIndex);
       return {
         ...state,
         courses: [
           ...before,
           {
             _id: state.courses[itemIndex]._id,
-            title: action.title,
-            description: action.description,
-            courseIndex: action.courseIndex
+            title: action.course.title,
+            description: action.course.description,
+            courseIndex: action.course.courseIndex
           },
           ...after
-        ]
+        ],
+        loading: false,
+        error: false
+      };
+
+    case CHANGE_COURSE_FAILURE:
+      return {
+        ...state,
+        error: true,
+        loading: false
       };
 
     default:

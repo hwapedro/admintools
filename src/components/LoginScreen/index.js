@@ -17,22 +17,18 @@ class LoginScreen extends React.Component {
       });
   };
 
-  componentDidMount() {
-    const { token } = this.props;
-    
-  }
+  // componentDidMount() {
+  //   const { token } = this.props;
+  // }
 
   setLogin = async () => {
     const { username, password } = this.state;
     const { login } = this.props;
     await login(username, password);
-    if (localStorage.getItem('userId') !== 'false') {
-      this.props.history.push("/courses");
-    }
   };
 
   render() {
-    const { token, loading, error } = this.props;
+    const { loading, error } = this.props;
 
     if (loading) {
       return <div>loading...</div>;

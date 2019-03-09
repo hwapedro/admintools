@@ -21,6 +21,7 @@ export default class AdminService {
       .post(`${_apiBase}/auth/login`)
       .set("Content-Type", "application/json")
       .send({ login: login, password: password });
+
     return response;
   }
 
@@ -29,25 +30,54 @@ export default class AdminService {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
-    return response.body;
+    return response.body.courses;
   }
 
-  async addCourses(title, description,token) {
+  async addCourses(title, description, token) {
     let response = await request
       .post(`${_apiBase}/course/create`)
       .set({
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
+        Authorization: "Bearer " + token
       })
       .send({ title: title, description: description });
+    return response.body.course;
+  }
+
+  async delCourse(courseIndex, token) {
+    let response = await request.del(`${_apiBase}/course/${courseIndex}`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
     return response;
   }
+
+  async changeCourse(courseIndex, title, description, token) {
+    let response = await request
+      .put(`${_apiBase}/course/${courseIndex}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({ title: title, description: description });
+    return response.body;
+  }
+
+  async getAll(token) {
+    let response = await request.get(`${_apiBase}/analytics/users`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return response.body
+  }
+
 }
 
 const swapi = new AdminService();
-//
-
+swapi.getAll(token).then(data => console.log(data))
 // swapi.register('dimababin', '123').then(data => console.log(data));
 // swapi.login("dimababin", "123").then(data => console.log(data));
 // swapi.getAllCourses().then(data => console.log(data));
 //swapi.addCourses('title', 'description').then(data => console.log(data));
+
+  

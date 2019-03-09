@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   changeCourse,
-  deleteCourse,
   getAllCourses,
-  addCourses
+  addCourses,
+  delCourse
 } from "../../actions";
 
 import SetCourse from "../Courses/SetCourse";
@@ -22,9 +22,9 @@ class Courses extends Component {
       loading,
       courses,
       changeCourse,
-      newCourse,
       addCourses,
-      getAllCourses
+      getAllCourses,
+      delCourse
     } = this.props;
     if (loading) {
       return <div>loading...</div>;
@@ -38,10 +38,10 @@ class Courses extends Component {
           getAllCourses={token => getAllCourses(token)}
         />
         <CoursesList
-          changeCourse={(id, title, description) =>
-            changeCourse(id, title, description)
+          changeCourse={(courseIndex,title, description, token) =>
+            changeCourse(courseIndex,title, description, token)
           }
-          deleteCourse={id => this.props.deleteCourse(id)}
+          delCourse={(courseIndex,token) => delCourse(courseIndex,token)}
           courses={courses}
         />
       </>
@@ -59,12 +59,12 @@ const mapDispatchToProps = dispatch => ({
   addCourses: (title, description, token) =>
     dispatch(addCourses(title, description, token)),
 
-  deleteCourse: id => dispatch(deleteCourse(id)),
+  delCourse: (courseIndex,token) => dispatch(delCourse(courseIndex,token)),
 
-  changeCourse: (id, title, description) =>
-    dispatch(changeCourse(id, title, description)),
+  getAllCourses: token => dispatch(getAllCourses(token)),
 
-  getAllCourses: token => dispatch(getAllCourses(token))
+  changeCourse: (courseIndex,title, description, token) =>
+    dispatch(changeCourse(courseIndex,title, description, token)),
 });
 
 export default connect(

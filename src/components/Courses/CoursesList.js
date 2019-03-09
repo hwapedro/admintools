@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+const token = localStorage.getItem("userId");
+
 class CourseList extends Component {
   state = {
     title: "",
@@ -9,7 +11,6 @@ class CourseList extends Component {
   };
 
   getParams = (courseIndex, title, description) => {
-    console.log(courseIndex);
     this.setState({
       changeFlag: true,
       courseIndex: courseIndex,
@@ -23,13 +24,15 @@ class CourseList extends Component {
     this.props.changeCourse(
       this.state.courseIndex,
       this.state.title,
-      this.state.description
+      this.state.description,
+      token
     );
     this.setState({ changeFlag: false, courseIndex: null });
   };
 
   deleteItem = courseIndex => {
-    this.props.deleteCourse(courseIndex)
+    
+    this.props.delCourse(courseIndex,token)
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });

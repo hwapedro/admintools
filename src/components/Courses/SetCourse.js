@@ -11,8 +11,6 @@ class SetCourse extends Component {
     const { title, description } = this.state;
     let token = localStorage.getItem("userId");
     this.props.addCourses(title, description, token);
- 
-    this.props.getAllCourses(token);
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
