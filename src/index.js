@@ -10,6 +10,11 @@ import { theme } from "./styles/theme";
 
 import App from "../src/components/App";
 
+// TODO: do norm props for service 
+// TODO: rewrite to hooks
+
+
+
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>

@@ -115,27 +115,44 @@ function reducer(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case CHANGE_COURSE_SUCCESS:
-      const todoId = action.course.courseIndex;
-      const itemIndex = state.courses.findIndex(
-        ({ courseIndex }) => courseIndex === todoId
-      );
-      const before = state.courses.slice(0, itemIndex);
-      const after = state.courses.slice(itemIndex + 1);
       return {
         ...state,
-        courses: [
-          ...before,
-          {
-            _id: state.courses[itemIndex]._id,
-            title: action.course.title,
-            description: action.course.description,
-            courseIndex: action.course.courseIndex
-          },
-          ...after
-        ],
+        courses: state.courses.map(course => {
+          return action.course.courseIndex === course.courseIndex
+            ? (course = {
+                _id: action.course._id,
+                title: action.course.title,
+                description: action.course.description,
+                courseIndex: action.course.courseIndex
+              })
+            : course;
+        }),
         loading: false,
         error: false
       };
+
+    // const todoId = action.course.courseIndex;
+    // const itemIndex = state.courses.findIndex(
+    //   ({ courseIndex }) => courseIndex === todoId
+    // );
+    // const before = state.courses.slice(0, itemIndex);
+    // const after = state.courses.slice(itemIndex + 1);
+
+    // return {
+    //   ...state,
+    //   courses: [
+    //     ...before,
+    //     {
+    //       _id: state.courses[itemIndex]._id,
+    //       title: action.course.title,
+    //       description: action.course.description,
+    //       courseIndex: action.course.courseIndex
+    //     },
+    //     ...after
+    //   ],
+    //   loading: false,
+    //   error: false
+    // };
 
     case CHANGE_COURSE_FAILURE:
       return stopLoading(state, action);

@@ -15,14 +15,6 @@ const signInSchema = Yup.object().shape({
 });
 
 class LoginScreen extends React.Component {
-  handleChange = (f, r) => e => {
-    console.log(e.target.value);
-    const v = e.target.value;
-    if (r.test(v))
-      this.setState({
-        [f]: v
-      });
-  };
 
   // componentDidMount() {
   //   const { token } = this.props;
