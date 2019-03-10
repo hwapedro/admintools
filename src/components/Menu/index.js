@@ -5,7 +5,6 @@ class Menu extends Component {
   render() {
     return (
       <>
-      
         <Link to = '/courses'>Курсы</Link>
         <Link to = '/lessons'>Уроки</Link>
       </>

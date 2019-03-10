@@ -34,6 +34,7 @@ class CourseList extends Component {
     
     this.props.delCourse(courseIndex,token)
   };
+  
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };

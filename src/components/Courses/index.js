@@ -7,6 +7,7 @@ import {
   delCourse
 } from "../../store/actions";
 
+import Menu from "../Menu";
 import SetCourse from "../Courses/SetCourse";
 import CoursesList from "../Courses/CoursesList";
 
@@ -31,6 +32,7 @@ class Courses extends Component {
     }
     return (
       <>
+      <Menu />
         <SetCourse
           addCourses={(title, description, token) =>
             addCourses(title, description, token)

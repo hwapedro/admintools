@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { Route , Switch} from "react-router-dom";
 
 import Courses from "../components/Courses";
-import Menu from "../components/Menu";
+
 import LoginScreen from "../components/LoginScreen";
+import GlobalStyles from './GlobalStyles'
 
 class App extends Component {
   render() {
     return (
       <>
-        <Menu />
+    
         <Switch>
           <Route path="/" exact component = {LoginScreen} /> 
           <Route path="/lessons">
@@ -18,6 +19,7 @@ class App extends Component {
           <Route path="/courses" component= { Courses } />
           {/* <Route path="/achievements" component={Achievements} /> */}
         </Switch>
+        
       </>
     );
   }

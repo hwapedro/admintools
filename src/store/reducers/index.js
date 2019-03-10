@@ -115,13 +115,10 @@ function reducer(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case CHANGE_COURSE_SUCCESS:
-      console.log(action.course);
       const todoId = action.course.courseIndex;
-      console.log(todoId);
       const itemIndex = state.courses.findIndex(
         ({ courseIndex }) => courseIndex === todoId
       );
-      console.log(itemIndex);
       const before = state.courses.slice(0, itemIndex);
       const after = state.courses.slice(itemIndex + 1);
       return {
