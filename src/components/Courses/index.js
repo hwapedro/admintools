@@ -10,6 +10,7 @@ import {
 import Menu from "../Menu";
 import SetCourse from "../Courses/SetCourse";
 import CoursesList from "../Courses/CoursesList";
+import Spinner from '../Spinner';
 
 class Courses extends Component {
   componentWillMount() {
@@ -28,11 +29,16 @@ class Courses extends Component {
       delCourse
     } = this.props;
     if (loading) {
-      return <div>loading...</div>;
+      return (
+        <>
+          <Menu />
+          <Spinner />
+        </>
+      );
     }
     return (
       <>
-      <Menu />
+        <Menu />
         <SetCourse
           addCourses={(title, description, token) =>
             addCourses(title, description, token)
@@ -40,10 +46,10 @@ class Courses extends Component {
           getAllCourses={token => getAllCourses(token)}
         />
         <CoursesList
-          changeCourse={(courseIndex,title, description, token) =>
-            changeCourse(courseIndex,title, description, token)
+          changeCourse={(courseIndex, title, description, token) =>
+            changeCourse(courseIndex, title, description, token)
           }
-          delCourse={(courseIndex,token) => delCourse(courseIndex,token)}
+          delCourse={(courseIndex, token) => delCourse(courseIndex, token)}
           courses={courses}
         />
       </>
@@ -61,12 +67,12 @@ const mapDispatchToProps = dispatch => ({
   addCourses: (title, description, token) =>
     dispatch(addCourses(title, description, token)),
 
-  delCourse: (courseIndex,token) => dispatch(delCourse(courseIndex,token)),
+  delCourse: (courseIndex, token) => dispatch(delCourse(courseIndex, token)),
 
   getAllCourses: token => dispatch(getAllCourses(token)),
 
-  changeCourse: (courseIndex,title, description, token) =>
-    dispatch(changeCourse(courseIndex,title, description, token)),
+  changeCourse: (courseIndex, title, description, token) =>
+    dispatch(changeCourse(courseIndex, title, description, token))
 });
 
 export default connect(

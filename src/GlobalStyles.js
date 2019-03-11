@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import { media } from '../../styles/helper'
+import { media } from './styles/helper'
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Poppins');

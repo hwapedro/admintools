@@ -4,7 +4,6 @@ import { Route , Switch} from "react-router-dom";
 import Courses from "../components/Courses";
 
 import LoginScreen from "../components/LoginScreen";
-import GlobalStyles from './GlobalStyles'
 
 class App extends Component {
   render() {
