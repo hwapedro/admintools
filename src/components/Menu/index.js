@@ -38,11 +38,13 @@ const LinkStyle = {
 
 const Wrapper = styled.div`
   padding-top: 0.5rem;
-  margin-left:2rem;
+  padding-left: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  background-color : #1e1e1e;
+  // box-shadow: 0px 4px 10px rgba(194, 194, 194, 0.1);
 `;
 
 const Title = styled.div`
@@ -66,7 +68,7 @@ export const LinkButton = styled.button`
   height: 40px;
   border: 0;
   border-radius: 10px;
-  background-color: #212121;
+  background-color : #1e1e1e;
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
