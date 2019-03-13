@@ -113,6 +113,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: 
 `;
 
 const TitleSpan = styled.span`
@@ -121,7 +122,6 @@ const TitleSpan = styled.span`
   align-items: center;
   margin: 1rem 0;
   font-size: 1.3rem;
-  color: white;
 `;
 
 const TitleInput = styled.input`
@@ -137,16 +137,14 @@ const LabelElement = styled.span`
   margin-top: 2rem;
   font-weight: 900;
   font-size: 1.8rem;
-  color: white;
 `;
 
 const DescriptionSpan = styled.span`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 2rem;
+  margin: 1rem 0;
   font-size: 1.3rem;
-  color: white;
 `;
 
 const DescriptionTextArea = styled.textarea`
@@ -166,9 +164,11 @@ const DescriptionTextArea = styled.textarea`
 const ElementsWrapper = styled.ul`
   list-style-type: none;
   width: 1000px;
+  
 `;
 
 const ElementWrapper = styled.li`
+  background-color : ${props => props.theme.courses};
   margin-top: 2rem;
   border: 1px solid white;
   border-radius: 20px;
@@ -184,13 +184,13 @@ const ButtonWrapper = styled.div`
 export const SignInButton = styled.button`
   width: 150px;
   height: 40px;
-  border: 1px solid #ffffff;
+  border: 0;
   border-radius: 10px;
-  background-color: #212121;
+  background-color:${props => props.theme.button};
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #ffffff;
+  color: white;
   transition: all 0.1s ease-in-out;
   &:hover {
     transform: scale(1.05);

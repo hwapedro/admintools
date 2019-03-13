@@ -106,7 +106,7 @@ export const SignInButton = styled.button`
   height: 40px;
   border: 1px solid #ffffff;
   border-radius: 10px;
-  background-color: #212121;
+  background-color: ${props => props.theme.button};;
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;

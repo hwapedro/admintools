@@ -43,7 +43,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  background-color : #1e1e1e;
+  background-color : ${props => props.theme.menu};
   // box-shadow: 0px 4px 10px rgba(194, 194, 194, 0.1);
 `;
 
@@ -68,7 +68,7 @@ export const LinkButton = styled.button`
   height: 40px;
   border: 0;
   border-radius: 10px;
-  background-color : #1e1e1e;
+  background-color : ${props => props.theme.button};
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
