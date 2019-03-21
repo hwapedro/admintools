@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { login } from "../../store/actions";
 import { withRouter } from "react-router-dom";
-
 import styled from "styled-components";
+
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -87,7 +87,8 @@ export default withRouter(
   )(LoginScreen)
 );
 
-const Wrapper = styled.div`
+
+export const Wrapper = styled.div`
   padding-top: 5rem;
   display: flex;
   flex-direction: column;
@@ -95,7 +96,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

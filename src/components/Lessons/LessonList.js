@@ -2,20 +2,20 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 const token = localStorage.getItem("userId");
-const name = "course";
+const name = "lesson";
 
-class CourseList extends Component {
+class LessonsList extends Component {
   state = {
     title: "",
     description: "",
     changeFlag: false,
-    courseIndex: null
+    _id: null
   };
 
-  getParams = (courseIndex, title, description) => {
+  getParams = (_id, title, description) => {
     this.setState({
       changeFlag: true,
-      courseIndex: courseIndex,
+      _id: _id,
       title: title,
       description: description
     });
@@ -25,18 +25,19 @@ class CourseList extends Component {
     event.preventDefault();
     const { title, description } = this.state;
     if (title && description)
-      this.props.changeCourse(
-        this.state.courseIndex,
+      this.props.changeLesson(
+        this.state._id,
         this.state.title,
         this.state.description,
         token,
         name
       );
-    this.setState({ changeFlag: false, courseIndex: null });
+    this.setState({ changeFlag: false, _id: null });
   };
 
-  deleteItem = courseIndex => {
-    this.props.delCourse(courseIndex, token, name);
+  deleteItem = _id => {
+    console.log(_id);
+    this.props.delLesson(_id, token, name);
   };
 
   onChange = event => {
@@ -44,21 +45,21 @@ class CourseList extends Component {
   };
 
   render() {
-    let list = this.props.courses.map(course => {
+    let list = this.props.lessons.map(lesson => {
       if (
         this.state.changeFlag &&
-        course.courseIndex === this.state.courseIndex
+        lesson._id === this.state._id
       ) {
         return (
-          <ElementWrapper key={course.courseIndex}>
+          <ElementWrapper key={lesson._id}>
             <form onSubmit={this.setParams}>
-              <LabelElement>Name of course :</LabelElement>
+              <LabelElement>Name of Lessons :</LabelElement>
               <TitleInput
                 name="title"
                 onChange={this.onChange}
                 value={this.state.title}
               />
-              <LabelElement>Description of course : </LabelElement>
+              <LabelElement>Description of Lessons : </LabelElement>
               <DescriptionTextArea
                 name="description"
                 onChange={this.onChange}
@@ -73,25 +74,27 @@ class CourseList extends Component {
         );
       } else {
         return (
-          <ElementWrapper key={course.courseIndex}>
-            <LabelElement>Name of course :</LabelElement>
-            <TitleSpan> {course.title}</TitleSpan>
-            <LabelElement>Description of course : </LabelElement>
-            <DescriptionSpan>{course.description}</DescriptionSpan>
+          <ElementWrapper key={lesson._id}>
+            <LabelElement>Name of Lessons :</LabelElement>
+            <TitleSpan> {lesson.title}</TitleSpan>
+            <LabelElement>Description of Lessons : </LabelElement>
+            <DescriptionSpan>{lesson.description}</DescriptionSpan>
             <ButtonWrapper>
               <SignInButton
                 onClick={() =>
                   this.getParams(
-                    course.courseIndex,
-                    course.title,
-                    course.description
+                    lesson._id,
+                    lesson.title,
+                    lesson.description
                   )
                 }
               >
-                CHANGE COURSE
+                CHANGE Lessons
               </SignInButton>
-              <SignInButton onClick={() => this.deleteItem(course.courseIndex)}>
-                DELETE COURSE
+              <SignInButton
+                onClick={() => this.deleteItem(lesson._id)}
+              >
+                DELETE Lessons
               </SignInButton>
             </ButtonWrapper>
           </ElementWrapper>
@@ -106,7 +109,29 @@ class CourseList extends Component {
   }
 }
 
-export default CourseList;
+export default LessonsList;
+
+
+Lessons.defaultProps = {
+  lessons: [],
+  loading: false,
+  error: false,
+  addLesson() {},
+  delLesson() {},
+  getAllLessons() {},
+  changeLesson() {}
+}
+
+Lessons.propTypes = {
+  lessons:  PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+
+  addCoursest: PropTypes.func,
+  delLesson: PropTypes.func,
+  getAllLessons: PropTypes.func,
+  changeLesson: PropTypes.func,
+}
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -163,7 +188,6 @@ const DescriptionTextArea = styled.textarea`
 `;
 
 const ElementsWrapper = styled.ul`
-  margin:0;
   list-style-type: none;
   width: 1000px;
 `;

@@ -2,20 +2,20 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 const token = localStorage.getItem("userId");
-const name = "course";
+const name = "badge";
 
-class CourseList extends Component {
+class badgeList extends Component {
   state = {
     title: "",
     description: "",
     changeFlag: false,
-    courseIndex: null
+    badgeIndex: null
   };
 
-  getParams = (courseIndex, title, description) => {
+  getParams = (badgeIndex, title, description) => {
     this.setState({
       changeFlag: true,
-      courseIndex: courseIndex,
+      badgeIndex: badgeIndex,
       title: title,
       description: description
     });
@@ -25,18 +25,18 @@ class CourseList extends Component {
     event.preventDefault();
     const { title, description } = this.state;
     if (title && description)
-      this.props.changeCourse(
-        this.state.courseIndex,
+      this.props.changeBadge(
+        this.state.badgeIndex,
         this.state.title,
         this.state.description,
         token,
         name
       );
-    this.setState({ changeFlag: false, courseIndex: null });
+    this.setState({ changeFlag: false, badgeIndex: null });
   };
 
-  deleteItem = courseIndex => {
-    this.props.delCourse(courseIndex, token, name);
+  deleteItem = badgeIndex => {
+    this.props.delBadge(badgeIndex, token, name);
   };
 
   onChange = event => {
@@ -44,21 +44,21 @@ class CourseList extends Component {
   };
 
   render() {
-    let list = this.props.courses.map(course => {
+    let list = this.props.badges.map(badge => {
       if (
         this.state.changeFlag &&
-        course.courseIndex === this.state.courseIndex
+        badge._id === this.state.badgeIndex
       ) {
         return (
-          <ElementWrapper key={course.courseIndex}>
+          <ElementWrapper key={badge._id}>
             <form onSubmit={this.setParams}>
-              <LabelElement>Name of course :</LabelElement>
+              <LabelElement>Name of badge :</LabelElement>
               <TitleInput
                 name="title"
                 onChange={this.onChange}
                 value={this.state.title}
               />
-              <LabelElement>Description of course : </LabelElement>
+              <LabelElement>Description of badge : </LabelElement>
               <DescriptionTextArea
                 name="description"
                 onChange={this.onChange}
@@ -73,25 +73,25 @@ class CourseList extends Component {
         );
       } else {
         return (
-          <ElementWrapper key={course.courseIndex}>
-            <LabelElement>Name of course :</LabelElement>
-            <TitleSpan> {course.title}</TitleSpan>
-            <LabelElement>Description of course : </LabelElement>
-            <DescriptionSpan>{course.description}</DescriptionSpan>
+          <ElementWrapper key={badge._id}>
+            <LabelElement>Name of badge :</LabelElement>
+            <TitleSpan> {badge.title}</TitleSpan>
+            <LabelElement>Description of badge : </LabelElement>
+            <DescriptionSpan>{badge.description}</DescriptionSpan>
             <ButtonWrapper>
               <SignInButton
                 onClick={() =>
                   this.getParams(
-                    course.courseIndex,
-                    course.title,
-                    course.description
+                    badge._id,
+                    badge.title,
+                    badge.description
                   )
                 }
               >
-                CHANGE COURSE
+                CHANGE badge
               </SignInButton>
-              <SignInButton onClick={() => this.deleteItem(course.courseIndex)}>
-                DELETE COURSE
+              <SignInButton onClick={() => this.deleteItem(badge._id)}>
+                DELETE badge
               </SignInButton>
             </ButtonWrapper>
           </ElementWrapper>
@@ -106,7 +106,7 @@ class CourseList extends Component {
   }
 }
 
-export default CourseList;
+export default badgeList;
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -163,7 +163,6 @@ const DescriptionTextArea = styled.textarea`
 `;
 
 const ElementsWrapper = styled.ul`
-  margin:0;
   list-style-type: none;
   width: 1000px;
 `;

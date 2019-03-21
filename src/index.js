@@ -10,8 +10,9 @@ import { theme } from "./styles/theme";
 
 import App from "../src/components/App";
 
-// TODO: do norm props for service 
+
 // TODO: rewrite to hooks
+// TODO: badges
 
 
 

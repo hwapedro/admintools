@@ -1,20 +1,27 @@
 import {
-  ADD_COURSE_ELEMENT,
   FETCH_LOGIN_REQUEST,
   FETCH_LOGIN_SUCCESS,
   FETCH_LOGIN_FAILURE,
-  FETCH_COURSE_SUCCESS,
-  FETCH_COURSE_FAILURE,
-  FETCH_COURSE_REQUEST,
-  ADD_COURSE_REQUEST,
+  GETALL_COURSE_SUCCESS,
+  GETALL_ELEMENT_FAILURE,
+  GETALL_ELEMENT_REQUEST,
+  GETALL_LESSON_SUCCESS,
+  GETALL_BADGE_SUCCESS,
+  ADD_ELEMENT_REQUEST,
   ADD_COURSE_SUCCESS,
-  ADD_COURSE_FAILURE,
+  ADD_BADGE_SUCCESS,
+  ADD_LESSON_SUCCESS,
+  ADD_ELEMENT_FAILURE,
+  DELETE_ELEMENT_REQUEST,
   DELETE_COURSE_SUCCESS,
-  DELETE_COURSE_FAILURE,
-  DELETE_COURSE_REQUEST,
-  CHANGE_COURSE_REQUEST,
+  DELETE_BADGE_SUCCESS,
+  DELETE_LESSON_SUCCESS,
+  DELETE_ELEMENT_FAILURE,
+  CHANGE_ELEMENT_REQUEST,
   CHANGE_COURSE_SUCCESS,
-  CHANGE_COURSE_FAILURE
+  CHANGE_BADGE_SUCCESS,
+  CHANGE_LESSON_SUCCESS,
+  CHANGE_ELEMENT_FAILURE
 } from "../constants";
 
 import { startLoading, stopLoading } from "../utils";
@@ -23,7 +30,9 @@ const initialState = {
   token: null,
   loading: false,
   error: null,
-  courses: []
+  courses: [],
+  badges: [],
+  lessons: []
 };
 
 function reducer(state = initialState, action = {}) {
@@ -50,7 +59,7 @@ function reducer(state = initialState, action = {}) {
       };
 
     //ADD BLOCK
-    case ADD_COURSE_REQUEST:
+    case ADD_ELEMENT_REQUEST:
       return startLoading(state, action);
 
     case ADD_COURSE_SUCCESS:
@@ -61,14 +70,30 @@ function reducer(state = initialState, action = {}) {
         courses: [...state.courses, action.courses]
       };
 
-    case ADD_COURSE_FAILURE:
+    case ADD_LESSON_SUCCESS:
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        lessons: [...state.lessons, action.lessons]
+      };
+
+    case ADD_BADGE_SUCCESS:
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        badges: [...state.badges, action.badges]
+      };
+
+    case ADD_ELEMENT_FAILURE:
       return stopLoading(state, action);
 
     //GET COURSES BLOCK
-    case FETCH_COURSE_REQUEST:
+    case GETALL_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-    case FETCH_COURSE_SUCCESS:
+    case GETALL_COURSE_SUCCESS:
       return {
         ...state,
         courses: action.courses,
@@ -76,56 +101,110 @@ function reducer(state = initialState, action = {}) {
         error: false
       };
 
-    case FETCH_COURSE_FAILURE:
-      return stopLoading(state, action);
-
-    case ADD_COURSE_ELEMENT:
+    case GETALL_LESSON_SUCCESS:
       return {
         ...state,
-        courses: [
-          ...state.courses,
-          {
-            title: action.title,
-            description: action.description,
-            id: action.id
-          }
-        ]
+        lessons: action.lessons,
+        loading: false,
+        error: false
       };
 
+    case GETALL_BADGE_SUCCESS:
+      return {
+        ...state,
+        badges: action.badges,
+        loading: false,
+        error: false
+      };
+
+    case GETALL_ELEMENT_FAILURE:
+      return stopLoading(state, action);
+
     //DELETE COURSES BLOCK
-    case DELETE_COURSE_REQUEST:
+    case DELETE_ELEMENT_REQUEST:
       return startLoading(state, action);
 
     case DELETE_COURSE_SUCCESS:
       return {
         ...state,
         courses: state.courses.filter(
-          courses => courses.courseIndex !== action.courseIndex
+          courses => courses.courseIndex !== action.index
         ),
         loading: false,
         error: false
       };
 
-    case DELETE_COURSE_FAILURE:
+    case DELETE_LESSON_SUCCESS:
+      return {
+        ...state,
+        lessons: state.lessons.filter(lesson => lesson._id !== action.index),
+        loading: false,
+        error: false
+      };
+
+    case DELETE_BADGE_SUCCESS:
+      return {
+        ...state,
+        badges: state.badges.filter(badges => badges._id !== action.index),
+        loading: false,
+        error: false
+      };
+
+    case DELETE_ELEMENT_FAILURE:
       return stopLoading(state, action);
 
     //DELETE COURSES BLOCK
-    case CHANGE_COURSE_REQUEST:
+    case CHANGE_ELEMENT_REQUEST:
       return startLoading(state, action);
 
     case CHANGE_COURSE_SUCCESS:
       return {
         ...state,
-        courses: state.courses.map(course => {
-          return action.course.courseIndex === course.courseIndex
-            ? (course = {
+        courses: state.courses.map(course =>
+          action.course.courseIndex === course.courseIndex
+            ? {
                 _id: action.course._id,
                 title: action.course.title,
                 description: action.course.description,
                 courseIndex: action.course.courseIndex
-              })
-            : course;
-        }),
+              }
+            : course
+        ),
+        loading: false,
+        error: false
+      };
+
+    case CHANGE_BADGE_SUCCESS:
+      return {
+        ...state,
+        badges: state.badges.map(badge =>
+          action.badge._id === badge._id
+            ? {
+                _id: action.badge._id,
+                title: action.badge.title,
+                description: action.badge.description,
+                lessonIndex: action.badge.badgeIndex
+              }
+            : badge
+        ),
+        loading: false,
+        error: false
+      };
+
+    case CHANGE_LESSON_SUCCESS:
+      return {
+        ...state,
+        lessons: state.lessons.map(lesson =>
+          action.lesson._id === lesson._id
+            ? {
+                _id: action.lesson._id,
+                title: action.lesson.title,
+                description: action.lesson.description,
+                courseIndex: action.lesson.courseIndex,
+                lessonIndex: action.lesson.lessonIndex
+              }
+            : lesson
+        ),
         loading: false,
         error: false
       };
@@ -153,7 +232,7 @@ function reducer(state = initialState, action = {}) {
     //   error: false
     // };
 
-    case CHANGE_COURSE_FAILURE:
+    case CHANGE_ELEMENT_FAILURE:
       return stopLoading(state, action);
 
     default:

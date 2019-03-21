@@ -13,7 +13,7 @@ export default class AdminService {
       .then(response => console.log(response))
       .catch(error => console.log(error));
 
-    return response.body;
+    return response;
   }
 
   async login(login, password) {
@@ -25,36 +25,17 @@ export default class AdminService {
     return response;
   }
 
-  async getAllCourses(token) {
-    let response = await request.get(`${_apiBase}/course/all`).set({
+  async getAll(token, name) {
+    let response = await request.get(`${_apiBase}/${name}/all`).set({
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
-    return response.body.courses;
+    return response.body;
   }
 
-  async addCourses(title, description, token) {
+  async add(title, description, token, name) {
     let response = await request
-      .post(`${_apiBase}/course/create`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      })
-      .send({ title: title, description: description });
-    return response.body.course;
-  }
-
-  async delCourse(courseIndex, token) {
-    let response = await request.del(`${_apiBase}/course/${courseIndex}`).set({
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    });
-    return response;
-  }
-
-  async changeCourse(courseIndex, title, description, token) {
-    let response = await request
-      .put(`${_apiBase}/course/${courseIndex}`)
+      .post(`${_apiBase}/${name}/create`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
@@ -63,21 +44,41 @@ export default class AdminService {
     return response.body;
   }
 
-  async getAll(token) {
-    let response = await request.get(`${_apiBase}/analytics/users`).set({
+  async delet(index, token, name) {
+    let response = await request.del(`${_apiBase}/${name}/${index}`).set({
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
-    return response.body
+    return response;
   }
 
-}
+  async change(courseIndex, title, description, token, name) {
+    let response = await request
+      .put(`${_apiBase}/${name}/${courseIndex}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({ title: title, description: description });
+    return response.body;
+  }
 
+  // async getImg() {
+  //   let responce = request
+  //     .put(`${_apiBase}/badge/avatar`)
+  //     .set("Content-Type", "image/png")
+  //     .set("Content-Disposition", "inline")
+  //     .send(theFile) // <--------------------------- THIS LINE instead of .attach()
+  //     .then(data => {
+  //       console.log(data);
+  //     });
+  // }
+}
+//avatar png super
 const swapi = new AdminService();
-swapi.getAll(token).then(data => console.log(data))
+
+// swapi.getAll(token).then(data => console.log(data));
 // swapi.register('dimababin', '123').then(data => console.log(data));
 // swapi.login("dimababin", "123").then(data => console.log(data));
 // swapi.getAllCourses().then(data => console.log(data));
 //swapi.addCourses('title', 'description').then(data => console.log(data));
-
-  

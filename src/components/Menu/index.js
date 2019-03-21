@@ -2,27 +2,30 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import * as route from '../Route/constants'
+
 class Menu extends Component {
   render() {
+    console.log(route.courses)
     return (
       <>
         <Wrapper>
           <Title> Admintools </Title>
-          <ButtonWrapper>
-            <LinkButton>
-              <Link style={LinkStyle} to="/courses">
-                Courses
-              </Link>
-            </LinkButton>
-          </ButtonWrapper>
-
-          <ButtonWrapper>
-            <LinkButton>
-              <Link style={LinkStyle} to="/lessons">
-                Lessons
-              </Link>
-            </LinkButton>
-          </ButtonWrapper>
+          <Link style={LinkStyle} to={route.courses}>
+            <ButtonWrapper>
+              <LinkButton>Courses</LinkButton>
+            </ButtonWrapper>
+          </Link>
+          <Link style={LinkStyle} to={route.lessons}>
+            <ButtonWrapper>
+              <LinkButton>Lessons</LinkButton>
+            </ButtonWrapper>
+          </Link>
+          <Link style={LinkStyle} to={route.badges}>
+            <ButtonWrapper>
+              <LinkButton>Badges</LinkButton>
+            </ButtonWrapper>
+          </Link>
         </Wrapper>
       </>
     );
@@ -43,7 +46,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  background-color : ${props => props.theme.menu};
+  background-color: ${props => props.theme.menu};
   // box-shadow: 0px 4px 10px rgba(194, 194, 194, 0.1);
 `;
 
@@ -68,7 +71,7 @@ export const LinkButton = styled.button`
   height: 40px;
   border: 0;
   border-radius: 10px;
-  background-color : ${props => props.theme.button};
+  background-color: ${props => props.theme.button};
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;

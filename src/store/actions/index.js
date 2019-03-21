@@ -1,26 +1,31 @@
 import {
-  ADD_COURSE_ELEMENT,
   FETCH_LOGIN_SUCCESS,
   FETCH_LOGIN_FAILURE,
-  FETCH_COURSE_SUCCESS,
-  FETCH_COURSE_FAILURE,
-  FETCH_COURSE_REQUEST,
-  ADD_COURSE_REQUEST,
+  GETALL_COURSE_SUCCESS,
+  GETALL_ELEMENT_FAILURE,
+  GETALL_ELEMENT_REQUEST,
+  GETALL_LESSON_SUCCESS,
+  GETALL_BADGE_SUCCESS,
+  ADD_ELEMENT_REQUEST,
   ADD_COURSE_SUCCESS,
-  ADD_COURSE_FAILURE,
-  DELETE_COURSE_REQUEST,
+  ADD_BADGE_SUCCESS,
+  ADD_LESSON_SUCCESS,
+  ADD_ELEMENT_FAILURE,
+  DELETE_ELEMENT_REQUEST,
   DELETE_COURSE_SUCCESS,
-  DELETE_COURSE_FAILURE,
-  CHANGE_COURSE_REQUEST,
+  DELETE_BADGE_SUCCESS,
+  DELETE_LESSON_SUCCESS,
+  DELETE_ELEMENT_FAILURE,
+  CHANGE_ELEMENT_REQUEST,
   CHANGE_COURSE_SUCCESS,
-  CHANGE_COURSE_FAILURE
+  CHANGE_BADGE_SUCCESS,
+  CHANGE_LESSON_SUCCESS,
+  CHANGE_ELEMENT_FAILURE
 } from "../constants";
 
 import AdminService from "../../service";
 
 const adminService = new AdminService();
-
-let id = 0;
 
 export const login = (username, password) => dispatch => {
   adminService
@@ -37,77 +42,149 @@ export const login = (username, password) => dispatch => {
     .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE }));
 };
 
-export const getAllCourses = token => dispatch => {
+export const getAllElements = (token, name) => dispatch => {
   dispatch({
-    type: FETCH_COURSE_REQUEST
+    type: GETALL_ELEMENT_REQUEST
   });
 
   adminService
-    .getAllCourses(token)
+    .getAll(token, name)
     .then(response => {
-      dispatch({
-        type: FETCH_COURSE_SUCCESS,
-        courses: response
-      });
+      console.log(response);
+      switch (name) {
+        case "course":
+          dispatch({
+            type: GETALL_COURSE_SUCCESS,
+            courses: response.courses
+          });
+          break;
+        case "badge":
+          dispatch({
+            type: GETALL_BADGE_SUCCESS,
+            badges: response.badges
+          });
+          break;
+        case "lesson":
+          dispatch({
+            type: GETALL_LESSON_SUCCESS,
+            lessons: response.lessons
+          });
+          break;
+        default:
+          break;
+      }
     })
-    .catch(error => dispatch({ type: FETCH_COURSE_FAILURE }));
+    .catch(error => dispatch({ type: GETALL_ELEMENT_FAILURE }));
 };
 
-export const addCourses = (title, description, token) => dispatch => {
+export const addElement = (title, description, token, name) => dispatch => {
   dispatch({
-    type: ADD_COURSE_REQUEST
+    type: ADD_ELEMENT_REQUEST
   });
 
   adminService
-    .addCourses(title, description, token)
+    .add(title, description, token, name)
     .then(response => {
-      dispatch({
-        type: ADD_COURSE_SUCCESS,
-        courses: response
-      });
+      console.log(response);
+      switch (name) {
+        case "course":
+          dispatch({
+            type: ADD_COURSE_SUCCESS,
+            courses: response.course
+          });
+          break;
+        case "badge":
+          dispatch({
+            type: ADD_BADGE_SUCCESS,
+            badges: response.badge
+          });
+          break;
+        case "lesson":
+        
+          dispatch({
+            type: ADD_LESSON_SUCCESS,
+            lessons: response.lesson
+          });
+          break;
+        default:
+          break;
+      }
     })
-    .catch(error => dispatch({ type: ADD_COURSE_FAILURE }));
+    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE }));
 };
 
-export const newCourse = (title, description) => {
-  return { type: ADD_COURSE_ELEMENT, id: id++, title, description };
-};
-
-export const delCourse = (courseIndex, token) => dispatch => {
+export const deletElement = (index, token, name) => dispatch => {
   dispatch({
-    type: DELETE_COURSE_REQUEST
+    type: DELETE_ELEMENT_REQUEST
   });
 
   adminService
-    .delCourse(courseIndex, token)
+    .delet(index, token, name)
     .then(response => {
-      dispatch({
-        type: DELETE_COURSE_SUCCESS,
-        courseIndex: courseIndex
-      });
+      switch (name) {
+        case "course":
+          dispatch({
+            type: DELETE_COURSE_SUCCESS,
+            index: index
+          });
+          break;
+        case "badge":
+          dispatch({
+            type: DELETE_BADGE_SUCCESS,
+            index: index
+          });
+          break;
+        case "lesson":
+          dispatch({
+            type: DELETE_LESSON_SUCCESS,
+            index: index
+          });
+          break;
+        default:
+          break;
+      }
     })
-    .catch(error => dispatch({ type: DELETE_COURSE_FAILURE }));
+    .catch(error => dispatch({ type: DELETE_ELEMENT_FAILURE }));
 };
 
-export const changeCourse = (
-  courseIndex,
+export const changeElement = (
+  index,
   title,
   description,
-  token
+  token,
+  name
 ) => dispatch => {
   dispatch({
-    type: CHANGE_COURSE_REQUEST
+    type: CHANGE_ELEMENT_REQUEST
   });
 
   adminService
-    .changeCourse(courseIndex, title, description, token)
+    .change(index, title, description, token, name)
     .then(response => {
-      dispatch({
-        type: CHANGE_COURSE_SUCCESS,
-        course: response.course
-      });
+      switch (name) {
+        case "course":
+          dispatch({
+            type: CHANGE_COURSE_SUCCESS,
+            course: response.course
+          });
+          break;
+        case "badge":
+          dispatch({
+            type: CHANGE_BADGE_SUCCESS,
+            badge: response.badge
+          });
+          break;
+        case "lesson":
+          dispatch({
+            type: CHANGE_LESSON_SUCCESS,
+            lesson: response.lesson
+          });
+          break;
+        default:
+          break;
+      }
     })
-    .catch(error => dispatch({ type: CHANGE_COURSE_FAILURE }));
+    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE }));
 };
 
 // export const changeCourse = (courseIndex, title, description) => {
