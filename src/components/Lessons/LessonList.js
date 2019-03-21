@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
+import PropTypes from 'prop-types'
 const token = localStorage.getItem("userId");
 const name = "lesson";
 
@@ -23,9 +23,10 @@ class LessonsList extends Component {
 
   setParams = event => {
     event.preventDefault();
+    const {changeLesson} = this.props
     const { title, description } = this.state;
     if (title && description)
-      this.props.changeLesson(
+      changeLesson(
         this.state._id,
         this.state.title,
         this.state.description,
@@ -36,8 +37,8 @@ class LessonsList extends Component {
   };
 
   deleteItem = _id => {
-    console.log(_id);
-    this.props.delLesson(_id, token, name);
+    const {delLesson} = this.props
+    delLesson(_id, token, name);
   };
 
   onChange = event => {
@@ -45,7 +46,8 @@ class LessonsList extends Component {
   };
 
   render() {
-    let list = this.props.lessons.map(lesson => {
+    const {lessons} = this.props
+    let list = lessons.map(lesson => {
       if (
         this.state.changeFlag &&
         lesson._id === this.state._id
@@ -112,24 +114,20 @@ class LessonsList extends Component {
 export default LessonsList;
 
 
-Lessons.defaultProps = {
+LessonsList.defaultProps = {
   lessons: [],
   loading: false,
   error: false,
-  addLesson() {},
   delLesson() {},
-  getAllLessons() {},
   changeLesson() {}
 }
 
-Lessons.propTypes = {
+LessonsList.propTypes = {
   lessons:  PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,
 
-  addCoursest: PropTypes.func,
   delLesson: PropTypes.func,
-  getAllLessons: PropTypes.func,
   changeLesson: PropTypes.func,
 }
 
@@ -139,7 +137,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: ;
 `;
 
 const TitleSpan = styled.span`

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
+import PropTypes from 'prop-types'
 const token = localStorage.getItem("userId");
 const name = "course";
 
@@ -24,8 +24,9 @@ class CourseList extends Component {
   setParams = event => {
     event.preventDefault();
     const { title, description } = this.state;
+    const {changeCourse} = this.props
     if (title && description)
-      this.props.changeCourse(
+      changeCourse(
         this.state.courseIndex,
         this.state.title,
         this.state.description,
@@ -36,7 +37,8 @@ class CourseList extends Component {
   };
 
   deleteItem = courseIndex => {
-    this.props.delCourse(courseIndex, token, name);
+    const {delCourse} = this.props
+    delCourse(courseIndex, token, name);
   };
 
   onChange = event => {
@@ -44,7 +46,8 @@ class CourseList extends Component {
   };
 
   render() {
-    let list = this.props.courses.map(course => {
+    const {courses} = this.props
+    let list = courses.map(course => {
       if (
         this.state.changeFlag &&
         course.courseIndex === this.state.courseIndex
@@ -108,13 +111,29 @@ class CourseList extends Component {
 
 export default CourseList;
 
+CourseList.defaultProps = {
+  courses: [],
+  loading: false,
+  error: false,
+  delCourse() {},
+  changeLesson() {}
+}
+
+CourseList.propTypes = {
+  courses:  PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+
+  delCourse: PropTypes.func,
+  changeLesson: PropTypes.func,
+}
+
 const Wrapper = styled.div`
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: ;
 `;
 
 const TitleSpan = styled.span`

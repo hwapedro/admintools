@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
+import PropTypes from 'prop-types'
 const token = localStorage.getItem("userId");
 const name = "badge";
 
@@ -23,6 +23,7 @@ class badgeList extends Component {
 
   setParams = event => {
     event.preventDefault();
+    const {changeBadge} = this.props
     const { title, description } = this.state;
     if (title && description)
       this.props.changeBadge(
@@ -36,6 +37,7 @@ class badgeList extends Component {
   };
 
   deleteItem = badgeIndex => {
+    const {delBadge} = this.props
     this.props.delBadge(badgeIndex, token, name);
   };
 
@@ -44,7 +46,8 @@ class badgeList extends Component {
   };
 
   render() {
-    let list = this.props.badges.map(badge => {
+    const {badges} = this.props
+    let list = badges.map(badge => {
       if (
         this.state.changeFlag &&
         badge._id === this.state.badgeIndex
@@ -108,13 +111,29 @@ class badgeList extends Component {
 
 export default badgeList;
 
+badgeList.defaultProps = {
+  badge: [],
+  loading: false,
+  error: false,
+  delBadge() {},
+  changeBadge() {}
+}
+
+badgeList.propTypes = {
+  badge:  PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+
+  delBadge: PropTypes.func,
+  changeBadge: PropTypes.func,
+}
+
 const Wrapper = styled.div`
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: ;
 `;
 
 const TitleSpan = styled.span`

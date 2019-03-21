@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types' 
 
 const name = 'badge'
 
@@ -10,10 +11,11 @@ class SetBadge extends Component {
  
   onSubmit = event => {
     event.preventDefault();
+    const {addBadge} = this.props
     const { title, description } = this.state;
     let token = localStorage.getItem("userId");
 
-    this.props.addBadge(title, description, token, name);
+    addBadge(title, description, token, name);
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -46,3 +48,11 @@ class SetBadge extends Component {
 }
 
 export default SetBadge;
+
+SetBadge.defaultProps = {
+  addBadge() {}
+}
+
+SetBadge.propTypes = {
+  addBadge: PropTypes.func,
+}

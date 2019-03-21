@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-
-const name = 'lesson'
+import PropTypes from 'prop-types'
+const name = "lesson";
 
 class SetLessons extends Component {
   state = {
     title: "",
     description: ""
   };
- 
+
   onSubmit = event => {
     event.preventDefault();
+    const { addLesson } = this.props;
     const { title, description } = this.state;
     let token = localStorage.getItem("userId");
-    this.props.addLesson(title, description, token, name);
+    addLesson(title, description, token, name);
   };
 
   onChange = event => {
@@ -46,3 +47,11 @@ class SetLessons extends Component {
 }
 
 export default SetLessons;
+
+SetLessons.defaultProps = {
+  addLesson() {}
+};
+
+SetLessons.propTypes = {
+  addLesson: PropTypes.func
+};
