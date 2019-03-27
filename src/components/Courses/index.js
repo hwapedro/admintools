@@ -20,7 +20,7 @@ const name = "course";
 class Courses extends Component {
   componentDidMount() {
     const { getAllCourses } = this.props;
-    let token = 'localStorage.getItem("userId")';
+    let token = localStorage.getItem("userId");
     getAllCourses(token, name);
   }
 
@@ -51,14 +51,14 @@ class Courses extends Component {
             <Error />
           </>
         )}
-        
+
         {loading ? (
           <>
             <Menu />
             <Spinner />
           </>
         ) : null}
-
+        
         {!error && (
           <>
             <Menu />
