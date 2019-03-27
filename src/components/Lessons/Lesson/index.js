@@ -14,13 +14,16 @@ import {
   LabelElement,
   ImgMark,
   ImgCross,
-  ConsturctorForm 
+  
 } from "../style";
+
+
+import Menu from "../../Menu";
+import Spinner from "../../Spinner";
+import Pages from '../PageList'
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
-import Menu from "../../Menu";
-import Spinner from "../../Spinner";
 
 const token = localStorage.getItem("userId");
 const name = "lesson";
@@ -86,21 +89,21 @@ class Lesson extends Component {
         </>
       );
     }
-
+    
     if (this.state.changeFlag) {
       return (
         <>
           <Menu />
           <Wrapper>
-            <ElementWrapper key={lesson._id}>
+            <ElementWrapper>
               <form onSubmit={this.setParams}>
-                <LabelElement>Name of Lessons :</LabelElement>
+                <LabelElement>Name of Lesson :</LabelElement>
                 <TitleInput
                   name="title"
                   onChange={this.onChange}
                   value={this.state.title}
                 />
-                <LabelElement>Description of Lessons : </LabelElement>
+                <LabelElement>Description of Lesson : </LabelElement>
                 <DescriptionTextArea
                   name="description"
                   onChange={this.onChange}
@@ -159,7 +162,10 @@ class Lesson extends Component {
               {/* <LabelElement>courseIndex :</LabelElement>
               <TitleSpan> {lesson.courseIndex}</TitleSpan> */}
             </ElementWrapper>
+              
+            
           </Wrapper>
+          <Pages pages = {lesson.flow}/>
         </>
       );
     }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import Page from "../components/Page";
 import Courses from "../components/Courses";
 import Lessons from "../components/Lessons";
 import Lesson from "../components/Lessons/Lesson";

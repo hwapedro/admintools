@@ -93,6 +93,21 @@ export default class AdminService {
     });
     return response.body;
   }
+
+  async changeTextPage(token, id, text) {
+    let response = await request
+      .put(`${_apiBase}/page/${id}/text`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({
+        text:text 
+      });
+    return response.body;
+  }
+
+
   // async getImg() {
   //   let responce = request
   //     .put(`${_apiBase}/badge/avatar`)
@@ -106,9 +121,9 @@ export default class AdminService {
 }
 //avatar png super
 const swapi = new AdminService();
-swapi
-  .getAllPages(token, "5c930dfdf2bd4b352f2149c1")
-  .then(data => console.log(data));
+
+swapi.changeTextPage(token,"5c9a4bc090842b2a7fa183d8",'2222').then(data => console.log(data));
+
 // swapi.register('dimababin', '123').then(data => console.log(data));
 // swapi.login("dimababin", "123").then(data => console.log(data));
 // swapi.getAllCourses().then(data => console.log(data));
