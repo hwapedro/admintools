@@ -211,7 +211,6 @@ function reducer(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case GET_LESSON_SUCCESS:
-      console.log(action.lesson);
       return {
         ...state,
         lesson: action.lesson,

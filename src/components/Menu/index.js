@@ -6,7 +6,6 @@ import * as route from '../Route/constants'
 
 class Menu extends Component {
   render() {
-    console.log(route.courses)
     return (
       <>
         <Wrapper>

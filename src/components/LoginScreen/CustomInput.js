@@ -68,6 +68,6 @@ const Input = styled.input`
 
 const Label = styled.label`
   font-size: 1.5rem;
-  color: white;
+  color: black;
   margin-bottom: 10px;
 `

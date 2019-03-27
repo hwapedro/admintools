@@ -118,13 +118,13 @@ const ConsturctorWrapper = styled.div`
 
 const ConsturctorForm = styled.form``;
 
-const TitleSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`;
+// const TitleSpan = styled.span`
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   margin: 1rem 0;
+//   font-size: 1.3rem;
+// `;
 
 const TitleInput = styled.input`
   display: flex;
@@ -141,13 +141,13 @@ const LabelElement = styled.span`
   font-size: 1.8rem;
 `;
 
-const DescriptionSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`;
+// const DescriptionSpan = styled.span`
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   margin: 1rem 0;
+//   font-size: 1.3rem;
+// `;
 
 const DescriptionTextArea = styled.textarea`
   display: flex;

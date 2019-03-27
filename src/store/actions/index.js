@@ -42,7 +42,7 @@ export const login = (username, password) => dispatch => {
         token: response.body.token
       });
     })
-    .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE }));
+    .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE,error: true }));
 };
 
 export const getAllElements = (token, name) => dispatch => {
@@ -53,7 +53,6 @@ export const getAllElements = (token, name) => dispatch => {
   adminService
     .getAll(token, name)
     .then(response => {
-      console.log(response);
       switch (name) {
         case "course":
           dispatch({
@@ -77,7 +76,7 @@ export const getAllElements = (token, name) => dispatch => {
           break;
       }
     })
-    .catch(error => dispatch({ type: GETALL_ELEMENT_FAILURE }));
+    .catch(error => dispatch({ type: GETALL_ELEMENT_FAILURE ,error: true}));
 };
 
 export const addElement = (title, description, token, name) => dispatch => {
@@ -88,7 +87,6 @@ export const addElement = (title, description, token, name) => dispatch => {
   adminService
     .add(title, description, token, name)
     .then(response => {
-      console.log(response);
       switch (name) {
         case "course":
           dispatch({
@@ -112,7 +110,7 @@ export const addElement = (title, description, token, name) => dispatch => {
           break;
       }
     })
-    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE }));
+    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE,error: true }));
 };
 
 export const deletElement = (index, token, name) => dispatch => {
@@ -146,7 +144,7 @@ export const deletElement = (index, token, name) => dispatch => {
           break;
       }
     })
-    .catch(error => dispatch({ type: DELETE_ELEMENT_FAILURE }));
+    .catch(error => dispatch({ type: DELETE_ELEMENT_FAILURE,error: true }));
 };
 
 export const changeElement = (
@@ -157,13 +155,34 @@ export const changeElement = (
   token,
   name
 ) => dispatch => {
-  console.log(token)
   dispatch({
     type: CHANGE_ELEMENT_REQUEST
   });
 
   adminService
-    .change(index, title, description, exam, token, name)
+    .changeLesson(index, title, description, exam, token, name)
+    .then(response => {
+      dispatch({
+        type: CHANGE_LESSON_SUCCESS,
+        lesson: response.lesson
+      });
+    })
+    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE,error: true }));
+};
+
+export const CourseChange = (
+  index,
+  title,
+  description,
+  token,
+  name
+) => dispatch => {
+  dispatch({
+    type: CHANGE_ELEMENT_REQUEST
+  });
+
+  adminService
+    .change(index, title, description, token, name)
     .then(response => {
       switch (name) {
         case "course":
@@ -178,17 +197,11 @@ export const changeElement = (
             badge: response.badge
           });
           break;
-        case "lesson":
-          dispatch({
-            type: CHANGE_LESSON_SUCCESS,
-            lesson: response.lesson
-          });
-          break;
         default:
           break;
       }
     })
-    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE }));
+    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE,error: true }));
 };
 
 export const getLesson = (token, id) => dispatch => {
@@ -204,9 +217,24 @@ export const getLesson = (token, id) => dispatch => {
         lesson: response.lesson
       });
     })
-    .catch(error => dispatch({ type: GET_LESSON_FAILURE }));
+    .catch(error => dispatch({ type: GET_LESSON_FAILURE,error: true }));
 };
 
-// export const changeCourse = (courseIndex, title, description) => {
-//   return { type: CHANGE_COURSE_ELEMENT, courseIndex, title, description };
-// };
+export const addLesson = (
+  title, description, exam, token, name
+) => dispatch => {
+  dispatch({
+    type: ADD_ELEMENT_REQUEST
+  });
+
+  adminService
+    .addLesson(title, description, exam, token, name)
+    .then(response => {
+      dispatch({
+        type: ADD_LESSON_SUCCESS,
+        lessons: response.lesson
+      });
+    })
+    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE,error: true }));
+};
+

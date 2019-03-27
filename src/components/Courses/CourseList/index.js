@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types'
+
+import Course from './Course'
+
 const token = localStorage.getItem("userId");
 const name = "course";
+
 
 class CourseList extends Component {
   state = {
@@ -77,26 +81,7 @@ class CourseList extends Component {
       } else {
         return (
           <ElementWrapper key={course.courseIndex}>
-            <LabelElement>Name of course :</LabelElement>
-            <TitleSpan> {course.title}</TitleSpan>
-            <LabelElement>Description of course : </LabelElement>
-            <DescriptionSpan>{course.description}</DescriptionSpan>
-            <ButtonWrapper>
-              <SignInButton
-                onClick={() =>
-                  this.getParams(
-                    course.courseIndex,
-                    course.title,
-                    course.description
-                  )
-                }
-              >
-                CHANGE COURSE
-              </SignInButton>
-              <SignInButton onClick={() => this.deleteItem(course.courseIndex)}>
-                DELETE COURSE
-              </SignInButton>
-            </ButtonWrapper>
+          <Course course = {course} deleteItem = {this.deleteItem} getParams = {this.getParams} />
           </ElementWrapper>
         );
       }
@@ -136,13 +121,13 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const TitleSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`;
+// const TitleSpan = styled.span`
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   margin: 1rem 0;
+//   font-size: 1.3rem;
+// `;
 
 const TitleInput = styled.input`
   display: flex;
@@ -159,13 +144,13 @@ const LabelElement = styled.span`
   font-size: 1.8rem;
 `;
 
-const DescriptionSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`;
+// const DescriptionSpan = styled.span`
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   margin: 1rem 0;
+//   font-size: 1.3rem;
+// `;
 
 const DescriptionTextArea = styled.textarea`
   display: flex;

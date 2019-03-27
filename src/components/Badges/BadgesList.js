@@ -26,7 +26,7 @@ class badgeList extends Component {
     const {changeBadge} = this.props
     const { title, description } = this.state;
     if (title && description)
-      this.props.changeBadge(
+      changeBadge(
         this.state.badgeIndex,
         this.state.title,
         this.state.description,
@@ -38,7 +38,7 @@ class badgeList extends Component {
 
   deleteItem = badgeIndex => {
     const {delBadge} = this.props
-    this.props.delBadge(badgeIndex, token, name);
+    delBadge(badgeIndex, token, name);
   };
 
   onChange = event => {

@@ -31,9 +31,9 @@ class SetLessons extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addLesson } = this.props;
-    const { title, description } = this.state;
+    const { title, description, exam } = this.state;
     let token = localStorage.getItem("userId");
-    addLesson(title, description, token, name);
+    addLesson(title, description, exam, token, name);
   };
 
   onChange = event => {
@@ -56,7 +56,6 @@ class SetLessons extends Component {
 
   render() {
     const {constructor,exam} = this.state
-    console.log(exam)
     if (constructor) {
       return (
         <Wrapper>

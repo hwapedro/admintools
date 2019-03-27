@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {
   changeElement,
   getAllElements,
-  addElement,
+  addLesson,
   deletElement
 } from "../../store/actions";
 
@@ -45,8 +45,8 @@ class Lessons extends Component {
         <Menu />
 
         <SetLesson
-          addLesson={(title, description, token, name) =>
-            addLesson(title, description, token, name)
+          addLesson={(title, description, exam, token, name) =>
+            addLesson(title, description, exam, token, name)
           }
         />
 
@@ -91,8 +91,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, token, name) =>
-    dispatch(addElement(title, description, token, name)),
+  addLesson: (title, description, exam, token, name) =>
+    dispatch(addLesson(title, description, exam, token, name)),
 
   delLesson: (lessonsIndex, token, name) =>
     dispatch(deletElement(lessonsIndex, token, name)),

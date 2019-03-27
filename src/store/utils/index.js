@@ -1,11 +1,11 @@
 export const startLoading = state => ({
     ...state,
     loading: true,
-    error: undefined
+    error: null
   })
   
 export const stopLoading = (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error:true
   })

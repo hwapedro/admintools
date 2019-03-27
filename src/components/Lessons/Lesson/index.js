@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from 'prop-types'
 
 import { getLesson, changeElement } from "../../../store/actions";
 import {
@@ -38,9 +39,8 @@ class Lesson extends Component {
   };
 
   componentDidMount() {
-    const { getLesson, id } = this.props;
+    const { getLesson  } = this.props;
     let token = localStorage.getItem("userId");
-    console.log(this.props);
     getLesson(token, this.props.itemId);
   }
 
@@ -165,11 +165,29 @@ class Lesson extends Component {
               
             
           </Wrapper>
-          <Pages pages = {lesson.flow}/>
+          <Pages pages = {lesson.pages}/>
         </>
       );
     }
   }
+}
+
+Lesson.defaultProps = {
+  lesson: [],
+  loading: false,
+  error: false,
+
+  getLesson() {},
+  changeLesson() {}
+}
+
+Lesson.propTypes = {
+  lesson:  PropTypes.object,
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+
+  getLesson: PropTypes.func,
+  changeLesson: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
