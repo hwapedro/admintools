@@ -20,7 +20,10 @@ import {
   CHANGE_COURSE_SUCCESS,
   CHANGE_BADGE_SUCCESS,
   CHANGE_LESSON_SUCCESS,
-  CHANGE_ELEMENT_FAILURE
+  CHANGE_ELEMENT_FAILURE,
+  GET_LESSON_REQUEST,
+  GET_LESSON_SUCCESS,
+  GET_LESSON_FAILURE
 } from "../constants";
 
 import AdminService from "../../service";
@@ -100,7 +103,6 @@ export const addElement = (title, description, token, name) => dispatch => {
           });
           break;
         case "lesson":
-        
           dispatch({
             type: ADD_LESSON_SUCCESS,
             lessons: response.lesson
@@ -151,15 +153,17 @@ export const changeElement = (
   index,
   title,
   description,
+  exam,
   token,
   name
 ) => dispatch => {
+  console.log(token)
   dispatch({
     type: CHANGE_ELEMENT_REQUEST
   });
 
   adminService
-    .change(index, title, description, token, name)
+    .change(index, title, description, exam, token, name)
     .then(response => {
       switch (name) {
         case "course":
@@ -185,6 +189,22 @@ export const changeElement = (
       }
     })
     .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE }));
+};
+
+export const getLesson = (token, id) => dispatch => {
+  dispatch({
+    type: GET_LESSON_REQUEST
+  });
+
+  adminService
+    .getLesson(token, id)
+    .then(response => {
+      dispatch({
+        type: GET_LESSON_SUCCESS,
+        lesson: response.lesson
+      });
+    })
+    .catch(error => dispatch({ type: GET_LESSON_FAILURE }));
 };
 
 // export const changeCourse = (courseIndex, title, description) => {

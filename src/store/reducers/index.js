@@ -21,7 +21,10 @@ import {
   CHANGE_COURSE_SUCCESS,
   CHANGE_BADGE_SUCCESS,
   CHANGE_LESSON_SUCCESS,
-  CHANGE_ELEMENT_FAILURE
+  CHANGE_ELEMENT_FAILURE,
+  GET_LESSON_REQUEST,
+  GET_LESSON_SUCCESS,
+  GET_LESSON_FAILURE
 } from "../constants";
 
 import { startLoading, stopLoading } from "../utils";
@@ -32,7 +35,8 @@ const initialState = {
   error: null,
   courses: [],
   badges: [],
-  lessons: []
+  lessons: [],
+  lesson: {}
 };
 
 function reducer(state = initialState, action = {}) {
@@ -194,45 +198,28 @@ function reducer(state = initialState, action = {}) {
     case CHANGE_LESSON_SUCCESS:
       return {
         ...state,
-        lessons: state.lessons.map(lesson =>
-          action.lesson._id === lesson._id
-            ? {
-                _id: action.lesson._id,
-                title: action.lesson.title,
-                description: action.lesson.description,
-                courseIndex: action.lesson.courseIndex,
-                lessonIndex: action.lesson.lessonIndex
-              }
-            : lesson
-        ),
+        lesson: action.lesson,
         loading: false,
         error: false
       };
 
-    // const todoId = action.course.courseIndex;
-    // const itemIndex = state.courses.findIndex(
-    //   ({ courseIndex }) => courseIndex === todoId
-    // );
-    // const before = state.courses.slice(0, itemIndex);
-    // const after = state.courses.slice(itemIndex + 1);
-
-    // return {
-    //   ...state,
-    //   courses: [
-    //     ...before,
-    //     {
-    //       _id: state.courses[itemIndex]._id,
-    //       title: action.course.title,
-    //       description: action.course.description,
-    //       courseIndex: action.course.courseIndex
-    //     },
-    //     ...after
-    //   ],
-    //   loading: false,
-    //   error: false
-    // };
-
     case CHANGE_ELEMENT_FAILURE:
+      return stopLoading(state, action);
+
+    //GET LESSON
+    case GET_LESSON_REQUEST:
+      return startLoading(state, action);
+
+    case GET_LESSON_SUCCESS:
+      console.log(action.lesson);
+      return {
+        ...state,
+        lesson: action.lesson,
+        loading: false,
+        error: false
+      };
+
+    case GET_LESSON_FAILURE:
       return stopLoading(state, action);
 
     default:

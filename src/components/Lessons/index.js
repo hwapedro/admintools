@@ -22,6 +22,7 @@ class Lessons extends Component {
     getAllLessons(token,name);
   }
 
+ 
   
   render() {
     const {
@@ -49,7 +50,7 @@ class Lessons extends Component {
           }
         />
 
-        <LessonList
+        <LessonList 
           changeLesson={(lessonsIndex, title, description, token, name) =>
             changeLesson(lessonsIndex, title, description, token, name)
           }

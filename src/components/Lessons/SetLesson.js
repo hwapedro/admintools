@@ -1,11 +1,31 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
+
+import {
+  ButtonWrapper,
+  TitleInput,
+  DescriptionTextArea,
+  LessonButton as ConstructirButton,
+  Wrapper,
+  DarkGround,
+  LabelElement,
+  ConsturctorForm,
+  ConsturctorWrapper,
+  ImgMark,
+  ImgCross
+} from "./style";
+
+import checkMark from "../../img/good.png";
+import redCross from "../../img/bad.png";
+
 const name = "lesson";
 
 class SetLessons extends Component {
   state = {
     title: "",
-    description: ""
+    description: "",
+    exam: false,
+    constructor: false,
   };
 
   onSubmit = event => {
@@ -19,29 +39,69 @@ class SetLessons extends Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  showConstructor = () => {
+    this.setState({
+      constructor: !this.state.constructor
+    });
+  };
+
+  ChangeExamTrue = () => {
+    this.setState({ exam :  true})
+  }
+
+  ChangeExamFalse = () => {
+    this.setState({ exam :  false})
+  }
+
   render() {
+    const {constructor,exam} = this.state
+    console.log(exam)
+    if (constructor) {
+      return (
+        <Wrapper>
+          <DarkGround onClick={this.showConstructor} />
+          <ConsturctorWrapper>
+            <ConsturctorForm onSubmit={this.onSubmit}>
+              <LabelElement>title</LabelElement>
+              <TitleInput
+                name="title"
+                placeholder="title"
+                type="text"
+                value={this.state.title}
+                onChange={this.onChange}
+              />
+              <LabelElement>description</LabelElement>
+              <DescriptionTextArea
+                name="description"
+                placeholder="description"
+                value={this.state.description}
+                type="text"
+                onChange={this.onChange}
+              />
+              <LabelElement>EXAM :</LabelElement>
+              
+              <ImgMark  style={!exam ? {  filter: 'grayscale(100%)'} : {}} src={checkMark} onClick = {this.ChangeExamTrue} />
+              <ImgCross style={exam ? {   filter: 'grayscale(100%)'} : {}}  src={redCross} onClick = {this.ChangeExamFalse}/>
+
+              <ButtonWrapper>
+                <ConstructirButton type="submit">
+                  ADD NEW COURSE
+                </ConstructirButton>
+              </ButtonWrapper>
+            </ConsturctorForm>
+          </ConsturctorWrapper>
+        </Wrapper>
+      );
+    }
     return (
-      <>
-        <form onSubmit={this.onSubmit}>
-          <label>Название</label>
-          <input
-            name="title"
-            placeholder="Название курса"
-            type="text"
-            value={this.state.title}
-            onChange={this.onChange}
-          />
-          <label>Описание</label>
-          <textarea
-            name="description"
-            placeholder="Описание курса"
-            value={this.state.description}
-            type="text"
-            onChange={this.onChange}
-          />
-          <button type="submit">Cоздать новый курс</button>
-        </form>
-      </>
+      <Wrapper>
+        <ButtonWrapper>
+          <ConstructirButton onClick={this.showConstructor}>
+            ADD NEW LESSON
+          </ConstructirButton>
+        </ButtonWrapper>
+      </Wrapper>
     );
   }
 }
@@ -55,3 +115,5 @@ SetLessons.defaultProps = {
 SetLessons.propTypes = {
   addLesson: PropTypes.func
 };
+
+

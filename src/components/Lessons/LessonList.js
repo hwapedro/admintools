@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types'
+import {withRouter} from 'react-router-dom'
+
+import checkMark from "../../img/good.png";
+import redCross from "../../img/bad.png";
+
 const token = localStorage.getItem("userId");
 const name = "lesson";
+
+
 
 class LessonsList extends Component {
   state = {
@@ -11,6 +18,8 @@ class LessonsList extends Component {
     changeFlag: false,
     _id: null
   };
+
+  
 
   getParams = (_id, title, description) => {
     this.setState({
@@ -44,6 +53,10 @@ class LessonsList extends Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+  
+  goTo = (id) => { 
+    this.props.history.push(`/lesson/${id}`)
+  }
 
   render() {
     const {lessons} = this.props
@@ -76,20 +89,28 @@ class LessonsList extends Component {
         );
       } else {
         return (
-          <ElementWrapper key={lesson._id}>
-            <LabelElement>Name of Lessons :</LabelElement>
+          <ElementWrapper key={lesson._id} >
+            <LabelElement >Name of Lessons :</LabelElement>
             <TitleSpan> {lesson.title}</TitleSpan>
             <LabelElement>Description of Lessons : </LabelElement>
             <DescriptionSpan>{lesson.description}</DescriptionSpan>
+            <LabelElement>EXAM :</LabelElement>
+              {lesson.exam ? (
+                <ImgMark src={checkMark} />
+              ) : (
+                <ImgCross src={redCross} />
+              )}
+              <br />
             <ButtonWrapper>
               <SignInButton
-                onClick={() =>
-                  this.getParams(
-                    lesson._id,
-                    lesson.title,
-                    lesson.description
-                  )
-                }
+                onClick = {()=>this.goTo(lesson._id)}
+                // onClick={() =>
+                //   this.getParams(
+                //     lesson._id,
+                //     lesson.title,
+                //     lesson.description
+                //   )
+                // }
               >
                 CHANGE Lessons
               </SignInButton>
@@ -111,7 +132,7 @@ class LessonsList extends Component {
   }
 }
 
-export default LessonsList;
+export default withRouter(LessonsList);
 
 
 LessonsList.defaultProps = {
@@ -187,6 +208,7 @@ const DescriptionTextArea = styled.textarea`
 const ElementsWrapper = styled.ul`
   list-style-type: none;
   width: 1000px;
+  margin: 0;
 `;
 
 const ElementWrapper = styled.li`
@@ -220,4 +242,20 @@ export const SignInButton = styled.button`
     cursor: pointer;
   }
   margin-right: 1rem;
+`;
+
+export const ImgMark = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 1rem;
+  margin-bottom: -0.4rem;
+`;
+
+export const ImgCross = styled.img`
+  
+  width: 2rem;
+  height: 2rem;
+  margin-left: 1rem;
+  margin-bottom: -0.4rem;
+
 `;

@@ -2,7 +2,7 @@ import request from "superagent";
 
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI2NmNmMjIwMzgyMWFjYjM5MjUwOSIsImlhdCI6MTU1MjA1Njk2Nn0.FQbPc-Es3jaFXhaIu40ltwow3lk1vbok_FqXTnY-0sY";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOWEzYjc1OTA4NDJiMmE3ZmExODNkNSIsImlhdCI6MTU1MzYxMTc0MH0.Y6QPgQKbv0x3P1zhVQorAUEFqrar4BfceXSG6Oso224";
 
 export default class AdminService {
   async register(username, password) {
@@ -52,17 +52,47 @@ export default class AdminService {
     return response;
   }
 
-  async change(courseIndex, title, description, token, name) {
+  async change(courseIndex, title, description, exam, token, name) {
     let response = await request
       .put(`${_apiBase}/${name}/${courseIndex}`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, description: description });
+      .send({ title: title, description: description, exam: exam });
     return response.body;
   }
 
+  async getLesson(token, lessonId) {
+    let response = await request.get(`${_apiBase}/lesson/${lessonId}`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return response.body;
+  }
+
+  async addPage(token, id, text, tasks, needToComplete) {
+    let response = await request
+      .put(`${_apiBase}/lesson/${id}/addPage`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({
+        text: text,
+        tasks: tasks,
+        needToComplete: needToComplete
+      });
+    return response.body;
+  }
+
+  async getAllPages(token, id) {
+    let response = await request.get(`${_apiBase}/lesson/${id}/all`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return response.body;
+  }
   // async getImg() {
   //   let responce = request
   //     .put(`${_apiBase}/badge/avatar`)
@@ -76,8 +106,9 @@ export default class AdminService {
 }
 //avatar png super
 const swapi = new AdminService();
-
-// swapi.getAll(token).then(data => console.log(data));
+swapi
+  .getAllPages(token, "5c930dfdf2bd4b352f2149c1")
+  .then(data => console.log(data));
 // swapi.register('dimababin', '123').then(data => console.log(data));
 // swapi.login("dimababin", "123").then(data => console.log(data));
 // swapi.getAllCourses().then(data => console.log(data));

@@ -107,7 +107,7 @@ const ConsturctorWrapper = styled.div`
   position: fixed;
   width: 700px;
   height: 500px;
-  top: 50%;
+  top: 45%;
   left: 50%;
   z-index: 101;
   margin-top: -200px;
