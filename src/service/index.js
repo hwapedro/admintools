@@ -1,8 +1,9 @@
 import request from "superagent";
+import { swap } from "formik";
 
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 const token =
-  "e2yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOWEzYjc1OTA4NDJiMmE3ZmExODNkNSIsImlhdCI6MTU1MzYxMTc0MH0.Y6QPgQKbv0x3P1zhVQorAUEFqrar4BfceXSG6Oso224";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOWEzYjc1OTA4NDJiMmE3ZmExODNkNSIsImlhdCI6MTU1MzYxMTc0MH0.Y6QPgQKbv0x3P1zhVQorAUEFqrar4BfceXSG6Oso224";
 
 export default class AdminService {
   async register(username, password) {
@@ -100,6 +101,22 @@ export default class AdminService {
     return response.body;
   }
 
+  async deletePage(token, id) {
+    let response = await request.del(`${_apiBase}/page/${id}/deletePage`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return response;
+  }
+
+  async deleteTask(token, id,taskid) {
+    let response = await request.del(`${_apiBase}/page/${id}/removeTask/${taskid}`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return response;
+  }
+
   //LESSON BLOCK
   async getLesson(token, lessonId) {
     let response = await request.get(`${_apiBase}/lesson/${lessonId}`).set({
@@ -132,4 +149,8 @@ export default class AdminService {
   }
 }
 
+
+
+
 const swapi = new AdminService();
+
