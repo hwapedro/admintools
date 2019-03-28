@@ -1,5 +1,9 @@
 import request from "superagent";
+<<<<<<< HEAD
 import { swap } from "formik";
+=======
+//import { swap } from "formik";
+>>>>>>> origin/task
 
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 const token =
@@ -108,6 +112,40 @@ export default class AdminService {
     });
     return response;
   }
+<<<<<<< HEAD
+=======
+ 
+  async createTask(token, pageid, type, info, answer){
+    let response = await request.post(`${_apiBase}/task/create?page=${pageid}`)
+    .set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    })
+    .send({
+      type: type,
+      info: info,
+      answer: answer
+    }
+    )
+    return response;
+  }
+  
+  // async addTask(token, pageid, type, info, answer){
+  //   let response = await request.put(`${_apiBase}/page/${pageid}/addtask`)
+  //   .set({
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer " + token
+  //   })
+  //   .send({
+  //     type: type,
+  //     info: info,
+  //     answer: answer
+  //   }
+  //   )
+  //   console.log(response)
+  //   return response;
+  // }
+>>>>>>> origin/task
 
   async deleteTask(token, id,taskid) {
     let response = await request.del(`${_apiBase}/page/${id}/removeTask/${taskid}`).set({
@@ -148,9 +186,17 @@ export default class AdminService {
     return response.body;
   }
 }
+<<<<<<< HEAD
 
 
 
 
 const swapi = new AdminService();
 
+=======
+
+const swapi = new AdminService();
+// swapi.addTask(token, "5c9b5f4b9e1cb72e66b80cd0", "quiz", [], {}).then(data => {
+//   console.log(data)
+// })
+>>>>>>> origin/task

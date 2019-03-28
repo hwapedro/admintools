@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types'
 
-import { getLesson, changeElement } from "../../../store/actions";
+import { getLesson, changeElement, addPage, deletePage } from "../../../store/actions";
 import {
   ButtonWrapper,
   TitleInput,
@@ -14,14 +14,12 @@ import {
   DescriptionSpan,
   LabelElement,
   ImgMark,
-  ImgCross,
-  
+  ImgCross
 } from "../style";
-
 
 import Menu from "../../Menu";
 import Spinner from "../../Spinner";
-import Pages from '../PageList'
+import Pages from "../PageList";
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
@@ -78,7 +76,9 @@ class Lesson extends Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
+  addPage =( ) => {
+    this.props.addPage(token, this.props.lesson._id, "blah text", [], 0)
+  }
   render() {
     const { lesson, loading } = this.props;
     if (loading) {
@@ -89,7 +89,7 @@ class Lesson extends Component {
         </>
       );
     }
-    
+
     if (this.state.changeFlag) {
       return (
         <>
@@ -162,10 +162,15 @@ class Lesson extends Component {
               {/* <LabelElement>courseIndex :</LabelElement>
               <TitleSpan> {lesson.courseIndex}</TitleSpan> */}
             </ElementWrapper>
-              
-            
           </Wrapper>
+<<<<<<< HEAD
           <Pages pages = {lesson.pages}/>
+=======
+          <ButtonWrapper>
+            <LessonButton onClick={this.addPage}>Add Page</LessonButton>
+          </ButtonWrapper>
+          <Pages pages={lesson.pages}/>
+>>>>>>> origin/task
         </>
       );
     }
@@ -198,7 +203,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getLesson: (token, id) => dispatch(getLesson(token, id)),
   changeLesson: (lessonsIndex, title, description, exam, token, name) =>
-    dispatch(changeElement(lessonsIndex, title, description, exam, token, name))
+    dispatch(
+      changeElement(lessonsIndex, title, description, exam, token, name)
+    ),
+  addPage: (token, id, text, tasks, needToComplete) =>
+    dispatch(addPage(token, id, text, tasks, needToComplete)),
+  deletePage: (token, id) => dispatch(deletePage(token, id))
 });
 
 export default connect(

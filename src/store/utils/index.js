@@ -7,5 +7,5 @@ export const startLoading = state => ({
 export const stopLoading = (state, { error }) => ({
     ...state,
     loading: false,
-    error:true
+    error
   })
