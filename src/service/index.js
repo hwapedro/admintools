@@ -1,4 +1,5 @@
 import request from "superagent";
+//import { swap } from "formik";
 
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 const token =
@@ -52,22 +53,36 @@ export default class AdminService {
     return response;
   }
 
-  async change(courseIndex, title, description, exam, token, name) {
+  async change(courseIndex, title, description, token, name) {
     let response = await request
       .put(`${_apiBase}/${name}/${courseIndex}`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, description: description, exam: exam });
+      .send({ title: title, description: description });
     return response.body;
   }
 
-  async getLesson(token, lessonId) {
-    let response = await request.get(`${_apiBase}/lesson/${lessonId}`).set({
+  //LESSON PAGE
+  async getAllPages(token, id) {
+    let response = await request.get(`${_apiBase}/lesson/${id}/all`).set({
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
+    return response.body;
+  }
+
+  async changeTextPage(token, id, text) {
+    let response = await request
+      .put(`${_apiBase}/page/${id}/text`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({
+        text: text
+      });
     return response.body;
   }
 
@@ -86,45 +101,86 @@ export default class AdminService {
     return response.body;
   }
 
-  async getAllPages(token, id) {
-    let response = await request.get(`${_apiBase}/lesson/${id}/all`).set({
+  async deletePage(token, id) {
+    let response = await request.del(`${_apiBase}/page/${id}/deletePage`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return response;
+  }
+ 
+  async createTask(token, pageid, type, info, answer){
+    let response = await request.post(`${_apiBase}/task/create?page=${pageid}`)
+    .set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    })
+    .send({
+      type: type,
+      info: info,
+      answer: answer
+    }
+    )
+    return response;
+  }
+  
+  // async addTask(token, pageid, type, info, answer){
+  //   let response = await request.put(`${_apiBase}/page/${pageid}/addtask`)
+  //   .set({
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer " + token
+  //   })
+  //   .send({
+  //     type: type,
+  //     info: info,
+  //     answer: answer
+  //   }
+  //   )
+  //   console.log(response)
+  //   return response;
+  // }
+
+  async deleteTask(token, id,taskid) {
+    let response = await request.del(`${_apiBase}/page/${id}/removeTask/${taskid}`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return response;
+  }
+
+  //LESSON BLOCK
+  async getLesson(token, lessonId) {
+    let response = await request.get(`${_apiBase}/lesson/${lessonId}`).set({
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
     return response.body;
   }
 
-  async changeTextPage(token, id, text) {
+  async addLesson(title, description, exam, token, name) {
     let response = await request
-      .put(`${_apiBase}/page/${id}/text`)
+      .post(`${_apiBase}/${name}/create`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({
-        text:text 
-      });
+      .send({ title: title, description: description, exam: exam });
     return response.body;
   }
 
-
-  // async getImg() {
-  //   let responce = request
-  //     .put(`${_apiBase}/badge/avatar`)
-  //     .set("Content-Type", "image/png")
-  //     .set("Content-Disposition", "inline")
-  //     .send(theFile) // <--------------------------- THIS LINE instead of .attach()
-  //     .then(data => {
-  //       console.log(data);
-  //     });
-  // }
+  async changeLesson(courseIndex, title, description, exam, token, name) {
+    let response = await request
+      .put(`${_apiBase}/${name}/${courseIndex}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({ title: title, description: description, exam: exam });
+    return response.body;
+  }
 }
-//avatar png super
+
 const swapi = new AdminService();
-
-swapi.changeTextPage(token,"5c9a4bc090842b2a7fa183d8",'2222').then(data => console.log(data));
-
-// swapi.register('dimababin', '123').then(data => console.log(data));
-// swapi.login("dimababin", "123").then(data => console.log(data));
-// swapi.getAllCourses().then(data => console.log(data));
-//swapi.addCourses('title', 'description').then(data => console.log(data));
+// swapi.addTask(token, "5c9b5f4b9e1cb72e66b80cd0", "quiz", [], {}).then(data => {
+//   console.log(data)
+// })

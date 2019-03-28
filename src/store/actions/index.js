@@ -23,7 +23,16 @@ import {
   CHANGE_ELEMENT_FAILURE,
   GET_LESSON_REQUEST,
   GET_LESSON_SUCCESS,
-  GET_LESSON_FAILURE
+  GET_LESSON_FAILURE,
+  ADD_TEST_TASK,
+  DELETE_TASK,
+  CHANGE_TEST_TASK,
+  ADD_PAGE_REQUEST,
+ADD_PAGE_SUCCESS,
+ADD_PAGE_FAILURE, 
+DELETE_PAGE_REQUEST,
+DELETE_PAGE_SUCCESS,
+DELETE_PAGE_FAILURE
 } from "../constants";
 
 import AdminService from "../../service";
@@ -210,3 +219,57 @@ export const getLesson = (token, id) => dispatch => {
 // export const changeCourse = (courseIndex, title, description) => {
 //   return { type: CHANGE_COURSE_ELEMENT, courseIndex, title, description };
 // };
+export const addPage = (token, id, text, tasks, needToComplete) => dispatch =>{
+  dispatch({
+    type: ADD_PAGE_REQUEST
+  });
+  adminService
+  .addPage(token, id, text, tasks, needToComplete)
+  .then(response => {
+    console.log(response)
+    dispatch({
+      type: ADD_PAGE_SUCCESS,
+      page: response.lesson.pages  
+    });
+  })
+  .catch(error => dispatch({ type: ADD_PAGE_FAILURE}))
+}
+
+export const deletePage = (token, id) => dispatch =>{
+  dispatch({type: DELETE_PAGE_REQUEST});
+
+  adminService
+  .deletePage(token, id)
+  .then(response =>{
+    dispatch({
+      type: DELETE_PAGE_SUCCESS,
+      lesson: response.lesson
+    })
+  })
+  .catch(error => dispatch({type: DELETE_PAGE_FAILURE}))
+}
+
+let id  = 0
+export const deleteTask = id => {
+  return {
+    type: DELETE_TASK,
+    id: id
+  };
+ };
+
+export const addTestTask = (name, description, question, options) => {
+  id++
+  const type = "test"
+  return {
+    type: ADD_TEST_TASK,
+    task: { name, description, question, id, type, options }
+  };
+};
+
+export const changeTestTask = (name, description, question, options, id) => {
+  const taskType = "test"
+  return {
+    type: CHANGE_TEST_TASK,
+    task: {name, description, question, id, taskType, options}
+  };
+};

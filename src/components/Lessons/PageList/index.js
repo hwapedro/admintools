@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Page from '../PageList/Page'
 
-class Pages extends Component {
+class PageList extends Component {
 
 
   render() {
@@ -11,9 +11,10 @@ class Pages extends Component {
     return (
       <>
        <ul><Page pages = {this.props.pages}/></ul>
+       
       </>
     );
   }
 }
 
-export default Pages;
+export default PageList;
