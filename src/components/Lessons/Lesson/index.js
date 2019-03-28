@@ -163,14 +163,10 @@ class Lesson extends Component {
               <TitleSpan> {lesson.courseIndex}</TitleSpan> */}
             </ElementWrapper>
           </Wrapper>
-<<<<<<< HEAD
-          <Pages pages = {lesson.pages}/>
-=======
           <ButtonWrapper>
             <LessonButton onClick={this.addPage}>Add Page</LessonButton>
           </ButtonWrapper>
           <Pages pages={lesson.pages}/>
->>>>>>> origin/task
         </>
       );
     }
