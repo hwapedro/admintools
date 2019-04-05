@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { deleteTask } from "../../../store/actions";
 
-import Tasks from "./TaskComponents/Task";
+import Tests from "./TaskComponents/Task";
 import TestConstructor from "./TaskConstructors/TestConstructor";
 
 // import { throws } from "assert";
@@ -80,7 +80,7 @@ class TaskList extends Component {
             </div>
           )}
         </div>
-        <div><Tasks id={this.props.id}/></div>
+        <div><Tests /></div>
         {/* <button onClick={()=>this.goTo(page._id)}>To task</button> */}
       </>
     );
@@ -88,6 +88,7 @@ class TaskList extends Component {
 }
 
 const mapStateToProps = state => ({
+
 });
 
 const mapDispatchToProps = dispatch => ({

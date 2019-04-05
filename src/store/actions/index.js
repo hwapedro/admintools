@@ -28,11 +28,14 @@ import {
   DELETE_TASK,
   CHANGE_TEST_TASK,
   ADD_PAGE_REQUEST,
-ADD_PAGE_SUCCESS,
-ADD_PAGE_FAILURE, 
-DELETE_PAGE_REQUEST,
-DELETE_PAGE_SUCCESS,
-DELETE_PAGE_FAILURE
+  ADD_PAGE_SUCCESS,
+  ADD_PAGE_FAILURE,
+  DELETE_PAGE_REQUEST,
+  DELETE_PAGE_SUCCESS,
+  DELETE_PAGE_FAILURE,
+  ADD_TASK_REQUEST,
+ADD_TASK_SUCCESS,
+ADD_TASK_FAILURE
 } from "../constants";
 
 import AdminService from "../../service";
@@ -51,7 +54,7 @@ export const login = (username, password) => dispatch => {
         token: response.body.token
       });
     })
-    .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE,error: true }));
+    .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE, error: true }));
 };
 
 export const getAllElements = (token, name) => dispatch => {
@@ -85,7 +88,7 @@ export const getAllElements = (token, name) => dispatch => {
           break;
       }
     })
-    .catch(error => dispatch({ type: GETALL_ELEMENT_FAILURE ,error: true}));
+    .catch(error => dispatch({ type: GETALL_ELEMENT_FAILURE, error: true }));
 };
 
 export const addElement = (title, description, token, name) => dispatch => {
@@ -119,7 +122,7 @@ export const addElement = (title, description, token, name) => dispatch => {
           break;
       }
     })
-    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE,error: true }));
+    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
 };
 
 export const deletElement = (index, token, name) => dispatch => {
@@ -153,7 +156,7 @@ export const deletElement = (index, token, name) => dispatch => {
           break;
       }
     })
-    .catch(error => dispatch({ type: DELETE_ELEMENT_FAILURE,error: true }));
+    .catch(error => dispatch({ type: DELETE_ELEMENT_FAILURE, error: true }));
 };
 
 export const changeElement = (
@@ -176,7 +179,7 @@ export const changeElement = (
         lesson: response.lesson
       });
     })
-    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE,error: true }));
+    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
 };
 
 export const CourseChange = (
@@ -210,7 +213,7 @@ export const CourseChange = (
           break;
       }
     })
-    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE,error: true }));
+    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
 };
 
 export const getLesson = (token, id) => dispatch => {
@@ -226,11 +229,15 @@ export const getLesson = (token, id) => dispatch => {
         lesson: response.lesson
       });
     })
-    .catch(error => dispatch({ type: GET_LESSON_FAILURE,error: true }));
+    .catch(error => dispatch({ type: GET_LESSON_FAILURE, error: true }));
 };
 
 export const addLesson = (
-  title, description, exam, token, name
+  title,
+  description,
+  exam,
+  token,
+  name
 ) => dispatch => {
   dispatch({
     type: ADD_ELEMENT_REQUEST
@@ -244,53 +251,54 @@ export const addLesson = (
         lessons: response.lesson
       });
     })
-    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE,error: true }));
+    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
 };
 
 // export const changeCourse = (courseIndex, title, description) => {
 //   return { type: CHANGE_COURSE_ELEMENT, courseIndex, title, description };
 // };
-export const addPage = (token, id, text, tasks, needToComplete) => dispatch =>{
+export const addPage = (token, id, text, tasks, needToComplete) => dispatch => {
   dispatch({
     type: ADD_PAGE_REQUEST
   });
   adminService
-  .addPage(token, id, text, tasks, needToComplete)
-  .then(response => {
-    console.log(response)
-    dispatch({
-      type: ADD_PAGE_SUCCESS,
-      page: response.lesson.pages  
-    });
-  })
-  .catch(error => dispatch({ type: ADD_PAGE_FAILURE}))
-}
+    .addPage(token, id, text, tasks, needToComplete)
+    .then(response => {
+      //console.log(response);
+      dispatch({
+        type: ADD_PAGE_SUCCESS,
+        lesson: response.lesson
+      });
+    })
+    .catch(error => dispatch({ type: ADD_PAGE_FAILURE }));
+};
 
-export const deletePage = (token, id) => dispatch =>{
-  dispatch({type: DELETE_PAGE_REQUEST});
+export const deletePage = (token, id) => dispatch => {
+  dispatch({ type: DELETE_PAGE_REQUEST });
 
   adminService
-  .deletePage(token, id)
-  .then(response =>{
-    dispatch({
-      type: DELETE_PAGE_SUCCESS,
-      lesson: response.lesson
+    .deletePage(token, id)
+    .then(response => {
+     // console.log(response);
+      dispatch({
+        type: DELETE_PAGE_SUCCESS,
+        lesson: response.body.lesson
+      });
     })
-  })
-  .catch(error => dispatch({type: DELETE_PAGE_FAILURE}))
-}
+    .catch(error => dispatch({ type: DELETE_PAGE_FAILURE }));
+};
 
-let id  = 0
+let id = 0;
 export const deleteTask = id => {
   return {
     type: DELETE_TASK,
     id: id
   };
- };
+};
 
 export const addTestTask = (name, description, question, options) => {
-  id++
-  const type = "test"
+  id++;
+  const type = "test";
   return {
     type: ADD_TEST_TASK,
     task: { name, description, question, id, type, options }
@@ -298,9 +306,25 @@ export const addTestTask = (name, description, question, options) => {
 };
 
 export const changeTestTask = (name, description, question, options, id) => {
-  const taskType = "test"
+  const taskType = "test";
   return {
     type: CHANGE_TEST_TASK,
-    task: {name, description, question, id, taskType, options}
+    task: { name, description, question, id, taskType, options }
   };
+};
+
+export const addTask = (token, id, text, tasks, needToComplete) => dispatch => {
+  dispatch({
+    type: ADD_PAGE_REQUEST
+  });
+  adminService
+    .addPage(token, id, text, tasks, needToComplete)
+    .then(response => {
+      console.log(response);
+      dispatch({
+        type: ADD_PAGE_SUCCESS,
+        page: response.lesson.pages
+      });
+    })
+    .catch(error => dispatch({ type: ADD_PAGE_FAILURE }));
 };
