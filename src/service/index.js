@@ -107,52 +107,39 @@ export default class AdminService {
     });
     return response;
   }
- 
-  async createTask(token, pageid, type, info, answer){
-    let response = await request.post(`${_apiBase}/task/create?page=${pageid}`)
-    .set({
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    })
-    .send({
-      type: type,
-      info: info,
-      answer: answer
-    }
-    )
+
+  async createTask(token, pageid, type, info) {
+    let response = await request
+      .post(`${_apiBase}/task/create?page=${pageid}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({
+        type: type,
+        info: info
+      });
     return response;
   }
-  
-  // async addTask(token, pageid, type, info, answer){
-  //   let response = await request.put(`${_apiBase}/page/${pageid}/addtask`)
-  //   .set({
-  //     "Content-Type": "application/json",
-  //     Authorization: "Bearer " + token
-  //   })
-  //   .send({
-  //     type: type,
-  //     info: info,
-  //     answer: answer
-  //   }
-  //   )
-  //   console.log(response)
-  //   return response;
-  // }
 
-  async deleteTask(token, id,taskid) {
-    let response = await request.del(`${_apiBase}/page/${id}/removeTask/${taskid}`).set({
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    });
+   async deleteTask(token, id, taskid) {
+    let response = await request
+      .del(`${_apiBase}/page/${id}/removeTask/${taskid}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      });
     return response;
   }
 
   //LESSON BLOCK
   async getLesson(token, lessonId) {
-    let response = await request.get(`${_apiBase}/lesson/${lessonId}`).set({
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    });
+    let response = await request
+      .get(`${_apiBase}/lesson/${lessonId}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      });
     return response.body;
   }
 
@@ -179,8 +166,6 @@ export default class AdminService {
   }
 }
 
-
-
-
 const swapi = new AdminService();
-
+// swapi.createTask(token, "5ca5710ad9fd5e30696616a2", "test", { heh: 5 });
+// swapi.addTask(token, "5ca5710ad9fd5e30696616a2", "5ca573d6d9fd5e30696616a8" )

@@ -247,8 +247,6 @@ export const addLesson = (
     .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE,error: true }));
 };
 
-<<<<<<< HEAD
-=======
 // export const changeCourse = (courseIndex, title, description) => {
 //   return { type: CHANGE_COURSE_ELEMENT, courseIndex, title, description };
 // };
@@ -306,4 +304,3 @@ export const changeTestTask = (name, description, question, options, id) => {
     task: {name, description, question, id, taskType, options}
   };
 };
->>>>>>> origin/task

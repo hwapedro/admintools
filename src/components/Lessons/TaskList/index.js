@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  deleteTask,
- // addTestTask,
+import { deleteTask } from "../../../store/actions";
 
-} from "../../../../store/actions";
-
-import TasksList from "./TasksList";
-import Test from "./Test";
+import Tasks from "./TaskComponents/Task";
+import TestConstructor from "./TaskConstructors/TestConstructor";
 
 // import { throws } from "assert";
 
-class Task extends Component {
+class TaskList extends Component {
   state = {
     displayConstructor: false,
     displayTestConstructor: true,
@@ -46,11 +42,6 @@ class Task extends Component {
     //  console.log(this.state.title)
   };
 
-  // addTestTask = () => {
-  //   const { name, description, question } = this.state;
-  //   this.props.addTestTask(name, description, question, this.props.options);
-  // };
-
   getParams = (name, description, question, id) => {
    // console.log("we working boys");
     this.setState({
@@ -58,8 +49,6 @@ class Task extends Component {
       info: { name, description, question, id }
     });
   };
-
-
 
   render() {
     const { displayConstructor, displayTestConstructor } = this.state;
@@ -79,7 +68,7 @@ class Task extends Component {
               </select>
               {displayTestConstructor ? (
                 <>
-                  <Test oldInfo={this.state.info} edited={false} />
+                  <TestConstructor oldInfo={this.state.info} edited={false} />
                 </>
               ) : (
                 <div />
@@ -91,7 +80,8 @@ class Task extends Component {
             </div>
           )}
         </div>
-        <div><TasksList /></div>
+        <div><Tasks id={this.props.id}/></div>
+        {/* <button onClick={()=>this.goTo(page._id)}>To task</button> */}
       </>
     );
   }
@@ -108,4 +98,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Task);
+)(TaskList);

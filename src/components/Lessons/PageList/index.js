@@ -10,7 +10,7 @@ class PageList extends Component {
     console.log(this.props.pages)
     return (
       <>
-       <ul><Page pages = {this.props.pages}/></ul>
+       <ul><Page pages = {this.props.pages} id={this.props.id}/></ul>
        
       </>
     );

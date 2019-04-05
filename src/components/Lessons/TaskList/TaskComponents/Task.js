@@ -8,7 +8,7 @@ import redCross from "../../../../img/bad.png";
 
 // import { throws } from "assert";
 let index = 150;
-class TasksList extends Component {
+class Tasks extends Component {
   state = {
     taskType: null,
     taskEditFlag: false,
@@ -116,6 +116,11 @@ class TasksList extends Component {
     this.setState({ taskEditFlag: false, info: {} });
   };
 
+  
+  goBack = (id) => { 
+    this.props.history.push(`/lesson/${id}`)
+  }
+
   render() {
     const { name, description, question, options } = this.state.info;
     let list = this.props.tasks.map(task => {
@@ -218,6 +223,7 @@ class TasksList extends Component {
                 Edit
               </button>
               <button onClick={() => this.deleteTask(task.id)}>Delete</button>
+              <button onClick={() => this.goBack(this.props.id)}>Back</button>
             </li>
             }
           </ul>
@@ -242,4 +248,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TasksList);
+)(Tasks);

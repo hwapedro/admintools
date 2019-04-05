@@ -1,9 +1,15 @@
 import React, { Component } from "react";
+import {withRouter} from 'react-router-dom'
 
-import TaskList from '../../TaskList'
+import TaskList from '../../TaskList/'
 
 class Page extends Component {
   
+  goTo = (id) => { 
+    console.log(this.props)
+    this.props.history.push(`/task/${id}`)
+  }
+
   render() {
     let list
     if (this.props.pages) {
@@ -12,6 +18,8 @@ class Page extends Component {
         <>
         <li key={page._id}>
           <span> {page.text}</span>
+          <TaskList id={this.props.id} />
+          <button onClick={()=>this.goTo(page._id)}>To task</button>
         </li>
         </>
       );
@@ -19,9 +27,8 @@ class Page extends Component {
 
     return <>
     {list}
-    <TaskList />
     </>;
   }
 }
 
-export default Page;
+export default withRouter(Page);

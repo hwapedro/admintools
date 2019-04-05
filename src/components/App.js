@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Courses from "../components/Courses";
 import Lessons from "../components/Lessons";
+import Tasks from "../components/Lessons/TaskList/TaskComponents/Task";
 import Lesson from "../components/Lessons/Lesson";
 import Badges from "../components/Badges";
 import * as route from "../components/Route/constants";
@@ -25,6 +26,12 @@ class App extends Component {
               return <Lesson itemId = {id}/>;
             }}
           />
+           <Route path={route.task} 
+              render={({match, history}) => {
+              console.log(match)
+              const {id} = match.params
+              return <Tasks itemId = {id} history={history}/>;
+            }} />
         </Switch>
       </>
     );

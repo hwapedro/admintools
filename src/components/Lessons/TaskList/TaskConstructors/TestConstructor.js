@@ -2,15 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  // addOption,
-  // deleteOption,
-  // setAnswerOption,
-  // setRightOption,
   addTestTask
-} from "../../../../../store/actions";
+} from "../../../../store/actions";
 
 let index = 100;
-class Test extends Component {
+class TestConstructor extends Component {
   state = {
     name: "",
     description: "",
@@ -64,22 +60,6 @@ class Test extends Component {
     // console.log(event.target.name);
     this.setState({ [event.target.name]: event.target.value });
   };
-
-  // addOption = () => {
-  //   this.props.addOption();
-  // };
-
-  // deleteOption = index => {
-  //   this.props.deleteOption(index);
-  // };
-
-  // answerChange = (index, event) => {
-  //   this.props.setAnswerOption(event.target.value, index);
-  // };
-
-  // setRight = (index, event) => {
-  //   this.props.setRightOption(event.target.checked, index);
-  // };
 
   addTestTask = () => {
     const { name, description, question } = this.state;
@@ -157,10 +137,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // addOption: () => dispatch(addOption()),
-  // deleteOption: id => dispatch(deleteOption(id)),
-  // setAnswerOption: (answer, index) => dispatch(setAnswerOption(answer, index)),
-  // setRightOption: (right, index) => dispatch(setRightOption(right, index)),
   addTestTask: (name, description, question, options) =>
     dispatch(addTestTask(name, description, question, options))
 });
@@ -168,4 +144,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Test);
+)(TestConstructor);

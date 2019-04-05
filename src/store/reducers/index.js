@@ -32,8 +32,8 @@ import {
   ADD_PAGE_SUCCESS,
   ADD_PAGE_FAILURE,
   DELETE_PAGE_REQUEST,
-DELETE_PAGE_SUCCESS,
-DELETE_PAGE_FAILURE
+  DELETE_PAGE_SUCCESS,
+  DELETE_PAGE_FAILURE
 } from "../constants";
 
 import { startLoading, stopLoading } from "../utils";
@@ -231,32 +231,32 @@ function reducer(state = initialState, action = {}) {
     case GET_LESSON_FAILURE:
       return stopLoading(state, action);
 
-      case ADD_PAGE_REQUEST:
+    case ADD_PAGE_REQUEST:
       return startLoading(state, action);
 
-      case ADD_PAGE_SUCCESS:
-      return{
+    case ADD_PAGE_SUCCESS:
+      return {
         ...state,
         lesson: action.lesson,
         error: false,
         loading: false
-      }
-      case ADD_PAGE_FAILURE:
+      };
+    case ADD_PAGE_FAILURE:
       return stopLoading(state, action);
 
-      case DELETE_PAGE_REQUEST:
+    case DELETE_PAGE_REQUEST:
       return startLoading(state, action);
 
-      case DELETE_PAGE_SUCCESS:
-      return{
+    case DELETE_PAGE_SUCCESS:
+      return {
         ...state,
         lesson: action.lesson,
         error: false,
         loading: false
-      }
-      case DELETE_PAGE_FAILURE:
+      };
+    case DELETE_PAGE_FAILURE:
       return stopLoading(state, action);
-      
+
     //tasks block start
     case DELETE_TASK:
       return {

@@ -80,7 +80,7 @@ class Lesson extends Component {
     this.props.addPage(token, this.props.lesson._id, "blah text", [], 0)
   }
   render() {
-    const { lesson, loading } = this.props;
+    const { lesson, loading, deletePage } = this.props;
     if (loading) {
       return (
         <>
@@ -163,14 +163,10 @@ class Lesson extends Component {
               <TitleSpan> {lesson.courseIndex}</TitleSpan> */}
             </ElementWrapper>
           </Wrapper>
-<<<<<<< HEAD
-          <Pages pages = {lesson.pages}/>
-=======
           <ButtonWrapper>
             <LessonButton onClick={this.addPage}>Add Page</LessonButton>
           </ButtonWrapper>
-          <Pages pages={lesson.pages}/>
->>>>>>> origin/task
+          <Pages pages={lesson.pages} id={lesson._id} deletePage={deletePage}/>
         </>
       );
     }
