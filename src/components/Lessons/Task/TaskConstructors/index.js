@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { deleteTask } from "../../../../store/actions";
+//import { deleteTask } from "../../../../store/actions";
 
-import Tests from "../TaskComponents/Task";
+import Tests from "../TaskComponents/Tests";
 import TestConstructor from "./TestConstructor";
 
 // import { throws } from "assert";
@@ -12,14 +12,14 @@ class TaskConstructor extends Component {
   state = {
     displayConstructor: false,
     displayTestConstructor: true,
-    taskEditFlag: false,
+    taskEditFlag: false
   };
 
   displayConstructor = () => {
     const displayConstructor = this.state.displayConstructor;
     this.setState({ displayConstructor: !displayConstructor });
   };
- 
+
   selectChange = event => {
     if (event.target.value === "test") {
       this.setState({
@@ -38,7 +38,7 @@ class TaskConstructor extends Component {
   };
 
   getParams = (name, description, question, id) => {
-   // console.log("we working boys");
+    // console.log("we working boys");
     this.setState({
       taskEditFlag: true,
       info: { name, description, question, id }
@@ -62,7 +62,11 @@ class TaskConstructor extends Component {
               </select>
               {displayTestConstructor ? (
                 <>
-                  <TestConstructor oldInfo={this.state.info} edited={false} />
+                  <TestConstructor
+                    oldInfo={this.state.info}
+                    edited={false}
+                    pageId={this.props.pageId}
+                  />
                 </>
               ) : (
                 <div />

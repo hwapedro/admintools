@@ -8,7 +8,7 @@ import TestConstructor from "./TaskConstructors/TestConstructor";
 
 // import { throws } from "assert";
 
-class TaskList extends Component {
+class BitchBoy extends Component {
   state = {
     displayConstructor: false,
     displayTestConstructor: true,
@@ -99,4 +99,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TaskList);
+)(BitchBoy);

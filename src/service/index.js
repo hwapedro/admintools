@@ -108,16 +108,16 @@ export default class AdminService {
     return response;
   }
 
-  async createTask(token, pageid, type, info) {
+  async createTask(token, pageId, type, info) {
     let response = await request
-      .post(`${_apiBase}/task/create?page=${pageid}`)
+      .post(`${_apiBase}/task/create?page=${pageId}`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
       .send({
         type: type,
-        info: info
+        info: info,
       });
     return response;
   }
@@ -167,5 +167,5 @@ export default class AdminService {
 }
 
 const swapi = new AdminService();
-// swapi.createTask(token, "5ca5710ad9fd5e30696616a2", "test", { heh: 5 });
+//swapi.createTask(token, "5ca76d78906b1177d3e75247", "test", { heh: 5 });
 // swapi.addTask(token, "5ca5710ad9fd5e30696616a2", "5ca573d6d9fd5e30696616a8" )

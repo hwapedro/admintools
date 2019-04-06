@@ -6,7 +6,8 @@ import {
   CourseChange,
   getAllElements,
   addElement,
-  deletElement
+  deletElement,
+  changeDnD
 } from "../../store/actions";
 
 import Menu from "../Menu";
@@ -32,7 +33,8 @@ class Courses extends Component {
       changeCourse,
       addCourses,
       getAllCourses,
-      delCourse
+      delCourse,
+      changeDnD
     } = this.props;
 
     if (loading) {
@@ -71,6 +73,7 @@ class Courses extends Component {
             />
 
             <CoursesList
+              changeDnD={(id1, id2) => changeDnD(id1, id2)}
               changeCourse={(courseIndex, title, description, token, name) =>
                 changeCourse(courseIndex, title, description, token, name)
               }
@@ -123,7 +126,9 @@ const mapDispatchToProps = dispatch => ({
   getAllCourses: (token, name) => dispatch(getAllElements(token, name)),
 
   changeCourse: (courseIndex, title, description, token, name) =>
-    dispatch(CourseChange(courseIndex, title, description, token, name))
+    dispatch(CourseChange(courseIndex, title, description, token, name)),
+   
+    changeDnD: (id1, id2) => dispatch(changeDnD(id1, id2)) 
 });
 
 export default connect(

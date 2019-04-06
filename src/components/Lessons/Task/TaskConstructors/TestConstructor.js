@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  addTestTask
+  addTask
 } from "../../../../store/actions";
 
 let index = 100;
@@ -60,15 +60,12 @@ class TestConstructor extends Component {
     // console.log(event.target.name);
     this.setState({ [event.target.name]: event.target.value });
   };
-
-  addTestTask = () => {
-    const { name, description, question } = this.state;
-    this.props.addTestTask(
-      name,
-      description,
-      question,
-      this.state.options
-    );
+  
+  addTestTask = (token) => {
+    const info = this.state;
+    const { pageId } = this.props
+    const type = "test"
+    this.props.addTask(token, pageId, type, info,    );
   };
 
   setParams = event => {
@@ -76,6 +73,7 @@ class TestConstructor extends Component {
   };
 
   render() {
+    let token = localStorage.getItem("userId");
     return (
       <>
         <div>
@@ -125,7 +123,7 @@ class TestConstructor extends Component {
               })}
             </div>
           </form>
-          <button onClick={this.addTestTask}>Save</button>
+          <button onClick={() => this.addTestTask(token)}>Save</button>
         </div>
       </>
     );
@@ -133,12 +131,11 @@ class TestConstructor extends Component {
 }
 
 const mapStateToProps = state => ({
-  tasks: state.tasks
 });
 
 const mapDispatchToProps = dispatch => ({
-  addTestTask: (name, description, question, options) =>
-    dispatch(addTestTask(name, description, question, options))
+  addTask: (token, pageid, type, info, answer) =>
+    dispatch(addTask(token, pageid, type, info, answer))
 });
 
 export default connect(

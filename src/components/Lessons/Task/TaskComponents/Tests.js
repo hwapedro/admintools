@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { deleteTask, changeTestTask } from "../../../../store/actions";
+//import { deleteTask, changeTestTask } from "../../../../store/actions";
 
 import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
@@ -240,9 +240,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteTask: id => dispatch(deleteTask(id)),
-  changeTestTask: (name, description, question, options, id) =>
-    dispatch(changeTestTask(name, description, question, options, id))
+  // deleteTask: id => dispatch(deleteTask(id)),
+  // changeTestTask: (name, description, question, options, id) =>
+  //   dispatch(changeTestTask(name, description, question, options, id))
 });
 
 export default connect(

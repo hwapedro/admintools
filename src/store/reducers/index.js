@@ -1,3 +1,5 @@
+import update from "immutability-helper";
+
 import {
   FETCH_LOGIN_REQUEST,
   FETCH_LOGIN_SUCCESS,
@@ -25,15 +27,16 @@ import {
   GET_LESSON_REQUEST,
   GET_LESSON_SUCCESS,
   GET_LESSON_FAILURE,
-  ADD_TEST_TASK,
-  DELETE_TASK,
-  CHANGE_TEST_TASK,
   ADD_PAGE_REQUEST,
   ADD_PAGE_SUCCESS,
   ADD_PAGE_FAILURE,
   DELETE_PAGE_REQUEST,
   DELETE_PAGE_SUCCESS,
-  DELETE_PAGE_FAILURE
+  DELETE_PAGE_FAILURE,
+  ADD_TASK_REQUEST,
+  ADD_TASK_SUCCESS,
+  ADD_TASK_FAILURE,
+  CHANGE_DND
 } from "../constants";
 
 import { startLoading, stopLoading } from "../utils";
@@ -45,8 +48,7 @@ const initialState = {
   courses: [],
   badges: [],
   lessons: [],
-  lesson: {},
-  tasks: []
+  lesson: {}
 };
 
 function reducer(state = initialState, action = {}) {
@@ -257,41 +259,30 @@ function reducer(state = initialState, action = {}) {
     case DELETE_PAGE_FAILURE:
       return stopLoading(state, action);
 
-    //tasks block start
-    case DELETE_TASK:
-      return {
-        ...state,
-        tasks: state.tasks.filter(task => task.id !== action.id)
-      };
+    case ADD_TASK_REQUEST:
+      return startLoading(state, action);
 
-    case ADD_TEST_TASK:
+    case ADD_TASK_SUCCESS:
       return {
         ...state,
-        tasks: [...state.tasks, action.task],
-        answerOptions: []
+        lesson: action.lesson,
+        error: false,
+        loading: false
       };
+    case ADD_TASK_FAILURE:
+      return stopLoading(state, action);
 
-    case CHANGE_TEST_TASK:
-      //console.log(action)
+    case CHANGE_DND:
+       
       return {
         ...state,
-        tasks: state.tasks.map(task => {
-          console.log(task);
-          return action.task.id === task.id
-            ? {
-                id: action.task.id,
-                name: action.task.name,
-                description: action.task.description,
-                question: action.task.question,
-                type: action.task.taskType,
-                options: action.task.options
-              }
-            : task;
+        courses: update(state.courses, {
+          $splice: [
+            [action.payload.id1, 1],
+            [action.payload.id2, 0, state.courses[action.payload.id1]]
+          ]
         })
-        // loading: false,
-        // error: false
       };
-    // tasks block end
 
     default:
       return {

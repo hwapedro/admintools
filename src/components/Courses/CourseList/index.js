@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
-import Course from './Course'
+import update from "immutability-helper";
+
+import Course from "./Course";
+import Card from "./Card.jsx";
 
 const token = localStorage.getItem("userId");
 const name = "course";
-
 
 class CourseList extends Component {
   state = {
@@ -28,7 +30,7 @@ class CourseList extends Component {
   setParams = event => {
     event.preventDefault();
     const { title, description } = this.state;
-    const {changeCourse} = this.props
+    const { changeCourse } = this.props;
     if (title && description)
       changeCourse(
         this.state.courseIndex,
@@ -41,7 +43,7 @@ class CourseList extends Component {
   };
 
   deleteItem = courseIndex => {
-    const {delCourse} = this.props
+    const { delCourse } = this.props;
     delCourse(courseIndex, token, name);
   };
 
@@ -49,9 +51,16 @@ class CourseList extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  moveCard = (dragIndex, hoverIndex) => {
+    const { courses } = this.props;
+     
+    this.props.changeDnD(dragIndex, hoverIndex);
+  };
+
   render() {
-    const {courses} = this.props
-    let list = courses.map(course => {
+    const { courses } = this.props;
+   
+    let list = courses.map((course, index) => {
       if (
         this.state.changeFlag &&
         course.courseIndex === this.state.courseIndex
@@ -80,9 +89,18 @@ class CourseList extends Component {
         );
       } else {
         return (
-          <ElementWrapper key={course.courseIndex}>
-          <Course course = {course} deleteItem = {this.deleteItem} getParams = {this.getParams} />
-          </ElementWrapper>
+          
+            <Card
+              key={course.courseIndex}
+              index={index}
+              id={course.courseIndex}
+              text={course.title}
+              moveCard={this.moveCard}
+              course={course}
+              deleteItem={this.deleteItem}
+              getParams={this.getParams}
+            />
+         
         );
       }
     });
@@ -102,16 +120,16 @@ CourseList.defaultProps = {
   error: false,
   delCourse() {},
   changeLesson() {}
-}
+};
 
 CourseList.propTypes = {
-  courses:  PropTypes.arrayOf(PropTypes.object),
+  courses: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,
 
   delCourse: PropTypes.func,
-  changeLesson: PropTypes.func,
-}
+  changeLesson: PropTypes.func
+};
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -167,7 +185,7 @@ const DescriptionTextArea = styled.textarea`
 `;
 
 const ElementsWrapper = styled.ul`
-  margin:0;
+  margin: 0;
   list-style-type: none;
   width: 1000px;
 `;
@@ -203,4 +221,5 @@ export const SignInButton = styled.button`
     cursor: pointer;
   }
   margin-right: 1rem;
+  //
 `;

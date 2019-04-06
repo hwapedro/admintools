@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import { DragDropContextProvider } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 import store from "./store";
 import GlobalStyle from "./components/GlobalStyles";
@@ -18,6 +20,7 @@ import App from "../src/components/App";
 
 ReactDOM.render(
   <Provider store={store}>
+   <DragDropContextProvider backend={HTML5Backend}>
     <ThemeProvider theme={theme}>
       <>
         <Router>
@@ -26,6 +29,7 @@ ReactDOM.render(
         <GlobalStyle />
       </>
     </ThemeProvider>
+    </DragDropContextProvider>
   </Provider>,
   document.getElementById("root")
 );

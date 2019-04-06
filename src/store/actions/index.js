@@ -35,7 +35,8 @@ import {
   DELETE_PAGE_FAILURE,
   ADD_TASK_REQUEST,
 ADD_TASK_SUCCESS,
-ADD_TASK_FAILURE
+ADD_TASK_FAILURE,
+CHANGE_DND
 } from "../constants";
 
 import AdminService from "../../service";
@@ -264,7 +265,7 @@ export const addPage = (token, id, text, tasks, needToComplete) => dispatch => {
   adminService
     .addPage(token, id, text, tasks, needToComplete)
     .then(response => {
-      //console.log(response);
+     
       dispatch({
         type: ADD_PAGE_SUCCESS,
         lesson: response.lesson
@@ -279,7 +280,7 @@ export const deletePage = (token, id) => dispatch => {
   adminService
     .deletePage(token, id)
     .then(response => {
-     // console.log(response);
+    
       dispatch({
         type: DELETE_PAGE_SUCCESS,
         lesson: response.body.lesson
@@ -288,43 +289,30 @@ export const deletePage = (token, id) => dispatch => {
     .catch(error => dispatch({ type: DELETE_PAGE_FAILURE }));
 };
 
-let id = 0;
-export const deleteTask = id => {
-  return {
-    type: DELETE_TASK,
-    id: id
-  };
-};
-
-export const addTestTask = (name, description, question, options) => {
-  id++;
-  const type = "test";
-  return {
-    type: ADD_TEST_TASK,
-    task: { name, description, question, id, type, options }
-  };
-};
-
-export const changeTestTask = (name, description, question, options, id) => {
-  const taskType = "test";
-  return {
-    type: CHANGE_TEST_TASK,
-    task: { name, description, question, id, taskType, options }
-  };
-};
-
-export const addTask = (token, id, text, tasks, needToComplete) => dispatch => {
+export const addTask = (token, pageId, type, info) => dispatch => {
   dispatch({
-    type: ADD_PAGE_REQUEST
+    type: ADD_TASK_REQUEST
   });
+
   adminService
-    .addPage(token, id, text, tasks, needToComplete)
+    .createTask(token, pageId, type, info)
     .then(response => {
-      console.log(response);
+     
       dispatch({
-        type: ADD_PAGE_SUCCESS,
-        page: response.lesson.pages
+        type: ADD_TASK_SUCCESS,
+        lesson: response.body.lesson
       });
     })
-    .catch(error => dispatch({ type: ADD_PAGE_FAILURE }));
+    .catch(error => dispatch({ type: ADD_TASK_FAILURE }));
 };
+
+export const changeDnD = (id1, id2) =>{
+  return {
+    type: CHANGE_DND,
+    payload: {
+      id1: id1,
+      id2: id2
+    }
+  
+  }
+}

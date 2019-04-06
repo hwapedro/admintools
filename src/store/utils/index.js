@@ -9,3 +9,6 @@ export const stopLoading = (state, { error }) => ({
     loading: false,
     error
   })
+
+
+  
