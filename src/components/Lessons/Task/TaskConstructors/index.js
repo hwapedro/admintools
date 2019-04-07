@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+//import { connect } from "react-redux";
 
 //import { deleteTask } from "../../../../store/actions";
 
-import Tests from "../TaskComponents/Tests";
+//import Tests from "../TaskComponents/Tests";
 import TestConstructor from "./TestConstructor";
 
 // import { throws } from "assert";
@@ -50,7 +50,6 @@ class TaskConstructor extends Component {
     return (
       <>
         <div>
-          <span>Lesson X</span>
           {displayConstructor ? (
             <div>
               <div>

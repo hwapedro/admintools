@@ -24,9 +24,7 @@ import {
   GET_LESSON_REQUEST,
   GET_LESSON_SUCCESS,
   GET_LESSON_FAILURE,
-  ADD_TEST_TASK,
-  DELETE_TASK,
-  CHANGE_TEST_TASK,
+
   ADD_PAGE_REQUEST,
   ADD_PAGE_SUCCESS,
   ADD_PAGE_FAILURE,
@@ -36,7 +34,10 @@ import {
   ADD_TASK_REQUEST,
 ADD_TASK_SUCCESS,
 ADD_TASK_FAILURE,
-CHANGE_DND
+CHANGE_DND,
+DELETE_TASK_REQUEST,
+DELETE_TASK_SUCCESS,
+ DELETE_TASK_FAILURE
 } from "../constants";
 
 import AdminService from "../../service";
@@ -297,13 +298,28 @@ export const addTask = (token, pageId, type, info) => dispatch => {
   adminService
     .createTask(token, pageId, type, info)
     .then(response => {
-     
+    //  console.log(response)
       dispatch({
         type: ADD_TASK_SUCCESS,
         lesson: response.body.lesson
       });
     })
     .catch(error => dispatch({ type: ADD_TASK_FAILURE }));
+};
+
+export const deleteTask = (token, pageId, taskid) => dispatch => {
+  dispatch({ type: DELETE_TASK_REQUEST });
+
+  adminService
+    .deleteTask(token, pageId, taskid)
+    .then(response => {
+    //  console.log(pageId)
+      dispatch({
+        type: DELETE_TASK_SUCCESS,
+        lesson: response.body.lesson
+      });
+    })
+    .catch(error => dispatch({ type: DELETE_TASK_FAILURE }));
 };
 
 export const changeDnD = (id1, id2) =>{

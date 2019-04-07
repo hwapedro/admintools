@@ -52,9 +52,9 @@ export default class AdminService {
     return response;
   }
 
-  async change(courseIndex, title, description, token, name) {
+  async change(index, title, description, token, name) {
     let response = await request
-      .put(`${_apiBase}/${name}/${courseIndex}`)
+      .put(`${_apiBase}/${name}/${index}`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token

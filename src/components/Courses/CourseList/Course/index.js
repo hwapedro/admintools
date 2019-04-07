@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import {
+  ElementWrapper,
   TitleSpan,
   LabelElement,
   DescriptionSpan,
@@ -14,7 +15,7 @@ class Course extends Component {
     const { course, getParams, deleteItem } = this.props;
 
     return (
-      <>
+        <>
         <LabelElement>Name of course :</LabelElement>
         <TitleSpan> {course.title}</TitleSpan>
         <LabelElement>Description of course : </LabelElement>
@@ -31,7 +32,7 @@ class Course extends Component {
             DELETE COURSE
           </SignInButton>
         </ButtonWrapper>
-      </>
+        </>
     );
   }
 }

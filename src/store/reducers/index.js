@@ -1,5 +1,3 @@
-import update from "immutability-helper";
-
 import {
   FETCH_LOGIN_REQUEST,
   FETCH_LOGIN_SUCCESS,
@@ -36,10 +34,14 @@ import {
   ADD_TASK_REQUEST,
   ADD_TASK_SUCCESS,
   ADD_TASK_FAILURE,
+  DELETE_TASK_REQUEST,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_FAILURE,
   CHANGE_DND
 } from "../constants";
 
-import { startLoading, stopLoading } from "../utils";
+
+import { startLoading, stopLoading, changeDnD } from "../utils";
 
 const initialState = {
   token: null,
@@ -272,17 +274,21 @@ function reducer(state = initialState, action = {}) {
     case ADD_TASK_FAILURE:
       return stopLoading(state, action);
 
-    case CHANGE_DND:
-       
+    case DELETE_TASK_REQUEST:
+      return startLoading(state, action);
+
+    case DELETE_TASK_SUCCESS:
       return {
         ...state,
-        courses: update(state.courses, {
-          $splice: [
-            [action.payload.id1, 1],
-            [action.payload.id2, 0, state.courses[action.payload.id1]]
-          ]
-        })
+        lesson: action.lesson,
+        error: false,
+        loading: false
       };
+    case DELETE_TASK_FAILURE:
+      return stopLoading(state, action);
+
+    case CHANGE_DND:
+      return changeDnD(state, action.payload.id1, action.payload.id2)
 
     default:
       return {

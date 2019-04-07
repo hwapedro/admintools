@@ -53,13 +53,13 @@ class CourseList extends Component {
 
   moveCard = (dragIndex, hoverIndex) => {
     const { courses } = this.props;
-     
+
     this.props.changeDnD(dragIndex, hoverIndex);
   };
 
   render() {
     const { courses } = this.props;
-   
+
     let list = courses.map((course, index) => {
       if (
         this.state.changeFlag &&
@@ -89,18 +89,21 @@ class CourseList extends Component {
         );
       } else {
         return (
-          
-            <Card
-              key={course.courseIndex}
-              index={index}
-              id={course.courseIndex}
-              text={course.title}
-              moveCard={this.moveCard}
-              course={course}
-              deleteItem={this.deleteItem}
-              getParams={this.getParams}
-            />
-         
+          <Card
+            key={course.courseIndex}
+            index={index}
+            id={course.courseIndex}
+            text={course.title}
+            moveCard={this.moveCard}
+            
+            Wrap={
+              <Course
+                course={course}
+                getParams={this.getParams}
+                deleteItem={this.deleteItem}
+              />
+            }
+          />
         );
       }
     });

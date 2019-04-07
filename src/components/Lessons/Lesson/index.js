@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
-import { getLesson, changeElement, addPage, deletePage } from "../../../store/actions";
+import {
+  getLesson,
+  changeElement,
+  addPage,
+  deletePage,
+  deleteTask
+} from "../../../store/actions";
 import {
   ButtonWrapper,
   TitleInput,
@@ -37,7 +43,7 @@ class Lesson extends Component {
   };
 
   componentDidMount() {
-    const { getLesson  } = this.props;
+    const { getLesson } = this.props;
     let token = localStorage.getItem("userId");
     getLesson(token, this.props.itemId);
   }
@@ -76,11 +82,13 @@ class Lesson extends Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  addPage =( ) => {
-    this.props.addPage(token, this.props.lesson._id, "blah text", [], 0)
-  }
+
+  addPage = () => {
+    this.props.addPage(token, this.props.lesson._id, "blah text", [], 0);
+  };
+  
   render() {
-    const { lesson, loading, deletePage } = this.props;
+    const { lesson, loading, deletePage, deleteTask } = this.props;
     if (loading) {
       return (
         <>
@@ -166,7 +174,12 @@ class Lesson extends Component {
           <ButtonWrapper>
             <LessonButton onClick={this.addPage}>Add Page</LessonButton>
           </ButtonWrapper>
-          <Pages pages={lesson.pages} id={lesson._id} deletePage={deletePage}/>
+          <Pages
+            pages={lesson.pages}
+            id={lesson._id}
+            deletePage={deletePage}
+            deleteTask={deleteTask}
+          />
         </>
       );
     }
@@ -180,16 +193,16 @@ Lesson.defaultProps = {
 
   getLesson() {},
   changeLesson() {}
-}
+};
 
 Lesson.propTypes = {
-  lesson:  PropTypes.object,
+  lesson: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.bool,
 
   getLesson: PropTypes.func,
-  changeLesson: PropTypes.func,
-}
+  changeLesson: PropTypes.func
+};
 
 const mapStateToProps = state => ({
   lesson: state.lesson,
@@ -204,7 +217,9 @@ const mapDispatchToProps = dispatch => ({
     ),
   addPage: (token, id, text, tasks, needToComplete) =>
     dispatch(addPage(token, id, text, tasks, needToComplete)),
-  deletePage: (token, id) => dispatch(deletePage(token, id))
+  deletePage: (token, id) => dispatch(deletePage(token, id)),
+  deleteTask: (token, pageId, taskid) =>
+    dispatch(deleteTask(token, pageId, taskid))
 });
 
 export default connect(
