@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
+import { Droppable } from "react-beautiful-dnd";
 import update from "immutability-helper";
 
 import Course from "./Course";
 import Card from "./Card.jsx";
+import { from } from "rxjs";
 
 const token = localStorage.getItem("userId");
 const name = "course";
@@ -89,27 +90,47 @@ class CourseList extends Component {
         );
       } else {
         return (
-          <Card
-            key={course.courseIndex}
-            index={index}
-            id={course.courseIndex}
-            text={course.title}
-            moveCard={this.moveCard}
-            
-            Wrap={
-              <Course
-                course={course}
-                getParams={this.getParams}
-                deleteItem={this.deleteItem}
-              />
-            }
-          />
+          
+            <Course
+              course={course}
+              index = {index}
+              getParams={this.getParams}
+              deleteItem={this.deleteItem}
+            />
+
+          // <Card
+          //   key={course.courseIndex}
+          //   index={index}
+          //   id={course.courseIndex}
+          //   text={course.title}
+          //   moveCard={this.moveCard}
+
+          //   Wrap={
+          //     <Course
+          //       course={course}
+          //       getParams={this.getParams}
+          //       deleteItem={this.deleteItem}
+          //     />
+          //   }
+          // />
         );
       }
     });
+
     return (
       <Wrapper>
-        <ElementsWrapper>{list}</ElementsWrapper>
+        <Droppable droppableId="droppable">
+          {provided => (
+            <ElementsWrapper
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            >
+              {list}
+              {provided.placeholder}
+            </ElementsWrapper>
+          )}
+        </Droppable>
       </Wrapper>
     );
   }

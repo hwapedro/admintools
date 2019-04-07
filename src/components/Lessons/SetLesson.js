@@ -47,11 +47,15 @@ class SetLessons extends Component {
   };
 
   ChangeExamTrue = () => {
+    
     this.setState({ exam :  true})
+    console.log(this.state.exam)
   }
 
   ChangeExamFalse = () => {
+   
     this.setState({ exam :  false})
+    console.log(this.state.exam)
   }
 
   render() {

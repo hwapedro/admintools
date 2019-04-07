@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Draggable } from "react-beautiful-dnd";
 
 import {
   ElementWrapper,
@@ -12,27 +13,46 @@ import {
 
 class Course extends Component {
   render() {
-    const { course, getParams, deleteItem } = this.props;
-
+    const { course, getParams, deleteItem, index } = this.props;
+    console.log(course.courseIndex)
     return (
-        <>
-        <LabelElement>Name of course :</LabelElement>
-        <TitleSpan> {course.title}</TitleSpan>
-        <LabelElement>Description of course : </LabelElement>
-        <DescriptionSpan>{course.description}</DescriptionSpan>
-        <ButtonWrapper>
-          <SignInButton
-            onClick={() =>
-              getParams(course.courseIndex, course.title, course.description)
-            }
+      <Draggable
+        key={course.courseIndex}
+        draggableId={course.courseIndex}
+        index={index}
+      >
+        {provided => (
+          <ElementWrapper
+            ref={provided.innerRef}
+
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+
+            key={course.courseIndex}
           >
-            CHANGE COURSE
-          </SignInButton>
-          <SignInButton onClick={() => deleteItem(course.courseIndex)}>
-            DELETE COURSE
-          </SignInButton>
-        </ButtonWrapper>
-        </>
+              <LabelElement>Name of course :</LabelElement>
+              <TitleSpan> {course.title}</TitleSpan>
+              <LabelElement>Description of course : </LabelElement>
+              <DescriptionSpan>{course.description}</DescriptionSpan>
+              <ButtonWrapper>
+                <SignInButton
+                  onClick={() =>
+                    getParams(
+                      course.courseIndex,
+                      course.title,
+                      course.description
+                    )
+                  }
+                >
+                  CHANGE COURSE
+                </SignInButton>
+                <SignInButton onClick={() => deleteItem(course.courseIndex)}>
+                  DELETE COURSE
+                </SignInButton>
+              </ButtonWrapper>
+            </ElementWrapper>
+        )}
+      </Draggable>
     );
   }
 }

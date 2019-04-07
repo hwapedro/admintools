@@ -93,6 +93,7 @@ Courses.defaultProps = {
   courses: [],
   loading: false,
   error: false,
+  
   addCourses() {},
   delCourse() {},
   getAllCourses() {},
