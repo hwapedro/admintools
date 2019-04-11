@@ -164,8 +164,24 @@ export default class AdminService {
       .send({ title: title, description: description, exam: exam });
     return response.body;
   }
+
+  async DragAndDrop(token, i1,i2) {
+    let response = await request
+      .put(`${_apiBase}/course/dragged`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({
+        i1: i1,
+        i2: i2
+      });
+    return response.body;
+  }
+  
 }
 
 const swapi = new AdminService();
+swapi.DragAndDrop(token,3,1).then(data => console.log(data))
 //swapi.createTask(token, "5ca76d78906b1177d3e75247", "test", { heh: 5 });
 // swapi.addTask(token, "5ca5710ad9fd5e30696616a2", "5ca573d6d9fd5e30696616a8" )

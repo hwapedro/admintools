@@ -17,6 +17,9 @@ class SetCourse extends Component {
     let token = localStorage.getItem("userId");
 
     addCourses(title, description, token, name);
+    this.setState({
+      constructor: !this.state.constructor
+    });
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -26,8 +29,9 @@ class SetCourse extends Component {
       constructor: !this.state.constructor
     });
   };
-
+  
   render() {
+    console.log(this.state.constructor)
     if (this.state.constructor) {
       return (
         <Wrapper>

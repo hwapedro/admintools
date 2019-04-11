@@ -8,7 +8,7 @@ import {
   deletElement
 } from "../../store/actions";
 
-import Menu from "../Menu";
+
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "../Lessons/LessonList";
 import Spinner from "../Spinner";
@@ -35,14 +35,14 @@ class Lessons extends Component {
     if (loading) {
       return (
         <>
-          <Menu />
+
           <Spinner />
         </>
       );
     }
     return (
       <>
-        <Menu />
+
 
         <SetLesson
           addLesson={(title, description, exam, token, name) =>

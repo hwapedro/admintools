@@ -10,7 +10,6 @@ import {
   changeDnD
 } from "../../store/actions";
 
-import Menu from "../Menu";
 import SetCourse from "../Courses/SetCourse";
 import CoursesList from "./CourseList/";
 import Spinner from "../Spinner";
@@ -37,34 +36,22 @@ class Courses extends Component {
       changeDnD
     } = this.props;
 
-    if (loading) {
-      return (
-        <>
-          <Menu />
-          <Spinner />
-        </>
-      );
-    }
     return (
       <>
         {error && (
           <>
-            <Menu />
             <Error />
           </>
         )}
 
         {loading ? (
           <>
-            <Menu />
             <Spinner />
           </>
         ) : null}
-        
+
         {!error && (
           <>
-            <Menu />
-
             <SetCourse
               addCourses={(title, description, token, name) =>
                 addCourses(title, description, token, name)
@@ -93,7 +80,7 @@ Courses.defaultProps = {
   courses: [],
   loading: false,
   error: false,
-  
+
   addCourses() {},
   delCourse() {},
   getAllCourses() {},
@@ -112,9 +99,9 @@ Courses.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  courses: state.courses,
-  loading: state.loading,
-  error: state.error
+  courses: state.reducerCourses.courses,
+  loading: state.reducerCourses.loading,
+  error: state.reducerCourses.error
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -128,8 +115,8 @@ const mapDispatchToProps = dispatch => ({
 
   changeCourse: (courseIndex, title, description, token, name) =>
     dispatch(CourseChange(courseIndex, title, description, token, name)),
-   
-    changeDnD: (id1, id2) => dispatch(changeDnD(id1, id2)) 
+
+  changeDnD: (id1, id2) => dispatch(changeDnD(id1, id2))
 });
 
 export default connect(

@@ -2,23 +2,23 @@ import {
   FETCH_LOGIN_REQUEST,
   FETCH_LOGIN_SUCCESS,
   FETCH_LOGIN_FAILURE,
-  GETALL_COURSE_SUCCESS,
+
   GETALL_ELEMENT_FAILURE,
   GETALL_ELEMENT_REQUEST,
   GETALL_LESSON_SUCCESS,
   GETALL_BADGE_SUCCESS,
   ADD_ELEMENT_REQUEST,
-  ADD_COURSE_SUCCESS,
+  
   ADD_BADGE_SUCCESS,
   ADD_LESSON_SUCCESS,
   ADD_ELEMENT_FAILURE,
   DELETE_ELEMENT_REQUEST,
-  DELETE_COURSE_SUCCESS,
+ 
   DELETE_BADGE_SUCCESS,
   DELETE_LESSON_SUCCESS,
   DELETE_ELEMENT_FAILURE,
   CHANGE_ELEMENT_REQUEST,
-  CHANGE_COURSE_SUCCESS,
+ 
   CHANGE_BADGE_SUCCESS,
   CHANGE_LESSON_SUCCESS,
   CHANGE_ELEMENT_FAILURE,
@@ -47,7 +47,6 @@ const initialState = {
   token: null,
   loading: false,
   error: null,
-  courses: [],
   badges: [],
   lessons: [],
   lesson: {}
@@ -80,13 +79,6 @@ function reducer(state = initialState, action = {}) {
     case ADD_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-    case ADD_COURSE_SUCCESS:
-      return {
-        ...state,
-        error: false,
-        loading: false,
-        courses: [...state.courses, action.courses]
-      };
 
     case ADD_LESSON_SUCCESS:
       return {
@@ -111,13 +103,7 @@ function reducer(state = initialState, action = {}) {
     case GETALL_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-    case GETALL_COURSE_SUCCESS:
-      return {
-        ...state,
-        courses: action.courses,
-        loading: false,
-        error: false
-      };
+
 
     case GETALL_LESSON_SUCCESS:
       return {
@@ -142,15 +128,7 @@ function reducer(state = initialState, action = {}) {
     case DELETE_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-    case DELETE_COURSE_SUCCESS:
-      return {
-        ...state,
-        courses: state.courses.filter(
-          courses => courses.courseIndex !== action.index
-        ),
-        loading: false,
-        error: false
-      };
+
 
     case DELETE_LESSON_SUCCESS:
       return {
@@ -175,22 +153,7 @@ function reducer(state = initialState, action = {}) {
     case CHANGE_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-    case CHANGE_COURSE_SUCCESS:
-      return {
-        ...state,
-        courses: state.courses.map(course =>
-          action.course.courseIndex === course.courseIndex
-            ? {
-                _id: action.course._id,
-                title: action.course.title,
-                description: action.course.description,
-                courseIndex: action.course.courseIndex
-              }
-            : course
-        ),
-        loading: false,
-        error: false
-      };
+
 
     case CHANGE_BADGE_SUCCESS:
       return {

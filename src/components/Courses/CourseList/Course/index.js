@@ -18,7 +18,7 @@ class Course extends Component {
     return (
       <Draggable
         key={course.courseIndex}
-        draggableId={course.courseIndex}
+        draggableId={`draggableId-course-${course.courseIndex}`}
         index={index}
       >
         {provided => (

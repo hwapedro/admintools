@@ -86,13 +86,12 @@ class Lesson extends Component {
   addPage = () => {
     this.props.addPage(token, this.props.lesson._id, "blah text", [], 0);
   };
-  
+
   render() {
     const { lesson, loading, deletePage, deleteTask } = this.props;
     if (loading) {
       return (
         <>
-          <Menu />
           <Spinner />
         </>
       );
@@ -101,7 +100,6 @@ class Lesson extends Component {
     if (this.state.changeFlag) {
       return (
         <>
-          <Menu />
           <Wrapper>
             <ElementWrapper>
               <form onSubmit={this.setParams}>
@@ -140,8 +138,6 @@ class Lesson extends Component {
     } else {
       return (
         <>
-          <Menu />
-
           <Wrapper>
             <ElementWrapper
               key={lesson._id}

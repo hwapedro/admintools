@@ -8,7 +8,7 @@ import {
   deletElement
 } from "../../store/actions";
 
-import Menu from "../Menu";
+
 import SetCourse from "../Badges/SetBadge";
 import CoursesList from "../Badges/BadgesList";
 import Spinner from "../Spinner";
@@ -35,14 +35,14 @@ class Badge extends Component {
     if (loading) {
       return (
         <>
-          <Menu />
+
           <Spinner />
         </>
       );
     }
     return (
       <>
-        <Menu />
+
 
         <SetCourse
           addBadge={(title, description, token, name) =>

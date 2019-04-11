@@ -90,13 +90,13 @@ class CourseList extends Component {
         );
       } else {
         return (
-          
-            <Course
-              course={course}
-              index = {index}
-              getParams={this.getParams}
-              deleteItem={this.deleteItem}
-            />
+          <Course
+            key={course.courseIndex}
+            course={course}
+            index={index}
+            getParams={this.getParams}
+            deleteItem={this.deleteItem}
+          />
 
           // <Card
           //   key={course.courseIndex}
@@ -116,15 +116,14 @@ class CourseList extends Component {
         );
       }
     });
-
     return (
       <Wrapper>
         <Droppable droppableId="droppable">
           {provided => (
             <ElementsWrapper
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
             >
               {list}
               {provided.placeholder}
