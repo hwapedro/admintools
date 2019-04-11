@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import {
   changeElement,
   getAllElements,
@@ -8,56 +8,44 @@ import {
   deletElement
 } from "../../store/actions";
 
-
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "../Lessons/LessonList";
 import Spinner from "../Spinner";
 
-const name = 'lesson'
+const name = "lesson";
 
 class Lessons extends Component {
   componentDidMount() {
     const { getAllLessons } = this.props;
     let token = localStorage.getItem("userId");
-    getAllLessons(token,name);
+    getAllLessons(token, name);
   }
 
- 
-  
   render() {
-    const {
-      loading,
-      lessons,
-      changeLesson,
-      addLesson,
-      delLesson
-    } = this.props;
-    if (loading) {
-      return (
-        <>
-
-          <Spinner />
-        </>
-      );
-    }
+    const { loading, lessons, changeLesson, addLesson, delLesson } = this.props;
+    // if (loading) {
+    //   return (
+    //     <>
+    //       <Spinner />
+    //     </>
+    //   );
+    // }
     return (
       <>
-
-
         <SetLesson
           addLesson={(title, description, exam, token, name) =>
             addLesson(title, description, exam, token, name)
           }
         />
-
-        <LessonList 
+        <LessonList
           changeLesson={(lessonsIndex, title, description, token, name) =>
             changeLesson(lessonsIndex, title, description, token, name)
           }
-          delLesson={(lessonsIndex, token, name) => delLesson(lessonsIndex, token, name)}
+          delLesson={(lessonsIndex, token, name) =>
+            delLesson(lessonsIndex, token, name)
+          }
           lessons={lessons}
         />
-
       </>
     );
   }
@@ -71,23 +59,23 @@ Lessons.defaultProps = {
   delLesson() {},
   getAllLessons() {},
   changeLesson() {}
-}
+};
 
 Lessons.propTypes = {
-  lessons:  PropTypes.arrayOf(PropTypes.object),
+  lessons: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,
 
   addCoursest: PropTypes.func,
   delLesson: PropTypes.func,
   getAllLessons: PropTypes.func,
-  changeLesson: PropTypes.func,
-}
+  changeLesson: PropTypes.func
+};
 
 const mapStateToProps = state => ({
-  lessons: state.lessons,
-  loading: state.loading,
-  error: state.error
+  lessons: state.reducerLessons.lessons,
+  loading: state.reducerLessons.loading,
+  error: state.reducerLessons.error
 });
 
 const mapDispatchToProps = dispatch => ({

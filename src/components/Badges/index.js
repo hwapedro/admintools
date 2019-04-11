@@ -86,9 +86,9 @@ Badge.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  badges: state.badges,
-  loading: state.loading,
-  error: state.error
+  badges: state.reducerBadges.badges,
+  loading: state.reducerBadges.loading,
+  error: state.reducerBadges.error
 });
 
 const mapDispatchToProps = dispatch => ({

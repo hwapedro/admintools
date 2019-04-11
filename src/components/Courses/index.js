@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { DragDropContext } from "react-beautiful-dnd";
 
 import {
   CourseChange,
@@ -44,31 +45,48 @@ class Courses extends Component {
           </>
         )}
 
-        {loading ? (
+        {/* {loading ? (
           <>
             <Spinner />
           </>
-        ) : null}
+        ) : null} */}
 
-        {!error && (
+        {!error && !loading &&(
           <>
-            <SetCourse
-              addCourses={(title, description, token, name) =>
-                addCourses(title, description, token, name)
-              }
-              getAllCourses={(token, name) => getAllCourses(token, name)}
-            />
+            <DragDropContext
+              onDragEnd={result => {
+                if (result.source.index !== result.destination.index) {
+                  let token = localStorage.getItem("userId");
+                  console.log(
+                    courses[result.source.index].courseIndex,
+                    courses[result.destination.index].courseIndex
+                  );
+                  changeDnD(
+                    token,
+                    courses[result.source.index].courseIndex,
+                    courses[result.destination.index].courseIndex
+                  )
+                }
+              }}
+            >
+              <SetCourse
+                addCourses={(title, description, token, name) =>
+                  addCourses(title, description, token, name)
+                }
+                getAllCourses={(token, name) => getAllCourses(token, name)}
+              />
 
-            <CoursesList
-              changeDnD={(id1, id2) => changeDnD(id1, id2)}
-              changeCourse={(courseIndex, title, description, token, name) =>
-                changeCourse(courseIndex, title, description, token, name)
-              }
-              delCourse={(courseIndex, token, name) =>
-                delCourse(courseIndex, token, name)
-              }
-              courses={courses}
-            />
+              <CoursesList
+                changeDnD={(id1, id2) => changeDnD(id1, id2)}
+                changeCourse={(courseIndex, title, description, token, name) =>
+                  changeCourse(courseIndex, title, description, token, name)
+                }
+                delCourse={(courseIndex, token, name) =>
+                  delCourse(courseIndex, token, name)
+                }
+                courses={courses}
+              />
+            </DragDropContext>
           </>
         )}
       </>
@@ -116,7 +134,7 @@ const mapDispatchToProps = dispatch => ({
   changeCourse: (courseIndex, title, description, token, name) =>
     dispatch(CourseChange(courseIndex, title, description, token, name)),
 
-  changeDnD: (id1, id2) => dispatch(changeDnD(id1, id2))
+  changeDnD: (token, id1, id2) => dispatch(changeDnD(token, id1, id2))
 });
 
 export default connect(

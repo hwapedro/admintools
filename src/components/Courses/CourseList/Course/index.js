@@ -14,7 +14,6 @@ import {
 class Course extends Component {
   render() {
     const { course, getParams, deleteItem, index } = this.props;
-    console.log(course.courseIndex)
     return (
       <Draggable
         key={course.courseIndex}

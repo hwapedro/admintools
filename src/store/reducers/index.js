@@ -41,7 +41,7 @@ import {
 } from "../constants";
 
 
-import { startLoading, stopLoading, changeDnD } from "../utils";
+import { startLoading, stopLoading, DND } from "../utils";
 
 const initialState = {
   token: null,
@@ -251,7 +251,7 @@ function reducer(state = initialState, action = {}) {
       return stopLoading(state, action);
 
     case CHANGE_DND:
-      return changeDnD(state, action.payload.id1, action.payload.id2)
+      return DND(state, action.payload.id1, action.payload.id2)
 
     default:
       return {

@@ -24,7 +24,6 @@ import {
   GET_LESSON_REQUEST,
   GET_LESSON_SUCCESS,
   GET_LESSON_FAILURE,
-
   ADD_PAGE_REQUEST,
   ADD_PAGE_SUCCESS,
   ADD_PAGE_FAILURE,
@@ -32,12 +31,15 @@ import {
   DELETE_PAGE_SUCCESS,
   DELETE_PAGE_FAILURE,
   ADD_TASK_REQUEST,
-ADD_TASK_SUCCESS,
-ADD_TASK_FAILURE,
-CHANGE_DND,
-DELETE_TASK_REQUEST,
-DELETE_TASK_SUCCESS,
- DELETE_TASK_FAILURE
+  ADD_TASK_SUCCESS,
+  ADD_TASK_FAILURE,
+  CHANGE_DND,
+  DELETE_TASK_REQUEST,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_FAILURE,
+  CHANGE_DND_REQUEST,
+  CHANGE_DND_SUCCESS,
+  CHANGE_DND_FAILURE
 } from "../constants";
 
 import AdminService from "../../service";
@@ -256,9 +258,6 @@ export const addLesson = (
     .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
 };
 
-// export const changeCourse = (courseIndex, title, description) => {
-//   return { type: CHANGE_COURSE_ELEMENT, courseIndex, title, description };
-// };
 export const addPage = (token, id, text, tasks, needToComplete) => dispatch => {
   dispatch({
     type: ADD_PAGE_REQUEST
@@ -266,7 +265,6 @@ export const addPage = (token, id, text, tasks, needToComplete) => dispatch => {
   adminService
     .addPage(token, id, text, tasks, needToComplete)
     .then(response => {
-     
       dispatch({
         type: ADD_PAGE_SUCCESS,
         lesson: response.lesson
@@ -281,7 +279,6 @@ export const deletePage = (token, id) => dispatch => {
   adminService
     .deletePage(token, id)
     .then(response => {
-    
       dispatch({
         type: DELETE_PAGE_SUCCESS,
         lesson: response.body.lesson
@@ -298,7 +295,6 @@ export const addTask = (token, pageId, type, info) => dispatch => {
   adminService
     .createTask(token, pageId, type, info)
     .then(response => {
-    //  console.log(response)
       dispatch({
         type: ADD_TASK_SUCCESS,
         lesson: response.body.lesson
@@ -313,7 +309,6 @@ export const deleteTask = (token, pageId, taskid) => dispatch => {
   adminService
     .deleteTask(token, pageId, taskid)
     .then(response => {
-    //  console.log(pageId)
       dispatch({
         type: DELETE_TASK_SUCCESS,
         lesson: response.body.lesson
@@ -322,13 +317,31 @@ export const deleteTask = (token, pageId, taskid) => dispatch => {
     .catch(error => dispatch({ type: DELETE_TASK_FAILURE }));
 };
 
-export const changeDnD = (id1, id2) =>{
-  return {
-    type: CHANGE_DND,
-    payload: {
-      id1: id1,
-      id2: id2
-    }
-  
-  }
-}
+// export const changeDnD = (id1, id2) =>{
+//   return {
+//     type: CHANGE_DND,
+//     payload: {
+//       id1: id1,
+//       id2: id2
+//     }
+
+//   }
+// }
+
+export const changeDnD = (token, id1, id2) => dispatch => {
+  dispatch({
+    type: CHANGE_DND_REQUEST
+  });
+  adminService
+    .DragAndDrop(token, id1, id2)
+    .then(response => {
+      dispatch({
+        type: CHANGE_DND_SUCCESS,
+        payload: {
+          id1: id1,
+          id2: id2
+        }
+      });
+    })
+    .catch(error => dispatch({ type: CHANGE_DND_FAILURE }));
+};

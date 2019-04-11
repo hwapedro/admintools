@@ -15,7 +15,6 @@ import App from "../src/components/App";
 
 ReactDOM.render(
   <Provider store={store}>
-    <DragDropContext onDragEnd={result => console.log(result)}>
       <ThemeProvider theme={theme}>
         <>
           <Router>
@@ -24,7 +23,6 @@ ReactDOM.render(
           <GlobalStyle />
         </>
       </ThemeProvider>
-    </DragDropContext>
   </Provider>,
   document.getElementById("root")
 );

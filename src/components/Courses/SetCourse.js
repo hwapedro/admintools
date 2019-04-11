@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 const name = "course";
 
 class SetCourse extends Component {
@@ -29,12 +29,16 @@ class SetCourse extends Component {
       constructor: !this.state.constructor
     });
   };
-  
+
   render() {
-    console.log(this.state.constructor)
     if (this.state.constructor) {
       return (
         <Wrapper>
+          <ButtonWrapper>
+            <ConstructirButton onClick={this.showConstructor}>
+              ADD NEW COURSE
+            </ConstructirButton>
+          </ButtonWrapper>
           <DarkGround onClick={this.showConstructor} />
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
