@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import {
   changeElement,
   getAllElements,
-  addLesson,
   deletElement
 } from "../../store/actions";
+import {addLesson} from "../../store/actions/actionLessons"
 
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "../Lessons/LessonList";

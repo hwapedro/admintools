@@ -3,9 +3,8 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { DragDropContextProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
-import { DragDropContext } from "react-beautiful-dnd";
+
+// import { DragDropContext } from "react-beautiful-dnd";
 
 import store from "./store";
 import GlobalStyle from "./components/GlobalStyles";

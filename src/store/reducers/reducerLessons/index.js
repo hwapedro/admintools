@@ -13,7 +13,20 @@ import {
   CHANGE_ELEMENT_FAILURE,
   GET_LESSON_REQUEST,
   GET_LESSON_SUCCESS,
-  GET_LESSON_FAILURE
+  GET_LESSON_FAILURE,
+
+  ADD_PAGE_REQUEST,
+  ADD_PAGE_SUCCESS,
+  ADD_PAGE_FAILURE,
+  DELETE_PAGE_REQUEST,
+  DELETE_PAGE_SUCCESS,
+  DELETE_PAGE_FAILURE,
+  ADD_TASK_REQUEST,
+  ADD_TASK_SUCCESS,
+  ADD_TASK_FAILURE,
+  DELETE_TASK_REQUEST,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_FAILURE,
 } from "../../constants";
 
 import { startLoading, stopLoading } from "../../utils";
@@ -101,6 +114,58 @@ function reducerLesson(state = initialState, action = {}) {
       };
 
     case GET_LESSON_FAILURE:
+      return stopLoading(state, action);
+
+    case ADD_PAGE_REQUEST:
+      return startLoading(state, action);
+
+    case ADD_PAGE_SUCCESS:
+      return {
+        ...state,
+        lesson: action.lesson,
+        error: false,
+        loading: false
+      };
+    case ADD_PAGE_FAILURE:
+      return stopLoading(state, action);
+
+    case DELETE_PAGE_REQUEST:
+      return startLoading(state, action);
+
+    case DELETE_PAGE_SUCCESS:
+      return {
+        ...state,
+        lesson: action.lesson,
+        error: false,
+        loading: false
+      };
+    case DELETE_PAGE_FAILURE:
+      return stopLoading(state, action);
+
+    case ADD_TASK_REQUEST:
+      return startLoading(state, action);
+
+    case ADD_TASK_SUCCESS:
+      return {
+        ...state,
+        lesson: action.lesson,
+        error: false,
+        loading: false
+      };
+    case ADD_TASK_FAILURE:
+      return stopLoading(state, action);
+
+    case DELETE_TASK_REQUEST:
+      return startLoading(state, action);
+
+    case DELETE_TASK_SUCCESS:
+      return {
+        ...state,
+        lesson: action.lesson,
+        error: false,
+        loading: false
+      };
+    case DELETE_TASK_FAILURE:
       return stopLoading(state, action);
 
     default:

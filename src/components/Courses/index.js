@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import {
-  CourseChange,
+  changeElement,
   getAllElements,
   addElement,
   deletElement,
@@ -132,7 +132,7 @@ const mapDispatchToProps = dispatch => ({
   getAllCourses: (token, name) => dispatch(getAllElements(token, name)),
 
   changeCourse: (courseIndex, title, description, token, name) =>
-    dispatch(CourseChange(courseIndex, title, description, token, name)),
+    dispatch(changeElement(courseIndex, title, description, token, name)),
 
   changeDnD: (token, id1, id2) => dispatch(changeDnD(token, id1, id2))
 });

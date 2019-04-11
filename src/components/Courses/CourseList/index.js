@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Droppable } from "react-beautiful-dnd";
-import update from "immutability-helper";
+
 
 import Course from "./Course";
-import Card from "./Card.jsx";
+
 import { from } from "rxjs";
 
 const token = localStorage.getItem("userId");

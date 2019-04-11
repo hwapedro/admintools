@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import {
   addTask
-} from "../../../../store/actions";
+} from "../../../../store/actions/actionLessons";
 
 let index = 100;
 class TestConstructor extends Component {

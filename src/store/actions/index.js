@@ -1,6 +1,4 @@
 import {
-  FETCH_LOGIN_SUCCESS,
-  FETCH_LOGIN_FAILURE,
   GETALL_COURSE_SUCCESS,
   GETALL_ELEMENT_FAILURE,
   GETALL_ELEMENT_REQUEST,
@@ -19,24 +17,7 @@ import {
   CHANGE_ELEMENT_REQUEST,
   CHANGE_COURSE_SUCCESS,
   CHANGE_BADGE_SUCCESS,
-  CHANGE_LESSON_SUCCESS,
   CHANGE_ELEMENT_FAILURE,
-  GET_LESSON_REQUEST,
-  GET_LESSON_SUCCESS,
-  GET_LESSON_FAILURE,
-  ADD_PAGE_REQUEST,
-  ADD_PAGE_SUCCESS,
-  ADD_PAGE_FAILURE,
-  DELETE_PAGE_REQUEST,
-  DELETE_PAGE_SUCCESS,
-  DELETE_PAGE_FAILURE,
-  ADD_TASK_REQUEST,
-  ADD_TASK_SUCCESS,
-  ADD_TASK_FAILURE,
-  CHANGE_DND,
-  DELETE_TASK_REQUEST,
-  DELETE_TASK_SUCCESS,
-  DELETE_TASK_FAILURE,
   CHANGE_DND_REQUEST,
   CHANGE_DND_SUCCESS,
   CHANGE_DND_FAILURE
@@ -46,20 +27,6 @@ import AdminService from "../../service";
 
 const adminService = new AdminService();
 
-export const login = (username, password) => dispatch => {
-  adminService
-    .login(username, password)
-    .then(response => {
-      localStorage.setItem("userId", response.body.token);
-      window.history.pushState({}, "", "/courses");
-      window.history.go();
-      dispatch({
-        type: FETCH_LOGIN_SUCCESS,
-        token: response.body.token
-      });
-    })
-    .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE, error: true }));
-};
 
 export const getAllElements = (token, name) => dispatch => {
   dispatch({
@@ -167,29 +134,6 @@ export const changeElement = (
   index,
   title,
   description,
-  exam,
-  token,
-  name
-) => dispatch => {
-  dispatch({
-    type: CHANGE_ELEMENT_REQUEST
-  });
-
-  adminService
-    .changeLesson(index, title, description, exam, token, name)
-    .then(response => {
-      dispatch({
-        type: CHANGE_LESSON_SUCCESS,
-        lesson: response.lesson
-      });
-    })
-    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
-};
-
-export const CourseChange = (
-  index,
-  title,
-  description,
   token,
   name
 ) => dispatch => {
@@ -220,113 +164,6 @@ export const CourseChange = (
     .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
 };
 
-export const getLesson = (token, id) => dispatch => {
-  dispatch({
-    type: GET_LESSON_REQUEST
-  });
-
-  adminService
-    .getLesson(token, id)
-    .then(response => {
-      dispatch({
-        type: GET_LESSON_SUCCESS,
-        lesson: response.lesson
-      });
-    })
-    .catch(error => dispatch({ type: GET_LESSON_FAILURE, error: true }));
-};
-
-export const addLesson = (
-  title,
-  description,
-  exam,
-  token,
-  name
-) => dispatch => {
-  dispatch({
-    type: ADD_ELEMENT_REQUEST
-  });
-
-  adminService
-    .addLesson(title, description, exam, token, name)
-    .then(response => {
-      dispatch({
-        type: ADD_LESSON_SUCCESS,
-        lessons: response.lesson
-      });
-    })
-    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
-};
-
-export const addPage = (token, id, text, tasks, needToComplete) => dispatch => {
-  dispatch({
-    type: ADD_PAGE_REQUEST
-  });
-  adminService
-    .addPage(token, id, text, tasks, needToComplete)
-    .then(response => {
-      dispatch({
-        type: ADD_PAGE_SUCCESS,
-        lesson: response.lesson
-      });
-    })
-    .catch(error => dispatch({ type: ADD_PAGE_FAILURE }));
-};
-
-export const deletePage = (token, id) => dispatch => {
-  dispatch({ type: DELETE_PAGE_REQUEST });
-
-  adminService
-    .deletePage(token, id)
-    .then(response => {
-      dispatch({
-        type: DELETE_PAGE_SUCCESS,
-        lesson: response.body.lesson
-      });
-    })
-    .catch(error => dispatch({ type: DELETE_PAGE_FAILURE }));
-};
-
-export const addTask = (token, pageId, type, info) => dispatch => {
-  dispatch({
-    type: ADD_TASK_REQUEST
-  });
-
-  adminService
-    .createTask(token, pageId, type, info)
-    .then(response => {
-      dispatch({
-        type: ADD_TASK_SUCCESS,
-        lesson: response.body.lesson
-      });
-    })
-    .catch(error => dispatch({ type: ADD_TASK_FAILURE }));
-};
-
-export const deleteTask = (token, pageId, taskid) => dispatch => {
-  dispatch({ type: DELETE_TASK_REQUEST });
-
-  adminService
-    .deleteTask(token, pageId, taskid)
-    .then(response => {
-      dispatch({
-        type: DELETE_TASK_SUCCESS,
-        lesson: response.body.lesson
-      });
-    })
-    .catch(error => dispatch({ type: DELETE_TASK_FAILURE }));
-};
-
-// export const changeDnD = (id1, id2) =>{
-//   return {
-//     type: CHANGE_DND,
-//     payload: {
-//       id1: id1,
-//       id2: id2
-//     }
-
-//   }
-// }
 
 export const changeDnD = (token, id1, id2) => dispatch => {
   dispatch({

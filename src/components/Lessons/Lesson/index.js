@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 
 import {
   getLesson,
-  changeElement,
+  changeLesson,
   addPage,
   deletePage,
   deleteTask
-} from "../../../store/actions";
+} from "../../../store/actions/actionLessons";
 import {
   ButtonWrapper,
   TitleInput,
@@ -209,7 +209,7 @@ const mapDispatchToProps = dispatch => ({
   getLesson: (token, id) => dispatch(getLesson(token, id)),
   changeLesson: (lessonsIndex, title, description, exam, token, name) =>
     dispatch(
-      changeElement(lessonsIndex, title, description, exam, token, name)
+      changeLesson(lessonsIndex, title, description, exam, token, name)
     ),
   addPage: (token, id, text, tasks, needToComplete) =>
     dispatch(addPage(token, id, text, tasks, needToComplete)),
