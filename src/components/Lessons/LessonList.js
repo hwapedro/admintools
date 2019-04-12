@@ -104,13 +104,6 @@ class LessonsList extends Component {
             <ButtonWrapper>
               <SignInButton
                 onClick = {()=>this.goTo(lesson._id)}
-                // onClick={() =>
-                //   this.getParams(
-                //     lesson._id,
-                //     lesson.title,
-                //     lesson.description
-                //   )
-                // }
               >
                 CHANGE Lessons
               </SignInButton>

@@ -2,7 +2,6 @@ import React from "react";
 
 const TaskList = ({ page, deleteTask }) => {
   let taskList;
- 
 
   taskList = page.tasks.map(task => {
     
@@ -10,7 +9,7 @@ const TaskList = ({ page, deleteTask }) => {
     return (
       
       <li key={task._id}>
-        <span> {task._id}</span>
+        <span> {task.info.name}</span>
         <button
           onClick={() => deleteTask(token, page._id, task._id)
           }

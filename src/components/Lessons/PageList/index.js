@@ -6,12 +6,11 @@ class PageList extends Component {
 
 
   render() {
-
+  
    const {pages, deletePage, deleteTask} = this.props
     return (
       <>
        <ul><Page pages = {pages} deletePage={deletePage} deleteTask={deleteTask}/></ul>
-       
       </>
     );
   }

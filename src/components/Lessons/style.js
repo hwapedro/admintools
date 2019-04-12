@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   padding-top: 1rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -95,6 +95,7 @@ export const ButtonWrapper = styled.div`
   margin-top: 0.5rem;
 `;
 export const LessonButton = styled.button`
+  margin-top: 0.5rem; 
   width: 150px;
   height: 40px;
   border: 0;
@@ -112,6 +113,7 @@ export const LessonButton = styled.button`
   }
   margin-right: 1rem;
 `;
+
 
 //SET LESSON CONSTRUCTION
 

@@ -14,7 +14,6 @@ import {
   GET_LESSON_REQUEST,
   GET_LESSON_SUCCESS,
   GET_LESSON_FAILURE,
-
   ADD_PAGE_REQUEST,
   ADD_PAGE_SUCCESS,
   ADD_PAGE_FAILURE,
@@ -26,7 +25,7 @@ import {
   ADD_TASK_FAILURE,
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_FAILURE,
+  DELETE_TASK_FAILURE
 } from "../../constants";
 
 import { startLoading, stopLoading } from "../../utils";
@@ -36,7 +35,8 @@ const initialState = {
   loading: false,
   error: null,
   lessons: [],
-  lesson: {}
+  lesson: {},
+  pages: []
 };
 
 function reducerLesson(state = initialState, action = {}) {
@@ -109,6 +109,7 @@ function reducerLesson(state = initialState, action = {}) {
       return {
         ...state,
         lesson: action.lesson,
+        pages: action.lesson.pages,
         loading: false,
         error: false
       };
@@ -148,7 +149,11 @@ function reducerLesson(state = initialState, action = {}) {
     case ADD_TASK_SUCCESS:
       return {
         ...state,
-        lesson: action.lesson,
+        pages: state.pages.map(page =>
+          page._id === action.pageId
+            ? { ...page, tasks: [...page.tasks, action.task] }
+            : page
+        ),
         error: false,
         loading: false
       };
@@ -159,9 +164,11 @@ function reducerLesson(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case DELETE_TASK_SUCCESS:
+    console.log( action.lesson)
       return {
         ...state,
         lesson: action.lesson,
+        pages: action.lesson.pages,
         error: false,
         loading: false
       };

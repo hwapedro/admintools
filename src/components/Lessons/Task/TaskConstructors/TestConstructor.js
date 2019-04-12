@@ -65,7 +65,7 @@ class TestConstructor extends Component {
     const info = this.state;
     const { pageId } = this.props
     const type = "test"
-    this.props.addTask(token, pageId, type, info,    );
+    this.props.addTask(token, pageId, type, info);
   };
 
   setParams = event => {

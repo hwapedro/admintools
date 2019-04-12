@@ -15,7 +15,7 @@ class Page extends Component {
     const { pages, deletePage, deleteTask } = this.props;
     let token = localStorage.getItem("userId");
     let list;
-    console.log()
+
     if (pages) {
       list = pages.map(page => {
         if (page.tasks) {

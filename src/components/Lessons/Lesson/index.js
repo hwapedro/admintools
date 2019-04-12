@@ -9,6 +9,7 @@ import {
   deletePage,
   deleteTask
 } from "../../../store/actions/actionLessons";
+
 import {
   ButtonWrapper,
   TitleInput,
@@ -25,7 +26,7 @@ import {
 
 import Menu from "../../Menu";
 import Spinner from "../../Spinner";
-import Pages from "../PageList";
+import PageList from "../PageList";
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
@@ -88,7 +89,9 @@ class Lesson extends Component {
   };
 
   render() {
-    const { lesson, loading, deletePage, deleteTask } = this.props;
+    
+    const { lesson, loading, deletePage, deleteTask, pages } = this.props;
+    console.log(pages)
     if (loading) {
       return (
         <>
@@ -166,16 +169,18 @@ class Lesson extends Component {
               {/* <LabelElement>courseIndex :</LabelElement>
               <TitleSpan> {lesson.courseIndex}</TitleSpan> */}
             </ElementWrapper>
+
+            <ButtonWrapper>
+              <LessonButton onClick={this.addPage}>Add Page</LessonButton>
+            </ButtonWrapper>
+
+            <PageList
+              pages={pages}
+              id={lesson._id}
+              deletePage={deletePage}
+              deleteTask={deleteTask}
+            />
           </Wrapper>
-          <ButtonWrapper>
-            <LessonButton onClick={this.addPage}>Add Page</LessonButton>
-          </ButtonWrapper>
-          <Pages
-            pages={lesson.pages}
-            id={lesson._id}
-            deletePage={deletePage}
-            deleteTask={deleteTask}
-          />
         </>
       );
     }
@@ -186,6 +191,7 @@ Lesson.defaultProps = {
   lesson: [],
   loading: false,
   error: false,
+  pages: [],
 
   getLesson() {},
   changeLesson() {}
@@ -202,15 +208,14 @@ Lesson.propTypes = {
 
 const mapStateToProps = state => ({
   lesson: state.reducerLessons.lesson,
-  loading: state.reducerLessons.loading
+  loading: state.reducerLessons.loading,
+  pages: state.reducerLessons.pages
 });
 
 const mapDispatchToProps = dispatch => ({
   getLesson: (token, id) => dispatch(getLesson(token, id)),
   changeLesson: (lessonsIndex, title, description, exam, token, name) =>
-    dispatch(
-      changeLesson(lessonsIndex, title, description, exam, token, name)
-    ),
+    dispatch(changeLesson(lessonsIndex, title, description, exam, token, name)),
   addPage: (token, id, text, tasks, needToComplete) =>
     dispatch(addPage(token, id, text, tasks, needToComplete)),
   deletePage: (token, id) => dispatch(deletePage(token, id)),
