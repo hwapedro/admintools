@@ -150,7 +150,7 @@ export default class AdminService {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, description: description, exam: exam });
+      .send({ title: title, description: description, exam: exam, courseIndex: 1 });
     return response.body;
   }
 

@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-//import { connect } from "react-redux";
 
-//import { deleteTask } from "../../../../store/actions";
-
-//import Tests from "../TaskComponents/Tests";
 import TestConstructor from "./TestConstructor";
-
-// import { throws } from "assert";
+import InputQConstructor from "./InputQConstructor";
 
 class TaskConstructor extends Component {
   state = {
@@ -29,16 +24,15 @@ class TaskConstructor extends Component {
     } else {
       this.setState({ displayTestConstructor: false });
     }
-    // console.log(event.target.value)
   };
 
   titleChange = event => {
     this.setState({ title: event.target.value });
-    //  console.log(this.state.title)
+
   };
 
   getParams = (name, description, question, id) => {
-    // console.log("we working boys");
+
     this.setState({
       taskEditFlag: true,
       info: { name, description, question, id }
@@ -61,15 +55,19 @@ class TaskConstructor extends Component {
               </select>
               {displayTestConstructor ? (
                 <>
-                  <TestConstructor
+                  {/* <TestConstructor
                     oldInfo={this.state.info}
                     edited={false}
                     pageId={this.props.pageId}
-                  />
+                  /> */}
+                  <InputQConstructor pageId={this.props.pageId} />
                 </>
               ) : (
                 <div />
               )}
+              {
+                
+              }
             </div>
           ) : (
             <div>
@@ -77,8 +75,7 @@ class TaskConstructor extends Component {
             </div>
           )}
         </div>
-        {/* <div><Tests /></div> */}
-        {/* <button onClick={()=>this.goTo(page._id)}>To task</button> */}
+   
       </>
     );
   }

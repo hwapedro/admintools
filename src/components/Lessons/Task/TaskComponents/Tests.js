@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-//import { deleteTask, changeTestTask } from "../../../../store/actions";
-
 import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
 
-// import { throws } from "assert";
 let index = 150;
 class Tests extends Component {
   state = {
@@ -16,7 +13,7 @@ class Tests extends Component {
   };
 
   addOption = () => {
-    //console.log(this.state.info.options);
+
     const answer = "";
     const right = false;
     index++;
@@ -76,7 +73,6 @@ class Tests extends Component {
     });
   };
   infoChange = event => {
-    // console.log(event.target.name);
     this.setState({
       info: {
         ...this.state.info,
@@ -98,7 +94,6 @@ class Tests extends Component {
     } else {
       this.setState({ displayTestConstructor: false });
     }
-    // console.log(event.target.value)
   };
 
   getParams = (name, description, question, options, id) => {
