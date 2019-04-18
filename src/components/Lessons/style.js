@@ -35,6 +35,7 @@ export const TitleSpan = styled.span`
   font-size: 1.3rem;
 `;
 
+
 export const TitleInput = styled.input`
   display: flex;
   width: 100%;
@@ -75,6 +76,7 @@ export const DescriptionTextArea = styled.textarea`
 `;
 
 export const ElementsWrapper = styled.ul`
+  margin: 0;
   list-style-type: none;
   width: 1000px;
 `;
@@ -95,7 +97,6 @@ export const ButtonWrapper = styled.div`
   margin-top: 0.5rem;
 `;
 export const LessonButton = styled.button`
-  margin-top: 0.5rem; 
   width: 150px;
   height: 40px;
   border: 0;
@@ -144,3 +145,11 @@ export const ConsturctorWrapper = styled.div`
   border: 1px solid white;
   border-radius: 20px;
 `;
+
+
+
+
+
+
+
+

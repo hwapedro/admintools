@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { DragDropContext } from "react-beautiful-dnd";
+
 import {
   changeElement,
   getAllElements,
   deletElement
 } from "../../store/actions";
-import {addLesson} from "../../store/actions/actionLessons"
+
+import { changeDndLesson } from "../../store/actions/actionLessons";
+
+import { addLesson } from "../../store/actions/actionLessons";
 
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "../Lessons/LessonList";
@@ -22,7 +27,7 @@ class Lessons extends Component {
   }
 
   render() {
-    const { loading, lessons, changeLesson, addLesson, delLesson } = this.props;
+    const { loading, lessons, changeLesson, addLesson, delLesson ,changeDndLesson} = this.props;
     // if (loading) {
     //   return (
     //     <>
@@ -32,20 +37,39 @@ class Lessons extends Component {
     // }
     return (
       <>
-        <SetLesson
-          addLesson={(title, description, exam, token, name) =>
-            addLesson(title, description, exam, token, name)
-          }
-        />
-        <LessonList
-          changeLesson={(lessonsIndex, title, description, token, name) =>
-            changeLesson(lessonsIndex, title, description, token, name)
-          }
-          delLesson={(lessonsIndex, token, name) =>
-            delLesson(lessonsIndex, token, name)
-          }
-          lessons={lessons}
-        />
+        <DragDropContext
+          onDragEnd={result => {
+            if (!result.destination) {
+              return;
+            }
+            console.log(result);
+            if (result.source.index !== result.destination.index) {
+              let token = localStorage.getItem("userId");
+              
+              changeDndLesson(
+                token,
+                lessons[result.source.index].lessonIndex,
+                lessons[result.destination.index].lessonIndex,
+                lessons[result.source.index].courseIndex
+              );
+            }
+          }}
+        >
+          <SetLesson
+            addLesson={(title, description, exam, token, name) =>
+              addLesson(title, description, exam, token, name)
+            }
+          />
+          <LessonList
+            changeLesson={(lessonsIndex, title, description, token, name) =>
+              changeLesson(lessonsIndex, title, description, token, name)
+            }
+            delLesson={(lessonsIndex, token, name) =>
+              delLesson(lessonsIndex, token, name)
+            }
+            lessons={lessons}
+          />
+        </DragDropContext>
       </>
     );
   }
@@ -73,9 +97,9 @@ Lessons.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  lessons: state.reducerLessons.lessons,
-  loading: state.reducerLessons.loading,
-  error: state.reducerLessons.error
+  lessons: state.Lessons.lessons,
+  loading: state.Lessons.loading,
+  error: state.Lessons.error
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -88,7 +112,10 @@ const mapDispatchToProps = dispatch => ({
   getAllLessons: (token, name) => dispatch(getAllElements(token, name)),
 
   changeLesson: (lessonsIndex, title, description, token, name) =>
-    dispatch(changeElement(lessonsIndex, title, description, token, name))
+    dispatch(changeElement(lessonsIndex, title, description, token, name)),
+
+  changeDndLesson: (token, id1, id2, courseIndex) =>
+    dispatch(changeDndLesson(token, id1, id2, courseIndex))
 });
 
 export default connect(

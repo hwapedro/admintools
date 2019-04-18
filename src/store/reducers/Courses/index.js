@@ -102,8 +102,7 @@ function reducerCourses(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case CHANGE_DND_SUCCESS:
-      console.log(DND(state, action.payload.id1, action.payload.id2))
-      return DND(state, action.payload.id1, action.payload.id2);
+      return DND(state, action.payload.id1, action.payload.id2,'courses');
 
 
     case CHANGE_DND_FAILURE:

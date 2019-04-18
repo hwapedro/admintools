@@ -3,7 +3,6 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Droppable } from "react-beautiful-dnd";
 
-
 import Course from "./Course";
 
 import { from } from "rxjs";
@@ -52,12 +51,7 @@ class CourseList extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  moveCard = (dragIndex, hoverIndex) => {
-    const { courses } = this.props;
-
-    this.props.changeDnD(dragIndex, hoverIndex);
-  };
-
+  
   render() {
     const { courses } = this.props;
 
@@ -97,22 +91,6 @@ class CourseList extends Component {
             getParams={this.getParams}
             deleteItem={this.deleteItem}
           />
-
-          // <Card
-          //   key={course.courseIndex}
-          //   index={index}
-          //   id={course.courseIndex}
-          //   text={course.title}
-          //   moveCard={this.moveCard}
-
-          //   Wrap={
-          //     <Course
-          //       course={course}
-          //       getParams={this.getParams}
-          //       deleteItem={this.deleteItem}
-          //     />
-          //   }
-          // />
         );
       }
     });

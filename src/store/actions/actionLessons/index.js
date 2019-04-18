@@ -19,7 +19,10 @@ import {
   ADD_TASK_FAILURE,
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_FAILURE
+  DELETE_TASK_FAILURE,
+  CHANGE_DND_REQUEST,
+  CHANGE_DND_FAILURE,
+  CHANGE_DND_LESSON_SUCCESS
 } from "../../constants";
 
 import AdminService from "../../../service";
@@ -136,7 +139,7 @@ export const addTask = (token, pageId, type, info) => dispatch => {
 
 export const deleteTask = (token, pageId, taskid) => dispatch => {
   dispatch({ type: DELETE_TASK_REQUEST });
-  
+
   adminService
     .deleteTask(token, pageId, taskid)
     .then(response => {
@@ -147,4 +150,24 @@ export const deleteTask = (token, pageId, taskid) => dispatch => {
       });
     })
     .catch(error => dispatch({ type: DELETE_TASK_FAILURE }));
+};
+
+export const changeDndLesson = (token, id1, id2, courseIndex) => dispatch => {
+
+  dispatch({
+    type: CHANGE_DND_REQUEST
+  });
+
+  adminService
+    .DragAndDropLesson(token, id1, id2, courseIndex)
+    .then(response => {
+      dispatch({
+        type: CHANGE_DND_LESSON_SUCCESS,
+        payload: {
+          id1: id1,
+          id2: id2
+        }
+      });
+    })
+    .catch(error => dispatch({ type: CHANGE_DND_FAILURE }));
 };

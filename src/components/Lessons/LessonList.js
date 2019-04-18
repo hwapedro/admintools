@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import PropTypes from 'prop-types'
-import {withRouter} from 'react-router-dom'
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 import checkMark from "../../img/good.png";
 import redCross from "../../img/bad.png";
 
 const token = localStorage.getItem("userId");
 const name = "lesson";
-
-
 
 class LessonsList extends Component {
   state = {
@@ -18,8 +17,6 @@ class LessonsList extends Component {
     changeFlag: false,
     _id: null
   };
-
-  
 
   getParams = (_id, title, description) => {
     this.setState({
@@ -32,7 +29,7 @@ class LessonsList extends Component {
 
   setParams = event => {
     event.preventDefault();
-    const {changeLesson} = this.props
+    const { changeLesson } = this.props;
     const { title, description } = this.state;
     if (title && description)
       changeLesson(
@@ -46,25 +43,22 @@ class LessonsList extends Component {
   };
 
   deleteItem = _id => {
-    const {delLesson} = this.props
+    const { delLesson } = this.props;
     delLesson(_id, token, name);
   };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  
-  goTo = (id) => { 
-    this.props.history.push(`/lesson/${id}`)
-  }
+
+  goTo = id => {
+    this.props.history.push(`/lesson/${id}`);
+  };
 
   render() {
-    const {lessons} = this.props
-    let list = lessons.map(lesson => {
-      if (
-        this.state.changeFlag &&
-        lesson._id === this.state._id
-      ) {
+    const { lessons } = this.props;
+    let list = lessons.map((lesson, index) => {
+      if (this.state.changeFlag && lesson._id === this.state._id) {
         return (
           <ElementWrapper key={lesson._id}>
             <form onSubmit={this.setParams}>
@@ -89,37 +83,63 @@ class LessonsList extends Component {
         );
       } else {
         return (
-          <ElementWrapper key={lesson._id} >
-            <LabelElement >Name of Lessons :</LabelElement>
-            <TitleSpan> {lesson.title}</TitleSpan>
-            <LabelElement>Description of Lessons : </LabelElement>
-            <DescriptionSpan>{lesson.description}</DescriptionSpan>
-            <LabelElement>EXAM :</LabelElement>
-              {lesson.exam ? (
-                <ImgMark src={checkMark} />
-              ) : (
-                <ImgCross src={redCross} />
-              )}
-              <br />
-            <ButtonWrapper>
-              <SignInButton
-                onClick = {()=>this.goTo(lesson._id)}
+          <Draggable
+            key={lesson._id}
+            draggableId={`draggableId-lesson-${lesson._id}`}
+            index={index}
+          >
+            {provided => (
+              <ElementWrapper
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                key={lesson._id}
               >
-                CHANGE Lessons
-              </SignInButton>
-              <SignInButton
-                onClick={() => this.deleteItem(lesson._id)}
-              >
-                DELETE Lessons
-              </SignInButton>
-            </ButtonWrapper>
-          </ElementWrapper>
+                <LabelElement>Name of Lessons :</LabelElement>
+                <TitleSpan> {lesson.title}</TitleSpan>
+                <LabelElement>Description of Lessons : </LabelElement>
+                <DescriptionSpan>{lesson.description}</DescriptionSpan>
+                <LabelElement>EXAM :</LabelElement>
+                {lesson.exam ? (
+                  <ImgMark src={checkMark} />
+                ) : (
+                  <ImgCross src={redCross} />
+                )}
+                <br />
+                <ButtonWrapper>
+                  <SignInButton onClick={() => this.goTo(lesson._id)}>
+                    CHANGE Lessons
+                  </SignInButton>
+                  <SignInButton
+                    onClick={() => {
+                      if (window.confirm("Delete the item?")) {
+                        this.deleteItem(lesson._id);
+                      }
+                    }}
+                  >
+                    DELETE Lessons
+                  </SignInButton>
+                </ButtonWrapper>
+              </ElementWrapper>
+            )}
+          </Draggable>
         );
       }
     });
     return (
       <Wrapper>
-        <ElementsWrapper>{list}</ElementsWrapper>
+        <Droppable droppableId="droppable">
+          {provided => (
+            <ElementsWrapper
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              {list}
+              {provided.placeholder}
+            </ElementsWrapper>
+          )}
+        </Droppable>
       </Wrapper>
     );
   }
@@ -127,23 +147,22 @@ class LessonsList extends Component {
 
 export default withRouter(LessonsList);
 
-
 LessonsList.defaultProps = {
   lessons: [],
   loading: false,
   error: false,
   delLesson() {},
   changeLesson() {}
-}
+};
 
 LessonsList.propTypes = {
-  lessons:  PropTypes.arrayOf(PropTypes.object),
+  lessons: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,
 
   delLesson: PropTypes.func,
-  changeLesson: PropTypes.func,
-}
+  changeLesson: PropTypes.func
+};
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -245,10 +264,8 @@ export const ImgMark = styled.img`
 `;
 
 export const ImgCross = styled.img`
-  
   width: 2rem;
   height: 2rem;
   margin-left: 1rem;
   margin-bottom: -0.4rem;
-
 `;

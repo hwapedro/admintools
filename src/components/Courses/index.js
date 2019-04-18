@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 
+
 import {
   changeElement,
   getAllElements,
@@ -20,6 +21,7 @@ const name = "course";
 
 class Courses extends Component {
   componentDidMount() {
+    console.log("asdasdsad");
     const { getAllCourses } = this.props;
     let token = localStorage.getItem("userId");
     getAllCourses(token, name);
@@ -51,21 +53,22 @@ class Courses extends Component {
           </>
         ) : null} */}
 
-        {!error && !loading &&(
+        {!error && !loading && (
           <>
             <DragDropContext
               onDragEnd={result => {
+                if (!result.destination) {
+                  return;
+                }
+
                 if (result.source.index !== result.destination.index) {
                   let token = localStorage.getItem("userId");
-                  console.log(
-                    courses[result.source.index].courseIndex,
-                    courses[result.destination.index].courseIndex
-                  );
+
                   changeDnD(
                     token,
                     courses[result.source.index].courseIndex,
                     courses[result.destination.index].courseIndex
-                  )
+                  );
                 }
               }}
             >
@@ -77,7 +80,6 @@ class Courses extends Component {
               />
 
               <CoursesList
-                changeDnD={(id1, id2) => changeDnD(id1, id2)}
                 changeCourse={(courseIndex, title, description, token, name) =>
                   changeCourse(courseIndex, title, description, token, name)
                 }
@@ -117,9 +119,9 @@ Courses.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  courses: state.reducerCourses.courses,
-  loading: state.reducerCourses.loading,
-  error: state.reducerCourses.error
+  courses: state.Courses.courses,
+  loading: state.Courses.loading,
+  error: state.Courses.error
 });
 
 const mapDispatchToProps = dispatch => ({

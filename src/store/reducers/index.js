@@ -2,28 +2,21 @@ import {
   FETCH_LOGIN_REQUEST,
   FETCH_LOGIN_SUCCESS,
   FETCH_LOGIN_FAILURE,
-
   GETALL_ELEMENT_FAILURE,
   GETALL_ELEMENT_REQUEST,
   GETALL_LESSON_SUCCESS,
   GETALL_BADGE_SUCCESS,
   ADD_ELEMENT_REQUEST,
-  
   ADD_BADGE_SUCCESS,
   ADD_LESSON_SUCCESS,
   ADD_ELEMENT_FAILURE,
   DELETE_ELEMENT_REQUEST,
- 
   DELETE_BADGE_SUCCESS,
   DELETE_LESSON_SUCCESS,
   DELETE_ELEMENT_FAILURE,
   CHANGE_ELEMENT_REQUEST,
- 
-  CHANGE_BADGE_SUCCESS,
-
-  CHANGE_DND
+  CHANGE_BADGE_SUCCESS
 } from "../constants";
-
 
 import { startLoading, stopLoading, DND } from "../utils";
 
@@ -63,7 +56,6 @@ function reducer(state = initialState, action = {}) {
     case ADD_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-
     case ADD_LESSON_SUCCESS:
       return {
         ...state,
@@ -86,8 +78,6 @@ function reducer(state = initialState, action = {}) {
     //GET COURSES BLOCK
     case GETALL_ELEMENT_REQUEST:
       return startLoading(state, action);
-
-
 
     case GETALL_LESSON_SUCCESS:
       return {
@@ -112,8 +102,6 @@ function reducer(state = initialState, action = {}) {
     case DELETE_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-
-
     case DELETE_LESSON_SUCCESS:
       return {
         ...state,
@@ -137,8 +125,6 @@ function reducer(state = initialState, action = {}) {
     case CHANGE_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-
-
     case CHANGE_BADGE_SUCCESS:
       return {
         ...state,
@@ -155,10 +141,6 @@ function reducer(state = initialState, action = {}) {
         loading: false,
         error: false
       };
-
- 
-    case CHANGE_DND:
-      return DND(state, action.payload.id1, action.payload.id2)
 
     default:
       return {

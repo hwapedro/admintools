@@ -15,7 +15,6 @@ const signInSchema = Yup.object().shape({
 });
 
 class LoginScreen extends React.Component {
-
   // componentDidMount() {
   //   const { token } = this.props;
   // }
@@ -39,7 +38,7 @@ class LoginScreen extends React.Component {
           validationSchema={signInSchema}
           onSubmit={this.setLogin}
           render={({ errors, touched }) => (
-            <Form>
+            <Form autocomplete="off">
               <Field
                 name="username"
                 label="username"
@@ -87,14 +86,12 @@ export default withRouter(
   )(LoginScreen)
 );
 
-
 export const Wrapper = styled.div`
   padding-top: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
 `;
 
 export const ButtonWrapper = styled.div`
@@ -108,7 +105,7 @@ export const SignInButton = styled.button`
   height: 40px;
   border: 1px solid #ffffff;
   border-radius: 10px;
-  background-color: ${props => props.theme.button};;
+  background-color: ${props => props.theme.button};
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;

@@ -30,7 +30,7 @@ class App extends Component {
                 {({ match }) => (
                   <CSSTransition
                     in={match != null}
-                    timeout={700}
+                    timeout={300}
                     classNames="page"
                     unmountOnExit
                   >
@@ -89,7 +89,7 @@ const Wrapper = styled.div`
   .page-enter-active {
     opacity: 1;
     transform: scale(1);
-    transition: opacity 500ms, transform 500ms;
+    transition: opacity 300ms, transform 300ms;
   }
 
   .page-exit {
@@ -100,7 +100,7 @@ const Wrapper = styled.div`
   .page-exit-active {
     opacity: 0;
     transform: scale(0.9);
-    transition: opacity 200ms, transform 200ms;
+    transition: opacity 300ms, transform 300ms;
   }
 `;
 

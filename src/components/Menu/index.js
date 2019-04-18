@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import * as route from '../Route/constants'
+import * as route from "../Route/constants";
 
 class Menu extends Component {
   render() {
@@ -10,21 +10,24 @@ class Menu extends Component {
       <>
         <Wrapper>
           <Title> Admintools </Title>
-          <Link style={LinkStyle} to={route.courses}>
-            <ButtonWrapper>
+
+          <ButtonWrapper>
+            <Link style={LinkStyle} to={route.courses}>
               <LinkButton>Courses</LinkButton>
-            </ButtonWrapper>
-          </Link>
-          <Link style={LinkStyle} to={route.lessons}>
-            <ButtonWrapper>
+            </Link>
+          </ButtonWrapper>
+
+          <ButtonWrapper>
+            <Link style={LinkStyle} to={route.lessons}>
               <LinkButton>Lessons</LinkButton>
-            </ButtonWrapper>
-          </Link>
-          <Link style={LinkStyle} to={route.badges}>
-            <ButtonWrapper>
+            </Link>
+          </ButtonWrapper>
+
+          <ButtonWrapper>
+            <Link style={LinkStyle} to={route.badges}>
               <LinkButton>Badges</LinkButton>
-            </ButtonWrapper>
-          </Link>
+            </Link>
+          </ButtonWrapper>
         </Wrapper>
       </>
     );

@@ -117,12 +117,12 @@ export default class AdminService {
       })
       .send({
         type: type,
-        info: info,
+        info: info
       });
     return response;
   }
 
-   async deleteTask(token, id, taskid) {
+  async deleteTask(token, id, taskid) {
     let response = await request
       .del(`${_apiBase}/page/${id}/removeTask/${taskid}`)
       .set({
@@ -134,12 +134,10 @@ export default class AdminService {
 
   //LESSON BLOCK
   async getLesson(token, lessonId) {
-    let response = await request
-      .get(`${_apiBase}/lesson/${lessonId}`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      });
+    let response = await request.get(`${_apiBase}/lesson/${lessonId}`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
     return response.body;
   }
 
@@ -165,7 +163,7 @@ export default class AdminService {
     return response.body;
   }
 
-  async DragAndDrop(token, i1,i2) {
+  async DragAndDropCourse(token, i1, i2) {
     let response = await request
       .put(`${_apiBase}/course/dragged`)
       .set({
@@ -178,10 +176,24 @@ export default class AdminService {
       });
     return response.body;
   }
-  
+
+  async DragAndDropLesson(token, i1, i2, courseIndex) {
+    let response = await request
+      .put(`${_apiBase}/lesson/dragged`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({
+        i1: i1,
+        i2: i2,
+        courseIndex: courseIndex
+      });
+    return response.body;
+  }
 }
 
 const swapi = new AdminService();
-// swapi.DragAndDrop(token,3,1).then(data => console.log(data))
+
 //swapi.createTask(token, "5ca76d78906b1177d3e75247", "test", { heh: 5 });
 // swapi.addTask(token, "5ca5710ad9fd5e30696616a2", "5ca573d6d9fd5e30696616a8" )

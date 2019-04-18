@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+
 import {
   getLesson,
   changeLesson,
@@ -89,9 +90,7 @@ class Lesson extends Component {
   };
 
   render() {
-    
     const { lesson, loading, deletePage, deleteTask, pages } = this.props;
-    console.log(pages)
     if (loading) {
       return (
         <>
@@ -175,7 +174,7 @@ class Lesson extends Component {
             </ButtonWrapper>
 
             <PageList
-              pages={pages}
+              pages={lesson.pages}
               id={lesson._id}
               deletePage={deletePage}
               deleteTask={deleteTask}

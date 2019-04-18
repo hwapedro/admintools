@@ -170,7 +170,7 @@ export const changeDnD = (token, id1, id2) => dispatch => {
     type: CHANGE_DND_REQUEST
   });
   adminService
-    .DragAndDrop(token, id1, id2)
+    .DragAndDropCourse(token, id1, id2)
     .then(response => {
       dispatch({
         type: CHANGE_DND_SUCCESS,

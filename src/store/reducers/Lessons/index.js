@@ -25,18 +25,20 @@ import {
   ADD_TASK_FAILURE,
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_FAILURE
+  DELETE_TASK_FAILURE,
+  CHANGE_DND_LESSON_SUCCESS,
+  CHANGE_DND_FAILURE,
+  CHANGE_DND_REQUEST
 } from "../../constants";
 
-import { startLoading, stopLoading } from "../../utils";
+import { startLoading, stopLoading, DND } from "../../utils";
 
 const initialState = {
   token: null,
   loading: false,
   error: null,
   lessons: [],
-  lesson: {},
-  pages: []
+  lesson: { pages: [] }
 };
 
 function reducerLesson(state = initialState, action = {}) {
@@ -109,7 +111,6 @@ function reducerLesson(state = initialState, action = {}) {
       return {
         ...state,
         lesson: action.lesson,
-        pages: action.lesson.pages,
         loading: false,
         error: false
       };
@@ -149,11 +150,14 @@ function reducerLesson(state = initialState, action = {}) {
     case ADD_TASK_SUCCESS:
       return {
         ...state,
-        pages: state.pages.map(page =>
-          page._id === action.pageId
-            ? { ...page, tasks: [...page.tasks, action.task] }
-            : page
-        ),
+        lesson: {
+          ...state.lesson,
+          pages: state.lesson.pages.map(page =>
+            page._id === action.pageId
+              ? { ...page, tasks: [...page.tasks, action.task] }
+              : page
+          )
+        },
         error: false,
         loading: false
       };
@@ -164,15 +168,23 @@ function reducerLesson(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case DELETE_TASK_SUCCESS:
-    console.log( action.lesson)
+      console.log(action.lesson);
       return {
         ...state,
-        lesson: action.lesson,
-        pages: action.lesson.pages,
+        lesson: { ...action.lesson, pages: action.lesson.pages },
         error: false,
         loading: false
       };
     case DELETE_TASK_FAILURE:
+      return stopLoading(state, action);
+
+    case CHANGE_DND_REQUEST:
+      return startLoading(state, action);
+
+    case CHANGE_DND_LESSON_SUCCESS:
+      return DND(state, action.payload.id1, action.payload.id2,'lessons');
+
+    case CHANGE_DND_FAILURE:
       return stopLoading(state, action);
 
     default:

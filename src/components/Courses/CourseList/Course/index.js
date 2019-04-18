@@ -23,33 +23,38 @@ class Course extends Component {
         {provided => (
           <ElementWrapper
             ref={provided.innerRef}
-
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-
             key={course.courseIndex}
           >
-              <LabelElement>Name of course :</LabelElement>
-              <TitleSpan> {course.title}</TitleSpan>
-              <LabelElement>Description of course : </LabelElement>
-              <DescriptionSpan>{course.description}</DescriptionSpan>
-              <ButtonWrapper>
-                <SignInButton
-                  onClick={() =>
-                    getParams(
-                      course.courseIndex,
-                      course.title,
-                      course.description
-                    )
+            <LabelElement>Name of course :</LabelElement>
+            <TitleSpan> {course.title}</TitleSpan>
+            <LabelElement>Description of course : </LabelElement>
+            <DescriptionSpan>{course.description}</DescriptionSpan>
+            <ButtonWrapper>
+              <SignInButton
+                onClick={() =>
+                  getParams(
+                    course.courseIndex,
+                    course.title,
+                    course.description
+                  )
+                }
+              >
+                CHANGE COURSE
+              </SignInButton>
+
+              <SignInButton
+                onClick={() => {
+                  if (window.confirm("Delete the item?")) {
+                    deleteItem(course.courseIndex);
                   }
-                >
-                  CHANGE COURSE
-                </SignInButton>
-                <SignInButton onClick={() => deleteItem(course.courseIndex)}>
-                  DELETE COURSE
-                </SignInButton>
-              </ButtonWrapper>
-            </ElementWrapper>
+                }}
+              >
+                DELETE COURSE
+              </SignInButton>
+            </ButtonWrapper>
+          </ElementWrapper>
         )}
       </Draggable>
     );
