@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 
-
 import {
   changeElement,
   getAllElements,
@@ -63,7 +62,10 @@ class Courses extends Component {
 
                 if (result.source.index !== result.destination.index) {
                   let token = localStorage.getItem("userId");
-
+                  console.log(
+                    courses[result.source.index].courseIndex,
+                    courses[result.destination.index].courseIndex
+                  );
                   changeDnD(
                     token,
                     courses[result.source.index].courseIndex,

@@ -13,22 +13,27 @@ export const stopLoading = (state, { error }) => ({
 });
 
 export const DND = (state, id1, id2, name) => {
+  id1--;
+  id2--;
   switch (name) {
-    case 'courses':
+    case "courses":
+      id1--;
+      id2--;
       let courses = update(state.courses, {
         $splice: [[id1, 1], [id2, 0, state.courses[id1]]]
       });
-
+      console.log(courses);
       return {
         ...state,
         loading: false,
         courses: courses.map((course, i) => {
-          course.courseIndex = i;
+          course.courseIndex = i + 1;
+          console.log(course, i);
           return course;
         })
       };
 
-    case 'lessons':
+    case "lessons":
       let lessons = update(state.lessons, {
         $splice: [[id1, 1], [id2, 0, state.lessons[id1]]]
       });
@@ -37,7 +42,7 @@ export const DND = (state, id1, id2, name) => {
         ...state,
         loading: false,
         lessons: lessons.map((lesson, i) => {
-          lesson.lessonIndex = i;
+          lesson.lessonIndex = i + 1;
           return lesson;
         })
       };
