@@ -206,9 +206,9 @@ Lesson.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  lesson: state.reducerLessons.lesson,
-  loading: state.reducerLessons.loading,
-  pages: state.reducerLessons.pages
+  lesson: state.Lessons.lesson,
+  loading: state.Lessons.loading,
+  pages: state.Lessons.pages
 });
 
 const mapDispatchToProps = dispatch => ({

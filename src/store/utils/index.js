@@ -17,8 +17,6 @@ export const DND = (state, id1, id2, name) => {
   id2--;
   switch (name) {
     case "courses":
-      id1--;
-      id2--;
       let courses = update(state.courses, {
         $splice: [[id1, 1], [id2, 0, state.courses[id1]]]
       });
@@ -27,8 +25,9 @@ export const DND = (state, id1, id2, name) => {
         ...state,
         loading: false,
         courses: courses.map((course, i) => {
-          course.courseIndex = i + 1;
           console.log(course, i);
+          course.courseIndex = i + 1;
+          
           return course;
         })
       };
