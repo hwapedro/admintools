@@ -34,6 +34,14 @@ class QConstructor extends Component {
     this.setState({ options: newOptions });
   };
 
+  deleteOption = index => {
+    let newOptions = this.state.options.filter(
+      option => option.index !== index
+    );
+    this.setState({ options: newOptions });
+  };
+
+
   addQTask = token => {
     const info = this.state;
     const { pageId } = this.props;
