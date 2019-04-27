@@ -122,6 +122,20 @@ export default class AdminService {
     return response;
   }
 
+  async changeTask(token, taskId, type, info) {
+    let response = await request
+      .put(`${_apiBase}/task/${taskId}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({
+        type: type,
+        info: info
+      });
+    return response;
+  }
+
   async deleteTask(token, id, taskid) {
     let response = await request
       .del(`${_apiBase}/page/${id}/removeTask/${taskid}`)
@@ -195,5 +209,5 @@ export default class AdminService {
 
 const swapi = new AdminService();
 
-//swapi.createTask(token, "5ca76d78906b1177d3e75247", "test", { heh: 5 });
+//swapi.changeTask(token, "5cc02d2f77c7d77fea5af993", "test", { heh: 5 });
 // swapi.addTask(token, "5ca5710ad9fd5e30696616a2", "5ca573d6d9fd5e30696616a8" )

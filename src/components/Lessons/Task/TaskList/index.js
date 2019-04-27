@@ -1,23 +1,23 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
-const TaskList = ({ page, deleteTask }) => {
-  let taskList;
+const goTo = (lessonId, taskId, history) => {
+  history.push(`/task/${lessonId}/${taskId}`);
+};
 
-  taskList = page.tasks.map(task => {
-    
+const TaskList = (props) => {
+  const {lessonId, page, deleteTask} = props
+  const taskList = page.tasks.map(task => {
     let token = localStorage.getItem("userId");
     return (
-      
       <li key={task._id}>
-        <span> {task.info.text}</span>
-        <button
-          onClick={() => deleteTask(token, page._id, task._id)
-          }
-        >
-          Delete Task</button>
+        <span onClick={() => goTo(lessonId ,task._id, props.history)}> {task.info.name}</span>
+        <button onClick={() => deleteTask(token, page._id, task._id)}>
+          Delete Task
+        </button>
       </li>
     );
   });
   return taskList;
 };
-export default TaskList;
+export default withRouter(TaskList);

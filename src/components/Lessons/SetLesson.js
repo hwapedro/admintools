@@ -89,7 +89,7 @@ class SetLessons extends Component {
 
               <ButtonWrapper>
                 <ConstructirButton type="submit">
-                  ADD NEW COURSE
+                  ADD NEW LESSON
                 </ConstructirButton>
               </ButtonWrapper>
             </ConsturctorForm>

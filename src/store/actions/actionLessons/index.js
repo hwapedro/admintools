@@ -17,6 +17,9 @@ import {
   ADD_TASK_REQUEST,
   ADD_TASK_SUCCESS,
   ADD_TASK_FAILURE,
+  CHANGE_TASK_REQUEST,
+  CHANGE_TASK_SUCCESS,
+  CHANGE_TASK_FAILURE,
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
   DELETE_TASK_FAILURE,
@@ -127,7 +130,6 @@ export const addTask = (token, pageId, type, info) => dispatch => {
   adminService
     .createTask(token, pageId, type, info)
     .then(response => {
-      console.log(response.body.task);
       dispatch({
         type: ADD_TASK_SUCCESS,
         task: response.body.task,
@@ -135,6 +137,25 @@ export const addTask = (token, pageId, type, info) => dispatch => {
       });
     })
     .catch(error => dispatch({ type: ADD_TASK_FAILURE }));
+};
+
+export const changeTask = (token, taskId, type, info, pageId) => dispatch => {
+  dispatch({
+    type: CHANGE_TASK_REQUEST
+  });
+
+  adminService
+    .changeTask(token, taskId, type, info)
+    .then(response => {
+      console.log(response)
+      dispatch({
+        type: CHANGE_TASK_SUCCESS,
+        task: response.body.task,
+        taskId: taskId,
+        pageId: pageId
+      });
+    })
+    .catch(error => dispatch({ type: CHANGE_TASK_FAILURE }));
 };
 
 export const deleteTask = (token, pageId, taskid) => dispatch => {
@@ -153,7 +174,6 @@ export const deleteTask = (token, pageId, taskid) => dispatch => {
 };
 
 export const changeDndLesson = (token, id1, id2, courseIndex) => dispatch => {
-
   dispatch({
     type: CHANGE_DND_REQUEST
   });

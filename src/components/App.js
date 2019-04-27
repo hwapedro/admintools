@@ -5,12 +5,13 @@ import styled from "styled-components";
 
 import Courses from "../components/Courses";
 import Lessons from "../components/Lessons";
-import Tasks from "../components/Lessons/Task/TaskComponents/Tests";
+import Tests from "../components/Lessons/Task/TaskComponents/Tests"
 import Lesson from "../components/Lessons/Lesson";
 import Badges from "../components/Badges";
 import * as route from "../components/Route/constants";
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/LoginScreen";
+
 let i = 0;
 class App extends Component {
   routes = [
@@ -44,6 +45,7 @@ class App extends Component {
             <Route
               path={route.lesson}
               render={({ match }) => {
+                
                 const { id } = match.params;
                 return <Lesson itemId={id} />;
               }}
@@ -51,9 +53,9 @@ class App extends Component {
             <Route
               path={route.task}
               render={({ match, history }) => {
-                console.log(match);
-                const { id } = match.params;
-                return <Tasks itemId={id} history={history} />;
+                console.log(match.params)               
+                const { lessonId, taskId } = match.params;
+                return <Tests lessonId={lessonId} taskId={taskId} history={history} />;
               }}
             />
           </Layout>

@@ -174,6 +174,7 @@ class Lesson extends Component {
             </ButtonWrapper>
 
             <PageList
+              lessonId={lesson._id}
               pages={lesson.pages}
               id={lesson._id}
               deletePage={deletePage}

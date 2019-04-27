@@ -7,10 +7,10 @@ class PageList extends Component {
 
   render() {
   
-   const {pages, deletePage, deleteTask} = this.props
+   const {lessonId, pages, deletePage, deleteTask} = this.props
     return (
       <>
-       <ul><Page pages = {pages} deletePage={deletePage} deleteTask={deleteTask}/></ul>
+       <ul><Page lessonId={lessonId} pages = {pages} deletePage={deletePage} deleteTask={deleteTask}/></ul>
       </>
     );
   }
