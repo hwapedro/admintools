@@ -3,6 +3,8 @@ import {
   GETALL_ELEMENT_FAILURE,
   GETALL_ELEMENT_REQUEST,
   GETALL_LESSON_SUCCESS,
+  GETALL_NEWS_SUCCESS,
+  ADD_NEWS_SUCCESS,
   GETALL_BADGE_SUCCESS,
   ADD_ELEMENT_REQUEST,
   ADD_COURSE_SUCCESS,
@@ -14,6 +16,7 @@ import {
   DELETE_BADGE_SUCCESS,
   DELETE_LESSON_SUCCESS,
   DELETE_ELEMENT_FAILURE,
+  DELETE_NEWS_SUCCESS,
   CHANGE_ELEMENT_REQUEST,
   CHANGE_COURSE_SUCCESS,
   CHANGE_BADGE_SUCCESS,
@@ -26,7 +29,6 @@ import {
 import AdminService from "../../service";
 
 const adminService = new AdminService();
-
 
 export const getAllElements = (token, name) => dispatch => {
   dispatch({
@@ -53,6 +55,12 @@ export const getAllElements = (token, name) => dispatch => {
           dispatch({
             type: GETALL_LESSON_SUCCESS,
             lessons: response.lessons
+          });
+          break;
+        case "news":
+          dispatch({
+            type: GETALL_NEWS_SUCCESS,
+            news: response.articles
           });
           break;
         default:
@@ -89,6 +97,12 @@ export const addElement = (title, description, token, name) => dispatch => {
             lessons: response.lesson
           });
           break;
+        case "news":
+          dispatch({
+            type: ADD_NEWS_SUCCESS,
+            news: response.article
+          });
+          break;
         default:
           break;
       }
@@ -120,6 +134,12 @@ export const deletElement = (index, token, name) => dispatch => {
         case "lesson":
           dispatch({
             type: DELETE_LESSON_SUCCESS,
+            index: index
+          });
+          break;
+          case "news":
+          dispatch({
+            type: DELETE_NEWS_SUCCESS,
             index: index
           });
           break;
@@ -163,7 +183,6 @@ export const changeElement = (
     })
     .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
 };
-
 
 export const changeDnD = (token, id1, id2) => dispatch => {
   dispatch({

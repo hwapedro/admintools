@@ -191,9 +191,26 @@ export default class AdminService {
       });
     return response.body;
   }
+
+  //NEWS BLOCK
+
+  async changeNews(token, title, text, id) {
+    let response = await request
+      .put(`${_apiBase}/news/update/${id}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({ title: title, text: text });
+    return response.body;
+  }
 }
 
 const swapi = new AdminService();
 
 //swapi.createTask(token, "5ca76d78906b1177d3e75247", "test", { heh: 5 });
-// swapi.addTask(token, "5ca5710ad9fd5e30696616a2", "5ca573d6d9fd5e30696616a8" )
+// swapi.addNews(token, "sad", "asdas").then(data => console.log(data));
+
+// swapi.changeNews(token, "111", "222", '5cc1185e77c7d77fea5af996').then(data => console.log(data));
+
+// swapi.getAllNews(token).then(data => console.log(data));

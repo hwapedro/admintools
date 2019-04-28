@@ -46,7 +46,7 @@ class Course extends Component {
 
               <SignInButton
                 onClick={() => {
-                  if (window.confirm("Delete the item?")) {
+                  if (window.confirm("ARE YOU SURE ?")) {
                     deleteItem(course.courseIndex);
                   }
                 }}

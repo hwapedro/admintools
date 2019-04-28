@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 
 import Courses from "../components/Courses";
@@ -8,15 +8,18 @@ import Lessons from "../components/Lessons";
 import Tasks from "../components/Lessons/Task/TaskComponents/Tests";
 import Lesson from "../components/Lessons/Lesson";
 import Badges from "../components/Badges";
-import * as route from "../components/Route/constants";
+import News from "../components/News";
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/LoginScreen";
-let i = 0;
+import * as route from "../components/Route/constants";
+
 class App extends Component {
+
   routes = [
     { path: route.courses, Component: Courses },
     { path: route.lessons, Component: Lessons },
-    { path: route.badges, Component: Badges }
+    { path: route.badges, Component: Badges },
+    { path: route.news, Component: News }
   ];
 
   render() {
