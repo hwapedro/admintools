@@ -9,7 +9,7 @@ const TaskList = ({ page, deleteTask }) => {
     return (
       
       <li key={task._id}>
-        <span> {task.info.text}</span>
+        <span> {task.info.name}</span>
         <button
           onClick={() => deleteTask(token, page._id, task._id)
           }

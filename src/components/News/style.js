@@ -32,9 +32,7 @@ export const LabelElement = styled.span`
 `;
 
 export const DescriptionSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  display: block;
   margin: 1rem 0;
   font-size: 1.3rem;
 `;

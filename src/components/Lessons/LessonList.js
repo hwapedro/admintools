@@ -3,6 +3,15 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML
+} from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
+
+import EditorText from "../EditorText";
 
 import checkMark from "../../img/good.png";
 import redCross from "../../img/bad.png";
@@ -19,11 +28,17 @@ class LessonsList extends Component {
   };
 
   getParams = (_id, title, description) => {
+    const blocksFromHTML = convertFromHTML(description);
+    const state = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
     this.setState({
       changeFlag: true,
       _id: _id,
       title: title,
-      description: description
+      description: description,
+      editorState: EditorState.createWithContent(state)
     });
   };
 
@@ -42,6 +57,17 @@ class LessonsList extends Component {
     this.setState({ changeFlag: false, _id: null });
   };
 
+  onEditorStateChange = editorState => {
+    let contentState = editorState.getCurrentContent();
+    let rawState = convertToRaw(contentState);
+    let html = stateToHTML(contentState);
+    console.log(rawState);
+
+    this.setState({
+      editorState
+    });
+  };
+
   deleteItem = _id => {
     const { delLesson } = this.props;
     delLesson(_id, token, name);
@@ -57,6 +83,7 @@ class LessonsList extends Component {
 
   render() {
     const { lessons } = this.props;
+    const { editorState } = this.state;
     let list = lessons.map((lesson, index) => {
       if (this.state.changeFlag && lesson._id === this.state._id) {
         return (
@@ -69,10 +96,9 @@ class LessonsList extends Component {
                 value={this.state.title}
               />
               <LabelElement>Description of Lessons : </LabelElement>
-              <DescriptionTextArea
-                name="description"
-                onChange={this.onChange}
-                value={this.state.description}
+              <EditorText
+                editorState={editorState}
+                onEditorStateChange={this.onEditorStateChange}
               />
 
               <ButtonWrapper>
@@ -98,7 +124,11 @@ class LessonsList extends Component {
                 <LabelElement>Name of Lessons :</LabelElement>
                 <TitleSpan> {lesson.title}</TitleSpan>
                 <LabelElement>Description of Lessons : </LabelElement>
-                <DescriptionSpan>{lesson.description}</DescriptionSpan>
+                <DescriptionSpan
+                  dangerouslySetInnerHTML={{
+                    __html: lesson.description
+                  }}
+                />
                 <LabelElement>EXAM :</LabelElement>
                 {lesson.exam ? (
                   <ImgMark src={checkMark} />

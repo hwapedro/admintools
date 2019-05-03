@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
 import {
   ElementWrapper,
@@ -12,20 +14,15 @@ import {
 
 class Article extends Component {
   render() {
-    const { news, getParams, deleteItem, index } = this.props;
-    const createFullPostMarkup = () => {
-      return { __html: news.description.replace(/\n/g,"<br />") };
-    };
-    console.log(createFullPostMarkup());
+    const { news, getParams, deleteItem} = this.props;
     return (
       <ElementWrapper>
         <LabelElement>Name of news :</LabelElement>
         <TitleSpan> {news.title}</TitleSpan>
         <LabelElement>Description of news : </LabelElement>
         <DescriptionSpan
-          whiteSpace='pre-wrap'
           dangerouslySetInnerHTML={{
-            __html: news.description.replace("\n", "<br/>")
+            __html: news.description
           }}
         />
         <LabelElement>Date of create : </LabelElement>

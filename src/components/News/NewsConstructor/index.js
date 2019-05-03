@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import './editor.css'
+
+import EditorText from "../../EditorText";
 
 const name = "news";
 
@@ -26,6 +25,7 @@ class SetArticle extends Component {
     const description = stateToHTML(this.state.editorState.getCurrentContent());
 
     addNews(title, description, token, name);
+
     this.setState({
       constructor: !this.state.constructor
     });
@@ -35,6 +35,7 @@ class SetArticle extends Component {
     let contentState = editorState.getCurrentContent();
     let rawState = convertToRaw(contentState);
     let html = stateToHTML(contentState);
+    console.log(rawState);
 
     this.setState({
       editorState
@@ -52,6 +53,7 @@ class SetArticle extends Component {
   };
 
   render() {
+    const { editorState } = this.state;
     if (this.state.constructor) {
       return (
         <Wrapper>
@@ -79,15 +81,10 @@ class SetArticle extends Component {
                 type="text"
                 onChange={this.onChange}
               /> */}
-              <EditorWrapper className="editor" >
-                <Editor
-                  editorState={this.state.editorState}
-                  wrapperClassName="myEditor-wrapper"
-                  editorClassName="myEditor-editor"
-                  onEditorStateChange={this.onEditorStateChange}
-                  placeholder="description"
-                />
-              </EditorWrapper>
+              <EditorText
+                editorState={editorState}
+                onEditorStateChange={this.onEditorStateChange}
+              />
 
               <ButtonWrapper>
                 <ConstructirButton type="submit">
@@ -121,7 +118,6 @@ SetArticle.propTypes = {
   addNews: PropTypes.func
 };
 
-
 const EditorWrapper = styled.div`
   min-height: 650px;
   box-sizing: border-box;
@@ -134,7 +130,6 @@ const EditorWrapper = styled.div`
   background: #fefefe;
   overflow: auto;
   height: 20rem;
-  line-height: 0.5rem;
 `;
 
 const Wrapper = styled.div`

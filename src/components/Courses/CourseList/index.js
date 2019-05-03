@@ -2,10 +2,16 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Droppable } from "react-beautiful-dnd";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML
+} from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
+import EditorText from "../../EditorText";
 import Course from "./Course";
-
-import { from } from "rxjs";
 
 const token = localStorage.getItem("userId");
 const name = "course";
@@ -19,26 +25,28 @@ class CourseList extends Component {
   };
 
   getParams = (courseIndex, title, description) => {
+    const blocksFromHTML = convertFromHTML(description);
+    const state = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
     this.setState({
       changeFlag: true,
       courseIndex: courseIndex,
       title: title,
-      description: description
+      description: description,
+      editorState: EditorState.createWithContent(state)
     });
   };
 
   setParams = event => {
     event.preventDefault();
-    const { title, description } = this.state;
+    const { title, courseIndex } = this.state;
     const { changeCourse } = this.props;
+    const description = stateToHTML(this.state.editorState.getCurrentContent());
+
     if (title && description)
-      changeCourse(
-        this.state.courseIndex,
-        this.state.title,
-        this.state.description,
-        token,
-        name
-      );
+      changeCourse(courseIndex, title, description, token, name);
     this.setState({ changeFlag: false, courseIndex: null });
   };
 
@@ -51,9 +59,20 @@ class CourseList extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  
+  onEditorStateChange = editorState => {
+    let contentState = editorState.getCurrentContent();
+    let rawState = convertToRaw(contentState);
+    let html = stateToHTML(contentState);
+    console.log(rawState);
+
+    this.setState({
+      editorState
+    });
+  };
+
   render() {
     const { courses } = this.props;
+    const { editorState } = this.state;
 
     let list = courses.map((course, index) => {
       if (
@@ -70,10 +89,9 @@ class CourseList extends Component {
                 value={this.state.title}
               />
               <LabelElement>Description of course : </LabelElement>
-              <DescriptionTextArea
-                name="description"
-                onChange={this.onChange}
-                value={this.state.description}
+              <EditorText
+                editorState={editorState}
+                onEditorStateChange={this.onEditorStateChange}
               />
 
               <ButtonWrapper>

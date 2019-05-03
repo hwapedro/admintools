@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { EditorState, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
 import Article from "./Article";
+
+import EditorText from "../../EditorText";
+
+
 
 const token = localStorage.getItem("userId");
 const name = "news";
@@ -12,7 +18,8 @@ class NewsList extends Component {
     title: "",
     description: "",
     changeFlag: false,
-    _id: null
+    _id: null,
+    editorState: EditorState.createEmpty()
   };
 
   getParams = (_id, title, description) => {
@@ -21,6 +28,17 @@ class NewsList extends Component {
       _id: _id,
       title: title,
       description: description
+    });
+  };
+
+  onEditorStateChange = editorState => {
+    let contentState = editorState.getCurrentContent();
+    let rawState = convertToRaw(contentState);
+    let html = stateToHTML(contentState);
+    console.log(rawState)
+
+    this.setState({
+      editorState
     });
   };
 
@@ -50,6 +68,7 @@ class NewsList extends Component {
 
   render() {
     const { news } = this.props;
+    const { editorState } = this.state;
 
     let list = news.map((news, index) => {
       if (this.state.changeFlag && news._id === this.state._id) {
@@ -63,10 +82,10 @@ class NewsList extends Component {
                 value={this.state.title}
               />
               <LabelElement>Description of news : </LabelElement>
-              <DescriptionTextArea
-                name="description"
-                onChange={this.onChange}
-                value={this.state.description}
+
+              <EditorText
+                editorState={editorState}
+                onEditorStateChange={this.onEditorStateChange}
               />
 
               <ButtonWrapper>
@@ -124,6 +143,19 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
+const EditorWrapper = styled.div`
+  min-height: 650px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  cursor: text;
+  padding: 16px;
+  border-radius: 2px;
+  margin-bottom: 2em;
+  box-shadow: inset 0px 1px 8px -3px #ababab;
+  background: #fefefe;
+  overflow: auto;
+  height: 20rem;
+`;
 // const TitleSpan = styled.span`
 //   display: flex;
 //   justify-content: flex-start;

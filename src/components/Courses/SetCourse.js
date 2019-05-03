@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { EditorState, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
+
+import EditorText from "../EditorText";
+
 const name = "course";
 
 class SetCourse extends Component {
   state = {
     title: "",
     description: "",
-    constructor: false
+    constructor: false,
+    editorState: EditorState.createEmpty()
   };
 
   onSubmit = event => {
@@ -29,8 +35,20 @@ class SetCourse extends Component {
       constructor: !this.state.constructor
     });
   };
+  
+  onEditorStateChange = editorState => {
+    let contentState = editorState.getCurrentContent();
+    let rawState = convertToRaw(contentState);
+    let html = stateToHTML(contentState);
+    console.log(rawState)
+
+    this.setState({
+      editorState
+    });
+  };
 
   render() {
+    const { editorState } = this.state
     if (this.state.constructor) {
       return (
         <Wrapper>
@@ -50,13 +68,10 @@ class SetCourse extends Component {
                 value={this.state.title}
                 onChange={this.onChange}
               />
-              <LabelElement>description</LabelElement>
-              <DescriptionTextArea
-                name="description"
-                placeholder="description"
-                value={this.state.description}
-                type="text"
-                onChange={this.onChange}
+              <LabelElement>description</LabelElement>  
+              <EditorText
+                editorState={editorState}
+                onEditorStateChange={this.onEditorStateChange}
               />
               <ButtonWrapper>
                 <ConstructirButton type="submit">

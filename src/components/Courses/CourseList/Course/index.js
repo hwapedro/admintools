@@ -30,7 +30,11 @@ class Course extends Component {
             <LabelElement>Name of course :</LabelElement>
             <TitleSpan> {course.title}</TitleSpan>
             <LabelElement>Description of course : </LabelElement>
-            <DescriptionSpan>{course.description}</DescriptionSpan>
+            <DescriptionSpan
+              dangerouslySetInnerHTML={{
+                __html: course.description
+              }}
+            />
             <ButtonWrapper>
               <SignInButton
                 onClick={() =>

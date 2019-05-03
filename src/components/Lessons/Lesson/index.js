@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML
+} from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
+import EditorText from "../../EditorText";
 
 import {
   getLesson,
@@ -55,26 +63,35 @@ class Lesson extends Component {
   };
 
   getParams = (_id, title, description, exam) => {
+    const blocksFromHTML = convertFromHTML(description);
+    const state = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+
     this.setState({
       changeFlag: true,
       _id: _id,
       title: title,
       description: description,
-      exam: exam
+      exam: exam,
+      editorState: EditorState.createWithContent(state)
     });
   };
 
   setParams = event => {
     event.preventDefault();
     const { changeLesson } = this.props;
-    const { title, description } = this.state;
+    const { title, _id, exam } = this.state;
+
+    const description = stateToHTML(this.state.editorState.getCurrentContent());
 
     if (title && description)
       changeLesson(
-        this.state._id,
-        this.state.title,
-        this.state.description,
-        this.state.exam,
+        _id,
+        title,
+        description,
+        exam,
         token,
         name
       );
@@ -89,8 +106,20 @@ class Lesson extends Component {
     this.props.addPage(token, this.props.lesson._id, "blah text", [], 0);
   };
 
+  onEditorStateChange = editorState => {
+    let contentState = editorState.getCurrentContent();
+    let rawState = convertToRaw(contentState);
+    let html = stateToHTML(contentState);
+    console.log(rawState);
+
+    this.setState({
+      editorState
+    });
+  };
+
   render() {
     const { lesson, loading, deletePage, deleteTask, pages } = this.props;
+    const { editorState } = this.state;
     if (loading) {
       return (
         <>
@@ -112,10 +141,9 @@ class Lesson extends Component {
                   value={this.state.title}
                 />
                 <LabelElement>Description of Lesson : </LabelElement>
-                <DescriptionTextArea
-                  name="description"
-                  onChange={this.onChange}
-                  value={this.state.description}
+                <EditorText
+                  editorState={editorState}
+                  onEditorStateChange={this.onEditorStateChange}
                 />
                 <LabelElement>EXAM :</LabelElement>
                 {this.state.exam ? (
@@ -155,7 +183,11 @@ class Lesson extends Component {
               <LabelElement>Name of Lessons :</LabelElement>
               <TitleSpan> {lesson.title}</TitleSpan>
               <LabelElement>Description of Lessons : </LabelElement>
-              <DescriptionSpan>{lesson.description}</DescriptionSpan>
+              <DescriptionSpan
+                dangerouslySetInnerHTML={{
+                  __html: lesson.description
+                }}
+              />
 
               <LabelElement>EXAM :</LabelElement>
               {lesson.exam ? (

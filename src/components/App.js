@@ -13,6 +13,9 @@ import Layout from "./hoc/Layout";
 import LoginScreen from "../components/LoginScreen";
 import * as route from "../components/Route/constants";
 
+
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 class App extends Component {
 
   routes = [
