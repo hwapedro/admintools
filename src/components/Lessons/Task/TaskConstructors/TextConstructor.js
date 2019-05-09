@@ -14,83 +14,43 @@ class TextConstructor extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  // addAnswer = () => {
-  //   const answer = "";
-  //   index++;
-  //   this.setState({
-  //     options: [...this.state.options, { answer, index }]
-  //   });
-  // };
-
-  // answerChange = (id, event) => {
-  //   let newOptions = this.state.options.map(option =>
-  //     id === option.index
-  //       ? {
-  //           answer: event.target.value,
-  //           index: option.index
-  //         }
-  //       : option
-  //   );
-  //   this.setState({ options: newOptions });
-  // };
-
-  // deleteOption = index => {
-  //   let newOptions = this.state.options.filter(
-  //     option => option.index !== index
-  //   );
-  //   this.setState({ options: newOptions });
-  // };
-
+  parseAnswer = async string => {
+    const rr = new RegExp(/\~([^~]*?)\~/gi);
+    let options = [];
+    let m;
+    while ((m = rr.exec(string))) {
+      options.push(m[1]);
+    }
+    await this.setState({options: options})
+  };
 
   addTextTask = async token => {
+    await this.parseAnswer(this.state.name)
     const info = this.state;
-    const { pageId } = this.props;
-    const type = "test";
-
-    await this.props.addTask(token, pageId, type, info);
+    const { pageId, addTask } = this.props;
+    const type = "text";
+    await addTask(token, pageId, type, info);
   };
 
   setParams = event => {
     event.preventDefault();
   };
-
+  // \~[a-zA-Z0-9\s_/&$%#?!|,.@"';:^(){}<>[\]+*\-\\]*\~
   render() {
+   // this.parseAnswer();
     let token = localStorage.getItem("userId");
     return (
       <>
         <div>
-        <span>Put words in ~ ~ to mark as answer</span>
+          <span>Put words in ~ ~ to mark as answer</span>
           <div>
-            
             <input
               name="name"
               placeholder="Question"
               onChange={this.infoChange}
             />
           </div>
-          {/* <div>
-            <button onClick={this.addAnswer}>Add answer option</button>
-          </div> */}
-          {/* <form onSubmit={this.setParams}>
-            <div>
-              {this.state.options.map(el => {
-                return (
-                  <div className="form-check" key={el.index}>
-                    <li>
-                      <input
-                        name="answer"
-                        placeholder="Answer"
-                        onChange={e => this.answerChange(el.index, e)}
-                      />
-                      <button onClick={() => this.deleteOption(el.index)}>
-                        Delete option
-                      </button>
-                    </li>
-                  </div>
-                );
-              })}
-            </div>
-          </form> */}
+
           <button onClick={() => this.addTextTask(token)}>Save</button>
         </div>
       </>

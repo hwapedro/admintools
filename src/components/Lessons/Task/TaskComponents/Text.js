@@ -23,33 +23,41 @@ class Test extends Component {
         ...this.state.info,
         [event.target.name]: event.target.value
       }
-    }, console.log(this.state));
+    });
   };
-
-  componentDidMount() {
-    // const { getLesson, lessonId } = this.props;
-    // let token = localStorage.getItem("userId");
-    // getLesson(token, lessonId);
-  }
 
   deleteTask = (token, pageId, taskId) => {
     this.props.deleteTask(token, pageId, taskId);
   };
 
   getParams = (name, options, id) => {
-    this.setState(
-      {
-        taskEditFlag: true,
-        info: { name, options, id }
-      },
-      console.log(this.state)
-    );
+    this.setState({
+      taskEditFlag: true,
+      info: { name, options, id }
+    });
   };
 
-  setParams = (event, token, taskId, type, info, pageId) => {
+  parseAnswer = async string => {
+    const rr = new RegExp(/\~([^~]*?)\~/gi);
+    let options = [];
+    let m;
+    while ((m = rr.exec(string))) {
+      options.push(m[1]);
+    }
+    await this.setState({
+      info: {
+        ...this.state.info,
+        options: options
+      }
+    });
+  };
+
+  setParams = async (event, token, taskId, type, info, pageId) => {
     event.preventDefault();
-    this.props.changeTask(token, taskId, type, info, pageId);
-    this.setState({ taskEditFlag: false, info: {} });
+    await this.parseAnswer(this.state.info.name);
+
+    await this.props.changeTask(token, taskId, type, info, pageId);
+    await this.setState({ taskEditFlag: false, info: {} });
   };
 
   render() {
@@ -72,7 +80,7 @@ class Test extends Component {
                       onChange={this.infoChange}
                     />
                   </div>
-             
+
                   <button
                     onClick={e =>
                       this.setParams(
@@ -95,7 +103,7 @@ class Test extends Component {
               <ul>
                 <li key={task._id}>
                   {task.info.name}
-                               
+
                   <button
                     onClick={() =>
                       this.getParams(
@@ -125,12 +133,9 @@ class Test extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  lesson: state.Lessons.lesson
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  getLesson: (token, id) => dispatch(getLesson(token, id)),
   deleteTask: (token, pageId, taskid) =>
     dispatch(deleteTask(token, pageId, taskid)),
   changeTask: (token, taskId, type, info, pageId) =>

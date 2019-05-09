@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
+
 //import { withRouter } from "react-router-dom";
 
 import Test from "./Tests";
@@ -11,49 +13,59 @@ const goTo = (lessonId, taskId, history) => {
 };
 
 class Tasks extends Component {
-  state = {
-    type: ""
-  };
 
-  componentWillMount () {
+  componentDidMount() {
     const { getLesson, lessonId } = this.props;
     let token = localStorage.getItem("userId");
     getLesson(token, lessonId);
-
   }
 
   goBack = id => {
     this.props.history.push(`/lesson/${id}`);
   };
 
-  constSwitch = (type, taskId, lessonId) =>{
+  constSwitch = (type, taskId, lessonId) => {
     switch (type) {
       case "test":
-        return  <Test taskId={taskId} lessonId={lessonId} lesson={this.props.lesson} /> 
+        return (
+          <Test
+            taskId={taskId}
+            lessonId={lessonId}
+            lesson={this.props.lesson}
+          />
+        );
       case "text":
-        return  <Text taskId={taskId} lessonId={lessonId} lesson={this.props.lesson} /> 
+        return (
+          <Text
+            taskId={taskId}
+            lessonId={lessonId}
+            lesson={this.props.lesson}
+          />
+        );
       default:
         return <div />;
     }
-    }
+  };
 
   render() {
-   
     const { lessonId, taskId, lesson } = this.props;
     let letask;
+
     lesson.pages.map(page => {
       letask = page.tasks.find(task => task._id === taskId);
     });
-  
+
     return (
-      <div>
-        {this.constSwitch(letask.type, taskId, lessonId)}
-        {/* <Text taskId={taskId} lessonId={lessonId} /> */}
+      <>
+        {letask && (
+          <div>{this.constSwitch(letask.type, taskId, lessonId)} </div>
+        )}
         <button onClick={() => this.goBack(this.props.lesson._id)}>Back</button>
-      </div>
+      </>
     );
   }
 }
+
 const mapStateToProps = state => ({
   lesson: state.Lessons.lesson
 });
