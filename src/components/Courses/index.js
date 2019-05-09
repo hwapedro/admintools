@@ -44,11 +44,11 @@ class Courses extends Component {
           </>
         )}
 
-        {loading ? (
+        {loading && (
           <>
             <Spinner />
           </>
-        ) : null}
+        )}
 
         {!error && !loading && (
           <>

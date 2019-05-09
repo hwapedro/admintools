@@ -23,6 +23,9 @@ import {
   ADD_TASK_REQUEST,
   ADD_TASK_SUCCESS,
   ADD_TASK_FAILURE,
+  CHANGE_TASK_REQUEST,
+  CHANGE_TASK_SUCCESS,
+  CHANGE_TASK_FAILURE,
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
   DELETE_TASK_FAILURE,
@@ -164,11 +167,40 @@ function reducerLesson(state = initialState, action = {}) {
     case ADD_TASK_FAILURE:
       return stopLoading(state, action);
 
+    case CHANGE_TASK_REQUEST:
+      return startLoading(state, action);
+
+    //unfinished
+    case CHANGE_TASK_SUCCESS:
+      return {
+        ...state,
+
+        lesson: {
+          ...state.lesson,
+          pages: state.lesson.pages.map(page =>
+            page._id === action.pageId
+              ? {
+                  ...page,
+                  tasks: page.tasks.map(task => 
+                    task._id === action.taskId
+                      ? action.task
+                      : task
+                  )
+                }
+              : page
+          )
+        },
+
+        error: false,
+        loading: false
+      };
+    case CHANGE_TASK_FAILURE:
+      return stopLoading(state, action);
+
     case DELETE_TASK_REQUEST:
       return startLoading(state, action);
 
     case DELETE_TASK_SUCCESS:
-      console.log(action.lesson);
       return {
         ...state,
         lesson: { ...action.lesson, pages: action.lesson.pages },
@@ -182,7 +214,7 @@ function reducerLesson(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case CHANGE_DND_LESSON_SUCCESS:
-      return DND(state, action.payload.id1, action.payload.id2,'lessons');
+      return DND(state, action.payload.id1, action.payload.id2, "lessons");
 
     case CHANGE_DND_FAILURE:
       return stopLoading(state, action);

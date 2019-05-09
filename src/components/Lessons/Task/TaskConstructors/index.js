@@ -1,17 +1,12 @@
 import React, { Component } from "react";
-//import { connect } from "react-redux";
 
-//import { deleteTask } from "../../../../store/actions";
-
-//import Tests from "../TaskComponents/Tests";
 import TestConstructor from "./TestConstructor";
-
-// import { throws } from "assert";
+import TextConstructor from "./TextConstructor";
 
 class TaskConstructor extends Component {
   state = {
     displayConstructor: false,
-    displayTestConstructor: true,
+    displayTaskConstructor: "test",
     taskEditFlag: false
   };
 
@@ -21,24 +16,30 @@ class TaskConstructor extends Component {
   };
 
   selectChange = event => {
-    if (event.target.value === "test") {
-      this.setState({
-        taskType: event.target.value,
-        displayTestConstructor: true
-      });
-    } else {
-      this.setState({ displayTestConstructor: false });
-    }
-    // console.log(event.target.value)
+    this.setState({
+      taskType: event.target.value,
+      displayTaskConstructor: event.target.value
+    });
   };
 
-  titleChange = event => {
-    this.setState({ title: event.target.value });
-    //  console.log(this.state.title)
-  };
+ constSwitch = (displayTaskConstructor) =>{
+  switch (displayTaskConstructor) {
+    case "test":
+      return (
+        <TestConstructor
+          oldInfo={this.state.info}
+          edited={false}
+          pageId={this.props.pageId}
+        />
+      );
+    case "text":
+      return <TextConstructor pageId={this.props.pageId} />;
+    default:
+      return <div />;
+  }
+  }
 
   getParams = (name, description, question, id) => {
-    // console.log("we working boys");
     this.setState({
       taskEditFlag: true,
       info: { name, description, question, id }
@@ -46,7 +47,7 @@ class TaskConstructor extends Component {
   };
 
   render() {
-    const { displayConstructor, displayTestConstructor } = this.state;
+    const { displayConstructor, displayTaskConstructor } = this.state;
     return (
       <>
         <div>
@@ -57,19 +58,25 @@ class TaskConstructor extends Component {
               </div>
               <select onChange={this.selectChange} defaultValue="test">
                 <option value="test">Test</option>
+                <option value="text">Text</option>
                 <option value="none">Placeholder</option>
               </select>
-              {displayTestConstructor ? (
-                <>
-                  <TestConstructor
-                    oldInfo={this.state.info}
-                    edited={false}
-                    pageId={this.props.pageId}
-                  />
-                </>
-              ) : (
-                <div />
-              )}
+              {/* {(displayTaskConstructor) => {
+              switch (displayTaskConstructor) {
+                  case "test":
+                    return (
+                      <TestConstructor
+                        oldInfo={this.state.info}
+                        edited={false}
+                        pageId={this.props.pageId}
+                      />
+                    );
+                  case "text":
+                    return <InputQConstructor pageId={this.props.pageId} />;
+                  default:
+                    return <div />;
+                }
+              }} */}{this.constSwitch(displayTaskConstructor)}
             </div>
           ) : (
             <div>
@@ -77,8 +84,6 @@ class TaskConstructor extends Component {
             </div>
           )}
         </div>
-        {/* <div><Tests /></div> */}
-        {/* <button onClick={()=>this.goTo(page._id)}>To task</button> */}
       </>
     );
   }

@@ -12,7 +12,7 @@ class Page extends Component {
   // };
 
   render() {
-    const { pages, deletePage, deleteTask } = this.props;
+    const { lessonId, pages, deletePage, deleteTask } = this.props;
     let token = localStorage.getItem("userId");
     let list;
 
@@ -24,9 +24,9 @@ class Page extends Component {
               <span> {page.text}</span>
               <TaskConstructor pageId={page._id} />
               <ul>
-              <TaskList page={page} deleteTask={deleteTask} />
+              <TaskList lessonId={lessonId} page={page} deleteTask={deleteTask} />
               </ul>
-              <button onClick={() => deletePage(token, page._id)}>
+              <button onClick={() => deletePage( page._id)}>
                 Delete page
               </button>
               {/* <button onClick={() => this.goTo(page._id)}>To task</button> */}

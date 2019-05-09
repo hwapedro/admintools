@@ -9,8 +9,10 @@ import {
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
+import Spinner from "../../Spinner";
 import EditorText from "../../EditorText";
 import Course from "./Course";
+
 import {
   Wrapper,
   TitleInput,
@@ -74,8 +76,16 @@ class CourseList extends Component {
   };
 
   render() {
-    const { courses } = this.props;
+    const { courses, loading } = this.props;
     const { editorState } = this.state;
+
+    if (loading) {
+      return (
+        <>
+          <Spinner />
+        </>
+      );
+    }
 
     let list = courses.map((course, index) => {
       if (

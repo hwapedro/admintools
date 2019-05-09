@@ -23,7 +23,7 @@ class Lessons extends Component {
   componentDidMount() {
     const { getAllLessons } = this.props;
     let token = localStorage.getItem("userId");
-    getAllLessons(token, name);
+    getAllLessons( name);
   }
 
   render() {
@@ -47,7 +47,7 @@ class Lessons extends Component {
               let token = localStorage.getItem("userId");
               
               changeDndLesson(
-                token,
+                
                 lessons[result.source.index].lessonIndex,
                 lessons[result.destination.index].lessonIndex,
                 lessons[result.source.index].courseIndex
@@ -56,16 +56,16 @@ class Lessons extends Component {
           }}
         >
           <SetLesson
-            addLesson={(title, description, exam, token, name) =>
-              addLesson(title, description, exam, token, name)
+            addLesson={(title, description, exam,  name) =>
+              addLesson(title, description, exam,  name)
             }
           />
           <LessonList
-            changeLesson={(lessonsIndex, title, description, token, name) =>
-              changeLesson(lessonsIndex, title, description, token, name)
+            changeLesson={(lessonsIndex, title, description,  name) =>
+              changeLesson(lessonsIndex, title, description,  name)
             }
-            delLesson={(lessonsIndex, token, name) =>
-              delLesson(lessonsIndex, token, name)
+            delLesson={(lessonsIndex,  name) =>
+              delLesson(lessonsIndex,  name)
             }
             lessons={lessons}
           />
@@ -103,19 +103,19 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam, token, name) =>
-    dispatch(addLesson(title, description, exam, token, name)),
+  addLesson: (title, description, exam,  name) =>
+    dispatch(addLesson(title, description, exam,  name)),
 
-  delLesson: (lessonsIndex, token, name) =>
-    dispatch(deletElement(lessonsIndex, token, name)),
+  delLesson: (lessonsIndex,  name) =>
+    dispatch(deletElement(lessonsIndex,  name)),
 
-  getAllLessons: (token, name) => dispatch(getAllElements(token, name)),
+  getAllLessons: ( name) => dispatch(getAllElements( name)),
 
-  changeLesson: (lessonsIndex, title, description, token, name) =>
-    dispatch(changeElement(lessonsIndex, title, description, token, name)),
+  changeLesson: (lessonsIndex, title, description,  name) =>
+    dispatch(changeElement(lessonsIndex, title, description,  name)),
 
-  changeDndLesson: (token, id1, id2, courseIndex) =>
-    dispatch(changeDndLesson(token, id1, id2, courseIndex))
+  changeDndLesson: ( id1, id2, courseIndex) =>
+    dispatch(changeDndLesson( id1, id2, courseIndex))
 });
 
 export default connect(

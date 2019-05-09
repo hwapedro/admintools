@@ -212,17 +212,9 @@ export default class AdminService {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-    return response.body;
+    return response;
   }
 
 
 }
 
-const swapi = new AdminService();
-
-//swapi.createTask(token, "5ca76d78906b1177d3e75247", "test", { heh: 5 });
-// swapi.addNews(token, "sad", "asdas").then(data => console.log(data));
-
-swapi.changeNews(token, '5cd42c9d57ff8c5bba56b3ae').then(data => console.log(data));
-
-// swapi.getAllNews(token).then(data => console.log(data));
