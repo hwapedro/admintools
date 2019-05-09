@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { DragDropContext } from "react-beautiful-dnd";
-
-
-
 
 import NewsList from "./NewsList";
 import NewsConstructor from "./NewsConstructor";
@@ -13,8 +9,7 @@ import {
   changeElement,
   getAllElements,
   addElement,
-  deletElement,
-  changeDnD
+  deletElement
 } from "../../store/actions";
 
 import Spinner from "../Spinner";
@@ -25,34 +20,49 @@ const name = "news";
 class News extends Component {
   componentDidMount() {
     const { getAllNews } = this.props;
-    let token = localStorage.getItem("userId");
-    getAllNews(token, name);
+    getAllNews(name);
   }
 
   render() {
-    const { loading, error, news, changeDnD, delNews, addNews } = this.props;
-    console.log(news);
+    const {
+      loading,
+      error,
+      news,
+      delArticle,
+      addNews,
+      changeArticle
+    } = this.props;
+
     return (
       <>
         {error && (
           <>
-            <Error />
+            <Error name={name} />
           </>
         )}
 
-        <NewsConstructor
-          addNews={(title, description, token, name) =>
-            addNews(title, description, token, name)
-          }
-        />
+        {loading ? (
+          <>
+            <Spinner />
+          </>
+        ) : null}
 
-        <NewsList
-          //   changeCourse={(courseIndex, title, description, token, name) =>
-          //     changeCourse(courseIndex, title, description, token, name)
-          //   }
-          delNews={(index, token, name) => delNews(index, token, name)}
-          news={news}
-        />
+        {!error && !loading && (
+          <>
+            <NewsConstructor
+              addNews={(title, description, name) =>
+                addNews(title, description, name)
+              }
+            />
+            <NewsList
+              changeArticle={(articleIndex, title, description, name) =>
+                changeArticle(articleIndex, title, description, name)
+              }
+              delArticle={(index, name) => delArticle(index, name)}
+              news={news}
+            />
+          </>
+        )}
       </>
     );
   }
@@ -64,9 +74,9 @@ News.defaultProps = {
   error: false,
 
   addNews() {},
-  //   delCourse() {},
-  getAllNews() {}
-  //   changeCourse() {}
+  delArticle() {},
+  getAllNews() {},
+  changeArticle() {}
 };
 
 News.propTypes = {
@@ -75,9 +85,9 @@ News.propTypes = {
   error: PropTypes.bool,
 
   addNews: PropTypes.func,
-  //   delCourse: PropTypes.func,
-  getAllNews: PropTypes.func
-  //   changeCourse: PropTypes.func
+  delArticle: PropTypes.func,
+  getAllNews: PropTypes.func,
+  changeArticle: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -87,18 +97,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addNews: (title, description, token, name) =>
-    dispatch(addElement(title, description, token, name)),
+  addNews: (title, description, name) =>
+    dispatch(addElement(title, description, name)),
 
-  delNews: (indexndex, token, name) =>
-    dispatch(deletElement(indexndex, token, name)),
+  delArticle: (index, name) => dispatch(deletElement(index, name)),
 
-  getAllNews: (token, name) => dispatch(getAllElements(token, name))
+  getAllNews: name => dispatch(getAllElements(name)),
 
-  //   changeCourse: (courseIndex, title, description, token, name) =>
-  //     dispatch(changeElement(courseIndex, title, description, token, name)),
-
-  //   changeDnD: (token, id1, id2) => dispatch(changeDnD(token, id1, id2))
+  changeArticle: (articleIndex, title, description, name) =>
+    dispatch(changeElement(articleIndex, title, description, name))
 });
 
 export default connect(

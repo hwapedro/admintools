@@ -7,10 +7,13 @@ import {
   ADD_ELEMENT_FAILURE,
   DELETE_ELEMENT_REQUEST,
   DELETE_NEWS_SUCCESS,
-  DELETE_ELEMENT_FAILURE
+  DELETE_ELEMENT_FAILURE,
+  CHANGE_ELEMENT_REQUEST,
+  CHANGE_NEWS_SUCCESS,
+  CHANGE_ELEMENT_FAILURE
 } from "../../constants";
 
-import { startLoading, stopLoading} from "../../utils";
+import { startLoading, stopLoading } from "../../utils";
 
 const initialState = {
   token: null,
@@ -51,6 +54,25 @@ function reducerLesson(state = initialState, action = {}) {
     case GETALL_ELEMENT_FAILURE:
       return stopLoading(state, action);
 
+    //CHANGE BLOCK
+    case CHANGE_ELEMENT_REQUEST:
+      return startLoading(state, action);
+
+    case CHANGE_NEWS_SUCCESS:
+      return {
+        ...state,
+        news: state.news.map(article =>
+          action.article._id === article._id
+            ? action.article
+            : article
+        ),
+        loading: false,
+        error: false
+      };
+
+    case CHANGE_ELEMENT_FAILURE:
+      return stopLoading(state, action);
+
     //DELETE COURSES BLOCK
     case DELETE_ELEMENT_REQUEST:
       return startLoading(state, action);
@@ -66,7 +88,6 @@ function reducerLesson(state = initialState, action = {}) {
     case DELETE_ELEMENT_FAILURE:
       return stopLoading(state, action);
 
-    
     default:
       return {
         ...state

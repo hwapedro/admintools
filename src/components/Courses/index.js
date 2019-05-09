@@ -11,7 +11,7 @@ import {
   changeDnD
 } from "../../store/actions";
 
-import SetCourse from "../Courses/SetCourse";
+import CourseConstructor from "./CourseConstructor";
 import CoursesList from "./CourseList/";
 import Spinner from "../Spinner";
 import Error from "../Error";
@@ -20,10 +20,8 @@ const name = "course";
 
 class Courses extends Component {
   componentDidMount() {
-    console.log("asdasdsad");
     const { getAllCourses } = this.props;
-    let token = localStorage.getItem("userId");
-    getAllCourses(token, name);
+    getAllCourses(name);
   }
 
   render() {
@@ -42,15 +40,15 @@ class Courses extends Component {
       <>
         {error && (
           <>
-            <Error />
+            <Error name={name} />
           </>
         )}
 
-        {/* {loading ? (
+        {loading ? (
           <>
             <Spinner />
           </>
-        ) : null} */}
+        ) : null}
 
         {!error && !loading && (
           <>
@@ -61,33 +59,25 @@ class Courses extends Component {
                 }
 
                 if (result.source.index !== result.destination.index) {
-                  let token = localStorage.getItem("userId");
-                  console.log(
-                    courses[result.source.index].courseIndex,
-                    courses[result.destination.index].courseIndex
-                  );
                   changeDnD(
-                    token,
                     courses[result.source.index].courseIndex,
                     courses[result.destination.index].courseIndex
                   );
                 }
               }}
             >
-              <SetCourse
-                addCourses={(title, description, token, name) =>
-                  addCourses(title, description, token, name)
+              <CourseConstructor
+                addCourses={(title, description, name) =>
+                  addCourses(title, description, name)
                 }
-                getAllCourses={(token, name) => getAllCourses(token, name)}
+                getAllCourses={name => getAllCourses(name)}
               />
 
               <CoursesList
-                changeCourse={(courseIndex, title, description, token, name) =>
-                  changeCourse(courseIndex, title, description, token, name)
+                changeCourse={(courseIndex, title, description, name) =>
+                  changeCourse(courseIndex, title, description, name)
                 }
-                delCourse={(courseIndex, token, name) =>
-                  delCourse(courseIndex, token, name)
-                }
+                delCourse={(courseIndex, name) => delCourse(courseIndex, name)}
                 courses={courses}
               />
             </DragDropContext>
@@ -127,18 +117,17 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addCourses: (title, description, token, name) =>
-    dispatch(addElement(title, description, token, name)),
+  addCourses: (title, description, name) =>
+    dispatch(addElement(title, description, name)),
 
-  delCourse: (courseIndex, token, name) =>
-    dispatch(deletElement(courseIndex, token, name)),
+  delCourse: (courseIndex, name) => dispatch(deletElement(courseIndex, name)),
 
-  getAllCourses: (token, name) => dispatch(getAllElements(token, name)),
+  getAllCourses: name => dispatch(getAllElements(name)),
 
-  changeCourse: (courseIndex, title, description, token, name) =>
-    dispatch(changeElement(courseIndex, title, description, token, name)),
+  changeCourse: (courseIndex, title, description, name) =>
+    dispatch(changeElement(courseIndex, title, description, name)),
 
-  changeDnD: (token, id1, id2) => dispatch(changeDnD(token, id1, id2))
+  changeDnD: (id1, id2) => dispatch(changeDnD(id1, id2))
 });
 
 export default connect(

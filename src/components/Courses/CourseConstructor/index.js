@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { EditorState } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
@@ -16,9 +16,10 @@ import {
   ButtonWrapper
 } from "../style";
 
-const name = "news";
+const name = "course";
 
-class SetArticle extends Component {
+
+export default class CourseCounstructor extends Component {
   state = {
     title: "",
     description: "",
@@ -28,30 +29,28 @@ class SetArticle extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { addNews } = this.props;
-    const { title } = this.state;
+    const { addCourses } = this.props;
+    const { title, constructor } = this.state;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
-    addNews(title, description, name);
-
+    addCourses(title, description, name);
     this.setState({
-      constructor: !this.state.constructor
-    });
-  };
-
-  onEditorStateChange = editorState => {
-    this.setState({
-      editorState
+      constructor: !constructor
     });
   };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
   showConstructor = () => {
     const { constructor } = this.state;
     this.setState({
       constructor: !constructor
+    });
+  };
+
+  onEditorStateChange = editorState => {
+    this.setState({
+      editorState
     });
   };
 
@@ -62,13 +61,13 @@ class SetArticle extends Component {
         <Wrapper>
           <ButtonWrapper>
             <ConstructorButton onClick={this.showConstructor}>
-              ADD NEW ARTICLE
+              ADD NEW COURSE
             </ConstructorButton>
           </ButtonWrapper>
           <DarkGround onClick={this.showConstructor} />
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
-              <LabelElement>TITLE</LabelElement>
+              <LabelElement>title</LabelElement>
               <TitleInput
                 name="title"
                 placeholder="title"
@@ -76,14 +75,14 @@ class SetArticle extends Component {
                 value={title}
                 onChange={this.onChange}
               />
-              <LabelElement>DESCRIPTION</LabelElement>
+              <LabelElement>description</LabelElement>
               <EditorText
                 editorState={editorState}
                 onEditorStateChange={this.onEditorStateChange}
               />
               <ButtonWrapper>
                 <ConstructorButton type="submit">
-                  ADD NEW ARTICLE
+                  ADD NEW COURSE
                 </ConstructorButton>
               </ButtonWrapper>
             </ConsturctorForm>
@@ -95,7 +94,7 @@ class SetArticle extends Component {
       <Wrapper>
         <ButtonWrapper>
           <ConstructorButton onClick={this.showConstructor}>
-            ADD NEW ARTICLE
+            ADD NEW COURSE
           </ConstructorButton>
         </ButtonWrapper>
       </Wrapper>
@@ -103,12 +102,10 @@ class SetArticle extends Component {
   }
 }
 
-export default SetArticle;
-
-SetArticle.defaultProps = {
-  addNews() {}
+CourseCounstructor.defaultProps = {
+  addCourses() {}
 };
 
-SetArticle.propTypes = {
-  addNews: PropTypes.func
+CourseCounstructor.propTypes = {
+  addCourses: PropTypes.func
 };
