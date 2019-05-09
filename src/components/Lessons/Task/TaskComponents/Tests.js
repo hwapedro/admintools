@@ -6,18 +6,18 @@ import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
 
 let index = 150;
-class Tests extends Component {
+class Test extends Component {
   state = {
-    taskType: null,
+    taskType: "test",
     taskEditFlag: false,
     info: {}
   };
 
   
   componentDidMount() {
-    const { getLesson } = this.props;
-    let token = localStorage.getItem("userId");
-    getLesson(token, this.props.lessonId);
+    // const { getLesson, lessonId } = this.props;
+    // let token = localStorage.getItem("userId");
+    // getLesson(token, lessonId);
     
   }
 
@@ -80,6 +80,7 @@ class Tests extends Component {
       }
     });
   };
+
   infoChange = event => {
     this.setState({
       info: {
@@ -89,9 +90,9 @@ class Tests extends Component {
     }, console.log(this.state));
   };
 
-  // deleteTask = (token, pageId, taskId) => {
-  //   this.props.deleteTask(token, pageId, taskId);
-  // };
+  deleteTask = (token, pageId, taskId) => {
+    this.props.deleteTask(token, pageId, taskId);
+  };
 
   selectChange = event => {
     if (event.target.value === "test") {
@@ -108,8 +109,8 @@ class Tests extends Component {
     this.setState({
       taskEditFlag: true,
       info: { name, description, question, options, id }
-    });
-    console.log(this.state)
+    }, console.log(this.state));
+  
   };
 
   setParams = ( event, token, taskId, type, info, pageId) => {
@@ -118,19 +119,15 @@ class Tests extends Component {
     this.setState({ taskEditFlag: false, info: {} });
   };
 
-  goBack = id => {
-    this.props.history.push(`/lesson/${id}`);
-  };
-
+ 
   render() {
     let token = localStorage.getItem("userId");
     const { name, description, question, options } = this.state.info;
     let list
     this.props.lesson.pages.map(page => {
       list = page.tasks.map(task => {
-      // console.log(this.props.lesson)
-
-        if (this.state.taskEditFlag && task._id === this.props.taskId) {
+        if (task._id === this.props.taskId){
+        if (this.state.taskEditFlag ) {
           return (
             <>
               <div>
@@ -179,7 +176,7 @@ class Tests extends Component {
                               checked={el.right}
                               onChange={e => this.setRight(el.index, e)}
                             />
-                            <button onClick={() => this.deleteOption(token, page._id, task._id)}>
+                            <button onClick={() => this.deleteOption(el.index)}>
                               Delete option
                             </button>
                           </li>
@@ -240,17 +237,16 @@ class Tests extends Component {
                 >
                   Edit
                 </button>
-                <button onClick={() => this.props.deleteTask(task._id)}>
+                <button onClick={() => this.props.deleteTask(token, page._id, task._id)}>
                   Delete
                 </button>
-                <button onClick={() => this.goBack(this.state.lesson._id)}>
-                  Back
-                </button>
+              
               </li>
-              }
+              
             </ul>
           );
         }
+      }
       });
     });
     return <>{list}</>;
@@ -271,4 +267,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Tests);
+)(Test);

@@ -5,7 +5,8 @@ import styled from "styled-components";
 
 import Courses from "../components/Courses";
 import Lessons from "../components/Lessons";
-import Tests from "../components/Lessons/Task/TaskComponents/Tests"
+// import Test from "../components/Lessons/Task/TaskComponents/Tests"
+import Tasks from "../components/Lessons/Task/TaskComponents"
 import Lesson from "../components/Lessons/Lesson";
 import Badges from "../components/Badges";
 import * as route from "../components/Route/constants";
@@ -55,7 +56,7 @@ class App extends Component {
               render={({ match, history }) => {
                 console.log(match.params)               
                 const { lessonId, taskId } = match.params;
-                return <Tests lessonId={lessonId} taskId={taskId} history={history} />;
+                return <Tasks lessonId={lessonId} taskId={taskId} history={history} />;
               }}
             />
           </Layout>

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { addTask } from "../../../../store/actions/actionLessons";
 
 let index = 100;
-class QConstructor extends Component {
+class TextConstructor extends Component {
   state = {
     name: "",
     options: []
@@ -14,39 +14,40 @@ class QConstructor extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  addAnswer = () => {
-    const answer = "";
-    index++;
-    this.setState({
-      options: [...this.state.options, { answer, index }]
-    });
-  };
+  // addAnswer = () => {
+  //   const answer = "";
+  //   index++;
+  //   this.setState({
+  //     options: [...this.state.options, { answer, index }]
+  //   });
+  // };
 
-  answerChange = (id, event) => {
-    let newOptions = this.state.options.map(option =>
-      id === option.index
-        ? {
-            answer: event.target.value,
-            index: option.index
-          }
-        : option
-    );
-    this.setState({ options: newOptions });
-  };
+  // answerChange = (id, event) => {
+  //   let newOptions = this.state.options.map(option =>
+  //     id === option.index
+  //       ? {
+  //           answer: event.target.value,
+  //           index: option.index
+  //         }
+  //       : option
+  //   );
+  //   this.setState({ options: newOptions });
+  // };
 
-  deleteOption = index => {
-    let newOptions = this.state.options.filter(
-      option => option.index !== index
-    );
-    this.setState({ options: newOptions });
-  };
+  // deleteOption = index => {
+  //   let newOptions = this.state.options.filter(
+  //     option => option.index !== index
+  //   );
+  //   this.setState({ options: newOptions });
+  // };
 
 
-  addQTask = token => {
+  addTextTask = async token => {
     const info = this.state;
     const { pageId } = this.props;
     const type = "test";
-    this.props.addTask(token, pageId, type, info);
+
+    await this.props.addTask(token, pageId, type, info);
   };
 
   setParams = event => {
@@ -58,17 +59,19 @@ class QConstructor extends Component {
     return (
       <>
         <div>
+        <span>Put words in ~ ~ to mark as answer</span>
           <div>
+            
             <input
               name="name"
               placeholder="Question"
               onChange={this.infoChange}
             />
           </div>
-          <div>
+          {/* <div>
             <button onClick={this.addAnswer}>Add answer option</button>
-          </div>
-          <form onSubmit={this.setParams}>
+          </div> */}
+          {/* <form onSubmit={this.setParams}>
             <div>
               {this.state.options.map(el => {
                 return (
@@ -87,8 +90,8 @@ class QConstructor extends Component {
                 );
               })}
             </div>
-          </form>
-          <button onClick={() => this.addQTask(token)}>Save</button>
+          </form> */}
+          <button onClick={() => this.addTextTask(token)}>Save</button>
         </div>
       </>
     );
@@ -105,4 +108,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(QConstructor);
+)(TextConstructor);

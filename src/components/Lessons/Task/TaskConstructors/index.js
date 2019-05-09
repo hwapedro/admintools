@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import TestConstructor from "./TestConstructor";
-import InputQConstructor from "./InputQConstructor";
+import TextConstructor from "./TextConstructor";
 
 class TaskConstructor extends Component {
   state = {
@@ -22,9 +22,6 @@ class TaskConstructor extends Component {
     });
   };
 
-  // titleChange = event => {
-  //   this.setState({ title: event.target.value });
-  // };
  constSwitch = (displayTaskConstructor) =>{
   switch (displayTaskConstructor) {
     case "test":
@@ -36,7 +33,7 @@ class TaskConstructor extends Component {
         />
       );
     case "text":
-      return <InputQConstructor pageId={this.props.pageId} />;
+      return <TextConstructor pageId={this.props.pageId} />;
     default:
       return <div />;
   }
