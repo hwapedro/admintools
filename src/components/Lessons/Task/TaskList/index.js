@@ -12,7 +12,7 @@ const TaskList = (props) => {
     return (
       <li key={task._id}>
         <span onClick={() => goTo(lessonId ,task._id, props.history)}> {task.info.name}</span>
-        <button onClick={() => deleteTask(token, page._id, task._id)}>
+        <button onClick={() => deleteTask( page._id, task._id)}>
           Delete Task
         </button>
       </li>

@@ -15,9 +15,13 @@ const signInSchema = Yup.object().shape({
 });
 
 class LoginScreen extends React.Component {
-  // componentDidMount() {
-  //   const { token } = this.props;
-  // }
+
+  componentDidMount() {
+    let token = localStorage.getItem("userId");
+    if (token !== null){
+      this.props.history.push('/courses')
+    }
+  }
 
   setLogin = async ({ username, password }) => {
     const { login } = this.props;
@@ -38,7 +42,7 @@ class LoginScreen extends React.Component {
           validationSchema={signInSchema}
           onSubmit={this.setLogin}
           render={({ errors, touched }) => (
-            <Form autocomplete="off">
+            <Form autoComplete="off">
               <Field
                 name="username"
                 label="username"

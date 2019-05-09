@@ -16,7 +16,7 @@ import {
   CHANGE_DND_FAILURE
 } from "../../constants";
 
-import { startLoading, stopLoading, DND} from "../../utils";
+import { startLoading, stopLoading, DND } from "../../utils";
 
 const initialState = {
   token: null,
@@ -83,12 +83,7 @@ function reducerCourses(state = initialState, action = {}) {
         ...state,
         courses: state.courses.map(course =>
           action.course.courseIndex === course.courseIndex
-            ? {
-                _id: action.course._id,
-                title: action.course.title,
-                description: action.course.description,
-                courseIndex: action.course.courseIndex
-              }
+            ? action.course
             : course
         ),
         loading: false,
@@ -102,8 +97,7 @@ function reducerCourses(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case CHANGE_DND_SUCCESS:
-      return DND(state, action.payload.id1, action.payload.id2,'courses');
-
+      return DND(state, action.payload.id1, action.payload.id2, "courses");
 
     case CHANGE_DND_FAILURE:
       return stopLoading(state, action);

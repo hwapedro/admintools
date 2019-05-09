@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-const name = "course";
+const name = "badge";
 
-class SetCourse extends Component {
+export default class BadgeConstructor extends Component {
   state = {
     title: "",
     description: "",
@@ -12,31 +12,31 @@ class SetCourse extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { addCourses } = this.props;
-    const { title, description } = this.state;
-    let token = localStorage.getItem("userId");
-
-    addCourses(title, description, token, name);
+    const { addBadge } = this.props;
+    const { title, description, constructor } = this.state;
+    addBadge(title, description, name);
     this.setState({
-      constructor: !this.state.constructor
+      constructor: !constructor
     });
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
   showConstructor = () => {
+    const { constructor } = this.state;
     this.setState({
-      constructor: !this.state.constructor
+      constructor: !constructor
     });
   };
 
   render() {
-    if (this.state.constructor) {
+    const { constructor, title, description } = this.state;
+    if (constructor) {
       return (
         <Wrapper>
           <ButtonWrapper>
             <ConstructirButton onClick={this.showConstructor}>
-              ADD NEW COURSE
+              ADD NEW badge
             </ConstructirButton>
           </ButtonWrapper>
           <DarkGround onClick={this.showConstructor} />
@@ -47,20 +47,20 @@ class SetCourse extends Component {
                 name="title"
                 placeholder="title"
                 type="text"
-                value={this.state.title}
+                value={title}
                 onChange={this.onChange}
               />
               <LabelElement>description</LabelElement>
               <DescriptionTextArea
                 name="description"
                 placeholder="description"
-                value={this.state.description}
+                value={description}
                 type="text"
                 onChange={this.onChange}
               />
               <ButtonWrapper>
                 <ConstructirButton type="submit">
-                  ADD NEW COURSE
+                  ADD NEW badge
                 </ConstructirButton>
               </ButtonWrapper>
             </ConsturctorForm>
@@ -72,7 +72,7 @@ class SetCourse extends Component {
       <Wrapper>
         <ButtonWrapper>
           <ConstructirButton onClick={this.showConstructor}>
-            ADD NEW COURSE
+            ADD NEW badge
           </ConstructirButton>
         </ButtonWrapper>
       </Wrapper>
@@ -80,14 +80,12 @@ class SetCourse extends Component {
   }
 }
 
-export default SetCourse;
-
-SetCourse.defaultProps = {
-  addCourses() {}
+BadgeConstructor.defaultProps = {
+  addBadges() {}
 };
 
-SetCourse.propTypes = {
-  addCourses: PropTypes.func
+BadgeConstructor.propTypes = {
+  addBadges: PropTypes.func
 };
 
 const Wrapper = styled.div`
@@ -117,7 +115,7 @@ const ConsturctorWrapper = styled.div`
   height: 500px;
   top: 45%;
   left: 50%;
-  z-index: 101;
+  z-index: 102;
   margin-top: -200px;
   margin-left: -330px;
   border: 1px solid white;

@@ -36,11 +36,12 @@ export const DND = (state, id1, id2, name) => {
       let lessons = update(state.lessons, {
         $splice: [[id1, 1], [id2, 0, state.lessons[id1]]]
       });
-
+      console.log(lessons)
       return {
         ...state,
         loading: false,
         lessons: lessons.map((lesson, i) => {
+          
           lesson.lessonIndex = i + 1;
           return lesson;
         })

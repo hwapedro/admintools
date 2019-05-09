@@ -65,7 +65,7 @@ class TestConstructor extends Component {
     const info = this.state;
     const { pageId } = this.props
     const type = "test"
-    this.props.addTask(token, pageId, type, info);
+    this.props.addTask( pageId, type, info);
   };
 
   setParams = event => {
@@ -134,8 +134,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addTask: (token, pageid, type, info, answer) =>
-    dispatch(addTask(token, pageid, type, info, answer))
+  addTask: ( pageid, type, info, answer) =>
+    dispatch(addTask( pageid, type, info, answer))
 });
 
 export default connect(

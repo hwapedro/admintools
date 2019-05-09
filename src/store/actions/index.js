@@ -3,6 +3,8 @@ import {
   GETALL_ELEMENT_FAILURE,
   GETALL_ELEMENT_REQUEST,
   GETALL_LESSON_SUCCESS,
+  GETALL_NEWS_SUCCESS,
+  ADD_NEWS_SUCCESS,
   GETALL_BADGE_SUCCESS,
   ADD_ELEMENT_REQUEST,
   ADD_COURSE_SUCCESS,
@@ -14,21 +16,23 @@ import {
   DELETE_BADGE_SUCCESS,
   DELETE_LESSON_SUCCESS,
   DELETE_ELEMENT_FAILURE,
+  DELETE_NEWS_SUCCESS,
   CHANGE_ELEMENT_REQUEST,
   CHANGE_COURSE_SUCCESS,
   CHANGE_BADGE_SUCCESS,
   CHANGE_ELEMENT_FAILURE,
   CHANGE_DND_REQUEST,
   CHANGE_DND_SUCCESS,
-  CHANGE_DND_FAILURE
+  CHANGE_DND_FAILURE,
+  CHANGE_NEWS_SUCCESS
 } from "../constants";
 
 import AdminService from "../../service";
 
 const adminService = new AdminService();
+const token = localStorage.getItem("token");
 
-
-export const getAllElements = (token, name) => dispatch => {
+export const getAllElements = name => dispatch => {
   dispatch({
     type: GETALL_ELEMENT_REQUEST
   });
@@ -55,6 +59,12 @@ export const getAllElements = (token, name) => dispatch => {
             lessons: response.lessons
           });
           break;
+        case "news":
+          dispatch({
+            type: GETALL_NEWS_SUCCESS,
+            news: response.articles
+          });
+          break;
         default:
           break;
       }
@@ -62,7 +72,7 @@ export const getAllElements = (token, name) => dispatch => {
     .catch(error => dispatch({ type: GETALL_ELEMENT_FAILURE, error: true }));
 };
 
-export const addElement = (title, description, token, name) => dispatch => {
+export const addElement = (title, description, name) => dispatch => {
   dispatch({
     type: ADD_ELEMENT_REQUEST
   });
@@ -89,6 +99,12 @@ export const addElement = (title, description, token, name) => dispatch => {
             lessons: response.lesson
           });
           break;
+        case "news":
+          dispatch({
+            type: ADD_NEWS_SUCCESS,
+            news: response.article
+          });
+          break;
         default:
           break;
       }
@@ -96,7 +112,7 @@ export const addElement = (title, description, token, name) => dispatch => {
     .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
 };
 
-export const deletElement = (index, token, name) => dispatch => {
+export const deletElement = (index, name) => dispatch => {
   dispatch({
     type: DELETE_ELEMENT_REQUEST
   });
@@ -123,6 +139,12 @@ export const deletElement = (index, token, name) => dispatch => {
             index: index
           });
           break;
+        case "news":
+          dispatch({
+            type: DELETE_NEWS_SUCCESS,
+            index: index
+          });
+          break;
         default:
           break;
       }
@@ -130,13 +152,7 @@ export const deletElement = (index, token, name) => dispatch => {
     .catch(error => dispatch({ type: DELETE_ELEMENT_FAILURE, error: true }));
 };
 
-export const changeElement = (
-  index,
-  title,
-  description,
-  token,
-  name
-) => dispatch => {
+export const changeElement = (index, title, description, name) => dispatch => {
   dispatch({
     type: CHANGE_ELEMENT_REQUEST
   });
@@ -157,6 +173,12 @@ export const changeElement = (
             badge: response.badge
           });
           break;
+        case "news":
+          dispatch({
+            type: CHANGE_NEWS_SUCCESS,
+            article: response.article
+          });
+          break;
         default:
           break;
       }
@@ -164,8 +186,7 @@ export const changeElement = (
     .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
 };
 
-
-export const changeDnD = (token, id1, id2) => dispatch => {
+export const changeDnD = (id1, id2) => dispatch => {
   dispatch({
     type: CHANGE_DND_REQUEST
   });

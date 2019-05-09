@@ -17,7 +17,7 @@ class Tasks extends Component {
   componentDidMount() {
     const { getLesson, lessonId } = this.props;
     let token = localStorage.getItem("userId");
-    getLesson(token, lessonId);
+    getLesson( lessonId);
   }
 
   goBack = id => {
@@ -71,7 +71,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getLesson: (token, id) => dispatch(getLesson(token, id))
+  getLesson: ( id) => dispatch(getLesson( id))
 });
 
 export default connect(

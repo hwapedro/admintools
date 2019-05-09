@@ -26,8 +26,8 @@ class Test extends Component {
     });
   };
 
-  deleteTask = (token, pageId, taskId) => {
-    this.props.deleteTask(token, pageId, taskId);
+  deleteTask = ( pageId, taskId) => {
+    this.props.deleteTask( pageId, taskId);
   };
 
   getParams = (name, options, id) => {
@@ -52,11 +52,11 @@ class Test extends Component {
     });
   };
 
-  setParams = async (event, token, taskId, type, info, pageId) => {
+  setParams = async (event,  taskId, type, info, pageId) => {
     event.preventDefault();
     await this.parseAnswer(this.state.info.name);
 
-    await this.props.changeTask(token, taskId, type, info, pageId);
+    await this.props.changeTask( taskId, type, info, pageId);
     await this.setState({ taskEditFlag: false, info: {} });
   };
 
@@ -85,7 +85,7 @@ class Test extends Component {
                     onClick={e =>
                       this.setParams(
                         e,
-                        token,
+                        
                         task._id,
                         task.type,
                         this.state.info,
@@ -117,7 +117,7 @@ class Test extends Component {
                   </button>
                   <button
                     onClick={() =>
-                      this.props.deleteTask(token, page._id, task._id)
+                      this.props.deleteTask( page._id, task._id)
                     }
                   >
                     Delete
@@ -136,10 +136,10 @@ class Test extends Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  deleteTask: (token, pageId, taskid) =>
-    dispatch(deleteTask(token, pageId, taskid)),
-  changeTask: (token, taskId, type, info, pageId) =>
-    dispatch(changeTask(token, taskId, type, info, pageId))
+  deleteTask: ( pageId, taskid) =>
+    dispatch(deleteTask( pageId, taskid)),
+  changeTask: ( taskId, type, info, pageId) =>
+    dispatch(changeTask( taskId, type, info, pageId))
 });
 
 export default connect(

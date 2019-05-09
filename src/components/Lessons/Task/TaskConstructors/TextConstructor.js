@@ -29,7 +29,7 @@ class TextConstructor extends Component {
     const info = this.state;
     const { pageId, addTask } = this.props;
     const type = "text";
-    await addTask(token, pageId, type, info);
+    await addTask( pageId, type, info);
   };
 
   setParams = event => {
@@ -61,8 +61,8 @@ class TextConstructor extends Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  addTask: (token, pageid, type, info, answer) =>
-    dispatch(addTask(token, pageid, type, info, answer))
+  addTask: ( pageid, type, info, answer) =>
+    dispatch(addTask( pageid, type, info, answer))
 });
 
 export default connect(

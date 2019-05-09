@@ -26,7 +26,7 @@ class Page extends Component {
               <ul>
               <TaskList lessonId={lessonId} page={page} deleteTask={deleteTask} />
               </ul>
-              <button onClick={() => deletePage(token, page._id)}>
+              <button onClick={() => deletePage( page._id)}>
                 Delete page
               </button>
               {/* <button onClick={() => this.goTo(page._id)}>To task</button> */}

@@ -2,7 +2,7 @@ import request from "superagent";
 
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOWEzYjc1OTA4NDJiMmE3ZmExODNkNSIsImlhdCI6MTU1MzYxMTc0MH0.Y6QPgQKbv0x3P1zhVQorAUEFqrar4BfceXSG6Oso224";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOWEzYjc1OTA4NDJiMmE3ZmExODNkNSIsImlhdCI6MTU1NzQwNTYzOX0.2k9ntDEFNGLBJWipOL23nP50MP_h0niyO4h_xegnxko";
 
 export default class AdminService {
   async register(username, password) {
@@ -205,6 +205,31 @@ export default class AdminService {
       });
     return response.body;
   }
+
+  //NEWS BLOCK
+
+  async changeNews(token, title, text, id) {
+    let response = await request
+      .put(`${_apiBase}/news/update/${id}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({ title: title, text: text });
+    return response.body;
+  }
+
+  async changeNews(token, id) {
+    let response = await request
+      .put(`${_apiBase}/badge/${id}/icon`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+    return response.body;
+  }
+
+
 }
 
 const swapi = new AdminService();

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import * as route from "../Route/constants";
@@ -28,13 +28,30 @@ class Menu extends Component {
               <LinkButton>Badges</LinkButton>
             </Link>
           </ButtonWrapper>
+
+          <ButtonWrapper>
+            <Link style={LinkStyle} to={route.news}>
+              <LinkButton>News</LinkButton>
+            </Link>
+          </ButtonWrapper>
+
+          <ButtonSignOut>
+            <LinkButton
+              onClick={() => {
+                localStorage.removeItem("userId");
+                this.props.history.push('/')
+              }}
+            >
+              Sign out
+            </LinkButton>
+          </ButtonSignOut>
         </Wrapper>
       </>
     );
   }
 }
 
-export default Menu;
+export default withRouter(Menu);
 
 const LinkStyle = {
   textDecoration: "none",
@@ -44,6 +61,7 @@ const LinkStyle = {
 const Wrapper = styled.div`
   padding-top: 0.5rem;
   padding-left: 2rem;
+  padding-right: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -84,4 +102,12 @@ export const LinkButton = styled.button`
     opacity: 0.9;
     cursor: pointer;
   }
+`;
+export const ButtonSignOut = styled.div`
+  margin-left: auto;
+  margin-right: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 2rem;
 `;

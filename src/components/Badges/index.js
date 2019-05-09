@@ -9,8 +9,8 @@ import {
 } from "../../store/actions";
 
 
-import SetCourse from "../Badges/SetBadge";
-import CoursesList from "../Badges/BadgesList";
+import BadgeConstructor from "./BadgeConstructor";
+import BadgesList from "../Badges/BadgesList";
 import Spinner from "../Spinner";
 
 const name = 'badge'
@@ -18,8 +18,7 @@ const name = 'badge'
 class Badge extends Component {
   componentDidMount() {
     const { getAllBadges } = this.props;
-    let token = localStorage.getItem("userId");
-    getAllBadges(token,name);
+    getAllBadges(name);
   }
 
   
@@ -44,18 +43,18 @@ class Badge extends Component {
       <>
 
 
-        <SetCourse
-          addBadge={(title, description, token, name) =>
-            addBadge(title, description, token, name)
+        <BadgeConstructor
+          addBadge={(title, description,  name) =>
+            addBadge(title, description,  name)
           }
-          getAllBadges={(token, name) => getAllBadges(token, name)}
+          getAllBadges={( name) => getAllBadges( name)}
         />
 
-        <CoursesList
-          changeBadge={(courseIndex, title, description, token, name) =>
-            changeBadge(courseIndex, title, description, token, name)
+        <BadgesList
+          changeBadge={(courseIndex, title, description,  name) =>
+            changeBadge(courseIndex, title, description,  name)
           }
-          delBadge={(courseIndex, token, name) => delBadge(courseIndex, token, name)}
+          delBadge={(courseIndex,  name) => delBadge(courseIndex,  name)}
           badges={badges}
         />
 
@@ -92,16 +91,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addBadge: (title, description, token, name) =>
-    dispatch(addElement(title, description, token, name)),
+  addBadge: (title, description,  name) =>
+    dispatch(addElement(title, description,  name)),
 
-  delBadge: (courseIndex, token, name) =>
-    dispatch(deletElement(courseIndex, token, name)),
+  delBadge: (courseIndex,  name) =>
+    dispatch(deletElement(courseIndex,  name)),
 
-  getAllBadges: (token, name) => dispatch(getAllElements(token, name)),
+  getAllBadges: ( name) => dispatch(getAllElements( name)),
 
-  changeBadge: (courseIndex, title, description, token, name) =>
-    dispatch(changeElement(courseIndex, title, description, token, name))
+  changeBadge: (courseIndex, title, description,  name) =>
+    dispatch(changeElement(courseIndex, title, description,  name))
 });
 
 export default connect(

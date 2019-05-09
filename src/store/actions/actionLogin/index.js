@@ -11,7 +11,7 @@ import {
     adminService
       .login(username, password)
       .then(response => {
-        localStorage.setItem("userId", response.body.token);
+        localStorage.setItem("token", response.body.token);
         window.history.pushState({}, "", "/courses");
         window.history.go();
         dispatch({

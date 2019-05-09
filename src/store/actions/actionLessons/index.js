@@ -31,13 +31,14 @@ import {
 import AdminService from "../../../service";
 
 const adminService = new AdminService();
+const token = localStorage.getItem("token");
 
 export const changeLesson = (
   index,
   title,
   description,
   exam,
-  token,
+
   name
 ) => dispatch => {
   dispatch({
@@ -55,7 +56,7 @@ export const changeLesson = (
     .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
 };
 
-export const getLesson = (token, id) => dispatch => {
+export const getLesson = id => dispatch => {
   dispatch({
     type: GET_LESSON_REQUEST
   });
@@ -75,7 +76,7 @@ export const addLesson = (
   title,
   description,
   exam,
-  token,
+
   name
 ) => dispatch => {
   dispatch({
@@ -93,7 +94,7 @@ export const addLesson = (
     .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
 };
 
-export const addPage = (token, id, text, tasks, needToComplete) => dispatch => {
+export const addPage = (id, text, tasks, needToComplete) => dispatch => {
   dispatch({
     type: ADD_PAGE_REQUEST
   });
@@ -108,7 +109,7 @@ export const addPage = (token, id, text, tasks, needToComplete) => dispatch => {
     .catch(error => dispatch({ type: ADD_PAGE_FAILURE }));
 };
 
-export const deletePage = (token, id) => dispatch => {
+export const deletePage = id => dispatch => {
   dispatch({ type: DELETE_PAGE_REQUEST });
 
   adminService
@@ -122,7 +123,7 @@ export const deletePage = (token, id) => dispatch => {
     .catch(error => dispatch({ type: DELETE_PAGE_FAILURE }));
 };
 
-export const addTask = (token, pageId, type, info) => dispatch => {
+export const addTask = (pageId, type, info) => dispatch => {
   dispatch({
     type: ADD_TASK_REQUEST
   });
@@ -139,7 +140,7 @@ export const addTask = (token, pageId, type, info) => dispatch => {
     .catch(error => dispatch({ type: ADD_TASK_FAILURE }));
 };
 
-export const changeTask = (token, taskId, type, info, pageId) => dispatch => {
+export const changeTask = (taskId, type, info, pageId) => dispatch => {
   dispatch({
     type: CHANGE_TASK_REQUEST
   });
@@ -158,7 +159,7 @@ export const changeTask = (token, taskId, type, info, pageId) => dispatch => {
     .catch(error => dispatch({ type: CHANGE_TASK_FAILURE }));
 };
 
-export const deleteTask = (token, pageId, taskid) => dispatch => {
+export const deleteTask = (pageId, taskid) => dispatch => {
   dispatch({ type: DELETE_TASK_REQUEST });
 
   adminService
@@ -173,7 +174,7 @@ export const deleteTask = (token, pageId, taskid) => dispatch => {
     .catch(error => dispatch({ type: DELETE_TASK_FAILURE }));
 };
 
-export const changeDndLesson = (token, id1, id2, courseIndex) => dispatch => {
+export const changeDndLesson = (id1, id2, courseIndex) => dispatch => {
   dispatch({
     type: CHANGE_DND_REQUEST
   });
