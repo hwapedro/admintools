@@ -23,14 +23,16 @@ import {
   CHANGE_ELEMENT_FAILURE,
   CHANGE_DND_REQUEST,
   CHANGE_DND_SUCCESS,
-  CHANGE_DND_FAILURE
+  CHANGE_DND_FAILURE,
+  CHANGE_NEWS_SUCCESS
 } from "../constants";
 
 import AdminService from "../../service";
 
 const adminService = new AdminService();
+const token = localStorage.getItem("token");
 
-export const getAllElements = (token, name) => dispatch => {
+export const getAllElements = name => dispatch => {
   dispatch({
     type: GETALL_ELEMENT_REQUEST
   });
@@ -70,7 +72,7 @@ export const getAllElements = (token, name) => dispatch => {
     .catch(error => dispatch({ type: GETALL_ELEMENT_FAILURE, error: true }));
 };
 
-export const addElement = (title, description, token, name) => dispatch => {
+export const addElement = (title, description, name) => dispatch => {
   dispatch({
     type: ADD_ELEMENT_REQUEST
   });
@@ -110,7 +112,7 @@ export const addElement = (title, description, token, name) => dispatch => {
     .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
 };
 
-export const deletElement = (index, token, name) => dispatch => {
+export const deletElement = (index, name) => dispatch => {
   dispatch({
     type: DELETE_ELEMENT_REQUEST
   });
@@ -137,7 +139,7 @@ export const deletElement = (index, token, name) => dispatch => {
             index: index
           });
           break;
-          case "news":
+        case "news":
           dispatch({
             type: DELETE_NEWS_SUCCESS,
             index: index
@@ -150,13 +152,7 @@ export const deletElement = (index, token, name) => dispatch => {
     .catch(error => dispatch({ type: DELETE_ELEMENT_FAILURE, error: true }));
 };
 
-export const changeElement = (
-  index,
-  title,
-  description,
-  token,
-  name
-) => dispatch => {
+export const changeElement = (index, title, description, name) => dispatch => {
   dispatch({
     type: CHANGE_ELEMENT_REQUEST
   });
@@ -177,6 +173,12 @@ export const changeElement = (
             badge: response.badge
           });
           break;
+        case "news":
+          dispatch({
+            type: CHANGE_NEWS_SUCCESS,
+            article: response.article
+          });
+          break;
         default:
           break;
       }
@@ -184,7 +186,7 @@ export const changeElement = (
     .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
 };
 
-export const changeDnD = (token, id1, id2) => dispatch => {
+export const changeDnD = (id1, id2) => dispatch => {
   dispatch({
     type: CHANGE_DND_REQUEST
   });

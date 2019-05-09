@@ -2,7 +2,7 @@ import request from "superagent";
 
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOWEzYjc1OTA4NDJiMmE3ZmExODNkNSIsImlhdCI6MTU1MzYxMTc0MH0.Y6QPgQKbv0x3P1zhVQorAUEFqrar4BfceXSG6Oso224";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOWEzYjc1OTA4NDJiMmE3ZmExODNkNSIsImlhdCI6MTU1NzQwNTYzOX0.2k9ntDEFNGLBJWipOL23nP50MP_h0niyO4h_xegnxko";
 
 export default class AdminService {
   async register(username, password) {
@@ -204,6 +204,18 @@ export default class AdminService {
       .send({ title: title, text: text });
     return response.body;
   }
+
+  async changeNews(token, id) {
+    let response = await request
+      .put(`${_apiBase}/badge/${id}/icon`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+    return response.body;
+  }
+
+
 }
 
 const swapi = new AdminService();
@@ -211,6 +223,6 @@ const swapi = new AdminService();
 //swapi.createTask(token, "5ca76d78906b1177d3e75247", "test", { heh: 5 });
 // swapi.addNews(token, "sad", "asdas").then(data => console.log(data));
 
-// swapi.changeNews(token, "111", "222", '5cc1185e77c7d77fea5af996').then(data => console.log(data));
+swapi.changeNews(token, '5cd42c9d57ff8c5bba56b3ae').then(data => console.log(data));
 
 // swapi.getAllNews(token).then(data => console.log(data));

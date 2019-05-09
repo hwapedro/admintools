@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Draggable } from "react-beautiful-dnd";
 
@@ -11,9 +11,7 @@ import {
   SignInButton
 } from "../../style.js";
 
-class Course extends Component {
-  render() {
-    const { course, getParams, deleteItem, index } = this.props;
+export default function Course ({ course, getParams, deleteItem, index }) {
     return (
       <Draggable
         key={course.courseIndex}
@@ -62,7 +60,6 @@ class Course extends Component {
         )}
       </Draggable>
     );
-  }
 }
 
 Course.defaultProps = {
@@ -83,4 +80,3 @@ Course.propTypes = {
   deleteItem: PropTypes.func
 };
 
-export default Course;

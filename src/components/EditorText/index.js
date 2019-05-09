@@ -28,13 +28,13 @@ EditorText.propTypes = {
 };
 
 const EditorWrapper = styled.div`
-  min-height: 650px;
+  min-height: 630px;
   box-sizing: border-box;
   border: 1px solid #ddd;
   cursor: text;
   padding: 16px;
   border-radius: 2px;
-  margin-bottom: 2em;
+  margin-bottom: 0.7em;
   box-shadow: inset 0px 1px 8px -3px #ababab;
   background: #fefefe;
   overflow: auto;
