@@ -49,7 +49,7 @@ export default function Course ({ course, getParams, deleteItem, index }) {
               <SignInButton
                 onClick={() => {
                   if (window.confirm("ARE YOU SURE ?")) {
-                    deleteItem(course.courseIndex);
+                    deleteItem(course._id);
                   }
                 }}
               >

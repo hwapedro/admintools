@@ -30,7 +30,7 @@ class badgeList extends Component {
         this.state.badgeIndex,
         this.state.title,
         this.state.description,
-        token,
+        
         name
       );
     this.setState({ changeFlag: false, badgeIndex: null });
@@ -38,7 +38,7 @@ class badgeList extends Component {
 
   deleteItem = badgeIndex => {
     const {delBadge} = this.props
-    delBadge(badgeIndex, token, name);
+    delBadge(badgeIndex,  name);
   };
 
   onChange = event => {

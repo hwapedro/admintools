@@ -65,7 +65,7 @@ function reducerCourses(state = initialState, action = {}) {
       return {
         ...state,
         courses: state.courses.filter(
-          courses => courses.courseIndex !== action.index
+          courses => courses._id !== action.index
         ),
         loading: false,
         error: false

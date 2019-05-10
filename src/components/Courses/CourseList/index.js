@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Droppable } from "react-beautiful-dnd";
 import {
   EditorState,
-  convertToRaw,
   ContentState,
   convertFromHTML
 } from "draft-js";

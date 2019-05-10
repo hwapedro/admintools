@@ -123,8 +123,9 @@ class Test extends Component {
     let token = localStorage.getItem("userId");
     const { name, description, question, options } = this.state.info;
     let list;
-    this.props.lesson.pages.map(page => {
-      list = page.tasks.map(task => {
+    
+    
+      list = this.props.lesson.pages[0].tasks.map(task => {
         if (task._id === this.props.taskId) {
           if (this.state.taskEditFlag) {
             return (
@@ -194,7 +195,7 @@ class Test extends Component {
                         task._id,
                         task.type,
                         this.state.info,
-                        page._id
+                        this.props.lesson.pages[0]._id
                       )
                     }
                   >
@@ -204,6 +205,7 @@ class Test extends Component {
               </>
             );
           } else {
+            console.log(task.info.name)
             return (
               <ul>
                 <li key={task._id}>
@@ -251,7 +253,7 @@ class Test extends Component {
                   </button>
                   <button
                     onClick={() =>
-                      this.props.deleteTask( page._id, task._id)
+                      this.props.deleteTask( this.props.lesson.pages[0]._id, task._id)
                     }
                   >
                     Delete
@@ -262,7 +264,7 @@ class Test extends Component {
           }
         }
       });
-    });
+  
     return <>{list}</>;
   }
 }

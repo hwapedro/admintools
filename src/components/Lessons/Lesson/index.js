@@ -205,6 +205,7 @@ class Lesson extends Component {
               <LessonButton onClick={this.addPage}>Add Page</LessonButton>
             </ButtonWrapper>
 
+            
             <PageList
               lessonId={lesson._id}
               pages={lesson.pages}

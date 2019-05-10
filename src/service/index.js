@@ -107,10 +107,24 @@ export default class AdminService {
     });
     return response;
   }
-
+  
   async createTask(token, pageId, type, info) {
     let response = await request
       .post(`${_apiBase}/task/create?page=${pageId}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({
+        type: type,
+        info: info
+      });
+    return response;
+  }
+
+  async changeTask(token, taskId, type, info) {
+    let response = await request
+      .put(`${_apiBase}/task/${taskId}`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
