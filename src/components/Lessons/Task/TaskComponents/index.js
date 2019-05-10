@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-
 //import { withRouter } from "react-router-dom";
 
 import Test from "./Tests";
@@ -13,22 +12,22 @@ const goTo = (lessonId, taskId, history) => {
 };
 
 class Tasks extends Component {
-
   componentDidMount() {
     const { getLesson, lessonId } = this.props;
     let token = localStorage.getItem("userId");
-    getLesson( lessonId);
+    getLesson(lessonId);
   }
 
   goBack = id => {
     this.props.history.push(`/lesson/${id}`);
   };
 
-  constSwitch = (type, taskId, lessonId) => {
+  constSwitch = (page, type, taskId, lessonId) => {
     switch (type) {
       case "test":
         return (
           <Test
+            page={page}
             taskId={taskId}
             lessonId={lessonId}
             lesson={this.props.lesson}
@@ -37,6 +36,7 @@ class Tasks extends Component {
       case "text":
         return (
           <Text
+            page={page}
             taskId={taskId}
             lessonId={lessonId}
             lesson={this.props.lesson}
@@ -49,16 +49,25 @@ class Tasks extends Component {
 
   render() {
     const { lessonId, taskId, lesson } = this.props;
-    let letask;
+    let page, task;
 
-    lesson.pages.map(page => {
-      letask = page.tasks.find(task => task._id === taskId);
-    });
+    // lesson.pages.map(page => {
+    //   letask = page.tasks.find(task => task._id === taskId);
+    // });
 
+    for (let i = 0; i < lesson.pages.length; i++) {
+      if (
+        lesson.pages[i].tasks.find(task => task._id === taskId) !== undefined
+      ) {
+        page = lesson.pages[i];
+        task = lesson.pages[i].tasks.find(task => task._id === taskId);
+      }
+    }
+    console.log(page, task);
     return (
       <>
-        {letask && (
-          <div>{this.constSwitch(letask.type, taskId, lessonId)} </div>
+        {task && (
+          <div>{this.constSwitch(page, task.type, taskId, lessonId)} </div>
         )}
         <button onClick={() => this.goBack(this.props.lesson._id)}>Back</button>
       </>
@@ -71,7 +80,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getLesson: ( id) => dispatch(getLesson( id))
+  getLesson: id => dispatch(getLesson(id))
 });
 
 export default connect(

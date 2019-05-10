@@ -64,9 +64,10 @@ class Test extends Component {
     let token = localStorage.getItem("userId");
     const { name } = this.state.info;
     let list;
-    this.props.lesson.pages.map(page => {
+    const { page, taskId, deleteTask } = this.props
+
       list = page.tasks.map(task => {
-        if (task._id === this.props.taskId) {
+        if (task._id === taskId) {
           if (this.state.taskEditFlag) {
             return (
               <>
@@ -117,7 +118,7 @@ class Test extends Component {
                   </button>
                   <button
                     onClick={() =>
-                      this.props.deleteTask( page._id, task._id)
+                      deleteTask( page._id, task._id)
                     }
                   >
                     Delete
@@ -128,7 +129,7 @@ class Test extends Component {
           }
         }
       });
-    });
+    
     return <>{list}</>;
   }
 }
