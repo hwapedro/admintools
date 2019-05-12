@@ -4,6 +4,7 @@ import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
+import Search from "../../Search";
 
 import {
   Wrapper,
@@ -13,7 +14,8 @@ import {
   ConsturctorForm,
   LabelElement,
   ConstructorButton,
-  ButtonWrapper
+  ButtonWrapper,
+  ButtonWrapperConstructor
 } from "../style";
 
 const name = "news";
@@ -28,11 +30,11 @@ class SetArticle extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { addNews } = this.props;
+    const { addNews, showConstructor } = this.props;
     const { title } = this.state;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
     addNews(title, description, name);
-
+    showConstructor();
     this.setState({
       constructor: !this.state.constructor
     });
@@ -56,48 +58,44 @@ class SetArticle extends Component {
   };
 
   render() {
-    const { editorState, constructor, title } = this.state;
-    if (constructor) {
-      return (
-        <Wrapper>
-          <ButtonWrapper>
-            <ConstructorButton onClick={this.showConstructor}>
-              ADD NEW ARTICLE
-            </ConstructorButton>
-          </ButtonWrapper>
-          <DarkGround onClick={this.showConstructor} />
-          <ConsturctorWrapper>
-            <ConsturctorForm onSubmit={this.onSubmit}>
-              <LabelElement>TITLE</LabelElement>
-              <TitleInput
-                name="title"
-                placeholder="title"
-                type="text"
-                value={title}
-                onChange={this.onChange}
-              />
-              <LabelElement>DESCRIPTION</LabelElement>
-              <EditorText
-                editorState={editorState}
-                onEditorStateChange={this.onEditorStateChange}
-              />
-              <ButtonWrapper>
-                <ConstructorButton type="submit">
-                  ADD NEW ARTICLE
-                </ConstructorButton>
-              </ButtonWrapper>
-            </ConsturctorForm>
-          </ConsturctorWrapper>
-        </Wrapper>
-      );
-    }
+    const { onChange, title, value, constructor, showConstructor } = this.props;
+    const { editorState } = this.state;
+
     return (
       <Wrapper>
-        <ButtonWrapper>
-          <ConstructorButton onClick={this.showConstructor}>
+        <ButtonWrapperConstructor>
+          <Search onChange={onChange} value={value} />
+          <ConstructorButton onClick={showConstructor}>
             ADD NEW ARTICLE
           </ConstructorButton>
-        </ButtonWrapper>
+        </ButtonWrapperConstructor>
+        {constructor && (
+          <>
+            <DarkGround onClick={showConstructor} />
+            <ConsturctorWrapper>
+              <ConsturctorForm onSubmit={this.onSubmit}>
+                <LabelElement>TITLE</LabelElement>
+                <TitleInput
+                  name="title"
+                  placeholder="title"
+                  type="text"
+                  value={title}
+                  onChange={onChange}
+                />
+                <LabelElement>DESCRIPTION</LabelElement>
+                <EditorText
+                  editorState={editorState}
+                  onEditorStateChange={this.onEditorStateChange}
+                />
+                <ButtonWrapper>
+                  <ConstructorButton type="submit">
+                    ADD NEW ARTICLE
+                  </ConstructorButton>
+                </ButtonWrapper>
+              </ConsturctorForm>
+            </ConsturctorWrapper>
+          </>
+        )}
       </Wrapper>
     );
   }

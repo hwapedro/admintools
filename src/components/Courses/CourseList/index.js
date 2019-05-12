@@ -46,9 +46,9 @@ class CourseList extends Component {
 
   setParams = event => {
     event.preventDefault();
-    const { title, courseIndex } = this.state;
+    const { title, courseIndex, editorState } = this.state;
     const { changeCourse } = this.props;
-    const description = stateToHTML(this.state.editorState.getCurrentContent());
+    const description = stateToHTML(editorState.getCurrentContent());
 
     if (title && description)
       changeCourse(courseIndex, title, description, name);
@@ -72,7 +72,7 @@ class CourseList extends Component {
 
   render() {
     const { courses, loading, search } = this.props;
-    const { editorState, title } = this.state;
+    const { editorState, changeFlag, courseIndex, title } = this.state;
 
     if (loading) {
       return (
@@ -82,34 +82,37 @@ class CourseList extends Component {
       );
     }
 
-    let list = courses.map((course, index) => {
-      if (
-        this.state.changeFlag &&
-        course.courseIndex === this.state.courseIndex
-      ) {
-        return (
-          <ElementWrapper key={course.courseIndex}>
-            <form onSubmit={this.setParams}>
-              <LabelElement>Name of course :</LabelElement>
-              <TitleInput
-                name="title"
-                onChange={this.onChange}
-                value={this.state.title}
-              />
-              <LabelElement>Description of course : </LabelElement>
-              <EditorText
-                editorState={editorState}
-                onEditorStateChange={this.onEditorStateChange}
-              />
-
-              <ButtonWrapper>
-                <SignInButton type="submit">CONFIRM</SignInButton>
-              </ButtonWrapper>
-            </form>
-          </ElementWrapper>
-        );
-      } else {
+    let list = courses
+      .filter(course => {
         if (course.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+          return true;
+        }
+        return false;
+      })
+      .map((course, index) => {
+        if (changeFlag && course.courseIndex === courseIndex) {
+          return (
+            <ElementWrapper key={course.courseIndex}>
+              <form onSubmit={this.setParams}>
+                <LabelElement>Name of course :</LabelElement>
+                <TitleInput
+                  name="title"
+                  onChange={this.onChange}
+                  value={title}
+                />
+                <LabelElement>Description of course : </LabelElement>
+                <EditorText
+                  editorState={editorState}
+                  onEditorStateChange={this.onEditorStateChange}
+                />
+
+                <ButtonWrapper>
+                  <SignInButton type="submit">CONFIRM</SignInButton>
+                </ButtonWrapper>
+              </form>
+            </ElementWrapper>
+          );
+        } else {
           return (
             <Course
               key={course.courseIndex}
@@ -119,12 +122,12 @@ class CourseList extends Component {
               deleteItem={this.deleteItem}
             />
           );
-        } else return null;
-      }
-    });
+        }
+      });
+    console.log();
     return (
       <Wrapper>
-        {courses.length === 0 ? (
+        {courses.length === 0 || list.length === 0 ? (
           <EmptyMessage>There is nothing here yet</EmptyMessage>
         ) : (
           <Droppable droppableId="droppable">

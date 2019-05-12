@@ -21,17 +21,27 @@ const name = "course";
 class Courses extends Component {
   state = {
     title: "",
-    search: ""
-  };
-
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    search: "",
+    constructor: false
   };
 
   componentDidMount() {
     const { getAllCourses } = this.props;
     getAllCourses(name);
   }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  showConstructor = () => {
+    const { constructor } = this.state;
+
+    this.setState({
+      constructor: !constructor,
+      title: ""
+    });
+  };
 
   render() {
     const {
@@ -45,7 +55,8 @@ class Courses extends Component {
       changeDnD
     } = this.props;
 
-    console.log(this.state.search);
+    const { title, search, constructor } = this.state;
+
     return (
       <>
         {error && (
@@ -82,8 +93,10 @@ class Courses extends Component {
                 }
                 getAllCourses={name => getAllCourses(name)}
                 onChange={this.onChange}
-                value={this.state.search}
-                title={this.state.title}
+                value={search}
+                title={title}
+                constructor={constructor}
+                showConstructor={() => this.showConstructor()}
               />
 
               <CoursesList

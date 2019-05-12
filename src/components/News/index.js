@@ -18,10 +18,30 @@ import Error from "../Error";
 const name = "news";
 
 class News extends Component {
+
+  state = {
+    title: "",
+    search: "",
+    constructor: false
+  };
+
   componentDidMount() {
     const { getAllNews } = this.props;
     getAllNews(name);
   }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  showConstructor = () => {
+    const { constructor } = this.state;
+
+    this.setState({
+      constructor: !constructor,
+      title: ""
+    });
+  };
 
   render() {
     const {
@@ -32,7 +52,7 @@ class News extends Component {
       addNews,
       changeArticle
     } = this.props;
-
+    const { title, search, constructor } = this.state;
     return (
       <>
         {error && (
@@ -53,6 +73,11 @@ class News extends Component {
               addNews={(title, description, name) =>
                 addNews(title, description, name)
               }
+              onChange={this.onChange}
+               value={search}
+               title={title}
+               constructor={constructor}
+               showConstructor={() => this.showConstructor()}
             />
             <NewsList
               changeArticle={(articleIndex, title, description, name) =>

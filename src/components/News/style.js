@@ -146,3 +146,12 @@ export const EmptyMessage = styled.div`
   top: 50%;
   margin-top: 270px;
 `;
+
+export const ButtonWrapperConstructor = styled.div`
+  padding-left:40px;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items:space-between;
+  margin-top: 0.3rem;
+`;

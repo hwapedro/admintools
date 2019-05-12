@@ -120,6 +120,16 @@ export const ButtonWrapper = styled.div`
   align-items: flex-end;
   margin-top: 0.3rem;
 `;
+
+export const ButtonWrapperConstructor = styled.div`
+  padding-left:40px;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items:space-between;
+  margin-top: 0.3rem;
+`;
+
 export const ConstructorButton = styled.button`
   width: 150px;
   height: 40px;

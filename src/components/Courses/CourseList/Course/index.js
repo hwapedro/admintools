@@ -25,9 +25,11 @@ export default function Course ({ course, getParams, deleteItem, index }) {
             {...provided.dragHandleProps}
             key={course.courseIndex}
           >
-            <LabelElement>Name of course :</LabelElement>
+            <LabelElement>Course number :</LabelElement>
+            <TitleSpan> {course.courseIndex}</TitleSpan>
+            <LabelElement>Course name :</LabelElement>
             <TitleSpan> {course.title}</TitleSpan>
-            <LabelElement>Description of course : </LabelElement>
+            <LabelElement>Course description : </LabelElement>
             <DescriptionSpan
               dangerouslySetInnerHTML={{
                 __html: course.description
