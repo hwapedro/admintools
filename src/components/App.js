@@ -55,6 +55,13 @@ class App extends Component {
               }}
             />
             <Route
+              path={route.course}
+              render={({ match }) => {
+                const { id } = match.params;
+                return <>asd</>;
+              }}
+            />
+            <Route
               path={route.task}
               render={({ match, history }) => {
                 console.log(match.params);
