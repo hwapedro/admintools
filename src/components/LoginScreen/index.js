@@ -17,7 +17,7 @@ const signInSchema = Yup.object().shape({
 class LoginScreen extends React.Component {
 
   componentDidMount() {
-    let token = localStorage.getItem("userId");
+    let token = localStorage.getItem("token");
     if (token !== null){
       this.props.history.push('/courses')
     }

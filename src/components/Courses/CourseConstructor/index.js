@@ -4,6 +4,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
+import Search from "../../Search";
 
 import {
   Wrapper,
@@ -18,19 +19,17 @@ import {
 
 const name = "course";
 
-
 export default class CourseCounstructor extends Component {
   state = {
     title: "",
-    description: "",
     constructor: false,
     editorState: EditorState.createEmpty()
   };
 
   onSubmit = event => {
     event.preventDefault();
-    const { addCourses } = this.props;
-    const { title, constructor } = this.state;
+    const { addCourses, title } = this.props;
+    const { constructor } = this.state;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
     addCourses(title, description, name);
     this.setState({
@@ -38,9 +37,6 @@ export default class CourseCounstructor extends Component {
     });
   };
 
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
   showConstructor = () => {
     const { constructor } = this.state;
     this.setState({
@@ -55,7 +51,8 @@ export default class CourseCounstructor extends Component {
   };
 
   render() {
-    const { editorState, constructor, title } = this.state;
+    const { onChange, title, value } = this.props;
+    const { editorState, constructor } = this.state;
     if (constructor) {
       return (
         <Wrapper>
@@ -73,7 +70,7 @@ export default class CourseCounstructor extends Component {
                 placeholder="title"
                 type="text"
                 value={title}
-                onChange={this.onChange}
+                onChange={onChange}
               />
               <LabelElement>description</LabelElement>
               <EditorText
@@ -93,6 +90,7 @@ export default class CourseCounstructor extends Component {
     return (
       <Wrapper>
         <ButtonWrapper>
+          <Search onChange={onChange} value={value} />
           <ConstructorButton onClick={this.showConstructor}>
             ADD NEW COURSE
           </ConstructorButton>

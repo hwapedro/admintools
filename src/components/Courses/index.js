@@ -19,6 +19,15 @@ import Error from "../Error";
 const name = "course";
 
 class Courses extends Component {
+  state = {
+    title: "",
+    search: ""
+  };
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
   componentDidMount() {
     const { getAllCourses } = this.props;
     getAllCourses(name);
@@ -36,6 +45,7 @@ class Courses extends Component {
       changeDnD
     } = this.props;
 
+    console.log(this.state.search);
     return (
       <>
         {error && (
@@ -71,6 +81,9 @@ class Courses extends Component {
                   addCourses(title, description, name)
                 }
                 getAllCourses={name => getAllCourses(name)}
+                onChange={this.onChange}
+                value={this.state.search}
+                title={this.state.title}
               />
 
               <CoursesList
@@ -79,6 +92,7 @@ class Courses extends Component {
                 }
                 delCourse={(courseIndex, name) => delCourse(courseIndex, name)}
                 courses={courses}
+                search={this.state.search}
               />
             </DragDropContext>
           </>

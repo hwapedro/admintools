@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Droppable } from "react-beautiful-dnd";
-import {
-  EditorState,
-  ContentState,
-  convertFromHTML
-} from "draft-js";
+import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import Spinner from "../../Spinner";
@@ -75,8 +71,8 @@ class CourseList extends Component {
   };
 
   render() {
-    const { courses, loading } = this.props;
-    const { editorState } = this.state;
+    const { courses, loading, search } = this.props;
+    const { editorState, title } = this.state;
 
     if (loading) {
       return (
@@ -113,15 +109,17 @@ class CourseList extends Component {
           </ElementWrapper>
         );
       } else {
-        return (
-          <Course
-            key={course.courseIndex}
-            course={course}
-            index={index}
-            getParams={this.getParams}
-            deleteItem={this.deleteItem}
-          />
-        );
+        if (course.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+          return (
+            <Course
+              key={course.courseIndex}
+              course={course}
+              index={index}
+              getParams={this.getParams}
+              deleteItem={this.deleteItem}
+            />
+          );
+        } else return null;
       }
     });
     return (
