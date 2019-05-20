@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-//import { withRouter } from "react-router-dom";
-
 import Test from "./Tests";
 import Text from "./Text";
 import { getLesson } from "../../../../store/actions/actionLessons";
@@ -14,7 +12,6 @@ const goTo = (lessonId, taskId, history) => {
 class Tasks extends Component {
   componentDidMount() {
     const { getLesson, lessonId } = this.props;
-    let token = localStorage.getItem("userId");
     getLesson(lessonId);
   }
 
@@ -51,10 +48,6 @@ class Tasks extends Component {
     const { lessonId, taskId, lesson } = this.props;
     let page, task;
 
-    // lesson.pages.map(page => {
-    //   letask = page.tasks.find(task => task._id === taskId);
-    // });
-
     for (let i = 0; i < lesson.pages.length; i++) {
       if (
         lesson.pages[i].tasks.find(task => task._id === taskId) !== undefined
@@ -63,7 +56,6 @@ class Tasks extends Component {
         task = lesson.pages[i].tasks.find(task => task._id === taskId);
       }
     }
-    console.log(page, task);
     return (
       <>
         {task && (

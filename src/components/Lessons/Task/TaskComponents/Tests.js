@@ -2,6 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
+  TaskTitleInput,
+  QuestionInput,
+  OptionButton,
+  DeleteOptionButton,
+  OptionButtonWrapper,
+  TaskOptionWrapper,
+  TaskButton
+} from "../../style";
+import {
   getLesson,
   deleteTask,
   changeTask
@@ -120,7 +129,6 @@ class Test extends Component {
   };
 
   render() {
-    let token = localStorage.getItem("userId");
     const { name, description, question, options } = this.state.info;
     let list;
     const { page, taskId, deleteTask } = this.props
@@ -133,7 +141,7 @@ class Test extends Component {
               <>
                 <div>
                   <div>
-                    <input
+                    <TaskTitleInput
                       name="name"
                       placeholder="Name"
                       value={name}
@@ -141,7 +149,7 @@ class Test extends Component {
                     />
                   </div>
                   <div>
-                    <input
+                    <TaskTitleInput
                       name="description"
                       placeholder="Description"
                       onChange={this.infoChange}
@@ -149,24 +157,24 @@ class Test extends Component {
                     />
                   </div>
                   <div>
-                    <input
+                    <QuestionInput
                       name="question"
                       placeholder="Question"
                       onChange={this.infoChange}
                       value={question}
                     />
                   </div>
-                  <div>
-                    <button onClick={this.addOption}>Add answer option</button>
-                  </div>
+                  <OptionButtonWrapper>
+                    <DeleteOptionButton onClick={this.addOption}>Add answer option</DeleteOptionButton>
+                  </OptionButtonWrapper>
 
                   <form onSubmit={this.setParams}>
                     <div>
                       {options.map(el => {
                         return (
                           <div className="form-check" key={el.index}>
-                            <li>
-                              <input
+                            <TaskOptionWrapper>
+                              <TaskTitleInput
                                 name="answer"
                                 placeholder="Answer"
                                 value={el.answer}
@@ -177,18 +185,18 @@ class Test extends Component {
                                 checked={el.right}
                                 onChange={e => this.setRight(el.index, e)}
                               />
-                              <button
+                              <OptionButton
                                 onClick={() => this.deleteOption(el.index)}
                               >
                                 Delete option
-                              </button>
-                            </li>
+                              </OptionButton>
+                            </TaskOptionWrapper>
                           </div>
                         );
                       })}
                     </div>
                   </form>
-                  <button
+                  <TaskButton
                     onClick={e =>
                       this.setParams(
                         e,
@@ -201,7 +209,7 @@ class Test extends Component {
                     }
                   >
                     Confirm
-                  </button>
+                  </TaskButton>
                 </div>
               </>
             );

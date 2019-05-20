@@ -5,18 +5,15 @@ import { withRouter } from "react-router-dom";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import {
   EditorState,
-  convertToRaw,
   ContentState,
   convertFromHTML
 } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../EditorText";
 
 import checkMark from "../../img/good.png";
 import redCross from "../../img/bad.png";
 
-const token = localStorage.getItem("userId");
 const name = "lesson";
 
 class LessonsList extends Component {
@@ -51,18 +48,12 @@ class LessonsList extends Component {
         this.state._id,
         this.state.title,
         this.state.description,
-        token,
         name
       );
     this.setState({ changeFlag: false, _id: null });
   };
 
   onEditorStateChange = editorState => {
-    let contentState = editorState.getCurrentContent();
-    let rawState = convertToRaw(contentState);
-    let html = stateToHTML(contentState);
-    console.log(rawState);
-
     this.setState({
       editorState
     });
@@ -70,7 +61,7 @@ class LessonsList extends Component {
 
   deleteItem = _id => {
     const { delLesson } = this.props;
-    delLesson(_id, token, name);
+    delLesson(_id, name);
   };
 
   onChange = event => {
@@ -233,19 +224,19 @@ const DescriptionSpan = styled.span`
   font-size: 1.3rem;
 `;
 
-const DescriptionTextArea = styled.textarea`
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  height: 400px;
-  max-height: 100%;
-  max-width: 100%;
-  resize: none;
-  align-items: center;
-  margin-top: 2rem;
-  font-size: 1.3rem;
-  color: black;
-`;
+// const DescriptionTextArea = styled.textarea`
+//   display: flex;
+//   justify-content: flex-start;
+//   width: 100%;
+//   height: 400px;
+//   max-height: 100%;
+//   max-width: 100%;
+//   resize: none;
+//   align-items: center;
+//   margin-top: 2rem;
+//   font-size: 1.3rem;
+//   color: black;
+// `;
 
 const ElementsWrapper = styled.ul`
   list-style-type: none;

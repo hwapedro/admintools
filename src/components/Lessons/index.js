@@ -15,26 +15,18 @@ import { addLesson } from "../../store/actions/actionLessons";
 
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "../Lessons/LessonList";
-import Spinner from "../Spinner";
 
 const name = "lesson";
 
 class Lessons extends Component {
   componentDidMount() {
     const { getAllLessons } = this.props;
-    let token = localStorage.getItem("userId");
     getAllLessons( name);
   }
 
   render() {
     const { loading, lessons, changeLesson, addLesson, delLesson ,changeDndLesson} = this.props;
-    // if (loading) {
-    //   return (
-    //     <>
-    //       <Spinner />
-    //     </>
-    //   );
-    // }
+
     return (
       <>
         <DragDropContext
@@ -42,12 +34,9 @@ class Lessons extends Component {
             if (!result.destination) {
               return;
             }
-            console.log(result);
+            
             if (result.source.index !== result.destination.index) {
-              let token = localStorage.getItem("userId");
-              
               changeDndLesson(
-                
                 lessons[result.source.index].lessonIndex,
                 lessons[result.destination.index].lessonIndex,
                 lessons[result.source.index].courseIndex

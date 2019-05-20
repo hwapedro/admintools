@@ -148,7 +148,6 @@ export const changeTask = (taskId, type, info, pageId) => dispatch => {
   adminService
     .changeTask(token, taskId, type, info)
     .then(response => {
-      //console.log(response)
       dispatch({
         type: CHANGE_TASK_SUCCESS,
         task: response.body.task,

@@ -10,14 +10,12 @@ class PageList extends Component {
   };
 
   changePage = number => {
-    console.log(number)
     this.setState({ pageNumber: number });
   };
 
   render() {
     const { pageNumber} = this.state
     const { lessonId, pages, deletePage, deleteTask } = this.props;
-    console.log(pageNumber)
     return (
       <>
         <PageNav amount={pages} changePage={this.changePage} />

@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import {
+  TaskTitleInput,
+  QuestionInput,
+  DescriptionSpan,
+  TaskButton
+} from "../../style";
 import { addTask } from "../../../../store/actions/actionLessons";
 
 let index = 100;
@@ -21,37 +27,42 @@ class TextConstructor extends Component {
     while ((m = rr.exec(string))) {
       options.push(m[1]);
     }
-    await this.setState({options: options})
+    await this.setState({ options: options });
   };
 
-  addTextTask = async token => {
-    await this.parseAnswer(this.state.name)
+  addTextTask = async () => {
+    await this.parseAnswer(this.state.text);
     const info = this.state;
     const { pageId, addTask } = this.props;
     const type = "text";
-    await addTask( pageId, type, info);
+    await addTask(pageId, type, info);
   };
 
   setParams = event => {
     event.preventDefault();
   };
-  // \~[a-zA-Z0-9\s_/&$%#?!|,.@"';:^(){}<>[\]+*\-\\]*\~
+
   render() {
-   // this.parseAnswer();
-    let token = localStorage.getItem("userId");
     return (
       <>
         <div>
-          <span>Put words in ~ ~ to mark as answer</span>
+          <DescriptionSpan>Put words in ~ ~ to mark as answer</DescriptionSpan>
           <div>
-            <input
+            <TaskTitleInput
               name="name"
+              placeholder="Title"
+              onChange={this.infoChange}
+            />
+          </div>
+          <div>
+            <QuestionInput
+              name="text"
               placeholder="Question"
               onChange={this.infoChange}
             />
           </div>
 
-          <button onClick={() => this.addTextTask(token)}>Save</button>
+          <TaskButton onClick={() => this.addTextTask()}>Save</TaskButton>
         </div>
       </>
     );
@@ -61,8 +72,8 @@ class TextConstructor extends Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  addTask: ( pageid, type, info, answer) =>
-    dispatch(addTask( pageid, type, info, answer))
+  addTask: (pageid, type, info, answer) =>
+    dispatch(addTask(pageid, type, info, answer))
 });
 
 export default connect(

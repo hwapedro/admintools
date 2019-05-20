@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
   EditorState,
-  convertToRaw,
   ContentState,
   convertFromHTML
 } from "draft-js";
@@ -22,7 +21,6 @@ import {
 import {
   ButtonWrapper,
   TitleInput,
-  DescriptionTextArea,
   LessonButton,
   Wrapper,
   ElementWrapper,
@@ -33,14 +31,12 @@ import {
   ImgCross
 } from "../style";
 
-import Menu from "../../Menu";
 import Spinner from "../../Spinner";
 import PageList from "../PageList";
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
 
-const token = localStorage.getItem("userId");
 const name = "lesson";
 
 class Lesson extends Component {
@@ -54,7 +50,6 @@ class Lesson extends Component {
 
   componentDidMount() {
     const { getLesson } = this.props;
-    let token = localStorage.getItem("userId");
     getLesson( this.props.itemId);
   }
 
@@ -92,7 +87,6 @@ class Lesson extends Component {
         title,
         description,
         exam,
-        
         name
       );
     this.setState({ changeFlag: false, _id: null });
@@ -103,22 +97,17 @@ class Lesson extends Component {
   };
 
   addPage = () => {
-    this.props.addPage( this.props.lesson._id, "blah text", [], 0);
+    this.props.addPage( this.props.lesson._id, `Page ${this.props.lesson.pages.length + 1}`, [], 0);
   };
 
   onEditorStateChange = editorState => {
-    let contentState = editorState.getCurrentContent();
-    let rawState = convertToRaw(contentState);
-    let html = stateToHTML(contentState);
-    console.log(rawState);
-
     this.setState({
       editorState
     });
   };
 
   render() {
-    const { lesson, loading, deletePage, deleteTask, pages } = this.props;
+    const { lesson, loading, deletePage, deleteTask } = this.props;
     const { editorState } = this.state;
     if (loading) {
       return (
@@ -197,8 +186,6 @@ class Lesson extends Component {
               )}
               <br />
 
-              {/* <LabelElement>courseIndex :</LabelElement>
-              <TitleSpan> {lesson.courseIndex}</TitleSpan> */}
             </ElementWrapper>
 
             <ButtonWrapper>

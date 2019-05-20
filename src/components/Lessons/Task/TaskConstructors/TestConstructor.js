@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import {
-  addTask
-} from "../../../../store/actions/actionLessons";
+  TaskTitleInput,
+  QuestionInput,
+  OptionButton,
+  DeleteOptionButton,
+  OptionButtonWrapper,
+  TaskOptionWrapper,
+  TaskButton
+} from "../../style";
+
+import { addTask } from "../../../../store/actions/actionLessons";
 
 let index = 100;
 class TestConstructor extends Component {
@@ -57,15 +64,14 @@ class TestConstructor extends Component {
   };
 
   infoChange = event => {
-    // console.log(event.target.name);
     this.setState({ [event.target.name]: event.target.value });
   };
-  
-  addTestTask = (token) => {
+
+  addTestTask = token => {
     const info = this.state;
-    const { pageId } = this.props
-    const type = "test"
-    this.props.addTask( pageId, type, info);
+    const { pageId } = this.props;
+    const type = "test";
+    this.props.addTask(pageId, type, info);
   };
 
   setParams = event => {
@@ -78,64 +84,70 @@ class TestConstructor extends Component {
       <>
         <div>
           <div>
-            <input name="name" placeholder="Name" onChange={this.infoChange} />
+            <TaskTitleInput
+              name="name"
+              placeholder="Name"
+              onChange={this.infoChange}
+            />
           </div>
           <div>
-            <input
+            <TaskTitleInput
               name="description"
               placeholder="Description"
               onChange={this.infoChange}
             />
           </div>
           <div>
-            <input
+            <QuestionInput
               name="question"
               placeholder="Question"
               onChange={this.infoChange}
             />
           </div>
-          <div>
-            <button onClick={this.addOption}>Add answer option</button>
-          </div>
+          <OptionButtonWrapper>
+            <OptionButton onClick={this.addOption}>
+              Add answer option
+            </OptionButton>
+          </OptionButtonWrapper>
 
           <form onSubmit={this.setParams}>
             <div>
               {this.state.options.map(el => {
                 return (
                   <div className="form-check" key={el.index}>
-                    <li>
-                      <input
+                    <TaskOptionWrapper>
+                      <TaskTitleInput
                         name="answer"
                         placeholder="Answer"
-                        //value={el.answer}
                         onChange={e => this.answerChange(el.index, e)}
                       />
-                      <input
+                      <TaskTitleInput
                         type="checkbox"
                         onChange={e => this.setRight(el.index, e)}
                       />
-                      <button onClick={() => this.deleteOption(el.index)}>
+                      <DeleteOptionButton
+                        onClick={() => this.deleteOption(el.index)}
+                      >
                         Delete option
-                      </button>
-                    </li>
+                      </DeleteOptionButton>
+                    </TaskOptionWrapper>
                   </div>
                 );
               })}
             </div>
           </form>
-          <button onClick={() => this.addTestTask(token)}>Save</button>
+          <TaskButton onClick={() => this.addTestTask(token)}>Save</TaskButton>
         </div>
       </>
     );
   }
 }
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  addTask: ( pageid, type, info, answer) =>
-    dispatch(addTask( pageid, type, info, answer))
+  addTask: (pageid, type, info, answer) =>
+    dispatch(addTask(pageid, type, info, answer))
 });
 
 export default connect(

@@ -31,7 +31,7 @@ class SetArticle extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addNews, showConstructor } = this.props;
-    const { title } = this.state;
+    const { title } = this.props;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
     addNews(title, description, name);
     showConstructor();

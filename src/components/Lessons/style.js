@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-
-//LESSON STYLE 
+//LESSON STYLE
 export const Wrapper = styled.div`
   padding-top: 1rem;
   display: flex;
@@ -18,14 +17,11 @@ export const ImgMark = styled.img`
 `;
 
 export const ImgCross = styled.img`
-  
   width: 2rem;
   height: 2rem;
   margin-left: 1rem;
   margin-bottom: -0.4rem;
-
 `;
-
 
 export const TitleSpan = styled.span`
   display: flex;
@@ -34,7 +30,6 @@ export const TitleSpan = styled.span`
   margin: 1rem 0;
   font-size: 1.3rem;
 `;
-
 
 export const TitleInput = styled.input`
   display: flex;
@@ -115,7 +110,6 @@ export const LessonButton = styled.button`
   margin-right: 1rem;
 `;
 
-
 //SET LESSON CONSTRUCTION
 
 export const DarkGround = styled.div`
@@ -146,10 +140,115 @@ export const ConsturctorWrapper = styled.div`
   border-radius: 20px;
 `;
 
+// TASK STYLES
+export const TaskButton = styled.button`
+  width: 120px;
+  height: 30px;
+  border: 0;
+  border-radius: 10px;
+  background-color: ${props => props.theme.button};
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+  margin-right: 1rem;
+`;
 
+export const TaskElementWrapper = styled.li`
+  display: flex;
+  flex-direction: row
+  justify-content: space-between;
+  background-color: ${props => props.theme.courses};
+  margin-top: 0.5rem;
+ 
+  border-radius: 10px;
+  padding: 0.3rem;
+  list-style-type: none;
+`;
 
+export const TaskTitleInput = styled.input`
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.5rem;
+  font-size: 1rem;
+  color: black;
+  padding-left: 0.7rem;
+`;
 
+export const QuestionInput = styled.input`
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.5rem;
+  padding-bottom: 5rem;
+  font-size: 1rem;
+  color: black;
+  padding-left: 0.7em;
+`;
 
+export const OptionButton = styled.button`
+  width: 200px;
+  height: 20px;
+  border: 0;
+  border-radius: 10px;
+  background-color: ${props => props.theme.button};
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: white;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+  margin-right: 1rem;
+`;
 
+export const DeleteOptionButton = styled.button`
+  width: 150px;
+  height: 20px;
+  border: 0;
+  border-radius: 10px;
+  background-color: ${props => props.theme.button};
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: white;
 
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+  margin-right: 1rem;
+`;
 
+export const OptionButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0.5rem;
+`;
+
+export const TaskOptionWrapper = styled.li`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: ${props => props.theme.courses};
+  margin-top: 0.5rem;
+
+  border-radius: 1px;
+  padding: 0.3rem;
+  list-style-type: none;
+`;

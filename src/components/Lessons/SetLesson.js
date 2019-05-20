@@ -32,8 +32,8 @@ class SetLessons extends Component {
     event.preventDefault();
     const { addLesson } = this.props;
     const { title, description, exam } = this.state;
-    let token = localStorage.getItem("userId");
-    addLesson(title, description, exam, token, name);
+   
+    addLesson(title, description, exam, name);
   };
 
   onChange = event => {
@@ -49,13 +49,13 @@ class SetLessons extends Component {
   ChangeExamTrue = () => {
     
     this.setState({ exam :  true})
-    console.log(this.state.exam)
+
   }
 
   ChangeExamFalse = () => {
    
     this.setState({ exam :  false})
-    console.log(this.state.exam)
+
   }
 
   render() {

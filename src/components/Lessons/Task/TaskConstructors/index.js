@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 
 import TestConstructor from "./TestConstructor";
 import TextConstructor from "./TextConstructor";
@@ -22,22 +23,22 @@ class TaskConstructor extends Component {
     });
   };
 
- constSwitch = (displayTaskConstructor) =>{
-  switch (displayTaskConstructor) {
-    case "test":
-      return (
-        <TestConstructor
-          oldInfo={this.state.info}
-          edited={false}
-          pageId={this.props.pageId}
-        />
-      );
-    case "text":
-      return <TextConstructor pageId={this.props.pageId} />;
-    default:
-      return <div />;
-  }
-  }
+  constSwitch = displayTaskConstructor => {
+    switch (displayTaskConstructor) {
+      case "test":
+        return (
+          <TestConstructor
+            oldInfo={this.state.info}
+            edited={false}
+            pageId={this.props.pageId}
+          />
+        );
+      case "text":
+        return <TextConstructor pageId={this.props.pageId} />;
+      default:
+        return <div />;
+    }
+  };
 
   getParams = (name, description, question, id) => {
     this.setState({
@@ -54,34 +55,23 @@ class TaskConstructor extends Component {
           {displayConstructor ? (
             <div>
               <div>
-                <button onClick={this.displayConstructor}>Cancel</button>
+                <TaskButton onClick={this.displayConstructor}>
+                  Cancel
+                </TaskButton>
               </div>
-              <select onChange={this.selectChange} defaultValue="test">
+              <Select onChange={this.selectChange} defaultValue="test">
                 <option value="test">Test</option>
                 <option value="text">Text</option>
                 <option value="none">Placeholder</option>
-              </select>
-              {/* {(displayTaskConstructor) => {
-              switch (displayTaskConstructor) {
-                  case "test":
-                    return (
-                      <TestConstructor
-                        oldInfo={this.state.info}
-                        edited={false}
-                        pageId={this.props.pageId}
-                      />
-                    );
-                  case "text":
-                    return <InputQConstructor pageId={this.props.pageId} />;
-                  default:
-                    return <div />;
-                }
-              }} */}{this.constSwitch(displayTaskConstructor)}
+              </Select>
+              {this.constSwitch(displayTaskConstructor)}
             </div>
           ) : (
-            <div>
-              <button onClick={this.displayConstructor}>Add Task</button>
-            </div>
+            <ButtonWrapper>
+              <TaskButton onClick={this.displayConstructor}>
+                Add Task
+              </TaskButton>
+            </ButtonWrapper>
           )}
         </div>
       </>
@@ -90,3 +80,40 @@ class TaskConstructor extends Component {
 }
 
 export default TaskConstructor;
+
+const TaskButton = styled.button`
+  width: 120px;
+  height: 30px;
+  border: 0;
+  border-radius: 10px;
+  background-color: ${props => props.theme.button};
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+  margin-right: 1rem;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  margin-top: 0.5rem;
+`;
+
+const Select = styled.select`
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.5rem ;
+  font-size: 1rem;
+  color: black;
+  padding-left: 0.7em;
+`;

@@ -1,29 +1,37 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
+import {
+  TaskElementWrapper,
+  TitleSpan,
+  ButtonWrapper,
+  TaskButton
+} from "../../style"
+
 const goTo = (lessonId, taskId, history) => {
   history.push(`/task/${lessonId}/${taskId}`);
 };
-let id = 1
+let id = 1;
 const TaskList = props => {
   const { lessonId, page, deleteTask } = props;
   const taskList = page.tasks.map(task => {
-    let token = localStorage.getItem("userId");
     return (
-      // <li key={task._id}>
-      <li key={id++}>
+      <TaskElementWrapper key={id++}>
         {task.info && (
-          <span onClick={() => goTo(lessonId, task._id, props.history)}>
+          <TitleSpan onClick={() => goTo(lessonId, task._id, props.history)}>
             {task.info.name}
-          </span>
+          </TitleSpan>
         )}
-        <button onClick={() => deleteTask(page._id, task._id)}>
-          Delete Task
-        </button>
-      </li>
+        <ButtonWrapper>
+          <TaskButton onClick={() => deleteTask(page._id, task._id)}>
+            {" "}
+            Delete Task{" "}
+          </TaskButton>
+        </ButtonWrapper>
+      </TaskElementWrapper>
     );
   });
-  console.log(taskList)
-  return  <ul>{taskList}</ul>;
+  return <ul>{taskList}</ul>;
 };
 export default withRouter(TaskList);
+

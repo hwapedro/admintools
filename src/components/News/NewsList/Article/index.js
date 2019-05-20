@@ -21,7 +21,7 @@ export default function Article({ news, getParams, deleteItem }) {
           __html: news.description
         }}
       />
-      <LabelElement>Date of create : </LabelElement>
+      <LabelElement>Published : </LabelElement>
       <DescriptionSpan>
         <pre>{new Date(news.date).toLocaleString()}</pre>
       </DescriptionSpan>
