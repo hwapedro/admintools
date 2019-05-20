@@ -12,7 +12,10 @@ import Badges from "../components/Badges";
 import News from "../components/News";
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/LoginScreen";
+import OneCourse from "../components/OneCourse";
+
 import * as route from "../components/Route/constants";
+
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -58,7 +61,7 @@ class App extends Component {
               path={route.course}
               render={({ match }) => {
                 const { id } = match.params;
-                return <>asd</>;
+                return <OneCourse itemId={id} />;
               }}
             />
             <Route

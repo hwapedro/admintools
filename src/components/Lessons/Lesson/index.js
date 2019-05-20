@@ -135,17 +135,12 @@ class Lesson extends Component {
                   onEditorStateChange={this.onEditorStateChange}
                 />
                 <LabelElement>EXAM :</LabelElement>
-                {this.state.exam ? (
+                
                   <ImgMark
-                    src={checkMark}
+                    src={this.state.exam ? checkMark : redCross }
                     onClick={() => this.changeExamMark(this.state.exam)}
                   />
-                ) : (
-                  <ImgCross
-                    src={redCross}
-                    onClick={() => this.changeExamMark(this.state.exam)}
-                  />
-                )}
+                
                 <ButtonWrapper>
                   <LessonButton type="submit">CONFIRM</LessonButton>
                 </ButtonWrapper>

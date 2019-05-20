@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Droppable } from "react-beautiful-dnd";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import { withRouter } from "react-router-dom";
 
 import Spinner from "../../Spinner";
 import EditorText from "../../EditorText";
@@ -70,6 +71,11 @@ class CourseList extends Component {
     });
   };
 
+  goTo = id => {
+    console.log(this.props.history)
+    this.props.history.push(`/course/${id}`);
+  };
+
   render() {
     const { courses, loading, search } = this.props;
     const { editorState, changeFlag, courseIndex, title } = this.state;
@@ -120,11 +126,11 @@ class CourseList extends Component {
               index={index}
               getParams={this.getParams}
               deleteItem={this.deleteItem}
+              goTo = {this.goTo}
             />
           );
         }
       });
-    console.log();
     return (
       <Wrapper>
         {courses.length === 0 || list.length === 0 ? (
@@ -148,7 +154,7 @@ class CourseList extends Component {
   }
 }
 
-export default CourseList;
+export default  withRouter(CourseList);
 
 CourseList.defaultProps = {
   courses: [],

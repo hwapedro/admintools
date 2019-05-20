@@ -11,57 +11,54 @@ import {
   SignInButton
 } from "../../style.js";
 
-export default function Course ({ course, getParams, deleteItem, index }) {
-    return (
-      <Draggable
-        key={course.courseIndex}
-        draggableId={`draggableId-course-${course.courseIndex}`}
-        index={index}
-      >
-        {provided => (
-          <ElementWrapper
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            key={course.courseIndex}
-          >
-            <LabelElement>Course number :</LabelElement>
-            <TitleSpan> {course.courseIndex}</TitleSpan>
-            <LabelElement>Course name :</LabelElement>
-            <TitleSpan> {course.title}</TitleSpan>
-            <LabelElement>Course description : </LabelElement>
-            <DescriptionSpan
-              dangerouslySetInnerHTML={{
-                __html: course.description
-              }}
-            />
-            <ButtonWrapper>
-              <SignInButton
-                onClick={() =>
-                  getParams(
-                    course.courseIndex,
-                    course.title,
-                    course.description
-                  )
-                }
-              >
-                CHANGE COURSE
-              </SignInButton>
+export default function Course({ course, getParams, deleteItem, index, goTo }) {
+  return (
+    <Draggable
+      key={course.courseIndex}
+      draggableId={`draggableId-course-${course.courseIndex}`}
+      index={index}
+    >
+      {provided => (
+        <ElementWrapper
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          key={course.courseIndex}
+        >
+          <LabelElement>Course number :</LabelElement>
+          <TitleSpan> {course.courseIndex}</TitleSpan>
+          <LabelElement>Course name :</LabelElement>
+          <TitleSpan> {course.title}</TitleSpan>
+          <LabelElement>Course description : </LabelElement>
+          <DescriptionSpan
+            dangerouslySetInnerHTML={{
+              __html: course.description
+            }}
+          />
+          <ButtonWrapper>
+            <SignInButton onClick={() => goTo(course._id)}>GO TO</SignInButton>
+            <SignInButton
+              onClick={() =>
+                getParams(course.courseIndex, course.title, course.description)
+              }
+            >
+              CHANGE COURSE
+            </SignInButton>
 
-              <SignInButton
-                onClick={() => {
-                  if (window.confirm("ARE YOU SURE ?")) {
-                    deleteItem(course._id);
-                  }
-                }}
-              >
-                DELETE COURSE
-              </SignInButton>
-            </ButtonWrapper>
-          </ElementWrapper>
-        )}
-      </Draggable>
-    );
+            <SignInButton
+              onClick={() => {
+                if (window.confirm("ARE YOU SURE ?")) {
+                  deleteItem(course._id);
+                }
+              }}
+            >
+              DELETE COURSE
+            </SignInButton>
+          </ButtonWrapper>
+        </ElementWrapper>
+      )}
+    </Draggable>
+  );
 }
 
 Course.defaultProps = {
@@ -81,4 +78,3 @@ Course.propTypes = {
   getParams: PropTypes.func,
   deleteItem: PropTypes.func
 };
-

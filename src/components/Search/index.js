@@ -24,7 +24,7 @@ const SearchInput = styled.input`
   padding-left: 0.5rem;
   width: 48.7rem;
   height: 40px;
-  border: 1px solid black;
+  border: 0.6px solid black;
   border-radius: 1rem;
   outline: none;
 `;

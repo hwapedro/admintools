@@ -53,6 +53,7 @@ class News extends Component {
       changeArticle
     } = this.props;
     const { title, search, constructor } = this.state;
+    console.log(search)
     return (
       <>
         {error && (
@@ -85,6 +86,7 @@ class News extends Component {
               }
               delArticle={(index, name) => delArticle(index, name)}
               news={news}
+              search={search}
             />
           </>
         )}

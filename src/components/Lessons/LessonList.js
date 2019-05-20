@@ -69,6 +69,7 @@ class LessonsList extends Component {
   };
 
   goTo = id => {
+    console.log(this.props.history)
     this.props.history.push(`/lesson/${id}`);
   };
 

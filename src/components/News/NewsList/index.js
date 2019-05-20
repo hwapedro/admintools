@@ -68,10 +68,15 @@ class NewsList extends Component {
   };
 
   render() {
-    const { news } = this.props;
+    const { news ,search} = this.props;
     const { editorState, _id, changeFlag, title } = this.state;
 
-    let list = news.map((news, index) => {
+    let list = news.filter(article => {
+        if (article.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+          return true;
+        }
+        return false;
+      }).map((news, index) => {
       if (changeFlag && news._id === _id) {
         return (
           <ElementWrapper key={news._id}>
@@ -103,9 +108,10 @@ class NewsList extends Component {
         );
       }
     });
+    console.log(news)
     return (
       <Wrapper>
-        {news.length === 0 ? (
+        {news.length === 0 || list.length === 0 ? (
           <EmptyMessage>There is nothing here yet</EmptyMessage>
         ) : (
           <ElementsWrapper>{list}</ElementsWrapper>
