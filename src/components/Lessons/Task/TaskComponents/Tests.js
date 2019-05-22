@@ -141,7 +141,7 @@ class Test extends Component {
               <>
                 <div>
                   <div>
-                    <TaskTitleInput
+                    <input
                       name="name"
                       placeholder="Name"
                       value={name}
@@ -149,7 +149,7 @@ class Test extends Component {
                     />
                   </div>
                   <div>
-                    <TaskTitleInput
+                    <input
                       name="description"
                       placeholder="Description"
                       onChange={this.infoChange}
@@ -157,24 +157,24 @@ class Test extends Component {
                     />
                   </div>
                   <div>
-                    <QuestionInput
+                    <input
                       name="question"
                       placeholder="Question"
                       onChange={this.infoChange}
                       value={question}
                     />
                   </div>
-                  <OptionButtonWrapper>
-                    <DeleteOptionButton onClick={this.addOption}>Add answer option</DeleteOptionButton>
-                  </OptionButtonWrapper>
+                  <div>
+                    <button onClick={this.addOption}>Add answer option</button>
+                  </div>
 
                   <form onSubmit={this.setParams}>
                     <div>
                       {options.map(el => {
                         return (
                           <div className="form-check" key={el.index}>
-                            <TaskOptionWrapper>
-                              <TaskTitleInput
+                            <div>
+                              <input
                                 name="answer"
                                 placeholder="Answer"
                                 value={el.answer}
@@ -185,18 +185,18 @@ class Test extends Component {
                                 checked={el.right}
                                 onChange={e => this.setRight(el.index, e)}
                               />
-                              <OptionButton
+                              <button
                                 onClick={() => this.deleteOption(el.index)}
                               >
                                 Delete option
-                              </OptionButton>
-                            </TaskOptionWrapper>
+                              </button>
+                            </div>
                           </div>
                         );
                       })}
                     </div>
                   </form>
-                  <TaskButton
+                  <button
                     onClick={e =>
                       this.setParams(
                         e,
@@ -209,7 +209,7 @@ class Test extends Component {
                     }
                   >
                     Confirm
-                  </TaskButton>
+                  </button>
                 </div>
               </>
             );
