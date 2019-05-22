@@ -81,13 +81,13 @@ class LessonsList extends Component {
         return (
           <ElementWrapper key={lesson._id}>
             <form onSubmit={this.setParams}>
-              <LabelElement>Name of Lessons :</LabelElement>
+              <LabelElement>Name of Lesson :</LabelElement>
               <TitleInput
                 name="title"
                 onChange={this.onChange}
                 value={this.state.title}
               />
-              <LabelElement>Description of Lessons : </LabelElement>
+              <LabelElement>Description of Lesson : </LabelElement>
               <EditorText
                 editorState={editorState}
                 onEditorStateChange={this.onEditorStateChange}
@@ -113,9 +113,9 @@ class LessonsList extends Component {
                 {...provided.dragHandleProps}
                 key={lesson._id}
               >
-                <LabelElement>Name of Lessons :</LabelElement>
+                <LabelElement>Name of Lesson :</LabelElement>
                 <TitleSpan> {lesson.title}</TitleSpan>
-                <LabelElement>Description of Lessons : </LabelElement>
+                <LabelElement>Description of Lesson : </LabelElement>
                 <DescriptionSpan
                   dangerouslySetInnerHTML={{
                     __html: lesson.description
@@ -130,7 +130,7 @@ class LessonsList extends Component {
                 <br />
                 <ButtonWrapper>
                   <SignInButton onClick={() => this.goTo(lesson._id)}>
-                    CHANGE Lessons
+                    CHANGE Lesson
                   </SignInButton>
                   <SignInButton
                     onClick={() => {
@@ -139,7 +139,7 @@ class LessonsList extends Component {
                       }
                     }}
                   >
-                    DELETE Lessons
+                    DELETE Lesson
                   </SignInButton>
                 </ButtonWrapper>
               </ElementWrapper>

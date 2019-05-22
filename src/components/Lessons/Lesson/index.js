@@ -164,9 +164,9 @@ class Lesson extends Component {
                 )
               }
             >
-              <LabelElement>Name of Lessons :</LabelElement>
+              <LabelElement>Name of Lesson :</LabelElement>
               <TitleSpan> {lesson.title}</TitleSpan>
-              <LabelElement>Description of Lessons : </LabelElement>
+              <LabelElement>Description of Lesson : </LabelElement>
               <DescriptionSpan
                 dangerouslySetInnerHTML={{
                   __html: lesson.description
