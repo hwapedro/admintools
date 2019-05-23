@@ -38,7 +38,7 @@ class Menu extends Component {
           <ButtonSignOut>
             <LinkButton
               onClick={() => {
-                localStorage.removeItem("userId");
+                localStorage.removeItem("token");
                 this.props.history.push('/')
               }}
             >

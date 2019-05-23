@@ -46,7 +46,7 @@ class LoginScreen extends React.Component {
               <Field
                 name="username"
                 label="username"
-                placeholder="Введите никнейм, пожалуйста"
+                placeholder="Введите никнейм"
                 invalid={touched.username && errors.username}
                 component={CustomInput}
               />
@@ -55,7 +55,7 @@ class LoginScreen extends React.Component {
               <Field
                 name="password"
                 label="password"
-                placeholder="Введите пароль, пожалуйста"
+                placeholder="Введите пароль"
                 invalid={touched.password && errors.password}
                 component={CustomInput}
               />
