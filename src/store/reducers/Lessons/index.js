@@ -210,14 +210,6 @@ function reducerLesson(state = initialState, action = {}) {
     case DELETE_TASK_FAILURE:
       return stopLoading(state, action);
 
-    case CHANGE_DND_REQUEST:
-      return startLoading(state, action);
-
-    case CHANGE_DND_LESSON_SUCCESS:
-      return DND(state, action.payload.id1, action.payload.id2, "lessons");
-
-    case CHANGE_DND_FAILURE:
-      return stopLoading(state, action);
 
     default:
       return {

@@ -38,12 +38,15 @@ class OneCourse extends Component {
           if (!result.destination) {
             return;
           }
-
+          
           if (result.source.index !== result.destination.index) {
+            console.log(course.lessons[result.source.index].lessonIndex,
+              course.lessons[result.destination.index].lessonIndex,
+              course.courseIndex)
             changeDndLesson(
               course.lessons[result.source.index].lessonIndex,
               course.lessons[result.destination.index].lessonIndex,
-              course.lessons[result.source.index].courseIndex
+              course.courseIndex
             );
           }
         }}
@@ -64,6 +67,7 @@ OneCourse.defaultProps = {
   course: {},
   loading: false,
   error: false,
+  
   addLesson() {},
   delLesson() {},
   getAllLessons() {},

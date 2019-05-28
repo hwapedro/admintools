@@ -27,8 +27,7 @@ import {
   CHANGE_NEWS_SUCCESS,
   GET_COURSE_REQUEST,
   GET_COURSE_SUCCESS,
-  GET_COURSE_FAILURE,
-  DELETE_COURSE_LESSON_SUCCESS
+  GET_COURSE_FAILURE
 } from "../constants";
 
 import AdminService from "../../service";
@@ -146,12 +145,6 @@ export const deletElement = (index, name) => dispatch => {
         case "news":
           dispatch({
             type: DELETE_NEWS_SUCCESS,
-            index: index
-          });
-          break;
-        case "course-lesson":
-          dispatch({
-            type: DELETE_COURSE_LESSON_SUCCESS,
             index: index
           });
           break;

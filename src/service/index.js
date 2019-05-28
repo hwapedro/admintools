@@ -164,14 +164,14 @@ export default class AdminService {
     return response.body;
   }
 
-  async addLesson(title, description, exam, token, name) {
+  async addLesson(title, description, exam, token, name, courseIndex) {
     let response = await request
       .post(`${_apiBase}/${name}/create`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, description: description, exam: exam });
+      .send({ title: title, description: description, exam: exam, courseIndex: courseIndex });
     return response.body;
   }
 

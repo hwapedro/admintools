@@ -27,25 +27,44 @@ export const DND = (state, id1, id2, name) => {
         courses: courses.map((course, i) => {
           console.log(course, i);
           course.courseIndex = i + 1;
-          
+
           return course;
         })
       };
 
     case "lessons":
-      let lessons = update(state.lessons, {
-        $splice: [[id1, 1], [id2, 0, state.lessons[id1]]]
+      console.log(state.course.lessons)
+      let lessons = update(state.course.lessons, {
+        $splice: [[id1, 1], [id2, 0, state.course.lessons[id1]]]
       });
-      console.log(lessons)
+      console.log(lessons);
       return {
         ...state,
         loading: false,
-        lessons: lessons.map((lesson, i) => {
-          
-          lesson.lessonIndex = i + 1;
-          return lesson;
-        })
+        course: {
+          ...state.course,
+          lessons: lessons.map((lesson, i) => {
+            lesson.lessonIndex = i + 1;
+            return lesson;
+          })
+        }
       };
+
+    // case "lessons":
+
+    //     let lessons = update(state.lessons, {
+    //       $splice: [[id1, 1], [id2, 0, state.lessons[id1]]]
+    //     });
+    //     console.log(lessons)
+    //     return {
+    //       ...state,
+    //       loading: false,
+    //       lessons: lessons.map((lesson, i) => {
+
+    //         lesson.lessonIndex = i + 1;
+    //         return lesson;
+    //       })
+    //     };
 
     default:
       break;

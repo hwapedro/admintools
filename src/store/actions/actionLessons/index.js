@@ -84,7 +84,7 @@ export const addLesson = (
   });
 
   adminService
-    .addLesson(title, description, exam, token, name)
+    .addLesson(title, description, exam, token, name, 1)
     .then(response => {
       dispatch({
         type: ADD_LESSON_SUCCESS,
@@ -177,7 +177,7 @@ export const changeDndLesson = (id1, id2, courseIndex) => dispatch => {
   dispatch({
     type: CHANGE_DND_REQUEST
   });
-
+  console.log(id1, id2, courseIndex)
   adminService
     .DragAndDropLesson(token, id1, id2, courseIndex)
     .then(response => {
