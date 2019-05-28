@@ -63,7 +63,16 @@ export default class AdminService {
     return response.body;
   }
 
+  async getOneCourse(token, id) {
+    let response = await request.get(`${_apiBase}/course/${id}`).set({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return response.body;
+  }
+
   //LESSON PAGE
+
   async getAllPages(token, id) {
     let response = await request.get(`${_apiBase}/lesson/${id}/all`).set({
       "Content-Type": "application/json",
@@ -219,16 +228,18 @@ export default class AdminService {
     return response.body;
   }
 
-  async changeNews(token, id) {
-    let response = await request
-      .put(`${_apiBase}/badge/${id}/icon`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      })
-    return response;
-  }
+  // async changeNews(token, id) {
+  //   let response = await request
+  //     .put(`${_apiBase}/badge/${id}/icon`)
+  //     .set({
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + token
+  //     })
+  //   return response;
+  // }
 
 
 }
+
+const swapi = new AdminService;
 

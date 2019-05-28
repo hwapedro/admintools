@@ -24,7 +24,11 @@ import {
   CHANGE_DND_REQUEST,
   CHANGE_DND_SUCCESS,
   CHANGE_DND_FAILURE,
-  CHANGE_NEWS_SUCCESS
+  CHANGE_NEWS_SUCCESS,
+  GET_COURSE_REQUEST,
+  GET_COURSE_SUCCESS,
+  GET_COURSE_FAILURE,
+  DELETE_COURSE_LESSON_SUCCESS
 } from "../constants";
 
 import AdminService from "../../service";
@@ -145,6 +149,12 @@ export const deletElement = (index, name) => dispatch => {
             index: index
           });
           break;
+        case "course-lesson":
+          dispatch({
+            type: DELETE_COURSE_LESSON_SUCCESS,
+            index: index
+          });
+          break;
         default:
           break;
       }
@@ -202,4 +212,21 @@ export const changeDnD = (id1, id2) => dispatch => {
       });
     })
     .catch(error => dispatch({ type: CHANGE_DND_FAILURE }));
+};
+
+export const getCourse = id => dispatch => {
+  dispatch({
+    type: GET_COURSE_REQUEST
+  });
+
+  adminService
+    .getOneCourse(token, id)
+    .then(response => {
+      console.log(response.course);
+      dispatch({
+        type: GET_COURSE_SUCCESS,
+        course: response.course
+      });
+    })
+    .catch(error => dispatch({ type: GET_COURSE_FAILURE, error: true }));
 };

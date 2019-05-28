@@ -1,26 +1,37 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
+
+import {
+  changeElement,
+  getAllElements,
+  deletElement,
+  getCourse
+} from "../../store/actions";
+
+import { changeDndLesson, addLesson } from "../../store/actions/actionLessons";
 
 import LessonList from "../Lessons/LessonList";
 
 class OneCourse extends Component {
-  state = {
-    lessons: [
-      {
-        courseIndex: 1,
-        description: "<p>1412312</p>",
-        exam: false,
-        lessonIndex: 1,
-        title: "12",
-        _id: "5cdccd3175f3a87fe23b9619"
-      }
-    ]
-  };
+  componentDidMount() {
+    const { getCourse } = this.props;
+    getCourse(this.props.itemId);
+  }
 
   render() {
-    console.log(this.props);
+    const {
+      loading,
+      lessons,
+      changeLesson,
+      addLesson,
+      course,
+      delLesson,
+      changeDndLesson
+    } = this.props;
+
     return (
       <DragDropContext
         onDragEnd={result => {
@@ -28,28 +39,70 @@ class OneCourse extends Component {
             return;
           }
 
-          //   if (result.source.index !== result.destination.index) {
-          //     changeDndLesson(
-          //       lessons[result.source.index].lessonIndex,
-          //       lessons[result.destination.index].lessonIndex,
-          //       lessons[result.source.index].courseIndex
-          //     );
-          //   }
+          if (result.source.index !== result.destination.index) {
+            changeDndLesson(
+              course.lessons[result.source.index].lessonIndex,
+              course.lessons[result.destination.index].lessonIndex,
+              course.lessons[result.source.index].courseIndex
+            );
+          }
         }}
       >
-        <LessonList lessons={this.state.lessons} />
+        <LessonList
+          changeLesson={(lessonsIndex, title, description, name) =>
+            changeLesson(lessonsIndex, title, description, name)
+          }
+          delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
+          lessons={course.lessons}
+        />
       </DragDropContext>
     );
   }
 }
 
+OneCourse.defaultProps = {
+  course: {},
+  loading: false,
+  error: false,
+  addLesson() {},
+  delLesson() {},
+  getAllLessons() {},
+  changeLesson() {}
+};
+
+OneCourse.propTypes = {
+  course: PropTypes.object,
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+
+  addCourses: PropTypes.func,
+  delLesson: PropTypes.func,
+  getAllLessons: PropTypes.func,
+  changeLesson: PropTypes.func
+};
+
 const mapStateToProps = state => ({
-  courses: state.Courses.courses,
+  course: state.Courses.course,
   loading: state.Courses.loading,
   error: state.Courses.error
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  addLesson: (title, description, exam, name) =>
+    dispatch(addLesson(title, description, exam, name)),
+
+  delLesson: (lessonsIndex, name) => dispatch(deletElement(lessonsIndex, name)),
+
+  getAllLessons: name => dispatch(getAllElements(name)),
+
+  changeLesson: (lessonsIndex, title, description, name) =>
+    dispatch(changeElement(lessonsIndex, title, description, name)),
+
+  changeDndLesson: (id1, id2, courseIndex) =>
+    dispatch(changeDndLesson(id1, id2, courseIndex)),
+
+  getCourse: id => dispatch(getCourse(id))
+});
 
 export default connect(
   mapStateToProps,

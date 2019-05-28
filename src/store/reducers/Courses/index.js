@@ -13,7 +13,11 @@ import {
   CHANGE_ELEMENT_FAILURE,
   CHANGE_DND_REQUEST,
   CHANGE_DND_SUCCESS,
-  CHANGE_DND_FAILURE
+  CHANGE_DND_FAILURE,
+  GET_COURSE_REQUEST,
+  GET_COURSE_SUCCESS,
+  GET_COURSE_FAILURE,
+  DELETE_LESSON_SUCCESS
 } from "../../constants";
 
 import { startLoading, stopLoading, DND } from "../../utils";
@@ -22,7 +26,8 @@ const initialState = {
   token: null,
   loading: false,
   error: null,
-  courses: []
+  courses: [],
+  course: {}
 };
 
 function reducerCourses(state = initialState, action = {}) {
@@ -64,9 +69,20 @@ function reducerCourses(state = initialState, action = {}) {
     case DELETE_COURSE_SUCCESS:
       return {
         ...state,
-        courses: state.courses.filter(
-          courses => courses._id !== action.index
-        ),
+        courses: state.courses.filter(courses => courses._id !== action.index),
+        loading: false,
+        error: false
+      };
+
+    case DELETE_LESSON_SUCCESS:
+      return {
+        ...state,
+        course: {
+          ...state.course,
+          lessons: state.course.lessons.filter(
+            lesson => lesson._id !== action.index
+          )
+        },
         loading: false,
         error: false
       };
@@ -100,6 +116,21 @@ function reducerCourses(state = initialState, action = {}) {
       return DND(state, action.payload.id1, action.payload.id2, "courses");
 
     case CHANGE_DND_FAILURE:
+      return stopLoading(state, action);
+
+    //GET COURSE
+    case GET_COURSE_REQUEST:
+      return startLoading(state, action);
+
+    case GET_COURSE_SUCCESS:
+      return {
+        ...state,
+        course: action.course,
+        loading: false,
+        error: false
+      };
+
+    case GET_COURSE_FAILURE:
       return stopLoading(state, action);
 
     default:
