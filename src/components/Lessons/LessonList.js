@@ -3,11 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import {
-  EditorState,
-  ContentState,
-  convertFromHTML
-} from "draft-js";
+import { EditorState, ContentState, convertFromHTML } from "draft-js";
 
 import EditorText from "../EditorText";
 
@@ -64,104 +60,112 @@ class LessonsList extends Component {
     delLesson(_id, name);
   };
 
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
   goTo = id => {
-    console.log(this.props.history)
     this.props.history.push(`/lesson/${id}`);
   };
 
   render() {
-    const { lessons } = this.props;
-    const { editorState } = this.state;
-    let list = lessons.map((lesson, index) => {
-      if (this.state.changeFlag && lesson._id === this.state._id) {
-        return (
-          <ElementWrapper key={lesson._id}>
-            <form onSubmit={this.setParams}>
-              <LabelElement>Name of Lesson :</LabelElement>
-              <TitleInput
-                name="title"
-                onChange={this.onChange}
-                value={this.state.title}
-              />
-              <LabelElement>Description of Lesson : </LabelElement>
-              <EditorText
-                editorState={editorState}
-                onEditorStateChange={this.onEditorStateChange}
-              />
+    const { lessons, search, onChange } = this.props;
+    const { editorState, changeFlag, _id, title } = this.state;
+   
+    let list = lessons
+      .filter(lesson => {
+       
+        if (lesson.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+          return true;
+        }
+        return false;
+      })
+      .map((lesson, index) => {
+        if (changeFlag && lesson._id === _id) {
+          return (
+            <ElementWrapper key={lesson._id}>
+              <form onSubmit={this.setParams}>
+                <LabelElement>Name of Lesson :</LabelElement>
+                <TitleInput
+                  name="title"
+                  onChange={onChange}
+                  value={title}
+                />
+                <LabelElement>Description of Lesson : </LabelElement>
+                <EditorText
+                  editorState={editorState}
+                  onEditorStateChange={this.onEditorStateChange}
+                />
 
-              <ButtonWrapper>
-                <SignInButton type="submit">CONFIRM</SignInButton>
-              </ButtonWrapper>
-            </form>
-          </ElementWrapper>
-        );
-      } else {
-        return (
-          <Draggable
-            key={lesson._id}
-            draggableId={`draggableId-lesson-${lesson._id}`}
-            index={index}
-          >
+                <ButtonWrapper>
+                  <SignInButton type="submit">CONFIRM</SignInButton>
+                </ButtonWrapper>
+              </form>
+            </ElementWrapper>
+          );
+        } else {
+          return (
+            <Draggable
+              key={lesson._id}
+              draggableId={`draggableId-lesson-${lesson._id}`}
+              index={index}
+            >
+              {provided => (
+                <ElementWrapper
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  key={lesson._id}
+                >
+                  <LabelElement>Name of Lesson :</LabelElement>
+                  <TitleSpan> {lesson.title}</TitleSpan>
+                  <LabelElement>Description of Lesson : </LabelElement>
+                  <DescriptionSpan
+                    dangerouslySetInnerHTML={{
+                      __html: lesson.description
+                    }}
+                  />
+                  <LabelElement>EXAM :</LabelElement>
+                  {lesson.exam ? (
+                    <ImgMark src={checkMark} />
+                  ) : (
+                    <ImgCross src={redCross} />
+                  )}
+                  <br />
+                  <ButtonWrapper>
+                    <SignInButton onClick={() => this.goTo(lesson._id)}>
+                      CHANGE Lesson
+                    </SignInButton>
+                    <SignInButton
+                      onClick={() => {
+                        if (window.confirm("Delete the item?")) {
+                          this.deleteItem(lesson._id);
+                        }
+                      }}
+                    >
+                      DELETE Lesson
+                    </SignInButton>
+                  </ButtonWrapper>
+                </ElementWrapper>
+              )}
+            </Draggable>
+          );
+        }
+      });
+    return (
+      <Wrapper>
+        {lessons.length === 0 || list.length === 0 ? (
+          <EmptyMessage>There is nothing here yet</EmptyMessage>
+        ) : (
+          <Droppable droppableId="droppable">
             {provided => (
-              <ElementWrapper
+              <ElementsWrapper
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
-                key={lesson._id}
               >
-                <LabelElement>Name of Lesson :</LabelElement>
-                <TitleSpan> {lesson.title}</TitleSpan>
-                <LabelElement>Description of Lesson : </LabelElement>
-                <DescriptionSpan
-                  dangerouslySetInnerHTML={{
-                    __html: lesson.description
-                  }}
-                />
-                <LabelElement>EXAM :</LabelElement>
-                {lesson.exam ? (
-                  <ImgMark src={checkMark} />
-                ) : (
-                  <ImgCross src={redCross} />
-                )}
-                <br />
-                <ButtonWrapper>
-                  <SignInButton onClick={() => this.goTo(lesson._id)}>
-                    CHANGE Lesson
-                  </SignInButton>
-                  <SignInButton
-                    onClick={() => {
-                      if (window.confirm("Delete the item?")) {
-                        this.deleteItem(lesson._id);
-                      }
-                    }}
-                  >
-                    DELETE Lesson
-                  </SignInButton>
-                </ButtonWrapper>
-              </ElementWrapper>
+                {list}
+                {provided.placeholder}
+              </ElementsWrapper>
             )}
-          </Draggable>
-        );
-      }
-    });
-    return (
-      <Wrapper>
-        <Droppable droppableId="droppable">
-          {provided => (
-            <ElementsWrapper
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-            >
-              {list}
-              {provided.placeholder}
-            </ElementsWrapper>
-          )}
-        </Droppable>
+          </Droppable>
+        )}
       </Wrapper>
     );
   }
@@ -238,6 +242,13 @@ const DescriptionSpan = styled.span`
 //   font-size: 1.3rem;
 //   color: black;
 // `;
+const EmptyMessage = styled.div`
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 2.5rem;
+  top: 50%;
+  margin-top: 270px;
+`;
 
 const ElementsWrapper = styled.ul`
   list-style-type: none;

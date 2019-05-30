@@ -1,17 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+
 import {
-  TaskTitleInput,
-  QuestionInput,
-  OptionButton,
-  DeleteOptionButton,
-  OptionButtonWrapper,
-  TaskOptionWrapper,
-  TaskButton
-} from "../../style";
-import {
-  getLesson,
+ // getLesson,
   deleteTask,
   changeTask
 } from "../../../../store/actions/actionLessons";

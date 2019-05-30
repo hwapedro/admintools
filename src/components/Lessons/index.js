@@ -13,20 +13,36 @@ import { changeDndLesson } from "../../store/actions/actionLessons";
 
 import { addLesson } from "../../store/actions/actionLessons";
 
+import Search from "../Search";
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "../Lessons/LessonList";
 
 const name = "lesson";
 
 class Lessons extends Component {
+  state = {
+    search: ""
+  };
+
   componentDidMount() {
     const { getAllLessons } = this.props;
-    getAllLessons( name);
+    getAllLessons(name);
   }
 
-  render() {
-    const { loading, lessons, changeLesson, addLesson, delLesson ,changeDndLesson} = this.props;
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
+  render() {
+    const {
+      loading,
+      lessons,
+      changeLesson,
+      addLesson,
+      delLesson,
+      changeDndLesson
+    } = this.props;
+    const { search } = this.state;
     return (
       <>
         <DragDropContext
@@ -34,7 +50,7 @@ class Lessons extends Component {
             if (!result.destination) {
               return;
             }
-            
+
             if (result.source.index !== result.destination.index) {
               changeDndLesson(
                 lessons[result.source.index].lessonIndex,
@@ -44,19 +60,22 @@ class Lessons extends Component {
             }
           }}
         >
+         
           <SetLesson
-            addLesson={(title, description, exam,  name) =>
-              addLesson(title, description, exam,  name)
+            addLesson={(title, description, exam, name) =>
+              addLesson(title, description, exam, name)
             }
+            onChange={this.onChange}
+            value={search}
           />
           <LessonList
-            changeLesson={(lessonsIndex, title, description,  name) =>
-              changeLesson(lessonsIndex, title, description,  name)
+            changeLesson={(lessonsIndex, title, description, name) =>
+              changeLesson(lessonsIndex, title, description, name)
             }
-            delLesson={(lessonsIndex,  name) =>
-              delLesson(lessonsIndex,  name)
-            }
+            onChange={this.onChange}
+            delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
             lessons={lessons}
+            search={this.state.search}
           />
         </DragDropContext>
       </>
@@ -92,19 +111,18 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam,  name) =>
-    dispatch(addLesson(title, description, exam,  name)),
+  addLesson: (title, description, exam, name) =>
+    dispatch(addLesson(title, description, exam, name)),
 
-  delLesson: (lessonsIndex,  name) =>
-    dispatch(deletElement(lessonsIndex,  name)),
+  delLesson: (lessonsIndex, name) => dispatch(deletElement(lessonsIndex, name)),
 
-  getAllLessons: ( name) => dispatch(getAllElements( name)),
+  getAllLessons: name => dispatch(getAllElements(name)),
 
-  changeLesson: (lessonsIndex, title, description,  name) =>
-    dispatch(changeElement(lessonsIndex, title, description,  name)),
+  changeLesson: (lessonsIndex, title, description, name) =>
+    dispatch(changeElement(lessonsIndex, title, description, name)),
 
-  changeDndLesson: ( id1, id2, courseIndex) =>
-    dispatch(changeDndLesson( id1, id2, courseIndex))
+  changeDndLesson: (id1, id2, courseIndex) =>
+    dispatch(changeDndLesson(id1, id2, courseIndex))
 });
 
 export default connect(
