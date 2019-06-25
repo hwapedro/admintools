@@ -9,7 +9,7 @@ import {
 } from "../../style";
 import { addTask } from "../../../../store/actions/actionLessons";
 
-let index = 100;
+
 class TextConstructor extends Component {
   state = {
     name: "",

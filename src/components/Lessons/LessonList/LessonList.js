@@ -61,12 +61,7 @@ class LessonsList extends Component {
     delLesson(_id, name);
   };
 
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
   goTo = id => {
-    console.log(this.props.history);
     this.props.history.push(`/lesson/${id}`);
   };
 
@@ -110,18 +105,22 @@ class LessonsList extends Component {
     });
     return (
       <Wrapper>
-        <Droppable droppableId="droppable">
-          {provided => (
-            <ElementsWrapper
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-            >
-              {list}
-              {provided.placeholder}
-            </ElementsWrapper>
-          )}
-        </Droppable>
+        {lessons.length === 0 || list.length === 0 ? (
+          <EmptyMessage>There is nothing here yet</EmptyMessage>
+        ) : (
+          <Droppable droppableId="droppable">
+            {provided => (
+              <ElementsWrapper
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                {list}
+                {provided.placeholder}
+              </ElementsWrapper>
+            )}
+          </Droppable>
+        )}
       </Wrapper>
     );
   }
@@ -198,6 +197,13 @@ const DescriptionSpan = styled.span`
 //   font-size: 1.3rem;
 //   color: black;
 // `;
+const EmptyMessage = styled.div`
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 2.5rem;
+  top: 50%;
+  margin-top: 270px;
+`;
 
 const ElementsWrapper = styled.ul`
   list-style-type: none;
