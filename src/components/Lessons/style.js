@@ -162,7 +162,7 @@ export const TaskButton = styled.button`
 
 export const TaskElementWrapper = styled.li`
   display: flex;
-  flex-direction: row
+  flex-direction: row;
   justify-content: space-between;
   background-color: ${props => props.theme.courses};
   margin-top: 0.5rem;
@@ -252,3 +252,5 @@ export const TaskOptionWrapper = styled.li`
   padding: 0.3rem;
   list-style-type: none;
 `;
+
+

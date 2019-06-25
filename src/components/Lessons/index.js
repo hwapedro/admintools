@@ -14,18 +14,25 @@ import { changeDndLesson } from "../../store/actions/actionLessons";
 import { addLesson } from "../../store/actions/actionLessons";
 
 import SetLesson from "../Lessons/SetLesson";
-import LessonList from "../Lessons/LessonList";
+import LessonList from "./LessonList/LessonList";
 
 const name = "lesson";
 
 class Lessons extends Component {
   componentDidMount() {
     const { getAllLessons } = this.props;
-    getAllLessons( name);
+    getAllLessons(name);
   }
 
   render() {
-    const { loading, lessons, changeLesson, addLesson, delLesson ,changeDndLesson} = this.props;
+    const {
+      loading,
+      lessons,
+      changeLesson,
+      addLesson,
+      delLesson,
+      changeDndLesson
+    } = this.props;
 
     return (
       <>
@@ -34,7 +41,7 @@ class Lessons extends Component {
             if (!result.destination) {
               return;
             }
-            
+
             if (result.source.index !== result.destination.index) {
               changeDndLesson(
                 lessons[result.source.index].lessonIndex,
@@ -45,17 +52,15 @@ class Lessons extends Component {
           }}
         >
           <SetLesson
-            addLesson={(title, description, exam,  name) =>
-              addLesson(title, description, exam,  name)
+            addLesson={(title, description, exam, name, courseIndex) =>
+              addLesson(title, description, exam, name, courseIndex)
             }
           />
           <LessonList
-            changeLesson={(lessonsIndex, title, description,  name) =>
-              changeLesson(lessonsIndex, title, description,  name)
+            changeLesson={(lessonsIndex, title, description, name) =>
+              changeLesson(lessonsIndex, title, description, name)
             }
-            delLesson={(lessonsIndex,  name) =>
-              delLesson(lessonsIndex,  name)
-            }
+            delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
             lessons={lessons}
           />
         </DragDropContext>
@@ -92,19 +97,18 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam,  name) =>
-    dispatch(addLesson(title, description, exam,  name)),
+  addLesson: (title, description, exam, name, courseIndex) =>
+    dispatch(addLesson(title, description, exam, name, courseIndex)),
 
-  delLesson: (lessonsIndex,  name) =>
-    dispatch(deletElement(lessonsIndex,  name)),
+  delLesson: (lessonsIndex, name) => dispatch(deletElement(lessonsIndex, name)),
 
-  getAllLessons: ( name) => dispatch(getAllElements( name)),
+  getAllLessons: name => dispatch(getAllElements(name)),
 
-  changeLesson: (lessonsIndex, title, description,  name) =>
-    dispatch(changeElement(lessonsIndex, title, description,  name)),
+  changeLesson: (lessonsIndex, title, description, name) =>
+    dispatch(changeElement(lessonsIndex, title, description, name)),
 
-  changeDndLesson: ( id1, id2, courseIndex) =>
-    dispatch(changeDndLesson( id1, id2, courseIndex))
+  changeDndLesson: (id1, id2, courseIndex) =>
+    dispatch(changeDndLesson(id1, id2, courseIndex))
 });
 
 export default connect(

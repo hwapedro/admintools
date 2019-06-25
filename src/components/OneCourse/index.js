@@ -13,7 +13,7 @@ import {
 
 import { changeDndLesson, addLesson } from "../../store/actions/actionLessons";
 
-import LessonList from "../Lessons/LessonList";
+import LessonList from "../Lessons/LessonList/LessonList";
 
 class OneCourse extends Component {
   componentDidMount() {
