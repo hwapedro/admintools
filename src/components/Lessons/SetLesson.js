@@ -18,6 +18,7 @@ import {
 
 import AdminService from "../../service";
 
+import Search from "../Search";
 import checkMark from "../../img/good.png";
 import redCross from "../../img/bad.png";
 
@@ -80,6 +81,7 @@ class SetLessons extends Component {
 
   render() {
     const { constructor, exam, courseIndex } = this.state;
+    const { onChange, value } = this.props;
 
     return (
       <Wrapper>
