@@ -2,6 +2,9 @@ import {
   FETCH_LOGIN_REQUEST,
   FETCH_LOGIN_SUCCESS,
   FETCH_LOGIN_FAILURE,
+  FETCH_REGISTER_REQUEST,
+  FETCH_REGISTER_SUCCESS,
+  FETCH_REGISTER_FAILURE,
   GETALL_ELEMENT_FAILURE,
   GETALL_ELEMENT_REQUEST,
   GETALL_LESSON_SUCCESS,
@@ -46,6 +49,26 @@ function reducer(state = initialState, action = {}) {
       };
 
     case FETCH_LOGIN_FAILURE:
+      return {
+        ...state,
+        error: true,
+        loading: false
+      };
+
+      case FETCH_REGISTER_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+    case FETCH_REGISTER_SUCCESS:
+      return {
+        ...state,
+        token: action.token,
+        loading: false,
+        error: false
+      };
+
+    case FETCH_REGISTER_FAILURE:
       return {
         ...state,
         error: true,

@@ -12,6 +12,7 @@ import Badges from "../components/Badges";
 import News from "../components/News";
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/LoginScreen";
+import RegistrationScreen from "../components/Registration"
 import OneCourse from "../components/OneCourse";
 
 import * as route from "../components/Route/constants";
@@ -31,6 +32,7 @@ class App extends Component {
     return (
       <Switch>
         <Route path="/" exact component={LoginScreen} />
+        <Route path={route.register} exact component={RegistrationScreen} />
         <Wrapper>
           <Layout className="container">
             {this.routes.map(({ path, Component }) => (
