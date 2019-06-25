@@ -72,9 +72,9 @@ class LessonsList extends Component {
 
   render() {
     const { lessons } = this.props;
-    const { editorState } = this.state;
+    const { editorState,changeFlag } = this.state;
     let list = lessons.map((lesson, index) => {
-      if (this.state.changeFlag && lesson._id === this.state._id) {
+      if (changeFlag && lesson._id === this.state._id) {
         return (
           <ElementWrapper key={lesson._id}>
             <form onSubmit={this.setParams}>
