@@ -6,4 +6,4 @@ export const course = "/course/:id";
 export const lesson = "/lesson/:id";
 export const pages = "/page/:id";
 export const task = "/task/:lessonId/:taskId"
-
+export const register = "/register";
