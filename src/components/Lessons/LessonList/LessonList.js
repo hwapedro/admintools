@@ -3,16 +3,13 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import {
-  EditorState,
-  ContentState,
-  convertFromHTML
-} from "draft-js";
+import { EditorState, ContentState, convertFromHTML } from "draft-js";
 
-import EditorText from "../EditorText";
+import EditorText from "../../EditorText";
+import Lesson from "./Lesson";
 
-import checkMark from "../../img/good.png";
-import redCross from "../../img/bad.png";
+import checkMark from "../../../img/good.png";
+import redCross from "../../../img/bad.png";
 
 const name = "lesson";
 
@@ -24,20 +21,20 @@ class LessonsList extends Component {
     _id: null
   };
 
-  getParams = (_id, title, description) => {
-    const blocksFromHTML = convertFromHTML(description);
-    const state = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
-    this.setState({
-      changeFlag: true,
-      _id: _id,
-      title: title,
-      description: description,
-      editorState: EditorState.createWithContent(state)
-    });
-  };
+  // getParams = (_id, title, description) => {
+  //   const blocksFromHTML = convertFromHTML(description);
+  //   const state = ContentState.createFromBlockArray(
+  //     blocksFromHTML.contentBlocks,
+  //     blocksFromHTML.entityMap
+  //   );
+  //   this.setState({
+  //     changeFlag: true,
+  //     _id: _id,
+  //     title: title,
+  //     description: description,
+  //     editorState: EditorState.createWithContent(state)
+  //   });
+  // };
 
   setParams = event => {
     event.preventDefault();
@@ -69,15 +66,15 @@ class LessonsList extends Component {
   };
 
   goTo = id => {
-    console.log(this.props.history)
+    console.log(this.props.history);
     this.props.history.push(`/lesson/${id}`);
   };
 
   render() {
     const { lessons } = this.props;
-    const { editorState } = this.state;
+    const { editorState,changeFlag } = this.state;
     let list = lessons.map((lesson, index) => {
-      if (this.state.changeFlag && lesson._id === this.state._id) {
+      if (changeFlag && lesson._id === this.state._id) {
         return (
           <ElementWrapper key={lesson._id}>
             <form onSubmit={this.setParams}>
@@ -101,50 +98,13 @@ class LessonsList extends Component {
         );
       } else {
         return (
-          <Draggable
-            key={lesson._id}
-            draggableId={`draggableId-lesson-${lesson._id}`}
-            index={index}
-          >
-            {provided => (
-              <ElementWrapper
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-                key={lesson._id}
-              >
-                <LabelElement>Name of Lesson :</LabelElement>
-                <TitleSpan> {lesson.title}</TitleSpan>
-                <LabelElement>Description of Lesson : </LabelElement>
-                <DescriptionSpan
-                  dangerouslySetInnerHTML={{
-                    __html: lesson.description
-                  }}
-                />
-                <LabelElement>EXAM :</LabelElement>
-                {lesson.exam ? (
-                  <ImgMark src={checkMark} />
-                ) : (
-                  <ImgCross src={redCross} />
-                )}
-                <br />
-                <ButtonWrapper>
-                  <SignInButton onClick={() => this.goTo(lesson._id)}>
-                    CHANGE Lesson
-                  </SignInButton>
-                  <SignInButton
-                    onClick={() => {
-                      if (window.confirm("Delete the item?")) {
-                        this.deleteItem(lesson._id);
-                      }
-                    }}
-                  >
-                    DELETE Lesson
-                  </SignInButton>
-                </ButtonWrapper>
-              </ElementWrapper>
-            )}
-          </Draggable>
+          <Lesson
+              key={lesson._id}
+              lesson={lesson}
+              index={index}
+              deleteItem={this.deleteItem}
+              goTo = {this.goTo}
+            />
         );
       }
     });

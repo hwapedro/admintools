@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  EditorState,
-  ContentState,
-  convertFromHTML
-} from "draft-js";
+import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
-
+import Select from "react-select";
 import EditorText from "../../EditorText";
 
 import {
@@ -34,24 +30,55 @@ import {
 import Spinner from "../../Spinner";
 import PageList from "../PageList";
 
+import AdminService from "../../../service";
+
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
 
 const name = "lesson";
+let options = [];
+const adminService = new AdminService();
 
 class Lesson extends Component {
   state = {
     title: "",
     description: "",
+    courseIndex: 0,
     changeFlag: false,
     _id: null,
     exam: null
   };
 
   componentDidMount() {
-    const { getLesson } = this.props;
-    getLesson( this.props.itemId);
+    const { getLesson, itemId } = this.props;
+    const token = localStorage.getItem("token");
+    getLesson(itemId);
+
+    adminService
+      .getLesson(token, itemId)
+      .then(response => {
+        const courseIndex = response.lesson.courseIndex;
+        this.setState({
+          courseIndex: { value: courseIndex, label: courseIndex }
+        });
+      })
+      .catch(console.error());
+
+    adminService
+      .getAll(token, "course")
+      .then(response => {
+        options = response.courses.map((element, index) => {
+          const option = index + 1;
+          return { value: option, label: option };
+        });
+        console.log(options[0].value);
+      })
+      .catch(console.error());
   }
+
+  handleChange = courseIndex => {
+    this.setState({ courseIndex });
+  };
 
   changeExamMark = exam => {
     this.setState({ exam: !exam });
@@ -77,18 +104,11 @@ class Lesson extends Component {
   setParams = event => {
     event.preventDefault();
     const { changeLesson } = this.props;
-    const { title, _id, exam } = this.state;
+    const { title, _id, exam, courseIndex } = this.state;
 
     const description = stateToHTML(this.state.editorState.getCurrentContent());
 
-    if (title && description)
-      changeLesson(
-        _id,
-        title,
-        description,
-        exam,
-        name
-      );
+    if (title && description) changeLesson(_id, title, description, exam, name);
     this.setState({ changeFlag: false, _id: null });
   };
 
@@ -97,7 +117,12 @@ class Lesson extends Component {
   };
 
   addPage = () => {
-    this.props.addPage( this.props.lesson._id, `Page ${this.props.lesson.pages.length + 1}`, [], 0);
+    this.props.addPage(
+      this.props.lesson._id,
+      `Page ${this.props.lesson.pages.length + 1}`,
+      [],
+      0
+    );
   };
 
   onEditorStateChange = editorState => {
@@ -108,7 +133,7 @@ class Lesson extends Component {
 
   render() {
     const { lesson, loading, deletePage, deleteTask } = this.props;
-    const { editorState } = this.state;
+    const { editorState, changeFlag, courseIndex } = this.state;
     if (loading) {
       return (
         <>
@@ -117,88 +142,93 @@ class Lesson extends Component {
       );
     }
 
-    if (this.state.changeFlag) {
-      return (
-        <>
-          <Wrapper>
-            <ElementWrapper>
-              <form onSubmit={this.setParams}>
-                <LabelElement>Name of Lesson :</LabelElement>
-                <TitleInput
-                  name="title"
-                  onChange={this.onChange}
-                  value={this.state.title}
-                />
-                <LabelElement>Description of Lesson : </LabelElement>
-                <EditorText
-                  editorState={editorState}
-                  onEditorStateChange={this.onEditorStateChange}
-                />
-                <LabelElement>EXAM :</LabelElement>
-                
+    return (
+      <>
+        <Wrapper>
+          {changeFlag ? (
+            <>
+              <ElementWrapper>
+                <form onSubmit={this.setParams}>
+                  <LabelElement>Name of Lesson :</LabelElement>
+                  <TitleInput
+                    name="title"
+                    onChange={this.onChange}
+                    value={this.state.title}
+                  />
+                  <LabelElement>Description of Lesson : </LabelElement>
+                  <EditorText
+                    editorState={editorState}
+                    onEditorStateChange={this.onEditorStateChange}
+                  />
+                  <LabelElement>EXAM :</LabelElement>
+
                   <ImgMark
-                    src={this.state.exam ? checkMark : redCross }
+                    src={this.state.exam ? checkMark : redCross}
                     onClick={() => this.changeExamMark(this.state.exam)}
                   />
-                
-                <ButtonWrapper>
-                  <LessonButton type="submit">CONFIRM</LessonButton>
-                </ButtonWrapper>
-              </form>
-            </ElementWrapper>
-          </Wrapper>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <Wrapper>
-            <ElementWrapper
-              key={lesson._id}
-              onClick={() =>
-                this.getParams(
-                  lesson._id,
-                  lesson.title,
-                  lesson.description,
-                  lesson.exam
-                )
-              }
-            >
-              <LabelElement>Name of Lesson :</LabelElement>
-              <TitleSpan> {lesson.title}</TitleSpan>
-              <LabelElement>Description of Lesson : </LabelElement>
-              <DescriptionSpan
-                dangerouslySetInnerHTML={{
-                  __html: lesson.description
-                }}
-              />
 
-              <LabelElement>EXAM :</LabelElement>
-              {lesson.exam ? (
-                <ImgMark src={checkMark} />
-              ) : (
-                <ImgCross src={redCross} />
-              )}
-              <br />
+                  <LabelElement>Course Index :</LabelElement>
+                  <Select
+                    value={courseIndex}
+                    onChange={this.handleChange}
+                    options={options}
+                  />
 
-            </ElementWrapper>
+                  <ButtonWrapper>
+                    <LessonButton type="submit">CONFIRM</LessonButton>
+                  </ButtonWrapper>
+                </form>
+              </ElementWrapper>{" "}
+            </>
+          ) : (
+            <>
+              <ElementWrapper
+                key={lesson._id}
+                onClick={() =>
+                  this.getParams(
+                    lesson._id,
+                    lesson.title,
+                    lesson.description,
+                    lesson.exam,
+                    lesson.courseIndex
+                  )
+                }
+              >
+                <LabelElement>Name of Lesson :</LabelElement>
+                <TitleSpan> {lesson.title}</TitleSpan>
+                <LabelElement>Description of Lesson : </LabelElement>
+                <DescriptionSpan
+                  dangerouslySetInnerHTML={{
+                    __html: lesson.description
+                  }}
+                />
 
-            <ButtonWrapper>
-              <LessonButton onClick={this.addPage}>Add Page</LessonButton>
-            </ButtonWrapper>
+                <LabelElement>EXAM :</LabelElement>
+                {lesson.exam ? (
+                  <ImgMark src={checkMark} />
+                ) : (
+                  <ImgCross src={redCross} />
+                )}
 
-            
-            <PageList
-              lessonId={lesson._id}
-              pages={lesson.pages}
-              id={lesson._id}
-              deletePage={deletePage}
-              deleteTask={deleteTask}
-            />
-          </Wrapper>
-        </>
-      );
-    }
+                <LabelElement>Course Index :</LabelElement>
+                <TitleSpan> {lesson.courseIndex}</TitleSpan>
+              </ElementWrapper>
+
+              <ButtonWrapper>
+                <LessonButton onClick={this.addPage}>Add Page</LessonButton>
+              </ButtonWrapper>
+            </>
+          )}
+          <PageList
+            lessonId={lesson._id}
+            pages={lesson.pages}
+            id={lesson._id}
+            deletePage={deletePage}
+            deleteTask={deleteTask}
+          />
+        </Wrapper>
+      </>
+    );
   }
 }
 
@@ -228,14 +258,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getLesson: ( id) => dispatch(getLesson( id)),
-  changeLesson: (lessonsIndex, title, description, exam,  name) =>
-    dispatch(changeLesson(lessonsIndex, title, description, exam,  name)),
-  addPage: ( id, text, tasks, needToComplete) =>
-    dispatch(addPage( id, text, tasks, needToComplete)),
-  deletePage: ( id) => dispatch(deletePage( id)),
-  deleteTask: ( pageId, taskid) =>
-    dispatch(deleteTask( pageId, taskid))
+  getLesson: id => dispatch(getLesson(id)),
+  changeLesson: (lessonsIndex, title, description, exam, name) =>
+    dispatch(changeLesson(lessonsIndex, title, description, exam, name)),
+  addPage: (id, text, tasks, needToComplete) =>
+    dispatch(addPage(id, text, tasks, needToComplete)),
+  deletePage: id => dispatch(deletePage(id)),
+  deleteTask: (pageId, taskid) => dispatch(deleteTask(pageId, taskid))
 });
 
 export default connect(

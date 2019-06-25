@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Select from "react-select";
 
 import {
   ButtonWrapper,
@@ -15,29 +16,52 @@ import {
   ImgCross
 } from "./style";
 
+import AdminService from "../../service";
+
 import checkMark from "../../img/good.png";
 import redCross from "../../img/bad.png";
 
 const name = "lesson";
+let options = [];
+
+const adminService = new AdminService();
 
 class SetLessons extends Component {
   state = {
     title: "",
     description: "",
     exam: false,
-    constructor: false,
+    courseIndex: 0,
+    constructor: false
   };
+
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    adminService
+      .getAll(token, "course")
+      .then(response => {
+        options = response.courses.map((element, index) => {
+          const option = index + 1;
+          return { value: option, label: option };
+        });
+      })
+      .catch(console.error());
+  }
 
   onSubmit = event => {
     event.preventDefault();
     const { addLesson } = this.props;
-    const { title, description, exam } = this.state;
-   
-    addLesson(title, description, exam, name);
+    const { title, description, exam, courseIndex } = this.state;
+    addLesson(title, description, exam, name, courseIndex.value);
   };
 
   onChange = event => {
+    console.log(event.target.name);
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleChange = courseIndex => {
+    this.setState({ courseIndex });
   };
 
   showConstructor = () => {
@@ -47,19 +71,15 @@ class SetLessons extends Component {
   };
 
   ChangeExamTrue = () => {
-    
-    this.setState({ exam :  true})
-
-  }
+    this.setState({ exam: true });
+  };
 
   ChangeExamFalse = () => {
-   
-    this.setState({ exam :  false})
-
-  }
+    this.setState({ exam: false });
+  };
 
   render() {
-    const {constructor,exam} = this.state
+    const { constructor, exam, courseIndex } = this.state;
     if (constructor) {
       return (
         <Wrapper>
@@ -83,10 +103,24 @@ class SetLessons extends Component {
                 onChange={this.onChange}
               />
               <LabelElement>EXAM :</LabelElement>
-              
-              <ImgMark  style={!exam ? {  filter: 'grayscale(100%)'} : {}} src={checkMark} onClick = {this.ChangeExamTrue} />
-              <ImgCross style={exam ? {   filter: 'grayscale(100%)'} : {}}  src={redCross} onClick = {this.ChangeExamFalse}/>
 
+              <ImgMark
+                style={!exam ? { filter: "grayscale(100%)" } : {}}
+                src={checkMark}
+                onClick={this.ChangeExamTrue}
+              />
+              <ImgCross
+                style={exam ? { filter: "grayscale(100%)" } : {}}
+                src={redCross}
+                onClick={this.ChangeExamFalse}
+              />
+              <br />
+              <LabelElement>Course Index :</LabelElement>
+              <Select
+                value={courseIndex}
+                onChange={this.handleChange}
+                options={options}
+              />
               <ButtonWrapper>
                 <ConstructirButton type="submit">
                   ADD NEW LESSON
@@ -118,5 +152,3 @@ SetLessons.defaultProps = {
 SetLessons.propTypes = {
   addLesson: PropTypes.func
 };
-
-

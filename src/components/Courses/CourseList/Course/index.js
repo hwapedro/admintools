@@ -11,6 +11,8 @@ import {
   SignInButton
 } from "../../style.js";
 
+
+
 export default function Course({ course, getParams, deleteItem, index, goTo }) {
   return (
     <Draggable
