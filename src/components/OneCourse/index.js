@@ -23,10 +23,7 @@ class OneCourse extends Component {
 
   render() {
     const {
-      loading,
-      lessons,
       changeLesson,
-      addLesson,
       course,
       delLesson,
       changeDndLesson
@@ -38,11 +35,8 @@ class OneCourse extends Component {
           if (!result.destination) {
             return;
           }
-          
+
           if (result.source.index !== result.destination.index) {
-            console.log(course.lessons[result.source.index].lessonIndex,
-              course.lessons[result.destination.index].lessonIndex,
-              course.courseIndex)
             changeDndLesson(
               course.lessons[result.source.index].lessonIndex,
               course.lessons[result.destination.index].lessonIndex,
@@ -57,6 +51,7 @@ class OneCourse extends Component {
           }
           delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
           lessons={course.lessons}
+          search= {""}
         />
       </DragDropContext>
     );
@@ -67,7 +62,7 @@ OneCourse.defaultProps = {
   course: {},
   loading: false,
   error: false,
-  
+
   addLesson() {},
   delLesson() {},
   getAllLessons() {},

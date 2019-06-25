@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
 import {
   TaskTitleInput,
   QuestionInput,
@@ -9,7 +10,6 @@ import {
   TaskOptionWrapper,
   TaskButton
 } from "../../style";
-
 import { addTask } from "../../../../store/actions/actionLessons";
 
 let index = 100;

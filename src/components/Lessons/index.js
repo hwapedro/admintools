@@ -13,16 +13,25 @@ import { changeDndLesson } from "../../store/actions/actionLessons";
 
 import { addLesson } from "../../store/actions/actionLessons";
 
+import Search from "../Search";
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "./LessonList/LessonList";
 
 const name = "lesson";
 
 class Lessons extends Component {
+  state = {
+    search: ""
+  };
+
   componentDidMount() {
     const { getAllLessons } = this.props;
     getAllLessons(name);
   }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   render() {
     const {
@@ -33,7 +42,7 @@ class Lessons extends Component {
       delLesson,
       changeDndLesson
     } = this.props;
-
+    const { search } = this.state;
     return (
       <>
         <DragDropContext
@@ -51,17 +60,22 @@ class Lessons extends Component {
             }
           }}
         >
+         
           <SetLesson
             addLesson={(title, description, exam, name, courseIndex) =>
               addLesson(title, description, exam, name, courseIndex)
             }
+            onChange={this.onChange}
+            value={search}
           />
           <LessonList
             changeLesson={(lessonsIndex, title, description, name) =>
               changeLesson(lessonsIndex, title, description, name)
             }
+            onChange={this.onChange}
             delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
             lessons={lessons}
+            search={this.state.search}
           />
         </DragDropContext>
       </>
