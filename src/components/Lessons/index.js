@@ -30,7 +30,6 @@ class Lessons extends Component {
   }
 
   onChange = event => {
-    console.log(event.target.name, event.target.value)
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -76,7 +75,7 @@ class Lessons extends Component {
             onChange={this.onChange}
             delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
             lessons={lessons}
-            search={this.state.search}
+            search={search}
           />
         </DragDropContext>
       </>

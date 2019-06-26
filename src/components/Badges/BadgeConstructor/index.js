@@ -129,14 +129,14 @@ const ConsturctorWrapper = styled.div`
 
 const ConsturctorForm = styled.form``;
 
-// const TitleSpan = styled.span`
-//   display: flex;
-//   justify-content: flex-start;
-//   align-items: center;
-//   margin: 1rem 0;
-//   font-size: 1.3rem;
-// `;
-
+export const ButtonWrapperConstructor = styled.div`
+  padding-left:40px;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items:space-between;
+  margin-top: 0.3rem;
+`;
 const TitleInput = styled.input`
   display: flex;
   justify-content: flex-start;
@@ -180,7 +180,7 @@ const ButtonWrapper = styled.div`
   align-items: flex-end;
   margin-top: 0.5rem;
 `;
-export const ConstructirButton = styled.button`
+export const ConstructorButton = styled.button`
   width: 150px;
   height: 40px;
   border: 0;
