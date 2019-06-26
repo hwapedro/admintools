@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 
+import Button from '../Button'
+
 import {
   ButtonWrapper,
   TitleInput,
@@ -89,9 +91,9 @@ class SetLessons extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <ConstructorButton onClick={this.showConstructor}>
+          <Button onClick={this.showConstructor}>
             ADD NEW LESSON
-          </ConstructorButton>
+          </Button>
         </ButtonWrapperConstructor>
         {constructor && (
           <>
@@ -128,9 +130,9 @@ class SetLessons extends Component {
                 />
 
                 <ButtonWrapper>
-                  <ConstructorButton type="submit">
+                  <Button type="submit">
                     ADD NEW LESSON
-                  </ConstructorButton>
+                  </Button>
                 </ButtonWrapper>
               </ConsturctorForm>
             </ConsturctorWrapper>

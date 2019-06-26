@@ -7,6 +7,7 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 
 import EditorText from "../../EditorText";
 import Lesson from "./Lesson";
+import Button from '../../Button'
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
@@ -86,7 +87,7 @@ class LessonsList extends Component {
               />
 
               <ButtonWrapper>
-                <SignInButton type="submit">CONFIRM</SignInButton>
+                <Button type="submit">CONFIRM</Button>
               </ButtonWrapper>
             </form>
           </ElementWrapper>

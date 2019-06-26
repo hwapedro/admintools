@@ -8,6 +8,7 @@ import { withRouter } from "react-router-dom";
 import Spinner from "../../Spinner";
 import EditorText from "../../EditorText";
 import Course from "./Course";
+import Button from '../../Button'
 
 import {
   Wrapper,
@@ -112,7 +113,7 @@ class CourseList extends Component {
                 />
 
                 <ButtonWrapper>
-                  <SignInButton type="submit">CONFIRM</SignInButton>
+                  <Button type="submit">CONFIRM</Button>
                 </ButtonWrapper>
               </form>
             </ElementWrapper>

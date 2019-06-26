@@ -8,6 +8,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import CustomInput from "../CustomInput";
+import Button from '../../Button'
+
 
 const signInSchema = Yup.object().shape({
   username: Yup.string().required("Обязательно для заполнения"),
@@ -65,7 +67,7 @@ class LoginScreen extends React.Component {
               <ErrorMessage name="password" component={Error} />
 
               <ButtonWrapper>
-                <SignInButton type="submit">SIGN IN</SignInButton>
+                <Button type="submit">SIGN IN</Button>
               </ButtonWrapper>
 
               <ButtonWrapper>
