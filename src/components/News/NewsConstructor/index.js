@@ -10,7 +10,7 @@ import Button from '../../Button'
 import {
   Wrapper,
   DarkGround,
-  ConsturctorWrapper,
+  ConsturctorWrapper, 
   TitleInput,
   ConsturctorForm,
   LabelElement,
