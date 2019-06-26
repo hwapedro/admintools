@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import {
   changeElement,
   getAllElements,
@@ -8,20 +8,26 @@ import {
   deletElement
 } from "../../store/actions";
 
-
 import BadgeConstructor from "./BadgeConstructor";
 import BadgesList from "../Badges/BadgesList";
 import Spinner from "../Spinner";
 
-const name = 'badge'
+const name = "badge";
 
 class Badge extends Component {
+  state = {
+    search: ""
+  };
+
   componentDidMount() {
     const { getAllBadges } = this.props;
     getAllBadges(name);
   }
 
-  
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
   render() {
     const {
       loading,
@@ -31,33 +37,34 @@ class Badge extends Component {
       getAllBadges,
       delBadge
     } = this.props;
+
+    const { search } = this.state;
+
     if (loading) {
       return (
         <>
-
           <Spinner />
         </>
       );
     }
     return (
       <>
-
-
         <BadgeConstructor
-          addBadge={(title, description,  name) =>
-            addBadge(title, description,  name)
+          addBadge={(title, description, name) =>
+            addBadge(title, description, name)
           }
-          getAllBadges={( name) => getAllBadges( name)}
+          getAllBadges={name => getAllBadges(name)}
+          onChange={this.onChange}
+          value={search}
         />
 
         <BadgesList
-          changeBadge={(courseIndex, title, description,  name) =>
-            changeBadge(courseIndex, title, description,  name)
+          changeBadge={(courseIndex, title, description, name) =>
+            changeBadge(courseIndex, title, description, name)
           }
-          delBadge={(courseIndex,  name) => delBadge(courseIndex,  name)}
+          delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
           badges={badges}
         />
-
       </>
     );
   }
@@ -71,18 +78,18 @@ Badge.defaultProps = {
   delBadge() {},
   getAllBadges() {},
   changeBadge() {}
-}
+};
 
 Badge.propTypes = {
-  badges:  PropTypes.arrayOf(PropTypes.object),
+  badges: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,
 
   addBadge: PropTypes.func,
   delBadge: PropTypes.func,
   getAllBadges: PropTypes.func,
-  changeBadge: PropTypes.func,
-}
+  changeBadge: PropTypes.func
+};
 
 const mapStateToProps = state => ({
   badges: state.Badges.badges,
@@ -91,16 +98,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addBadge: (title, description,  name) =>
-    dispatch(addElement(title, description,  name)),
+  addBadge: (title, description, name) =>
+    dispatch(addElement(title, description, name)),
 
-  delBadge: (courseIndex,  name) =>
-    dispatch(deletElement(courseIndex,  name)),
+  delBadge: (courseIndex, name) => dispatch(deletElement(courseIndex, name)),
 
-  getAllBadges: ( name) => dispatch(getAllElements( name)),
+  getAllBadges: name => dispatch(getAllElements(name)),
 
-  changeBadge: (courseIndex, title, description,  name) =>
-    dispatch(changeElement(courseIndex, title, description,  name))
+  changeBadge: (courseIndex, title, description, name) =>
+    dispatch(changeElement(courseIndex, title, description, name))
 });
 
 export default connect(

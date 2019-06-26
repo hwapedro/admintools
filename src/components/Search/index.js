@@ -1,18 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 300
+const styles = {
+  field: {
+    width: "82%"
   }
-}));
+};
 
-export default function Search({ onChange, value }) {
-  const classes = useStyles();
+const SearchInput = withStyles({
+  root: {
+    "& .MuiOutlinedInput-input": {
+      padding: "15px 14px"
+    }
+  }
+})(TextField);
+
+function Search({ onChange, value, classes }) {
   return (
     // <Wrapper>
     //   <SearchInput
@@ -24,23 +29,18 @@ export default function Search({ onChange, value }) {
     //     autocomplete="off"
     //   />
     // </Wrapper>
-    <TextField
+    <SearchInput
       id="standard-bare"
-      className={classes.textField}
+      name="search"
+      className={classes.field}
       placeholder="Search"
-      margin="normal"
-      inputProps={{ "aria-label": "bare" }}
+      variant="outlined"
+      value={value}
+      onChange={onChange}
     />
   );
 }
+export default withStyles(styles)(Search);
 
 export const Wrapper = styled.div``;
 
-const SearchInput = styled.input`
-  padding-left: 0.5rem;
-  width: 48.7rem;
-  height: 40px;
-  border: 0.6px solid black;
-  border-radius: 1rem;
-  outline: none;
-`;
