@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+
+import Search from "../../Search";
 const name = "badge";
 
 export default class BadgeConstructor extends Component {
@@ -31,10 +33,12 @@ export default class BadgeConstructor extends Component {
 
   render() {
     const { constructor, title, description } = this.state;
+    const {onChange, value} = this.props
     if (constructor) {
       return (
         <Wrapper>
           <ButtonWrapper>
+            <Search onChange={onChange} value={value} />
             <ConstructirButton onClick={this.showConstructor}>
               ADD NEW badge
             </ConstructirButton>
