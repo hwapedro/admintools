@@ -19,16 +19,7 @@ const SearchInput = withStyles({
 
 function Search({ onChange, value, classes }) {
   return (
-    // <Wrapper>
-    //   <SearchInput
-    //     type="text"
-    //     name="search"
-    //     value={value}
-    //     onChange={onChange}
-    //     placeholder="search"
-    //     autocomplete="off"
-    //   />
-    // </Wrapper>
+   
     <SearchInput
       id="standard-bare"
       name="search"
