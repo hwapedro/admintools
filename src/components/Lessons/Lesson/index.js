@@ -152,7 +152,7 @@ class Lesson extends Component {
                   <LabelElement>Name of Lesson :</LabelElement>
                   <TitleInput
                     name="title"
-                    onChange={this.onChange}
+                    onChange={this.onChange} 
                     value={this.state.title}
                   />
                   <LabelElement>Description of Lesson : </LabelElement>
