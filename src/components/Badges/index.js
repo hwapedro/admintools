@@ -64,6 +64,7 @@ class Badge extends Component {
           }
           delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
           badges={badges}
+          search={search}
         />
       </>
     );

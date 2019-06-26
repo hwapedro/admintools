@@ -46,8 +46,14 @@ class badgeList extends Component {
   };
 
   render() {
-    const {badges} = this.props
-    let list = badges.map(badge => {
+    const { badges, search } = this.props
+    let list = badges.filter(badge => {
+      if ( badge.title.toLowerCase().indexOf(search.toLowerCase()) !== -1){
+        return true;
+      }
+      return false
+    })
+    .map(badge => {
       if (
         this.state.changeFlag &&
         badge._id === this.state.badgeIndex

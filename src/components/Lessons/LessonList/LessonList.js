@@ -66,9 +66,15 @@ class LessonsList extends Component {
   };
 
   render() {
-    const { lessons } = this.props;
+    const { lessons, search } = this.props;
     const { editorState,changeFlag } = this.state;
-    let list = lessons.map((lesson, index) => {
+    let list = lessons.filter(lesson => {
+      if (lesson.title.toLowerCase().indexOf(search.toLowerCase()) !== -1){
+        return true;
+      }
+      return false
+    })
+    .map((lesson, index) => {
       if (changeFlag && lesson._id === this.state._id) {
         return (
           <ElementWrapper key={lesson._id}>

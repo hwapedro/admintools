@@ -37,12 +37,12 @@ export default class BadgeConstructor extends Component {
     if (constructor) {
       return (
         <Wrapper>
-          <ButtonWrapper>
-            <Search onChange={onChange} value={value} />
-            <ConstructirButton onClick={this.showConstructor}>
+          <ButtonWrapperConstructor>
+          <Search onChange={onChange} value={value} />
+            <ConstructorButton onClick={this.showConstructor}>
               ADD NEW badge
-            </ConstructirButton>
-          </ButtonWrapper>
+            </ConstructorButton>
+          </ButtonWrapperConstructor>
           <DarkGround onClick={this.showConstructor} />
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
@@ -63,9 +63,9 @@ export default class BadgeConstructor extends Component {
                 onChange={this.onChange}
               />
               <ButtonWrapper>
-                <ConstructirButton type="submit">
+                <ConstructorButton type="submit">
                   ADD NEW badge
-                </ConstructirButton>
+                </ConstructorButton>
               </ButtonWrapper>
             </ConsturctorForm>
           </ConsturctorWrapper>
@@ -74,11 +74,12 @@ export default class BadgeConstructor extends Component {
     }
     return (
       <Wrapper>
-        <ButtonWrapper>
-          <ConstructirButton onClick={this.showConstructor}>
+        <ButtonWrapperConstructor>
+        <Search onChange={onChange} value={value} />
+          <ConstructorButton onClick={this.showConstructor}>
             ADD NEW badge
-          </ConstructirButton>
-        </ButtonWrapper>
+          </ConstructorButton>
+        </ButtonWrapperConstructor>
       </Wrapper>
     );
   }
@@ -128,14 +129,14 @@ const ConsturctorWrapper = styled.div`
 
 const ConsturctorForm = styled.form``;
 
-// const TitleSpan = styled.span`
-//   display: flex;
-//   justify-content: flex-start;
-//   align-items: center;
-//   margin: 1rem 0;
-//   font-size: 1.3rem;
-// `;
-
+export const ButtonWrapperConstructor = styled.div`
+  padding-left:40px;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items:space-between;
+  margin-top: 0.3rem;
+`;
 const TitleInput = styled.input`
   display: flex;
   justify-content: flex-start;
@@ -179,7 +180,7 @@ const ButtonWrapper = styled.div`
   align-items: flex-end;
   margin-top: 0.5rem;
 `;
-export const ConstructirButton = styled.button`
+export const ConstructorButton = styled.button`
   width: 150px;
   height: 40px;
   border: 0;
