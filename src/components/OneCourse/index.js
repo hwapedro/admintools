@@ -37,6 +37,9 @@ class OneCourse extends Component {
           }
 
           if (result.source.index !== result.destination.index) {
+            console.log(course.lessons[result.source.index].lessonIndex,
+              course.lessons[result.destination.index].lessonIndex,
+              course.courseIndex)
             changeDndLesson(
               course.lessons[result.source.index].lessonIndex,
               course.lessons[result.destination.index].lessonIndex,

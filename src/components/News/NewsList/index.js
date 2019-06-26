@@ -5,6 +5,7 @@ import { stateToHTML } from "draft-js-export-html";
 
 import Article from "./Article";
 import EditorText from "../../EditorText";
+import Button from '../../Button'
 
 import {
   Wrapper,
@@ -91,7 +92,7 @@ class NewsList extends Component {
               />
 
               <ButtonWrapper>
-                <SignInButton type="submit">CONFIRM</SignInButton>
+                <Button type="submit">CONFIRM</Button>
               </ButtonWrapper>
             </form>
           </ElementWrapper>
