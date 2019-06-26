@@ -27,7 +27,7 @@ export default function Search({ onChange, value }) {
     <TextField
       id="standard-bare"
       className={classes.textField}
-      defaultValue="Search"
+      placeholder="Search"
       margin="normal"
       inputProps={{ "aria-label": "bare" }}
     />
