@@ -6,21 +6,19 @@ import {
   ButtonWrapper,
   TitleInput,
   DescriptionTextArea,
-  //LessonButton as ConstructorButton,
+  LessonButton as ConstructirButton,
   Wrapper,
   DarkGround,
   LabelElement,
   ConsturctorForm,
   ConsturctorWrapper,
-  ConstructorButton,
-  ButtonWrapperConstructor,
   ImgMark,
   ImgCross
 } from "./style";
 
+import Button from '../Button'
 import AdminService from "../../service";
 
-import Search from "../Search";
 import checkMark from "../../img/good.png";
 import redCross from "../../img/bad.png";
 
@@ -83,59 +81,64 @@ class SetLessons extends Component {
 
   render() {
     const { constructor, exam, courseIndex } = this.state;
-    const { onChange, value } = this.props;
+    if (constructor) {
+      return (
+        <Wrapper>
+          <DarkGround onClick={this.showConstructor} />
+          <ConsturctorWrapper>
+            <ConsturctorForm onSubmit={this.onSubmit}>
+              <LabelElement>title</LabelElement>
+              <TitleInput
+                name="title"
+                placeholder="title"
+                type="text"
+                value={this.state.title}
+                onChange={this.onChange}
+              />
+              <LabelElement>description</LabelElement>
+              <DescriptionTextArea
+                name="description"
+                placeholder="description"
+                value={this.state.description}
+                type="text"
+                onChange={this.onChange}
+              />
+              <LabelElement>EXAM :</LabelElement>
 
+              <ImgMark
+                style={!exam ? { filter: "grayscale(100%)" } : {}}
+                src={checkMark}
+                onClick={this.ChangeExamTrue}
+              />
+              <ImgCross
+                style={exam ? { filter: "grayscale(100%)" } : {}}
+                src={redCross}
+                onClick={this.ChangeExamFalse}
+              />
+              <br />
+              <LabelElement>Course Index :</LabelElement>
+              <Select
+                value={courseIndex}
+                onChange={this.handleChange}
+                options={options}
+              />
+              <ButtonWrapper>
+                <Button type="submit">
+                  ADD NEW LESSON
+                </Button>
+              </ButtonWrapper>
+            </ConsturctorForm>
+          </ConsturctorWrapper>
+        </Wrapper>
+      );
+    }
     return (
       <Wrapper>
-        <ButtonWrapperConstructor>
-          <Search onChange={onChange} value={value} />
-          <ConstructorButton onClick={this.showConstructor}>
+        <ButtonWrapper>
+          <Button onClick={this.showConstructor}>
             ADD NEW LESSON
-          </ConstructorButton>
-        </ButtonWrapperConstructor>
-        {constructor && (
-          <>
-            <DarkGround onClick={this.showConstructor} />
-            <ConsturctorWrapper>
-              <ConsturctorForm onSubmit={this.onSubmit}>
-                <LabelElement>title</LabelElement>
-                <TitleInput
-                  name="title"
-                  placeholder="title"
-                  type="text"
-                  value={this.state.title}
-                  onChange={this.onChange}
-                />
-                <LabelElement>description</LabelElement>
-                <DescriptionTextArea
-                  name="description"
-                  placeholder="description"
-                  value={this.state.description}
-                  type="text"
-                  onChange={this.onChange}
-                />
-                <LabelElement>EXAM :</LabelElement>
-
-                <ImgMark
-                  style={!exam ? { filter: "grayscale(100%)" } : {}}
-                  src={checkMark}
-                  onClick={this.ChangeExamTrue}
-                />
-                <ImgCross
-                  style={exam ? { filter: "grayscale(100%)" } : {}}
-                  src={redCross}
-                  onClick={this.ChangeExamFalse}
-                />
-
-                <ButtonWrapper>
-                  <ConstructorButton type="submit">
-                    ADD NEW LESSON
-                  </ConstructorButton>
-                </ButtonWrapper>
-              </ConsturctorForm>
-            </ConsturctorWrapper>
-          </>
-        )}
+          </Button>
+        </ButtonWrapper>
       </Wrapper>
     );
   }

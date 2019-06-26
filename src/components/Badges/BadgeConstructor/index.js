@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import Button from '../../Button'
 import Search from "../../Search";
 const name = "badge";
 
@@ -37,12 +38,12 @@ export default class BadgeConstructor extends Component {
     if (constructor) {
       return (
         <Wrapper>
-          <ButtonWrapperConstructor>
-          <Search onChange={onChange} value={value} />
-            <ConstructorButton onClick={this.showConstructor}>
+          <ButtonWrapper>
+            <Search onChange={onChange} value={value} />
+            <Button onClick={this.showConstructor}>
               ADD NEW badge
-            </ConstructorButton>
-          </ButtonWrapperConstructor>
+            </Button>
+          </ButtonWrapper>
           <DarkGround onClick={this.showConstructor} />
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
@@ -63,9 +64,9 @@ export default class BadgeConstructor extends Component {
                 onChange={this.onChange}
               />
               <ButtonWrapper>
-                <ConstructorButton type="submit">
+                <Button type="submit">
                   ADD NEW badge
-                </ConstructorButton>
+                </Button>
               </ButtonWrapper>
             </ConsturctorForm>
           </ConsturctorWrapper>
@@ -74,12 +75,11 @@ export default class BadgeConstructor extends Component {
     }
     return (
       <Wrapper>
-        <ButtonWrapperConstructor>
-        <Search onChange={onChange} value={value} />
-          <ConstructorButton onClick={this.showConstructor}>
+        <ButtonWrapper>
+          <Button onClick={this.showConstructor}>
             ADD NEW badge
-          </ConstructorButton>
-        </ButtonWrapperConstructor>
+          </Button>
+        </ButtonWrapper>
       </Wrapper>
     );
   }

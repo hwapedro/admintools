@@ -5,6 +5,7 @@ import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
+import Button from '../../Button'
 
 import {
   Wrapper,
@@ -51,9 +52,9 @@ export default class CourseCounstructor extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <ConstructorButton onClick={showConstructor}>
+          <Button onClick={showConstructor}>
             ADD NEW COURSE
-          </ConstructorButton>
+          </Button>
           {constructor && (
             <>
               <DarkGround onClick={showConstructor} />
@@ -73,9 +74,9 @@ export default class CourseCounstructor extends Component {
                     onEditorStateChange={this.onEditorStateChange}
                   />
                   <ButtonWrapper>
-                    <ConstructorButton type="submit" >
+                    <Button type="submit" >
                       ADD NEW COURSE
-                    </ConstructorButton>
+                    </Button>
                   </ButtonWrapper>
                 </ConsturctorForm>
               </ConsturctorWrapper>

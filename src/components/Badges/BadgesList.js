@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types'
+
+import Button from '../Button'
+
 const token = localStorage.getItem("userId");
 const name = "badge";
 
@@ -75,7 +78,7 @@ class badgeList extends Component {
               />
 
               <ButtonWrapper>
-                <SignInButton type="submit">CONFIRM</SignInButton>
+                <Button type="submit">CONFIRM</Button>
               </ButtonWrapper>
             </form>
           </ElementWrapper>
@@ -88,7 +91,7 @@ class badgeList extends Component {
             <LabelElement>Description of badge : </LabelElement>
             <DescriptionSpan>{badge.description}</DescriptionSpan>
             <ButtonWrapper>
-              <SignInButton
+              <Button
                 onClick={() =>
                   this.getParams(
                     badge._id,
@@ -98,10 +101,10 @@ class badgeList extends Component {
                 }
               >
                 CHANGE badge
-              </SignInButton>
-              <SignInButton onClick={() => this.deleteItem(badge._id)}>
+              </Button>
+              <Button onClick={() => this.deleteItem(badge._id)}>
                 DELETE badge
-              </SignInButton>
+              </Button>
             </ButtonWrapper>
           </ElementWrapper>
         );
