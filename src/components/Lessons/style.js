@@ -140,6 +140,34 @@ export const ConsturctorWrapper = styled.div`
   border-radius: 20px;
 `;
 
+export const ConstructorButton = styled.button`
+  width: 150px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background-color: ${props => props.theme.button};
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+  margin-right: 1rem;
+`;
+
+export const ButtonWrapperConstructor = styled.div`
+  padding-left:40px;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items:space-between;
+  margin-top: 0.3rem;
+`;
+
 // TASK STYLES
 export const TaskButton = styled.button`
   width: 120px;

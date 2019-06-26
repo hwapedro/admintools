@@ -13,7 +13,7 @@ import { changeDndLesson } from "../../store/actions/actionLessons";
 
 import { addLesson } from "../../store/actions/actionLessons";
 
-import Search from "../Search";
+//import Search from "../Search";
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "./LessonList/LessonList";
 

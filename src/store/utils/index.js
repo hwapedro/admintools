@@ -9,7 +9,7 @@ export const startLoading = state => ({
 export const stopLoading = (state, { error }) => ({
   ...state,
   loading: false,
-  error
+  error: null
 });
 
 export const DND = (state, id1, id2, name) => {

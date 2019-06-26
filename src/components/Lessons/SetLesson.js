@@ -6,12 +6,14 @@ import {
   ButtonWrapper,
   TitleInput,
   DescriptionTextArea,
-  LessonButton as ConstructorButton,
+  //LessonButton as ConstructorButton,
   Wrapper,
   DarkGround,
   LabelElement,
   ConsturctorForm,
   ConsturctorWrapper,
+  ConstructorButton,
+  ButtonWrapperConstructor,
   ImgMark,
   ImgCross
 } from "./style";
@@ -85,12 +87,12 @@ class SetLessons extends Component {
 
     return (
       <Wrapper>
-        <ButtonWrapper>
+        <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
           <ConstructorButton onClick={this.showConstructor}>
             ADD NEW LESSON
           </ConstructorButton>
-        </ButtonWrapper>
+        </ButtonWrapperConstructor>
         {constructor && (
           <>
             <DarkGround onClick={this.showConstructor} />

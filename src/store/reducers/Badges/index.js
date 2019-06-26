@@ -10,8 +10,7 @@ import {
   DELETE_ELEMENT_FAILURE,
   CHANGE_ELEMENT_REQUEST,
   CHANGE_BADGE_SUCCESS,
-  CHANGE_ELEMENT_FAILURE,
-
+  CHANGE_ELEMENT_FAILURE
 } from "../../constants";
 
 import { startLoading, stopLoading, changeDnD } from "../../utils";
@@ -73,6 +72,16 @@ function reducerBadges(state = initialState, action = {}) {
     //DELETE COURSES BLOCK
     case CHANGE_ELEMENT_REQUEST:
       return startLoading(state, action);
+
+    case CHANGE_BADGE_SUCCESS:
+      return {
+        ...state,
+        badges: state.badges.map(badge =>
+          action.badge._id === badge._id ? action.badge : badge
+        ),
+        loading: false,
+        error: false
+      };
 
     case CHANGE_ELEMENT_FAILURE:
       return stopLoading(state, action);

@@ -1,24 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { register } from "../../store/actions/actionRegister";
+import { login } from "../../../store/actions/actionLogin";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import CustomInput from "../LoginScreen/CustomInput";
+import CustomInput from "../CustomInput";
 
-const signUpSchema = Yup.object().shape({
-  // email: Yup.string()
-  //   .email("Неверный e-mail")
-  //   .required("Обязательно для заполнения"),
+const signInSchema = Yup.object().shape({
   username: Yup.string().required("Обязательно для заполнения"),
-  password: Yup.string().required("Обязательно для заполнения"),
-  confirmPassword: Yup.string().required("Обязательно для заполнения")
+  password: Yup.string().required("Обязательно для заполнения")
 });
 
-class RegistrationScreen extends React.Component {
+class LoginScreen extends React.Component {
   componentDidMount() {
     let token = localStorage.getItem("token");
     if (token !== null) {
@@ -27,12 +23,12 @@ class RegistrationScreen extends React.Component {
   }
 
   setLogin = async ({ username, password }) => {
-    const { register } = this.props;
-    await register(username, password);
+    const { login } = this.props;
+    await login(username, password);
   };
 
-  toLogin = () => {
-    this.props.history.push("/");
+  toRegister = () => {
+    this.props.history.push("/register");
   };
 
   render() {
@@ -41,31 +37,18 @@ class RegistrationScreen extends React.Component {
     if (loading) {
       return <div>loading...</div>;
     }
+
     return (
       <Wrapper>
         <Formik
-          initialValues={{
-            email: "",
-            username: "",
-            password: "",
-            confirmPassword: ""
-          }}
-          validationSchema={signUpSchema}
+          initialValues={{ username: "", password: "" }}
+          validationSchema={signInSchema}
           onSubmit={this.setLogin}
           render={({ errors, touched }) => (
             <Form autoComplete="off">
-              {/* <Field
-                name="e-mail"
-                label="E-mail"
-                placeholder="Enter email"
-                invalid={touched.email && errors.email}
-                component={CustomInput}
-              />
-              <ErrorMessage name="email" component={Error} /> */}
-
               <Field
                 name="username"
-                label="Username"
+                label="username"
                 placeholder="Введите никнейм"
                 invalid={touched.username && errors.username}
                 component={CustomInput}
@@ -74,29 +57,21 @@ class RegistrationScreen extends React.Component {
 
               <Field
                 name="password"
-                label="Password"
+                label="password"
                 placeholder="Введите пароль"
                 invalid={touched.password && errors.password}
                 component={CustomInput}
               />
               <ErrorMessage name="password" component={Error} />
 
-              <Field
-                name="confirmPassword"
-                label="Confirm password"
-                placeholder="Подтвердите пароль"
-                invalid={touched.password && errors.password}
-                component={CustomInput}
-              />
-
-              <ErrorMessage name="password" component={Error} />
-
               <ButtonWrapper>
-                <SignInButton type="submit">SIGN UP</SignInButton>
+                <SignInButton type="submit">SIGN IN</SignInButton>
               </ButtonWrapper>
 
               <ButtonWrapper>
-                <SignInButton onClick={this.toLogin}>F it go back</SignInButton>
+                <button onClick={this.toRegister}>
+                  Not registered yet? Sign up now!
+                </button>
               </ButtonWrapper>
             </Form>
           )}
@@ -114,14 +89,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (username, password) => dispatch(register(username, password))
+  login: (username, password) => dispatch(login(username, password))
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(RegistrationScreen)
+  )(LoginScreen)
 );
 
 export const Wrapper = styled.div`

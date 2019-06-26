@@ -11,8 +11,8 @@ import Lesson from "../components/Lessons/Lesson";
 import Badges from "../components/Badges";
 import News from "../components/News";
 import Layout from "./hoc/Layout";
-import LoginScreen from "../components/LoginScreen";
-import RegistrationScreen from "../components/Registration"
+import LoginScreen from "../components/Authorization/LoginScreen";
+import RegistrationScreen from "../components/Authorization/RegistrationScreen"
 import OneCourse from "../components/OneCourse";
 
 import * as route from "../components/Route/constants";
