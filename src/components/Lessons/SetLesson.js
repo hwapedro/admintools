@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 
+import Search from "../Search";
 import {
   ButtonWrapper,
   TitleInput,
@@ -12,11 +13,12 @@ import {
   LabelElement,
   ConsturctorForm,
   ConsturctorWrapper,
+  ButtonWrapperConstructor,
   ImgMark,
   ImgCross
 } from "./style";
 
-import Button from '../Button'
+import Button from "../Button";
 import AdminService from "../../service";
 
 import checkMark from "../../img/good.png";
@@ -81,6 +83,8 @@ class SetLessons extends Component {
 
   render() {
     const { constructor, exam, courseIndex } = this.state;
+    const { onChange, value } = this.props;
+
     if (constructor) {
       return (
         <Wrapper>
@@ -122,11 +126,10 @@ class SetLessons extends Component {
                 onChange={this.handleChange}
                 options={options}
               />
-              <ButtonWrapper>
-                <Button type="submit">
-                  ADD NEW LESSON
-                </Button>
-              </ButtonWrapper>
+              <ButtonWrapperConstructor>
+                <Search onChange={onChange} value={value} />
+                <Button type="submit">ADD NEW LESSON</Button>
+              </ButtonWrapperConstructor>
             </ConsturctorForm>
           </ConsturctorWrapper>
         </Wrapper>
@@ -134,11 +137,10 @@ class SetLessons extends Component {
     }
     return (
       <Wrapper>
-        <ButtonWrapper>
-          <Button onClick={this.showConstructor}>
-            ADD NEW LESSON
-          </Button>
-        </ButtonWrapper>
+        <ButtonWrapperConstructor>
+        <Search onChange={onChange} value={value} />
+          <Button onClick={this.showConstructor}>ADD NEW LESSON</Button>
+        </ButtonWrapperConstructor>
       </Wrapper>
     );
   }

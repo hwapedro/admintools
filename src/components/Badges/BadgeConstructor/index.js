@@ -38,12 +38,12 @@ export default class BadgeConstructor extends Component {
     if (constructor) {
       return (
         <Wrapper>
-          <ButtonWrapper>
+          <ButtonWrapperConstructor>
             <Search onChange={onChange} value={value} />
             <Button onClick={this.showConstructor}>
               ADD NEW badge
             </Button>
-          </ButtonWrapper>
+          </ButtonWrapperConstructor>
           <DarkGround onClick={this.showConstructor} />
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
@@ -75,11 +75,12 @@ export default class BadgeConstructor extends Component {
     }
     return (
       <Wrapper>
-        <ButtonWrapper>
+        <ButtonWrapperConstructor>
+        <Search onChange={onChange} value={value} />
           <Button onClick={this.showConstructor}>
             ADD NEW badge
           </Button>
-        </ButtonWrapper>
+        </ButtonWrapperConstructor>
       </Wrapper>
     );
   }
@@ -129,14 +130,6 @@ const ConsturctorWrapper = styled.div`
 
 const ConsturctorForm = styled.form``;
 
-export const ButtonWrapperConstructor = styled.div`
-  padding-left:40px;
-  width: 1000px;
-  display: flex;
-  justify-content: space-between;
-  align-items:space-between;
-  margin-top: 0.3rem;
-`;
 const TitleInput = styled.input`
   display: flex;
   justify-content: flex-start;
@@ -197,4 +190,12 @@ export const ConstructorButton = styled.button`
     cursor: pointer;
   }
   margin-right: 1rem;
+`;
+export const ButtonWrapperConstructor = styled.div`
+  padding-left:40px;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items:space-between;
+  margin-top: 0.3rem;
 `;

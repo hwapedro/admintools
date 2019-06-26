@@ -91,6 +91,7 @@ export const ButtonWrapper = styled.div`
   align-items: flex-end;
   margin-top: 0.5rem;
 `;
+
 export const LessonButton = styled.button`
   width: 150px;
   height: 40px;
