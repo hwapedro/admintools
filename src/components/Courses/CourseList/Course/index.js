@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Draggable } from "react-beautiful-dnd";
 
+import Button from '../../../Button'
+
 import {
   ElementWrapper,
   TitleSpan,
@@ -38,16 +40,16 @@ export default function Course({ course, getParams, deleteItem, index, goTo }) {
             }}
           />
           <ButtonWrapper>
-            <SignInButton onClick={() => goTo(course._id)}>GO TO</SignInButton>
-            <SignInButton
+            <Button onClick={() => goTo(course._id)}>GO TO</Button>
+            <Button
               onClick={() =>
                 getParams(course.courseIndex, course.title, course.description)
               }
             >
               CHANGE COURSE
-            </SignInButton>
+            </Button>
 
-            <SignInButton
+            <Button
               onClick={() => {
                 if (window.confirm("ARE YOU SURE ?")) {
                   deleteItem(course._id);
@@ -55,7 +57,7 @@ export default function Course({ course, getParams, deleteItem, index, goTo }) {
               }}
             >
               DELETE COURSE
-            </SignInButton>
+            </Button>
           </ButtonWrapper>
         </ElementWrapper>
       )}

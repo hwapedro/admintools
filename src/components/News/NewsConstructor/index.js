@@ -5,6 +5,7 @@ import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
+import Button from '../../Button'
 
 import {
   Wrapper,
@@ -65,9 +66,9 @@ class SetArticle extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <ConstructorButton onClick={showConstructor}>
+          <Button onClick={showConstructor}>
             ADD NEW ARTICLE
-          </ConstructorButton>
+          </Button>
         </ButtonWrapperConstructor>
         {constructor && (
           <>
@@ -88,9 +89,9 @@ class SetArticle extends Component {
                   onEditorStateChange={this.onEditorStateChange}
                 />
                 <ButtonWrapper>
-                  <ConstructorButton type="submit">
+                  <Button type="submit">
                     ADD NEW ARTICLE
-                  </ConstructorButton>
+                  </Button>
                 </ButtonWrapper>
               </ConsturctorForm>
             </ConsturctorWrapper>

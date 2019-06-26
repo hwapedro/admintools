@@ -5,6 +5,7 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import Select from "react-select";
 import EditorText from "../../EditorText";
+import Button from '../../Button'
 
 import {
   getLesson,
@@ -152,7 +153,7 @@ class Lesson extends Component {
                   <LabelElement>Name of Lesson :</LabelElement>
                   <TitleInput
                     name="title"
-                    onChange={this.onChange}
+                    onChange={this.onChange} 
                     value={this.state.title}
                   />
                   <LabelElement>Description of Lesson : </LabelElement>
@@ -175,7 +176,7 @@ class Lesson extends Component {
                   />
 
                   <ButtonWrapper>
-                    <LessonButton type="submit">CONFIRM</LessonButton>
+                    <Button type="submit">CONFIRM</Button>
                   </ButtonWrapper>
                 </form>
               </ElementWrapper>{" "}
@@ -215,7 +216,7 @@ class Lesson extends Component {
               </ElementWrapper>
 
               <ButtonWrapper>
-                <LessonButton onClick={this.addPage}>Add Page</LessonButton>
+                <Button onClick={this.addPage}>Add Page</Button>
               </ButtonWrapper>
             </>
           )}

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Draggable } from "react-beautiful-dnd";
+import Button from '../../../Button'
 
 import {
   ElementWrapper,
@@ -48,10 +49,10 @@ export default function Lesson({ lesson, deleteItem, index, goTo }) {
           <LabelElement>Course Index :</LabelElement>
           <TitleSpan> {lesson.courseIndex}</TitleSpan>
           <ButtonWrapper>
-            <LessonButton onClick={() => goTo(lesson._id)}>
+            <Button onClick={() => goTo(lesson._id)}>
               CHANGE Lesson
-            </LessonButton>
-            <LessonButton
+            </Button>
+            <Button
               onClick={() => {
                 if (window.confirm("Delete the item?")) {
                   deleteItem(lesson._id);
@@ -59,7 +60,7 @@ export default function Lesson({ lesson, deleteItem, index, goTo }) {
               }}
             >
               DELETE Lesson
-            </LessonButton>
+            </Button>
           </ButtonWrapper>
         </ElementWrapper>
       )}

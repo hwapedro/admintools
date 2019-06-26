@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Button from '../../../Button'
+
 import {
   ElementWrapper,
   TitleSpan,
@@ -26,13 +28,13 @@ export default function Article({ news, getParams, deleteItem }) {
         <pre>{new Date(news.date).toLocaleString()}</pre>
       </DescriptionSpan>
       <ButtonWrapper>
-        <SignInButton
+        <Button
           onClick={() => getParams(news._id, news.title, news.description)}
         >
           CHANGE news
-        </SignInButton>
+        </Button>
 
-        <SignInButton
+        <Button
           onClick={() => {
             if (window.confirm("ARE YOU SURE ?")) {
               deleteItem(news._id);
@@ -40,7 +42,7 @@ export default function Article({ news, getParams, deleteItem }) {
           }}
         >
           DELETE news
-        </SignInButton>
+        </Button>
       </ButtonWrapper>
     </ElementWrapper>
   );

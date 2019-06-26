@@ -8,6 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import CustomInput from "../CustomInput";
+import Button from '../../Button'
 
 const signUpSchema = Yup.object().shape({
   // email: Yup.string()
@@ -92,11 +93,11 @@ class RegistrationScreen extends React.Component {
               <ErrorMessage name="password" component={Error} />
 
               <ButtonWrapper>
-                <SignInButton type="submit">SIGN UP</SignInButton>
+                <Button type="submit">SIGN UP</Button>
               </ButtonWrapper>
 
               <ButtonWrapper>
-                <SignInButton onClick={this.toLogin}>Back</SignInButton>
+                <Button onClick={this.toLogin}>Back</Button>
               </ButtonWrapper>
             </Form>
           )}
