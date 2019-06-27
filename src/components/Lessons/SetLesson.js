@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
+import { EditorState, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
+import EditorText from "../EditorText";
 import Search from "../Search";
 import {
   ButtonWrapper,
@@ -32,7 +35,7 @@ const adminService = new AdminService();
 class SetLessons extends Component {
   state = {
     title: "",
-    description: "",
+    editorState: EditorState.createEmpty(),
     exam: false,
     courseIndex: { value: 1, label: "course" },
     constructor: false
@@ -54,15 +57,31 @@ class SetLessons extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addLesson } = this.props;
-    const { title, description, exam, courseIndex } = this.state;
-    console.log(courseIndex.value);
+    const { title, editorState, exam, courseIndex } = this.state;
+    const description = stateToHTML(editorState.getCurrentContent());
+
+    this.setState({
+      constructor: !constructor,
+      title: "",
+      description: "",
+      exam: false,
+      courseIndex: 0,
+      editorState: EditorState.createEmpty()
+    });
+
     addLesson(title, description, exam, name, courseIndex.value);
   };
 
   onChange = event => {
-    console.log(event.target.name);
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  onEditorStateChange = editorState => {
+    this.setState({
+      editorState
+    });
+  };
+
 
   handleChange = courseIndex => {
     this.setState({ courseIndex });
@@ -83,7 +102,7 @@ class SetLessons extends Component {
   };
 
   render() {
-    const { constructor, exam, courseIndex } = this.state;
+    const { constructor, exam, courseIndex, editorState, title } = this.state;
     const { onChange, value, course } = this.props;
 
     if (constructor) {
@@ -97,17 +116,14 @@ class SetLessons extends Component {
                 name="title"
                 placeholder="title"
                 type="text"
-                value={this.state.title}
+                value={title}
                 onChange={this.onChange}
               />
               <LabelElement>description</LabelElement>
-              <DescriptionTextArea
-                name="description"
-                placeholder="description"
-                value={this.state.description}
-                type="text"
-                onChange={this.onChange}
-              />
+              <EditorText
+                  editorState={editorState}
+                  onEditorStateChange={this.onEditorStateChange}
+                />
               <LabelElement>EXAM :</LabelElement>
 
               <ImgMark

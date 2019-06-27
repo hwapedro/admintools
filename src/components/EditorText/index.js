@@ -28,7 +28,7 @@ EditorText.propTypes = {
 };
 
 const EditorWrapper = styled.div`
-  min-height: 630px;
+  min-height: 430px;
   box-sizing: border-box;
   border: 1px solid #ddd;
   cursor: text;

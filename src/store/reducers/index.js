@@ -79,13 +79,13 @@ function reducer(state = initialState, action = {}) {
     case ADD_ELEMENT_REQUEST:
       return startLoading(state, action);
 
-    case ADD_LESSON_SUCCESS:
-      return {
-        ...state,
-        error: false,
-        loading: false,
-        lessons: [...state.lessons, action.lessons]
-      };
+    // case ADD_LESSON_SUCCESS:
+    //   return {
+    //     ...state,
+    //     error: false,
+    //     loading: false,
+    //     lessons: [...state.lessons, action.lessons]
+    //   };
 
     case ADD_BADGE_SUCCESS:
       return {
