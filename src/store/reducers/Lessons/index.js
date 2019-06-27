@@ -76,7 +76,7 @@ function reducerLesson(state = initialState, action = {}) {
     case GETALL_ELEMENT_FAILURE:
       return stopLoading(state, action);
 
-    //DELETE COURSES BLOCK
+    //DELETE LESSONS BLOCK
     case DELETE_ELEMENT_REQUEST:
       return startLoading(state, action);
 

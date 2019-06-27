@@ -3,7 +3,10 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+
 import { DragDropContext } from "react-beautiful-dnd";
+
+
 
 import { changeDndLesson } from "../../../store/actions/actionLessons";
 

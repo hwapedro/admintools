@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
+import { EditorState, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
+import EditorText from "../EditorText";
 import Search from "../Search";
 import {
   ButtonWrapper,
@@ -33,7 +36,7 @@ const adminService = new AdminService();
 class SetLessons extends Component {
   state = {
     title: "",
-    description: "",
+    editorState: EditorState.createEmpty(),
     exam: false,
     courseIndex: 0,
     constructor: false
@@ -53,17 +56,34 @@ class SetLessons extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { addLesson, course } = this.props;
-    const { title, description, exam, courseIndex } = this.state;
-    console.log(course);
-    course
-      ? addLesson(title, description, exam, name, course.courseIndex)
-      : addLesson(title, description, exam, name, courseIndex.value);
+
+    const { addLesson } = this.props;
+    const { constructor, editorState } = this.state;
+    const { title, exam, courseIndex } = this.state;
+
+    const description = stateToHTML(editorState.getCurrentContent());
+
+    this.setState({
+      constructor: !constructor,
+      title: "",
+      description: "",
+      exam: false,
+      courseIndex: 0,
+      editorState: EditorState.createEmpty()
+    });
+
+    addLesson(title, description, exam, name, courseIndex.value);
+
   };
 
   onChange = event => {
-    console.log(event.target.name);
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  onEditorStateChange = editorState => {
+    this.setState({
+      editorState
+    });
   };
 
   handleChange = courseIndex => {
@@ -85,68 +105,61 @@ class SetLessons extends Component {
   };
 
   render() {
-    const { constructor, exam, courseIndex } = this.state;
-    const { onChange, value, course } = this.props;
 
-    if (constructor) {
-      return (
-        <Wrapper>
-          <DarkGround onClick={this.showConstructor} />
-          <ConsturctorWrapper>
-            <ConsturctorForm onSubmit={this.onSubmit}>
-              <LabelElement>title</LabelElement>
-              <TitleInput
-                name="title"
-                placeholder="title"
-                type="text"
-                value={this.state.title}
-                onChange={this.onChange}
-              />
-              <LabelElement>description</LabelElement>
-              <DescriptionTextArea
-                name="description"
-                placeholder="description"
-                value={this.state.description}
-                type="text"
-                onChange={this.onChange}
-              />
-              <LabelElement>EXAM :</LabelElement>
+    const { constructor, exam, courseIndex, editorState } = this.state;
+    const { onChange, value } = this.props;
 
-              <ImgMark
-                style={!exam ? { filter: "grayscale(100%)" } : {}}
-                src={checkMark}
-                onClick={this.ChangeExamTrue}
-              />
-              <ImgCross
-                style={exam ? { filter: "grayscale(100%)" } : {}}
-                src={redCross}
-                onClick={this.ChangeExamFalse}
-              />
-              <br />
-              {!course && (
-                <>
-                  <LabelElement>Course Index :</LabelElement>
-                  <Select
-                    value={courseIndex}
-                    onChange={this.handleChange}
-                    options={options}
-                  />
-                </>
-              )}
-              <ButtonWrapper>
-                <Button type="submit">ADD NEW LESSON</Button>
-              </ButtonWrapper>
-            </ConsturctorForm>
-          </ConsturctorWrapper>
-        </Wrapper>
-      );
-    }
+
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
           <Button onClick={this.showConstructor}>ADD NEW LESSON</Button>
         </ButtonWrapperConstructor>
+        {constructor && (
+          <>
+            <DarkGround onClick={this.showConstructor} />
+            <ConsturctorWrapper>
+              <ConsturctorForm onSubmit={this.onSubmit}>
+                <LabelElement>title</LabelElement>
+                <TitleInput
+                  name="title"
+                  placeholder="title"
+                  type="text"
+                  value={this.state.title}
+                  onChange={this.onChange}
+                />
+                <LabelElement>description</LabelElement>
+                <EditorText
+                  editorState={editorState}
+                  onEditorStateChange={this.onEditorStateChange}
+                />
+                <LabelElement>EXAM :</LabelElement>
+
+                <ImgMark
+                  style={!exam ? { filter: "grayscale(100%)" } : {}}
+                  src={checkMark}
+                  onClick={this.ChangeExamTrue}
+                />
+                <ImgCross
+                  style={exam ? { filter: "grayscale(100%)" } : {}}
+                  src={redCross}
+                  onClick={this.ChangeExamFalse}
+                />
+                <br />
+                <LabelElement>Course Index :</LabelElement>
+                <Select
+                  value={courseIndex}
+                  onChange={this.handleChange}
+                  options={options}
+                />
+                <ButtonWrapper>
+                  <Button type="submit">ADD NEW LESSON</Button>
+                </ButtonWrapper>
+              </ConsturctorForm>
+            </ConsturctorWrapper>
+          </>
+        )}
       </Wrapper>
     );
   }
