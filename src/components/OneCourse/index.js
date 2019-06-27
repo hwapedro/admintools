@@ -90,7 +90,10 @@ const mapDispatchToProps = dispatch => ({
   changeDndLesson: (id1, id2, courseIndex) =>
     dispatch(changeDndLesson(id1, id2, courseIndex)),
 
-  getCourse: id => dispatch(getCourse(id))
+  getCourse: id => dispatch(getCourse(id)),
+
+  changeDndLesson: (id1, id2, courseIndex) =>
+    dispatch(changeDndLesson(id1, id2, courseIndex))
 });
 
 export default connect(

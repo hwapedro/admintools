@@ -55,12 +55,11 @@ class LessonsList extends Component {
           if (!result.destination) {
             return;
           }
-
           if (result.source.index !== result.destination.index) {
             changeDndLesson(
               lessons[result.source.index].lessonIndex,
               lessons[result.destination.index].lessonIndex,
-              lessons[result.source.index].courseIndex
+              course.courseIndex
             );
           }
         }}
