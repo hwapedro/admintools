@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import Button from '../../Button'
+import Button from "../../Button";
 import Search from "../../Search";
 const name = "badge";
 
@@ -34,18 +34,23 @@ export default class BadgeConstructor extends Component {
 
   render() {
     const { constructor, title, description } = this.state;
-    const {onChange, value} = this.props
-    if (constructor) {
-      return (
-        <Wrapper>
-          <ButtonWrapperConstructor>
-            <Search onChange={onChange} value={value} />
-            <Button onClick={this.showConstructor}>
-              ADD NEW badge
-            </Button>
-          </ButtonWrapperConstructor>
-          <DarkGround onClick={this.showConstructor} />
+    const { onChange, value } = this.props;
+
+    return (
+      <Wrapper>
+        <ButtonWrapperConstructor>
+          <Search onChange={onChange} value={value} />
+          <Button onClick={this.showConstructor}>ADD NEW badge</Button>
+        </ButtonWrapperConstructor>
+        {constructor && (
+          <>
           <ConsturctorWrapper>
+            <ButtonWrapperConstructor>
+              <Search onChange={onChange} value={value} />
+              <Button onClick={this.showConstructor}>ADD NEW badge</Button>
+            </ButtonWrapperConstructor>
+            <DarkGround onClick={this.showConstructor} />
+
             <ConsturctorForm onSubmit={this.onSubmit}>
               <LabelElement>title</LabelElement>
               <TitleInput
@@ -64,23 +69,12 @@ export default class BadgeConstructor extends Component {
                 onChange={this.onChange}
               />
               <ButtonWrapper>
-                <Button type="submit">
-                  ADD NEW badge
-                </Button>
+                <Button type="submit">ADD NEW badge</Button>
               </ButtonWrapper>
             </ConsturctorForm>
           </ConsturctorWrapper>
-        </Wrapper>
-      );
-    }
-    return (
-      <Wrapper>
-        <ButtonWrapperConstructor>
-        <Search onChange={onChange} value={value} />
-          <Button onClick={this.showConstructor}>
-            ADD NEW badge
-          </Button>
-        </ButtonWrapperConstructor>
+          </>
+        )}
       </Wrapper>
     );
   }
@@ -192,10 +186,10 @@ export const ConstructorButton = styled.button`
   margin-right: 1rem;
 `;
 export const ButtonWrapperConstructor = styled.div`
-  padding-left:40px;
+  padding-left: 40px;
   width: 1000px;
   display: flex;
   justify-content: space-between;
-  align-items:space-between;
+  align-items: space-between;
   margin-top: 0.3rem;
 `;

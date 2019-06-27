@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
+// import { EditorState, ContentState, convertFromHTML } from "draft-js";
 
 import EditorText from "../../EditorText";
 import Lesson from "./Lesson";

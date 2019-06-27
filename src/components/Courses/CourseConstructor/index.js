@@ -14,7 +14,6 @@ import {
   TitleInput,
   ConsturctorForm,
   LabelElement,
-  ConstructorButton,
   ButtonWrapperConstructor,
   ButtonWrapper
 } from "../style";
@@ -29,13 +28,9 @@ export default class CourseCounstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addCourses, title, showConstructor } = this.props;
-    const { constructor } = this.state;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
     showConstructor()
     addCourses(title, description, name);
-    this.setState({
-      constructor: !constructor
-    });
   };
 
   onEditorStateChange = editorState => {

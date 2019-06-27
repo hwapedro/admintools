@@ -82,7 +82,6 @@ export const addLesson = (
   dispatch({
     type: ADD_ELEMENT_REQUEST
   });
-  console.log(courseIndex)
   adminService
     .addLesson(title, description, exam, token, name, courseIndex)
     .then(response => {
