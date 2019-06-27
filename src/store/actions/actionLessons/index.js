@@ -38,15 +38,15 @@ export const changeLesson = (
   title,
   description,
   exam,
-
-  name
+  name,
+  courseIndex
 ) => dispatch => {
   dispatch({
     type: CHANGE_ELEMENT_REQUEST
   });
 
   adminService
-    .changeLesson(index, title, description, exam, token, name)
+    .changeLesson(index, title, description, exam, token, name, courseIndex)
     .then(response => {
       dispatch({
         type: CHANGE_LESSON_SUCCESS,

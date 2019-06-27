@@ -3,11 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import {
-  changeElement,
-  getAllElements,
-  deletElement
-} from "../../store/actions";
+import { getAllElements, deletElement } from "../../store/actions";
 
 import { changeDndLesson } from "../../store/actions/actionLessons";
 
@@ -37,7 +33,6 @@ class Lessons extends Component {
     const {
       loading,
       lessons,
-      changeLesson,
       addLesson,
       delLesson,
       changeDndLesson
@@ -45,39 +40,19 @@ class Lessons extends Component {
     const { search } = this.state;
     return (
       <>
-        <DragDropContext
-          onDragEnd={result => {
-            if (!result.destination) {
-              return;
-            }
-
-            if (result.source.index !== result.destination.index) {
-              changeDndLesson(
-                lessons[result.source.index].lessonIndex,
-                lessons[result.destination.index].lessonIndex,
-                lessons[result.source.index].courseIndex
-              );
-            }
-          }}
-        >
-         
-          <SetLesson
-            addLesson={(title, description, exam, name, courseIndex) =>
-              addLesson(title, description, exam, name, courseIndex)
-            }
-            onChange={this.onChange}
-            value={search}
-          />
-          <LessonList
-            changeLesson={(lessonsIndex, title, description, name) =>
-              changeLesson(lessonsIndex, title, description, name)
-            }
-            onChange={this.onChange}
-            delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
-            lessons={lessons}
-            search={search}
-          />
-        </DragDropContext>
+        <SetLesson
+          addLesson={(title, description, exam, name, courseIndex) =>
+            addLesson(title, description, exam, name, courseIndex)
+          }
+          onChange={this.onChange}
+          value={search}
+        />
+        <LessonList
+          onChange={this.onChange}
+          delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
+          lessons={lessons}
+          search={search}
+        />
       </>
     );
   }
@@ -89,8 +64,7 @@ Lessons.defaultProps = {
   error: false,
   addLesson() {},
   delLesson() {},
-  getAllLessons() {},
-  changeLesson() {}
+  getAllLessons() {}
 };
 
 Lessons.propTypes = {
@@ -100,8 +74,7 @@ Lessons.propTypes = {
 
   addCoursest: PropTypes.func,
   delLesson: PropTypes.func,
-  getAllLessons: PropTypes.func,
-  changeLesson: PropTypes.func
+  getAllLessons: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -117,9 +90,6 @@ const mapDispatchToProps = dispatch => ({
   delLesson: (lessonsIndex, name) => dispatch(deletElement(lessonsIndex, name)),
 
   getAllLessons: name => dispatch(getAllElements(name)),
-
-  changeLesson: (lessonsIndex, title, description, name) =>
-    dispatch(changeElement(lessonsIndex, title, description, name)),
 
   changeDndLesson: (id1, id2, courseIndex) =>
     dispatch(changeDndLesson(id1, id2, courseIndex))

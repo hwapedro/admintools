@@ -116,7 +116,7 @@ export default class AdminService {
     });
     return response;
   }
-  
+
   async createTask(token, pageId, type, info) {
     let response = await request
       .post(`${_apiBase}/task/create?page=${pageId}`)
@@ -171,18 +171,36 @@ export default class AdminService {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, description: description, exam: exam, courseIndex: courseIndex });
+      .send({
+        title: title,
+        description: description,
+        exam: exam,
+        courseIndex: courseIndex
+      });
     return response.body;
   }
 
-  async changeLesson(courseIndex, title, description, exam, token, name) {
+  async changeLesson(
+    lessonId,
+    title,
+    description,
+    exam,
+    token,
+    name,
+    courseIndex
+  ) {
     let response = await request
-      .put(`${_apiBase}/${name}/${courseIndex}`)
+      .put(`${_apiBase}/${name}/${lessonId}`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, description: description, exam: exam });
+      .send({
+        title: title,
+        description: description,
+        exam: exam,
+        courseIndex: courseIndex
+      });
     return response.body;
   }
 
@@ -237,9 +255,6 @@ export default class AdminService {
   //     })
   //   return response;
   // }
-
-
 }
 
-const swapi = new AdminService;
-
+const swapi = new AdminService();

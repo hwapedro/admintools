@@ -4,59 +4,69 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import {
-  changeElement,
-  getAllElements,
-  deletElement,
-  getCourse
-} from "../../store/actions";
+import { getAllElements, deletElement, getCourse } from "../../store/actions";
 
 import { changeDndLesson, addLesson } from "../../store/actions/actionLessons";
 
 import LessonList from "../Lessons/LessonList/LessonList";
+import SetLesson from "../Lessons/SetLesson";
 
 class OneCourse extends Component {
+  state = {
+    search: ""
+  };
+
   componentDidMount() {
     const { getCourse } = this.props;
     getCourse(this.props.itemId);
   }
 
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
   render() {
-    const {
-      changeLesson,
-      course,
-      delLesson,
-      changeDndLesson
-    } = this.props;
+    const { addLesson, course, delLesson, changeDndLesson } = this.props;
+    const { search } = this.state;
 
     return (
-      <DragDropContext
-        onDragEnd={result => {
-          if (!result.destination) {
-            return;
+      <>
+        <SetLesson
+          addLesson={(title, description, exam, name, courseIndex) =>
+            addLesson(title, description, exam, name, courseIndex)
           }
-
-          if (result.source.index !== result.destination.index) {
-            console.log(course.lessons[result.source.index].lessonIndex,
-              course.lessons[result.destination.index].lessonIndex,
-              course.courseIndex)
-            changeDndLesson(
-              course.lessons[result.source.index].lessonIndex,
-              course.lessons[result.destination.index].lessonIndex,
-              course.courseIndex
-            );
-          }
-        }}
-      >
-        <LessonList
-          changeLesson={(lessonsIndex, title, description, name) =>
-            changeLesson(lessonsIndex, title, description, name)
-          }
-          delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
-          lessons={course.lessons}
-          search= {""}
+          onChange={this.onChange}
+          value={search}
+          course={course}
         />
-      </DragDropContext>
+        <DragDropContext
+          onDragEnd={result => {
+            if (!result.destination) {
+              return;
+            }
+
+            if (result.source.index !== result.destination.index) {
+              console.log(
+                course.lessons[result.source.index].lessonIndex,
+                course.lessons[result.destination.index].lessonIndex,
+                course.courseIndex
+              );
+              changeDndLesson(
+                course.lessons[result.source.index].lessonIndex,
+                course.lessons[result.destination.index].lessonIndex,
+                course.courseIndex
+              );
+            }
+          }}
+        >
+          <LessonList
+            delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
+            lessons={course.lessons}
+            search={search}
+            course={course}
+          />
+        </DragDropContext>
+      </>
     );
   }
 }
@@ -68,8 +78,7 @@ OneCourse.defaultProps = {
 
   addLesson() {},
   delLesson() {},
-  getAllLessons() {},
-  changeLesson() {}
+  getAllLessons() {}
 };
 
 OneCourse.propTypes = {
@@ -79,8 +88,7 @@ OneCourse.propTypes = {
 
   addCourses: PropTypes.func,
   delLesson: PropTypes.func,
-  getAllLessons: PropTypes.func,
-  changeLesson: PropTypes.func
+  getAllLessons: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -90,15 +98,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam, name) =>
-    dispatch(addLesson(title, description, exam, name)),
+  addLesson: (title, description, exam, name, courseIndex) =>
+    dispatch(addLesson(title, description, exam, name, courseIndex)),
 
   delLesson: (lessonsIndex, name) => dispatch(deletElement(lessonsIndex, name)),
 
   getAllLessons: name => dispatch(getAllElements(name)),
-
-  changeLesson: (lessonsIndex, title, description, name) =>
-    dispatch(changeElement(lessonsIndex, title, description, name)),
 
   changeDndLesson: (id1, id2, courseIndex) =>
     dispatch(changeDndLesson(id1, id2, courseIndex)),

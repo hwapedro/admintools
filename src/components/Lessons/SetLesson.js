@@ -28,6 +28,7 @@ import checkMark from "../../img/good.png";
 import redCross from "../../img/bad.png";
 
 const name = "lesson";
+const token = localStorage.getItem("token");
 let options = [];
 
 const adminService = new AdminService();
@@ -42,7 +43,6 @@ class SetLessons extends Component {
   };
 
   componentDidMount() {
-    const token = localStorage.getItem("token");
     adminService
       .getAll(token, "course")
       .then(response => {
@@ -56,6 +56,7 @@ class SetLessons extends Component {
 
   onSubmit = event => {
     event.preventDefault();
+
     const { addLesson } = this.props;
     const { constructor, editorState } = this.state;
     const { title, exam, courseIndex } = this.state;
@@ -72,6 +73,7 @@ class SetLessons extends Component {
     });
 
     addLesson(title, description, exam, name, courseIndex.value);
+
   };
 
   onChange = event => {
@@ -103,8 +105,10 @@ class SetLessons extends Component {
   };
 
   render() {
+
     const { constructor, exam, courseIndex, editorState } = this.state;
     const { onChange, value } = this.props;
+
 
     return (
       <Wrapper>
@@ -164,9 +168,11 @@ class SetLessons extends Component {
 export default SetLessons;
 
 SetLessons.defaultProps = {
-  addLesson() {}
+  addLesson() {},
+  course: null
 };
 
 SetLessons.propTypes = {
-  addLesson: PropTypes.func
+  addLesson: PropTypes.func,
+  course: PropTypes.object
 };
