@@ -44,35 +44,30 @@ export default class BadgeConstructor extends Component {
         </ButtonWrapperConstructor>
         {constructor && (
           <>
-          <ConsturctorWrapper>
-            <ButtonWrapperConstructor>
-              <Search onChange={onChange} value={value} />
-              <Button onClick={this.showConstructor}>ADD NEW badge</Button>
-            </ButtonWrapperConstructor>
             <DarkGround onClick={this.showConstructor} />
-
-            <ConsturctorForm onSubmit={this.onSubmit}>
-              <LabelElement>title</LabelElement>
-              <TitleInput
-                name="title"
-                placeholder="title"
-                type="text"
-                value={title}
-                onChange={this.onChange}
-              />
-              <LabelElement>description</LabelElement>
-              <DescriptionTextArea
-                name="description"
-                placeholder="description"
-                value={description}
-                type="text"
-                onChange={this.onChange}
-              />
-              <ButtonWrapper>
-                <Button type="submit">ADD NEW badge</Button>
-              </ButtonWrapper>
-            </ConsturctorForm>
-          </ConsturctorWrapper>
+            <ConsturctorWrapper>
+              <ConsturctorForm onSubmit={this.onSubmit}>
+                <LabelElement>title</LabelElement>
+                <TitleInput
+                  name="title"
+                  placeholder="title"
+                  type="text"
+                  value={title}
+                  onChange={this.onChange}
+                />
+                <LabelElement>description</LabelElement>
+                <DescriptionTextArea
+                  name="description"
+                  placeholder="description"
+                  value={description}
+                  type="text"
+                  onChange={this.onChange}
+                />
+                <ButtonWrapper>
+                  <Button type="submit">ADD NEW badge</Button>
+                </ButtonWrapper>
+              </ConsturctorForm>
+            </ConsturctorWrapper>
           </>
         )}
       </Wrapper>
