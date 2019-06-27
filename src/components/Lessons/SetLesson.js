@@ -34,7 +34,7 @@ class SetLessons extends Component {
     title: "",
     description: "",
     exam: false,
-    courseIndex: { value: 1 , label: 'course'},
+    courseIndex: { value: 1, label: "course" },
     constructor: false
   };
 
@@ -84,7 +84,7 @@ class SetLessons extends Component {
 
   render() {
     const { constructor, exam, courseIndex } = this.state;
-    const { onChange, value } = this.props;
+    const { onChange, value, course } = this.props;
 
     if (constructor) {
       return (
@@ -121,12 +121,17 @@ class SetLessons extends Component {
                 onClick={this.ChangeExamFalse}
               />
               <br />
-              <LabelElement>Course Index :</LabelElement>
-              <Select
-                value={courseIndex}
-                onChange={this.handleChange}
-                options={options}
-              />
+              {!course && (
+                <>
+                  <LabelElement>Course Index :</LabelElement>
+                  <Select
+                    value={courseIndex}
+                    onChange={this.handleChange}
+                    options={options}
+                  />
+                </>
+              )}
+
               <ButtonWrapper>
                 <Button type="submit">ADD NEW LESSON</Button>
               </ButtonWrapper>
@@ -149,9 +154,11 @@ class SetLessons extends Component {
 export default SetLessons;
 
 SetLessons.defaultProps = {
+  course: null,
   addLesson() {}
 };
 
 SetLessons.propTypes = {
+  course: PropTypes.func,
   addLesson: PropTypes.func
 };
