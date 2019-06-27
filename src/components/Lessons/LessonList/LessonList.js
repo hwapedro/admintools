@@ -3,14 +3,11 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
+import { DragDropContext } from "react-beautiful-dnd";
 
-import EditorText from "../../EditorText";
+import { changeDndLesson } from "../../../store/actions/actionLessons";
+
 import Lesson from "./Lesson";
-import Button from '../../Button'
-
-import checkMark from "../../../img/good.png";
-import redCross from "../../../img/bad.png";
 
 const name = "lesson";
 
@@ -18,43 +15,7 @@ class LessonsList extends Component {
   state = {
     title: "",
     description: "",
-    changeFlag: false,
     _id: null
-  };
-
-  // getParams = (_id, title, description) => {
-  //   const blocksFromHTML = convertFromHTML(description);
-  //   const state = ContentState.createFromBlockArray(
-  //     blocksFromHTML.contentBlocks,
-  //     blocksFromHTML.entityMap
-  //   );
-  //   this.setState({
-  //     changeFlag: true,
-  //     _id: _id,
-  //     title: title,
-  //     description: description,
-  //     editorState: EditorState.createWithContent(state)
-  //   });
-  // };
-
-  setParams = event => {
-    event.preventDefault();
-    const { changeLesson } = this.props;
-    const { title, description } = this.state;
-    if (title && description)
-      changeLesson(
-        this.state._id,
-        this.state.title,
-        this.state.description,
-        name
-      );
-    this.setState({ changeFlag: false, _id: null });
-  };
-
-  onEditorStateChange = editorState => {
-    this.setState({
-      editorState
-    });
   };
 
   deleteItem = _id => {
@@ -67,68 +28,62 @@ class LessonsList extends Component {
   };
 
   render() {
-    const { lessons, search } = this.props;
-    const { editorState,changeFlag } = this.state;
-    let list = lessons.filter(lesson => {
-      if (lesson.title.toLowerCase().indexOf(search.toLowerCase()) !== -1){
-        return true;
-      }
-      return false
-    })
-    .map((lesson, index) => {
-      if (changeFlag && lesson._id === this.state._id) {
-        return (
-          <ElementWrapper key={lesson._id}>
-            <form onSubmit={this.setParams}>
-              <LabelElement>Name of Lesson :</LabelElement>
-              <TitleInput
-                name="title"
-                onChange={this.onChange}
-                value={this.state.title}
-              />
-              <LabelElement>Description of Lesson : </LabelElement>
-              <EditorText
-                editorState={editorState}
-                onEditorStateChange={this.onEditorStateChange}
-              />
-
-              <ButtonWrapper>
-                <Button type="submit">CONFIRM</Button>
-              </ButtonWrapper>
-            </form>
-          </ElementWrapper>
-        );
-      } else {
+    const { lessons, search, course } = this.props;
+    let list = lessons
+      .filter(lesson => {
+        if (lesson.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+          return true;
+        }
+        return false;
+      })
+      .map((lesson, index) => {
         return (
           <Lesson
-              key={lesson._id}
-              lesson={lesson}
-              index={index}
-              deleteItem={this.deleteItem}
-              goTo = {this.goTo}
-            />
+            key={lesson._id}
+            lesson={lesson}
+            index={index}
+            deleteItem={this.deleteItem}
+            goTo={this.goTo}
+            course={course}
+          />
         );
-      }
-    });
+      });
+
     return (
-      <Wrapper>
-        {lessons.length === 0 || list.length === 0 ? (
-          <EmptyMessage>There is nothing here yet</EmptyMessage>
-        ) : (
-          <Droppable droppableId="droppable">
-            {provided => (
-              <ElementsWrapper
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                {list}
-                {provided.placeholder}
-              </ElementsWrapper>
-            )}
-          </Droppable>
-        )}
-      </Wrapper>
+      <DragDropContext
+        onDragEnd={result => {
+          if (!result.destination) {
+            return;
+          }
+
+          if (result.source.index !== result.destination.index) {
+            changeDndLesson(
+              lessons[result.source.index].lessonIndex,
+              lessons[result.destination.index].lessonIndex,
+              lessons[result.source.index].courseIndex
+            );
+          }
+        }}
+      >
+        <Wrapper>
+          {lessons.length === 0 || list.length === 0 ? (
+            <EmptyMessage>There is nothing here yet</EmptyMessage>
+          ) : (
+            <Droppable droppableId="droppable">
+              {provided => (
+                <ElementsWrapper
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                >
+                  {list}
+                  {provided.placeholder}
+                </ElementsWrapper>
+              )}
+            </Droppable>
+          )}
+        </Wrapper>
+      </DragDropContext>
     );
   }
 }
@@ -139,17 +94,17 @@ LessonsList.defaultProps = {
   lessons: [],
   loading: false,
   error: false,
-  delLesson() {},
-  changeLesson() {}
+  course: null,
+  delLesson() {}
 };
 
 LessonsList.propTypes = {
   lessons: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,
+  course: PropTypes.object,
 
-  delLesson: PropTypes.func,
-  changeLesson: PropTypes.func
+  delLesson: PropTypes.func
 };
 
 const Wrapper = styled.div`

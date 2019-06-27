@@ -5,7 +5,7 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import Select from "react-select";
 import EditorText from "../../EditorText";
-import Button from '../../Button'
+import Button from "../../Button";
 
 import {
   getLesson,
@@ -86,20 +86,30 @@ class Lesson extends Component {
   };
 
   getParams = (_id, title, description, exam) => {
-    const blocksFromHTML = convertFromHTML(description);
-    const state = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
-
-    this.setState({
-      changeFlag: true,
-      _id: _id,
-      title: title,
-      description: description,
-      exam: exam,
-      editorState: EditorState.createWithContent(state)
-    });
+    if (description !== "") {
+      const blocksFromHTML = convertFromHTML(description);
+      const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+      );
+      this.setState({
+        changeFlag: true,
+        _id: _id,
+        title: title,
+        description: description,
+        exam: exam,
+        editorState: EditorState.createWithContent(state)
+      });
+    } else {
+      this.setState({
+        changeFlag: true,
+        _id: _id,
+        title: title,
+        description: description,
+        exam: exam,
+        editorState: EditorState.createEmpty()
+      });
+    }
   };
 
   setParams = event => {
@@ -109,7 +119,8 @@ class Lesson extends Component {
 
     const description = stateToHTML(this.state.editorState.getCurrentContent());
 
-    if (title && description) changeLesson(_id, title, description, exam, name);
+    if (title && description)
+      changeLesson(_id, title, description, exam, name, courseIndex.value);
     this.setState({ changeFlag: false, _id: null });
   };
 
@@ -153,7 +164,7 @@ class Lesson extends Component {
                   <LabelElement>Name of Lesson :</LabelElement>
                   <TitleInput
                     name="title"
-                    onChange={this.onChange} 
+                    onChange={this.onChange}
                     value={this.state.title}
                   />
                   <LabelElement>Description of Lesson : </LabelElement>
@@ -260,8 +271,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getLesson: id => dispatch(getLesson(id)),
-  changeLesson: (lessonsIndex, title, description, exam, name) =>
-    dispatch(changeLesson(lessonsIndex, title, description, exam, name)),
+  changeLesson: (lessonsIndex, title, description, exam, name, courseIndex) =>
+    dispatch(changeLesson(lessonsIndex, title, description, exam, name, courseIndex)),
   addPage: (id, text, tasks, needToComplete) =>
     dispatch(addPage(id, text, tasks, needToComplete)),
   deletePage: id => dispatch(deletePage(id)),
