@@ -160,8 +160,7 @@ CourseList.defaultProps = {
   courses: [],
   loading: false,
   error: false,
-  delCourse() {},
-  changeLesson() {}
+  delCourse() {}
 };
 
 CourseList.propTypes = {
@@ -169,6 +168,5 @@ CourseList.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
 
-  delCourse: PropTypes.func,
-  changeLesson: PropTypes.func
+  delCourse: PropTypes.func
 };

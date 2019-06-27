@@ -25,6 +25,7 @@ import checkMark from "../../img/good.png";
 import redCross from "../../img/bad.png";
 
 const name = "lesson";
+const token = localStorage.getItem("token");
 let options = [];
 
 const adminService = new AdminService();
@@ -39,7 +40,6 @@ class SetLessons extends Component {
   };
 
   componentDidMount() {
-    const token = localStorage.getItem("token");
     adminService
       .getAll(token, "course")
       .then(response => {
@@ -53,9 +53,12 @@ class SetLessons extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { addLesson } = this.props;
+    const { addLesson, course } = this.props;
     const { title, description, exam, courseIndex } = this.state;
-    addLesson(title, description, exam, name, courseIndex.value);
+    console.log(course);
+    course
+      ? addLesson(title, description, exam, name, course.courseIndex)
+      : addLesson(title, description, exam, name, courseIndex.value);
   };
 
   onChange = event => {
@@ -83,7 +86,7 @@ class SetLessons extends Component {
 
   render() {
     const { constructor, exam, courseIndex } = this.state;
-    const { onChange, value } = this.props;
+    const { onChange, value, course } = this.props;
 
     if (constructor) {
       return (
@@ -120,16 +123,19 @@ class SetLessons extends Component {
                 onClick={this.ChangeExamFalse}
               />
               <br />
-              <LabelElement>Course Index :</LabelElement>
-              <Select
-                value={courseIndex}
-                onChange={this.handleChange}
-                options={options}
-              />
-              <ButtonWrapperConstructor>
-                <Search onChange={onChange} value={value} />
+              {!course && (
+                <>
+                  <LabelElement>Course Index :</LabelElement>
+                  <Select
+                    value={courseIndex}
+                    onChange={this.handleChange}
+                    options={options}
+                  />
+                </>
+              )}
+              <ButtonWrapper>
                 <Button type="submit">ADD NEW LESSON</Button>
-              </ButtonWrapperConstructor>
+              </ButtonWrapper>
             </ConsturctorForm>
           </ConsturctorWrapper>
         </Wrapper>
@@ -138,7 +144,7 @@ class SetLessons extends Component {
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
-        <Search onChange={onChange} value={value} />
+          <Search onChange={onChange} value={value} />
           <Button onClick={this.showConstructor}>ADD NEW LESSON</Button>
         </ButtonWrapperConstructor>
       </Wrapper>
@@ -149,9 +155,11 @@ class SetLessons extends Component {
 export default SetLessons;
 
 SetLessons.defaultProps = {
-  addLesson() {}
+  addLesson() {},
+  course: null
 };
 
 SetLessons.propTypes = {
-  addLesson: PropTypes.func
+  addLesson: PropTypes.func,
+  course: PropTypes.object
 };
