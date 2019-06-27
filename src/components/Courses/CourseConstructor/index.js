@@ -5,7 +5,7 @@ import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
-import Button from '../../Button'
+import Button from "../../Button";
 
 import {
   Wrapper,
@@ -14,7 +14,6 @@ import {
   TitleInput,
   ConsturctorForm,
   LabelElement,
-  ConstructorButton,
   ButtonWrapperConstructor,
   ButtonWrapper
 } from "../style";
@@ -29,13 +28,9 @@ export default class CourseCounstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addCourses, title, showConstructor } = this.props;
-    const { constructor } = this.state;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
-    showConstructor()
+    showConstructor();
     addCourses(title, description, name);
-    this.setState({
-      constructor: !constructor
-    });
   };
 
   onEditorStateChange = editorState => {
@@ -47,14 +42,12 @@ export default class CourseCounstructor extends Component {
   render() {
     const { onChange, title, value, constructor, showConstructor } = this.props;
     const { editorState } = this.state;
-    
+
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <Button onClick={showConstructor}>
-            ADD NEW COURSE
-          </Button>
+          <Button onClick={showConstructor}>ADD NEW COURSE</Button>
           {constructor && (
             <>
               <DarkGround onClick={showConstructor} />
@@ -74,9 +67,7 @@ export default class CourseCounstructor extends Component {
                     onEditorStateChange={this.onEditorStateChange}
                   />
                   <ButtonWrapper>
-                    <Button type="submit" >
-                      ADD NEW COURSE
-                    </Button>
+                    <Button type="submit">ADD NEW COURSE</Button>
                   </ButtonWrapper>
                 </ConsturctorForm>
               </ConsturctorWrapper>
