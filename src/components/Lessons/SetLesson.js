@@ -57,17 +57,18 @@ class SetLessons extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addLesson } = this.props;
-    const { constructor } = this.state;
+    const { constructor, editorState } = this.state;
     const { title, exam, courseIndex } = this.state;
 
-    const description = stateToHTML(this.state.editorState.getCurrentContent());
+    const description = stateToHTML(editorState.getCurrentContent());
 
     this.setState({
       constructor: !constructor,
       title: "",
       description: "",
       exam: false,
-      courseIndex: 0
+      courseIndex: 0,
+      editorState: EditorState.createEmpty()
     });
 
     addLesson(title, description, exam, name, courseIndex.value);
