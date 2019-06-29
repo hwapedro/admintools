@@ -10,7 +10,10 @@ import { changeDndLesson, addLesson } from "../../store/actions/actionLessons";
 
 import LessonList from "../Lessons/LessonList/LessonList";
 import SetLesson from "../Lessons/SetLesson";
+import Spinner from "../Spinner";
+import Error from "../Error";
 
+const name = "course"
 class OneCourse extends Component {
   state = {
     search: ""
@@ -26,28 +29,42 @@ class OneCourse extends Component {
   };
 
   render() {
-    const { addLesson, course, delLesson, changeDndLesson } = this.props;
+    const { addLesson, course, delLesson, changeDndLesson, error, loading } = this.props;
     const { search } = this.state;
 
     return (
       <>
-        <SetLesson
-          addLesson={(title, description, exam, name, courseIndex) =>
-            addLesson(title, description, exam, name, courseIndex)
-          }
-          onChange={this.onChange}
-          value={search}
-          course={course}
-        />
+        {error && (
+          <>
+            <Error name={name} />
+          </>
+        )}
 
-          <LessonList
-            delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
-            lessons={course.lessons}
-            search={search}
-            course={course}
-            changeDndLesson={changeDndLesson}
-          />
-     
+        {loading && (
+          <>
+            <Spinner />
+          </>
+        )}
+        {!error && !loading && (
+          <>
+            <SetLesson
+              addLesson={(title, description, exam, name, courseIndex) =>
+                addLesson(title, description, exam, name, courseIndex)
+              }
+              onChange={this.onChange}
+              value={search}
+              course={course}
+            />
+
+            <LessonList
+              delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
+              lessons={course.lessons}
+              search={search}
+              course={course}
+              changeDndLesson={changeDndLesson}
+            />
+          </>
+        )}
       </>
     );
   }
@@ -90,10 +107,7 @@ const mapDispatchToProps = dispatch => ({
   changeDndLesson: (id1, id2, courseIndex) =>
     dispatch(changeDndLesson(id1, id2, courseIndex)),
 
-  getCourse: id => dispatch(getCourse(id)),
-
-  changeDndLesson: (id1, id2, courseIndex) =>
-    dispatch(changeDndLesson(id1, id2, courseIndex))
+  getCourse: id => dispatch(getCourse(id))
 });
 
 export default connect(

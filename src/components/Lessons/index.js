@@ -12,6 +12,8 @@ import { addLesson } from "../../store/actions/actionLessons";
 //import Search from "../Search";
 import SetLesson from "../Lessons/SetLesson";
 import LessonList from "./LessonList/LessonList";
+import Spinner from "../Spinner";
+import Error from "../Error";
 
 const name = "lesson";
 
@@ -31,6 +33,7 @@ class Lessons extends Component {
 
   render() {
     const {
+      error,
       loading,
       lessons,
       addLesson,
@@ -40,19 +43,34 @@ class Lessons extends Component {
     const { search } = this.state;
     return (
       <>
-        <SetLesson
-          addLesson={(title, description, exam, name, courseIndex) =>
-            addLesson(title, description, exam, name, courseIndex)
-          }
-          onChange={this.onChange}
-          value={search}
-        />
-        <LessonList
-          onChange={this.onChange}
-          delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
-          lessons={lessons}
-          search={search}
-        />
+        {error && (
+          <>
+            <Error name={name} />
+          </>
+        )}
+
+        {loading && (
+          <>
+            <Spinner />
+          </>
+        )}
+        {!error && !loading && (
+          <>
+            <SetLesson
+              addLesson={(title, description, exam, name, courseIndex) =>
+                addLesson(title, description, exam, name, courseIndex)
+              }
+              onChange={this.onChange}
+              value={search}
+            />
+            <LessonList
+              onChange={this.onChange}
+              delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
+              lessons={lessons}
+              search={search}
+            />
+          </>
+        )}
       </>
     );
   }

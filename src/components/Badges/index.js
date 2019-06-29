@@ -11,6 +11,7 @@ import {
 import BadgeConstructor from "./BadgeConstructor";
 import BadgesList from "../Badges/BadgesList";
 import Spinner from "../Spinner";
+import Error from "../Error";
 
 const name = "badge";
 
@@ -35,37 +36,46 @@ class Badge extends Component {
       changeBadge,
       addBadge,
       getAllBadges,
-      delBadge
+      delBadge,
+      error
     } = this.props;
 
     const { search } = this.state;
 
-    if (loading) {
-      return (
-        <>
-          <Spinner />
-        </>
-      );
-    }
     return (
       <>
-        <BadgeConstructor
-          addBadge={(title, description, name) =>
-            addBadge(title, description, name)
-          }
-          getAllBadges={name => getAllBadges(name)}
-          onChange={this.onChange}
-          value={search}
-        />
+        {error && (
+          <>
+            <Error name={name} />
+          </>
+        )}
 
-        <BadgesList
-          changeBadge={(courseIndex, title, description, name) =>
-            changeBadge(courseIndex, title, description, name)
-          }
-          delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
-          badges={badges}
-          search={search}
-        />
+        {loading && (
+          <>
+            <Spinner />
+          </>
+        )}
+        {!error && !loading && (
+          <>
+            <BadgeConstructor
+              addBadge={(title, description, name) =>
+                addBadge(title, description, name)
+              }
+              getAllBadges={name => getAllBadges(name)}
+              onChange={this.onChange}
+              value={search}
+            />
+
+            <BadgesList
+              changeBadge={(courseIndex, title, description, name) =>
+                changeBadge(courseIndex, title, description, name)
+              }
+              delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
+              badges={badges}
+              search={search}
+            />
+          </>
+        )}
       </>
     );
   }

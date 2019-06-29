@@ -18,7 +18,8 @@ import {
   GET_COURSE_SUCCESS,
   GET_COURSE_FAILURE,
   DELETE_LESSON_SUCCESS,
-  CHANGE_DND_LESSON_SUCCESS
+  CHANGE_DND_LESSON_SUCCESS,
+  ADD_LESSON_SUCCESS
 } from "../../constants";
 
 import { startLoading, stopLoading, DND } from "../../utils";
@@ -137,6 +138,18 @@ function reducerCourses(state = initialState, action = {}) {
 
     case GET_COURSE_FAILURE:
       return stopLoading(state, action);
+
+    case ADD_LESSON_SUCCESS:
+      console.log("!!!")
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        course: state.course !== {} ? {
+          ...state.course,
+          lessons: [...state.course.lessons, action.lessons]
+        } : {}
+      };
 
     default:
       return {

@@ -144,6 +144,7 @@ class SetLessons extends Component {
                     value={courseIndex}
                     onChange={this.handleChange}
                     options={options}
+                    maxMenuHeight={100}
                   />
                 </>
               )}
