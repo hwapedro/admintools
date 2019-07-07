@@ -52,7 +52,7 @@ export default class CourseCounstructor extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <Button onClick={showConstructor}>
+          <Button  style={"outlined"} onClick={showConstructor}>
             ADD NEW COURSE
           </Button>
           {constructor && (
@@ -74,7 +74,7 @@ export default class CourseCounstructor extends Component {
                     onEditorStateChange={this.onEditorStateChange}
                   />
                   <ButtonWrapper>
-                    <Button type="submit" >
+                    <Button  style={"outlined"} type="submit" >
                       ADD NEW COURSE
                     </Button>
                   </ButtonWrapper>

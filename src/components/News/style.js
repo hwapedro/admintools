@@ -36,10 +36,9 @@ export const ElementsWrapper = styled.ul`
 
 export const ElementWrapper = styled.li`
   background-color: ${props => props.theme.courses};
-  margin-top: 1rem;
-  border: 1px solid white;
-  border-radius: 20px;
+  margin-top: 2rem;
   padding: 1rem;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
 `;
 
 export const SignInButton = styled.button`
@@ -148,10 +147,10 @@ export const EmptyMessage = styled.div`
 `;
 
 export const ButtonWrapperConstructor = styled.div`
-  padding-left:40px;
+  padding-left: 40px;
   width: 1000px;
   display: flex;
   justify-content: space-between;
-  align-items:space-between;
+  align-items: space-between;
   margin-top: 0.3rem;
 `;

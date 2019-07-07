@@ -199,7 +199,7 @@ class Lesson extends Component {
                     />
 
                     <ButtonWrapper>
-                      <Button type="submit">CONFIRM</Button>
+                      <Button style={"outlined"}  type="submit">CONFIRM</Button>
                     </ButtonWrapper>
                   </form>
                 </ElementWrapper>{" "}
@@ -239,7 +239,7 @@ class Lesson extends Component {
                 </ElementWrapper>
 
                 <ButtonWrapper>
-                  <Button onClick={this.addPage}>Add Page</Button>
+                  <Button  style={"outlined"} onClick={this.addPage}>Add Page</Button>
                 </ButtonWrapper>
               </>
             )}

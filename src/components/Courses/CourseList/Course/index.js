@@ -2,18 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Draggable } from "react-beautiful-dnd";
 
-import Button from '../../../Button'
+import Button from "../../../Button";
 
 import {
   ElementWrapper,
   TitleSpan,
   LabelElement,
   DescriptionSpan,
-  ButtonWrapper,
-  SignInButton
+  ButtonWrapper
 } from "../../style.js";
-
-
 
 export default function Course({ course, getParams, deleteItem, index, goTo }) {
   return (
@@ -40,8 +37,11 @@ export default function Course({ course, getParams, deleteItem, index, goTo }) {
             }}
           />
           <ButtonWrapper>
-            <Button onClick={() => goTo(course._id)}>GO TO</Button>
+            <Button style={"outlined"} onClick={() => goTo(course._id)}>
+              GO TO
+            </Button>
             <Button
+              style={"outlined"}
               onClick={() =>
                 getParams(course.courseIndex, course.title, course.description)
               }
@@ -50,6 +50,7 @@ export default function Course({ course, getParams, deleteItem, index, goTo }) {
             </Button>
 
             <Button
+              style={"outlined"}
               onClick={() => {
                 if (window.confirm("ARE YOU SURE ?")) {
                   deleteItem(course._id);

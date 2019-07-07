@@ -78,7 +78,7 @@ class badgeList extends Component {
               />
 
               <ButtonWrapper>
-                <Button type="submit">CONFIRM</Button>
+                <Button  style={"outlined"} type="submit">CONFIRM</Button>
               </ButtonWrapper>
             </form>
           </ElementWrapper>
@@ -92,6 +92,7 @@ class badgeList extends Component {
             <DescriptionSpan>{badge.description}</DescriptionSpan>
             <ButtonWrapper>
               <Button
+              style={"outlined"}
                 onClick={() =>
                   this.getParams(
                     badge._id,
@@ -102,7 +103,7 @@ class badgeList extends Component {
               >
                 CHANGE badge
               </Button>
-              <Button onClick={() => this.deleteItem(badge._id)}>
+              <Button  style={"outlined"} onClick={() => this.deleteItem(badge._id)}>
                 DELETE badge
               </Button>
             </ButtonWrapper>
@@ -160,6 +161,7 @@ const TitleInput = styled.input`
   margin: 1rem 0;
   font-size: 1.3rem;
   color: black;
+  width:200px;
 `;
 
 const LabelElement = styled.span`
@@ -198,9 +200,8 @@ const ElementsWrapper = styled.ul`
 const ElementWrapper = styled.li`
   background-color: ${props => props.theme.courses};
   margin-top: 2rem;
-  border: 1px solid white;
-  border-radius: 20px;
   padding: 1rem;
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
 `;
 
 const ButtonWrapper = styled.div`

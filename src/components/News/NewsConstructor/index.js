@@ -66,7 +66,7 @@ class SetArticle extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <Button onClick={showConstructor}>
+          <Button style={"outlined"} onClick={showConstructor}>
             ADD NEW ARTICLE
           </Button>
         </ButtonWrapperConstructor>
@@ -89,7 +89,7 @@ class SetArticle extends Component {
                   onEditorStateChange={this.onEditorStateChange}
                 />
                 <ButtonWrapper>
-                  <Button type="submit">
+                  <Button  style={"outlined"} type="submit">
                     ADD NEW ARTICLE
                   </Button>
                 </ButtonWrapper>

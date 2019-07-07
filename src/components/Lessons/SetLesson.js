@@ -150,7 +150,7 @@ class SetLessons extends Component {
               )}
 
               <ButtonWrapper>
-                <Button type="submit">ADD NEW LESSON</Button>
+                <Button  style={"outlined"} type="submit">ADD NEW LESSON</Button>
               </ButtonWrapper>
             </ConsturctorForm>
           </ConsturctorWrapper>
@@ -161,7 +161,7 @@ class SetLessons extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <Button onClick={this.showConstructor}>ADD NEW LESSON</Button>
+          <Button style={"outlined"} onClick={this.showConstructor}>ADD NEW LESSON</Button>
         </ButtonWrapperConstructor>
       </Wrapper>
     );

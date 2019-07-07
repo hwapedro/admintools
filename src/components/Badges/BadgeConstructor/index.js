@@ -40,7 +40,7 @@ export default class BadgeConstructor extends Component {
         <Wrapper>
           <ButtonWrapperConstructor>
             <Search onChange={onChange} value={value} />
-            <Button onClick={this.showConstructor}>
+            <Button  style={"outlined"} onClick={this.showConstructor}>
               ADD NEW badge
             </Button>
           </ButtonWrapperConstructor>
@@ -64,7 +64,7 @@ export default class BadgeConstructor extends Component {
                 onChange={this.onChange}
               />
               <ButtonWrapper>
-                <Button type="submit">
+                <Button  style={"outlined"} type="submit">
                   ADD NEW badge
                 </Button>
               </ButtonWrapper>
@@ -77,7 +77,7 @@ export default class BadgeConstructor extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
         <Search onChange={onChange} value={value} />
-          <Button onClick={this.showConstructor}>
+          <Button  style={"outlined"} onClick={this.showConstructor}>
             ADD NEW badge
           </Button>
         </ButtonWrapperConstructor>

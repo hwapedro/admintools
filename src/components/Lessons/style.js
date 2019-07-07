@@ -78,11 +78,10 @@ export const ElementsWrapper = styled.ul`
 
 export const ElementWrapper = styled.div`
   background-color: ${props => props.theme.courses};
-  margin-top: 2rem;
   width: 960px;
-  border: 1px solid white;
-  border-radius: 20px;
+  margin-top: 2rem;
   padding: 1rem;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
 `;
 
 export const ButtonWrapper = styled.div`
@@ -161,11 +160,11 @@ export const ConstructorButton = styled.button`
 `;
 
 export const ButtonWrapperConstructor = styled.div`
-  padding-left:40px;
+  padding-left: 40px;
   width: 1000px;
   display: flex;
   justify-content: space-between;
-  align-items:space-between;
+  align-items: space-between;
   margin-top: 0.3rem;
 `;
 
@@ -195,7 +194,7 @@ export const TaskElementWrapper = styled.li`
   justify-content: space-between;
   background-color: ${props => props.theme.courses};
   margin-top: 0.5rem;
- 
+
   border-radius: 10px;
   padding: 0.3rem;
   list-style-type: none;
@@ -281,5 +280,3 @@ export const TaskOptionWrapper = styled.li`
   padding: 0.3rem;
   list-style-type: none;
 `;
-
-

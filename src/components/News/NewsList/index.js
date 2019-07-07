@@ -92,7 +92,7 @@ class NewsList extends Component {
               />
 
               <ButtonWrapper>
-                <Button type="submit">CONFIRM</Button>
+                <Button  style={"outlined"} type="submit">CONFIRM</Button>
               </ButtonWrapper>
             </form>
           </ElementWrapper>

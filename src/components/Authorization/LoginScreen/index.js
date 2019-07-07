@@ -67,7 +67,7 @@ class LoginScreen extends React.Component {
               <ErrorMessage name="password" component={Error} />
 
               <ButtonWrapper>
-                <Button type="submit">SIGN IN</Button>
+                <Button style={"outlined"} type="submit">SIGN IN</Button>
               </ButtonWrapper>
 
               <ButtonWrapper>

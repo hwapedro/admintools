@@ -175,9 +175,8 @@ const ElementsWrapper = styled.ul`
 const ElementWrapper = styled.li`
   background-color: ${props => props.theme.courses};
   margin-top: 2rem;
-  border: 1px solid white;
-  border-radius: 20px;
   padding: 1rem;
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
 `;
 
 const ButtonWrapper = styled.div`

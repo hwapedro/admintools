@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 
+import Button from "../Button";
 import * as route from "../Route/constants";
 
 class Menu extends Component {
@@ -13,37 +14,39 @@ class Menu extends Component {
 
           <ButtonWrapper>
             <Link style={LinkStyle} to={route.courses}>
-              <LinkButton>Courses</LinkButton>
+              <Button style={"text"} color={'white'}>Courses</Button>
             </Link>
           </ButtonWrapper>
 
           <ButtonWrapper>
             <Link style={LinkStyle} to={route.lessons}>
-              <LinkButton>Lessons</LinkButton>
+              <Button style={"text"} color={'white'} >Lessons</Button>
             </Link>
           </ButtonWrapper>
 
           <ButtonWrapper>
             <Link style={LinkStyle} to={route.badges}>
-              <LinkButton>Badges</LinkButton>
+              <Button style={"text"} color={'white'}>Badges</Button>
             </Link>
           </ButtonWrapper>
 
           <ButtonWrapper>
             <Link style={LinkStyle} to={route.news}>
-              <LinkButton>News</LinkButton>
+              <Button style={"text"} color={'white'}>News</Button>
             </Link>
           </ButtonWrapper>
 
           <ButtonSignOut>
-            <LinkButton
+            <Button
+              style={"text"}
+              color={'white'}
               onClick={() => {
                 localStorage.removeItem("token");
-                this.props.history.push('/')
+                this.props.history.push("/");
               }}
             >
               Sign out
-            </LinkButton>
+            </Button>
           </ButtonSignOut>
         </Wrapper>
       </>
@@ -59,55 +62,32 @@ const LinkStyle = {
 };
 
 const Wrapper = styled.div`
-  padding-top: 0.5rem;
+  padding-top: 0.2rem;
   padding-left: 2rem;
   padding-right: 2rem;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
-  background-color: ${props => props.theme.menu};
-  // box-shadow: 0px 4px 10px rgba(194, 194, 194, 0.1);
+  background-color: #1C2023;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.1);
 `;
 
 const Title = styled.div`
-  display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 2rem;
-  margin: 2rem 1rem 0 1rem;
+  margin: 1rem 1rem 0 1rem;
   font-size: 2rem;
   color: white;
 `;
 
 const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
+  margin-top: 1.2rem;
 `;
-export const LinkButton = styled.button`
-  width: 100px;
-  height: 40px;
-  border: 0;
-  border-radius: 10px;
-  background-color: ${props => props.theme.button};
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #ffffff;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-    cursor: pointer;
-  }
-`;
+
 export const ButtonSignOut = styled.div`
   margin-left: auto;
   margin-right: 2rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1.2rem;
 `;

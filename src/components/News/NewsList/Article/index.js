@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Button from '../../../Button'
+import Button from "../../../Button";
 
 import {
   ElementWrapper,
@@ -29,12 +29,14 @@ export default function Article({ news, getParams, deleteItem }) {
       </DescriptionSpan>
       <ButtonWrapper>
         <Button
+          style={"outlined"}
           onClick={() => getParams(news._id, news.title, news.description)}
         >
           CHANGE news
         </Button>
 
         <Button
+          style={"outlined"}
           onClick={() => {
             if (window.confirm("ARE YOU SURE ?")) {
               deleteItem(news._id);

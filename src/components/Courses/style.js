@@ -37,9 +37,8 @@ export const ElementsWrapper = styled.ul`
 export const ElementWrapper = styled.li`
   background-color: ${props => props.theme.courses};
   margin-top: 2rem;
-  border-radius: 20px;
   padding: 1rem;
-  box-shadow: 0px 5px 7px rgb(0,0,0,0.3)
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
 `;
 
 export const SignInButton = styled.button`
@@ -106,6 +105,7 @@ export const TitleInput = styled.input`
   font-size: 1.3rem;
   color: black;
   padding-left: 0.7em;
+  width:100%;
 `;
 
 export const LabelElement = styled.span`

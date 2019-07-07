@@ -41,8 +41,11 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
         <LabelElement>Course Index :</LabelElement>
         <TitleSpan> {lesson.courseIndex}</TitleSpan>
         <ButtonWrapper>
-          <Button onClick={() => goTo(lesson._id)}>CHANGE Lesson</Button>
+          <Button style={"outlined"} onClick={() => goTo(lesson._id)}>
+            CHANGE Lesson
+          </Button>
           <Button
+          style={"outlined"}
             onClick={() => {
               if (window.confirm("Delete the item?")) {
                 deleteItem(lesson._id);
@@ -75,8 +78,11 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
         <LabelElement>Course Index :</LabelElement>
         <TitleSpan> {lesson.courseIndex}</TitleSpan>
         <ButtonWrapper>
-          <Button onClick={() => goTo(lesson._id)}>CHANGE Lesson</Button>
+          <Button style={"outlined"} onClick={() => goTo(lesson._id)}>
+            CHANGE Lesson
+          </Button>
           <Button
+            style={"outlined"}
             onClick={() => {
               if (window.confirm("Delete the item?")) {
                 deleteItem(lesson._id);
