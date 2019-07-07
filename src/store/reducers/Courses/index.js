@@ -71,7 +71,11 @@ function reducerCourses(state = initialState, action = {}) {
     case DELETE_COURSE_SUCCESS:
       return {
         ...state,
-        courses: state.courses.filter(courses => courses._id !== action.index),
+        courses: state.courses
+          .filter(courses => courses._id !== action.index)
+          .map((course, index) => {
+            return { ...course, courseIndex: index+1 };
+          }),
         loading: false,
         error: false
       };
@@ -140,15 +144,18 @@ function reducerCourses(state = initialState, action = {}) {
       return stopLoading(state, action);
 
     case ADD_LESSON_SUCCESS:
-      console.log("!!!")
+      console.log("!!!");
       return {
         ...state,
         error: false,
         loading: false,
-        course: state.course !== {} ? {
-          ...state.course,
-          lessons: [...state.course.lessons, action.lessons]
-        } : {}
+        course:
+          state.course !== {}
+            ? {
+                ...state.course,
+                lessons: [...state.course.lessons, action.lessons]
+              }
+            : {}
       };
 
     default:
