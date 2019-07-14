@@ -13,7 +13,6 @@ const ButtonContainer = withStyles({
 
 function ButtonElement({ onClick, children, type, style, color }) {
   color = color ? "white" : "";
-  console.log(color);
   return (
     <div>
       <ButtonContainer

@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 
-import {
-  ButtonWrapper,
-  LessonButton,
-  ElementWrapper,
-  LabelElement,
-} from "../../style";
-
+import Button from "../../../Button";
 import TaskList from "../../Task/TaskList";
 import TaskConstructor from "../../Task/TaskConstructors/";
 // import Error from "../../../Error";
@@ -21,8 +16,8 @@ class Page extends Component {
       list = pages.map((page, index) => {
         if (page.tasks && index === pageNumber) {
           return (
-            <ElementWrapper key={page._id}>
-              <LabelElement> {page.text}</LabelElement>
+            <div key={page._id}>
+              <PageNumber>{page.text}</PageNumber>
               <TaskConstructor pageId={page._id} />
 
               <TaskList
@@ -31,18 +26,33 @@ class Page extends Component {
                 deleteTask={deleteTask}
               />
               <ButtonWrapper>
-                <LessonButton onClick={() => deletePage(page._id)}>
+                <Button style={"outlined"} onClick={() => deletePage(page._id)}>
                   Delete page
-                </LessonButton>
+                </Button>
               </ButtonWrapper>
-            </ElementWrapper>
+            </div>
           );
         }
       });
     }
 
-    return <ul>{list}</ul>;
+    return <PagesWrapper>{list}</PagesWrapper>;
   }
 }
 
 export default withRouter(Page);
+
+const PageNumber = styled.span`
+  margin-top: 2rem;
+  font-weight: 900;
+  font-size: 1.8rem;
+`;
+
+const PagesWrapper = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+const ButtonWrapper = styled.div`
+  text-align: right;
+`;

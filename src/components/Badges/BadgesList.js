@@ -161,7 +161,6 @@ const TitleInput = styled.input`
   margin: 1rem 0;
   font-size: 1.3rem;
   color: black;
-  width:200px;
 `;
 
 const LabelElement = styled.span`
