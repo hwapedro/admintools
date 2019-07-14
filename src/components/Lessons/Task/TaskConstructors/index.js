@@ -1,13 +1,20 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import Select from "react-select";
 
+import { ButtonWrapper, ConsturctorWrapper, DarkGround } from "./style";
+import Button from "../../../Button";
 import TestConstructor from "./TestConstructor";
 import TextConstructor from "./TextConstructor";
 
+const options = [
+  { value: "test", label: "Test" },
+  { value: "text", label: "Text" },
+  { value: "placeholder", label: "Placeholder" }
+];
 class TaskConstructor extends Component {
   state = {
     displayConstructor: false,
-    displayTaskConstructor: "test",
+    displayTaskConstructor: { value: "test", label: "Test" },
     taskEditFlag: false
   };
 
@@ -16,15 +23,14 @@ class TaskConstructor extends Component {
     this.setState({ displayConstructor: !displayConstructor });
   };
 
-  selectChange = event => {
+  selectChange = displayTaskConstructor => {
     this.setState({
-      taskType: event.target.value,
-      displayTaskConstructor: event.target.value
+      displayTaskConstructor
     });
   };
 
   constSwitch = displayTaskConstructor => {
-    switch (displayTaskConstructor) {
+    switch (displayTaskConstructor.value) {
       case "test":
         return (
           <TestConstructor
@@ -49,71 +55,33 @@ class TaskConstructor extends Component {
 
   render() {
     const { displayConstructor, displayTaskConstructor } = this.state;
+
     return (
       <>
-        <div>
-          {displayConstructor ? (
-            <div>
-              <div>
-                <TaskButton onClick={this.displayConstructor}>
-                  Cancel
-                </TaskButton>
-              </div>
-              <Select onChange={this.selectChange} defaultValue="test">
-                <option value="test">Test</option>
-                <option value="text">Text</option>
-                <option value="none">Placeholder</option>
-              </Select>
+        {displayConstructor ? (
+          <>
+            <DarkGround onClick={this.displayConstructor} />
+            <ConsturctorWrapper>
+              <Select
+                value={displayTaskConstructor}
+                options={options}
+                maxMenuHeight={100}
+                onChange={this.selectChange}
+              />
+
               {this.constSwitch(displayTaskConstructor)}
-            </div>
-          ) : (
-            <ButtonWrapper>
-              <TaskButton onClick={this.displayConstructor}>
-                Add Task
-              </TaskButton>
-            </ButtonWrapper>
-          )}
-        </div>
+            </ConsturctorWrapper>
+          </>
+        ) : (
+          <ButtonWrapper>
+            <Button style={"outlined"} onClick={this.displayConstructor}>
+              Add Task
+            </Button>
+          </ButtonWrapper>
+        )}
       </>
     );
   }
 }
 
 export default TaskConstructor;
-
-const TaskButton = styled.button`
-  width: 120px;
-  height: 30px;
-  border: 0;
-  border-radius: 10px;
-  background-color: ${props => props.theme.button};
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-    cursor: pointer;
-  }
-  margin-right: 1rem;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  margin-top: 0.5rem;
-`;
-
-const Select = styled.select`
-  border: 1px solid #ddd;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 0.5rem ;
-  font-size: 1rem;
-  color: black;
-  padding-left: 0.7em;
-`;

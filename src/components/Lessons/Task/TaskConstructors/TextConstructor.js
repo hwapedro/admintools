@@ -1,19 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { EditorState } from "draft-js";
 
 import {
-  TaskTitleInput,
+  LabelElement,
+  ConsturctorForm,
+  TitleInput,
   QuestionInput,
-  DescriptionSpan,
-  TaskButton
-} from "../../style";
+  ButtonWrapper,
+  TextQuestion
+} from "./style";
+import Button from "../../../Button";
+import EditorText from "../../../EditorText";
 import { addTask } from "../../../../store/actions/actionLessons";
-
 
 class TextConstructor extends Component {
   state = {
     name: "",
-    options: []
+    description: "",
+    text: "",
+    options: [],
+    editorState: EditorState.createEmpty()
   };
 
   infoChange = event => {
@@ -42,27 +49,43 @@ class TextConstructor extends Component {
     event.preventDefault();
   };
 
+  onEditorStateChange = editorState => {
+    this.setState({
+      editorState
+    });
+  };
+
   render() {
+    const { editorState } = this.state;
     return (
       <>
         <div>
-          <DescriptionSpan>Put words in ~ ~ to mark as answer</DescriptionSpan>
-          <div>
-            <TaskTitleInput
+          <ConsturctorForm>
+            <LabelElement>Title</LabelElement>
+            <TitleInput
               name="name"
               placeholder="Title"
               onChange={this.infoChange}
             />
-          </div>
-          <div>
-            <QuestionInput
+            <LabelElement>Description</LabelElement>
+            <EditorText
+              editorState={editorState}
+              onEditorStateChange={this.onEditorStateChange}
+            />
+            <LabelElement>Question</LabelElement>
+            <br />
+            <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
+            <TextQuestion
               name="text"
               placeholder="Question"
               onChange={this.infoChange}
             />
-          </div>
-
-          <TaskButton onClick={() => this.addTextTask()}>Save</TaskButton>
+          </ConsturctorForm>
+          <ButtonWrapper>
+            <Button style={"outlined"} onClick={() => this.addTextTask()}>
+              Save
+            </Button>
+          </ButtonWrapper>
         </div>
       </>
     );

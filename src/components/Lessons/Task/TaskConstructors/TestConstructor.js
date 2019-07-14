@@ -1,24 +1,35 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { EditorState } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
 import {
-  TaskTitleInput,
+  LabelElement,
+  ConsturctorForm,
+  TitleInput,
   QuestionInput,
-  OptionButton,
-  DeleteOptionButton,
-  OptionButtonWrapper,
-  TaskOptionWrapper,
-  TaskButton
-} from "../../style";
+  ButtonWrapper,
+  OptionsWrapper,
+  OptionInput,
+  CheckboxInput
+} from "./style";
+import Button from "../../../Button";
+import EditorText from "../../../EditorText";
 import { addTask } from "../../../../store/actions/actionLessons";
 
 let index = 100;
+const type = "test";
 class TestConstructor extends Component {
   state = {
     name: "",
-    description: "",
     question: "",
-    options: []
+    options: [],
+    info: {
+      name: "",
+      question: "",
+      options: []
+    },
+    editorState: EditorState.createEmpty()
   };
 
   addOption = () => {
@@ -26,19 +37,27 @@ class TestConstructor extends Component {
     const right = false;
     index++;
     this.setState({
-      options: [...this.state.options, { answer, right, index }]
+      info: {
+        ...this.state.info,
+        options: [...this.state.info.options, { answer, right, index }]
+      }
     });
   };
 
   deleteOption = index => {
-    let newOptions = this.state.options.filter(
+    let newOptions = this.state.info.options.filter(
       option => option.index !== index
     );
-    this.setState({ options: newOptions });
+    this.setState({
+      info: {
+        ...this.state.info,
+        options: newOptions
+      }
+    });
   };
 
   answerChange = (id, event) => {
-    let newOptions = this.state.options.map(option =>
+    let newOptions = this.state.info.options.map(option =>
       id === option.index
         ? {
             answer: event.target.value,
@@ -47,11 +66,16 @@ class TestConstructor extends Component {
           }
         : option
     );
-    this.setState({ options: newOptions });
+    this.setState({
+      info: {
+        ...this.state.info,
+        options: newOptions
+      }
+    });
   };
 
   setRight = (id, event) => {
-    let newOptions = this.state.options.map(option =>
+    let newOptions = this.state.info.options.map(option =>
       id === option.index
         ? {
             answer: option.answer,
@@ -60,84 +84,104 @@ class TestConstructor extends Component {
           }
         : option
     );
-    this.setState({ options: newOptions });
+    this.setState({
+      info: {
+        ...this.state.info,
+        options: newOptions
+      }
+    });
   };
 
   infoChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  addTestTask = token => {
-    const info = this.state;
-    const { pageId } = this.props;
-    const type = "test";
-    this.props.addTask(pageId, type, info);
+    this.setState({
+      info: { ...this.state.info, [event.target.name]: event.target.value }
+    });
   };
 
   setParams = event => {
     event.preventDefault();
   };
 
+  onSubmit = event => {
+    event.preventDefault();
+    const { pageId, addTask } = this.props;
+    const { info, editorState } = this.state;
+    info.description = stateToHTML(editorState.getCurrentContent());
+    addTask(pageId, type, info);
+
+  };
+
+  onEditorStateChange = editorState => {
+    this.setState({
+      editorState
+    });
+  };
+
   render() {
     let token = localStorage.getItem("userId");
+    const { editorState } = this.state;
+    
     return (
       <>
-        <div>
-          <div>
-            <TaskTitleInput
-              name="name"
-              placeholder="Name"
-              onChange={this.infoChange}
-            />
-          </div>
-          <div>
-            <TaskTitleInput
-              name="description"
-              placeholder="Description"
-              onChange={this.infoChange}
-            />
-          </div>
-          <div>
-            <QuestionInput
-              name="question"
-              placeholder="Question"
-              onChange={this.infoChange}
-            />
-          </div>
-          <OptionButtonWrapper>
-            <OptionButton onClick={this.addOption}>
-              Add answer option
-            </OptionButton>
-          </OptionButtonWrapper>
+        <ConsturctorForm onSubmit={this.onSubmit}>
+          <LabelElement>Title</LabelElement>
+          <TitleInput
+            name="name"
+            placeholder="Name"
+            onChange={this.infoChange}
+          />
 
-          <form onSubmit={this.setParams}>
-            <div>
-              {this.state.options.map(el => {
-                return (
-                  <div className="form-check" key={el.index}>
-                    <TaskOptionWrapper>
-                      <TaskTitleInput
-                        name="answer"
-                        placeholder="Answer"
-                        onChange={e => this.answerChange(el.index, e)}
-                      />
-                      <TaskTitleInput
-                        type="checkbox"
-                        onChange={e => this.setRight(el.index, e)}
-                      />
-                      <DeleteOptionButton
-                        onClick={() => this.deleteOption(el.index)}
-                      >
-                        Delete option
-                      </DeleteOptionButton>
-                    </TaskOptionWrapper>
-                  </div>
-                );
-              })}
-            </div>
-          </form>
-          <TaskButton onClick={() => this.addTestTask(token)}>Save</TaskButton>
-        </div>
+          <LabelElement>Description</LabelElement>
+
+          <EditorText
+            editorState={editorState}
+            onEditorStateChange={this.onEditorStateChange}
+          />
+
+          <LabelElement>Question</LabelElement>
+          <QuestionInput
+            name="question"
+            placeholder="Question"
+            onChange={this.infoChange}
+          />
+          <ButtonWrapper>
+            <Button style={"outlined"} onClick={this.addOption}>
+              Add answer option
+            </Button>
+          </ButtonWrapper>
+
+          <div>
+            {this.state.info.options.map(el => {
+              return (
+                <div className="form-check" key={el.index}>
+                  <OptionsWrapper>
+                    <OptionInput
+                      name="answer"
+                      placeholder="Answer"
+                      onChange={e => this.answerChange(el.index, e)}
+                    />
+                    <CheckboxInput
+                      type="checkbox"
+                      onChange={e => this.setRight(el.index, e)}
+                    />
+                    <Button
+                      style={"outlined"}
+                      onClick={() => this.deleteOption(el.index)}
+                    >
+                      Delete option
+                    </Button>
+                  </OptionsWrapper>
+                </div>
+              );
+            })}
+          </div>
+
+          <ButtonWrapper>
+            <Button style={"outlined"} type="submit">
+              Save
+            </Button>
+          </ButtonWrapper>
+        </ConsturctorForm>
       </>
     );
   }

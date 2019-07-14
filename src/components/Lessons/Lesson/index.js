@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
@@ -199,7 +200,9 @@ class Lesson extends Component {
                     />
 
                     <ButtonWrapper>
-                      <Button style={"outlined"}  type="submit">CONFIRM</Button>
+                      <Button style={"outlined"} type="submit">
+                        CONFIRM
+                      </Button>
                     </ButtonWrapper>
                   </form>
                 </ElementWrapper>{" "}
@@ -239,17 +242,23 @@ class Lesson extends Component {
                 </ElementWrapper>
 
                 <ButtonWrapper>
-                  <Button  style={"outlined"} onClick={this.addPage}>Add Page</Button>
+                  <Button style={"outlined"} onClick={this.addPage}>
+                    Add Page
+                  </Button>
                 </ButtonWrapper>
               </>
             )}
-            <PageList
-              lessonId={lesson._id}
-              pages={lesson.pages}
-              id={lesson._id}
-              deletePage={deletePage}
-              deleteTask={deleteTask}
-            />
+            {lesson.pages.length === 0 ? (
+              <EmptyMessage>There is nothing here yet</EmptyMessage>
+            ) : (
+              <PageList
+                lessonId={lesson._id}
+                pages={lesson.pages}
+                id={lesson._id}
+                deletePage={deletePage}
+                deleteTask={deleteTask}
+              />
+            )}
           </Wrapper>
         )}
       </>
@@ -298,3 +307,11 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Lesson);
+
+const EmptyMessage = styled.div`
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 2.5rem;
+  top: 50%;
+  margin-top: 270px;
+`;

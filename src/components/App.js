@@ -12,11 +12,10 @@ import Badges from "../components/Badges";
 import News from "../components/News";
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/Authorization/LoginScreen";
-import RegistrationScreen from "../components/Authorization/RegistrationScreen"
+import RegistrationScreen from "../components/Authorization/RegistrationScreen";
 import OneCourse from "../components/OneCourse";
 
 import * as route from "../components/Route/constants";
-
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -69,7 +68,6 @@ class App extends Component {
             <Route
               path={route.task}
               render={({ match, history }) => {
-                console.log(match.params);
                 const { lessonId, taskId } = match.params;
                 return (
                   <Tasks
