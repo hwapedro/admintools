@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { EditorState } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
 import {
   LabelElement,
@@ -16,16 +17,20 @@ import { addTask } from "../../../../store/actions/actionLessons";
 
 class TextConstructor extends Component {
   state = {
-    name: "",
-    description: "",
-    text: "",
-    options: [],
+    info: {
+      name: "",
+      question: "",
+      options: []
+    },
     editorState: EditorState.createEmpty()
   };
 
   infoChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      info: { ...this.state.info, [event.target.name]: event.target.value }
+    });
   };
+  А;
 
   parseAnswer = async string => {
     const rr = new RegExp(/\~([^~]*?)\~/gi);
@@ -38,10 +43,11 @@ class TextConstructor extends Component {
   };
 
   addTextTask = async () => {
-    await this.parseAnswer(this.state.text);
-    const info = this.state;
+    await this.parseAnswer(this.state.info.question);
+    const { info, editorState } = this.state;
     const { pageId, addTask } = this.props;
     const type = "text";
+    info.description = stateToHTML(editorState.getCurrentContent());
     await addTask(pageId, type, info);
   };
 
@@ -59,34 +65,32 @@ class TextConstructor extends Component {
     const { editorState } = this.state;
     return (
       <>
-        <div>
-          <ConsturctorForm>
-            <LabelElement>Title</LabelElement>
-            <TitleInput
-              name="name"
-              placeholder="Title"
-              onChange={this.infoChange}
-            />
-            <LabelElement>Description</LabelElement>
-            <EditorText
-              editorState={editorState}
-              onEditorStateChange={this.onEditorStateChange}
-            />
-            <LabelElement>Question</LabelElement>
-            <br />
-            <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
-            <TextQuestion
-              name="text"
-              placeholder="Question"
-              onChange={this.infoChange}
-            />
-          </ConsturctorForm>
-          <ButtonWrapper>
-            <Button style={"outlined"} onClick={() => this.addTextTask()}>
-              Save
-            </Button>
-          </ButtonWrapper>
-        </div>
+        <ConsturctorForm>
+          <LabelElement>Title</LabelElement>
+          <TitleInput
+            name="name"
+            placeholder="Title"
+            onChange={this.infoChange}
+          />
+          <LabelElement>Description</LabelElement>
+          <EditorText
+            editorState={editorState}
+            onEditorStateChange={this.onEditorStateChange}
+          />
+          <LabelElement>Question</LabelElement>
+          <br />
+          <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
+          <TextQuestion
+            name="question"
+            placeholder="Question"
+            onChange={this.infoChange}
+          />
+        </ConsturctorForm>
+        <ButtonWrapper>
+          <Button style={"outlined"} onClick={() => this.addTextTask()}>
+            Save
+          </Button>
+        </ButtonWrapper>
       </>
     );
   }

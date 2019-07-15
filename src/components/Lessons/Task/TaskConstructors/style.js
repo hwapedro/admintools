@@ -30,7 +30,6 @@ export const ConsturctorWrapper = styled.div`
   background: ${props => props.theme.courses};
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 1rem;
   position: absolute;
   width: 700px;

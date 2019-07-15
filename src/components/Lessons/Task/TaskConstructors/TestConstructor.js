@@ -21,9 +21,6 @@ let index = 100;
 const type = "test";
 class TestConstructor extends Component {
   state = {
-    name: "",
-    question: "",
-    options: [],
     info: {
       name: "",
       question: "",
