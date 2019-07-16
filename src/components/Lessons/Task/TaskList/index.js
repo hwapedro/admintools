@@ -2,6 +2,15 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
+import {
+  TaskElementWrapper,
+  TaskInfo,
+  LabelElement,
+  TitleSpan,
+  ButtonsWrapper,
+  ButtonWrapper,
+  TaskListWrapper
+} from "../style";
 import Button from "../../../Button";
 
 const goTo = (lessonId, taskId, history) => {
@@ -15,20 +24,21 @@ const TaskList = props => {
       <TaskElementWrapper key={id++}>
         {task.info && (
           <TaskInfo>
-            <span>Task type:</span>
+            <LabelElement>Task type:</LabelElement>
             <TitleSpan>{task.type}</TitleSpan>
-            <span>Task title:</span>
+            <LabelElement>Task title:</LabelElement>
             <TitleSpan>{task.info.name}</TitleSpan>
-            <span>Task description:</span>
+            <LabelElement>Task description:</LabelElement>
             <TitleSpan
               dangerouslySetInnerHTML={{
                 __html: task.info.description
               }}
             />
-            <span>Question:</span>
+            <LabelElement>Question:</LabelElement>
             <TitleSpan>{task.info.question}</TitleSpan>
           </TaskInfo>
         )}
+
         <ButtonsWrapper>
           <ButtonWrapper>
             <Button
@@ -51,47 +61,6 @@ const TaskList = props => {
       </TaskElementWrapper>
     );
   });
-  return <Tasklist>{taskList}</Tasklist>;
+  return <TaskListWrapper>{taskList}</TaskListWrapper>;
 };
 export default withRouter(TaskList);
-
-const TaskInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const TaskElementWrapper = styled.li`
-  background-color: #dddddd;
-  margin: 1.5rem 0;
-  padding: 1rem;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
-  display: flex;
-  flex-direction: column;
- 
-`;
-
-const Tasklist = styled.ul`
-  padding: 0;
-  list-style-type: none;
-`;
-const TitleSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1rem;
-  color: black;
-  padding-left: 0.7em;
-  width: 100%;
-`;
-
-export const ButtonWrapper = styled.div`
-  margin: 0.5rem 0
-  text-align: end;
-`;
-
-const ButtonsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-`

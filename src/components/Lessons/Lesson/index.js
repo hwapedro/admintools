@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import Select from "react-select";
-import EditorText from "../../EditorText";
-import Button from "../../Button";
 
 import {
   getLesson,
@@ -29,6 +27,8 @@ import {
   ImgCross
 } from "../style";
 
+import EditorText from "../../EditorText";
+import Button from "../../Button";
 import Spinner from "../../Spinner";
 import PageList from "../PageList";
 import Error from "../../Error";
@@ -288,6 +288,7 @@ Lesson.propTypes = {
 const mapStateToProps = state => ({
   lesson: state.Lessons.lesson,
   loading: state.Lessons.loading,
+  error: state.Lessons.error,
   pages: state.Lessons.pages
 });
 

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Test from "./Tests";
 import Text from "./Text";
 import { getLesson } from "../../../../store/actions/actionLessons";
+import Button from "../../../Button";
 
 const goTo = (lessonId, taskId, history) => {
   history.push(`/task/${lessonId}/${taskId}`);
@@ -61,7 +62,7 @@ class Tasks extends Component {
         {task && (
           <div>{this.constSwitch(page, task.type, taskId, lessonId)} </div>
         )}
-        <button onClick={() => this.goBack(this.props.lesson._id)}>Back</button>
+        <Button style={"outlined"} onClick={() => this.goBack(this.props.lesson._id)}>Back</Button>
       </>
     );
   }

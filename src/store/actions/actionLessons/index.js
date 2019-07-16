@@ -143,7 +143,6 @@ export const changeTask = (taskId, type, info, pageId) => dispatch => {
   dispatch({
     type: CHANGE_TASK_REQUEST
   });
-
   adminService
     .changeTask(token, taskId, type, info)
     .then(response => {

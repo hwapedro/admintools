@@ -1,12 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-
 import {
- // getLesson,
+  // getLesson,
   deleteTask,
   changeTask
 } from "../../../../store/actions/actionLessons";
+import {
+  TaskElementWrapper,
+  TaskInfo,
+  LabelElement,
+  TitleSpan,
+  ButtonWrapper,
+  ButtonsWrapper,
+  TaskWrapper,
+  Wrapper,
+  OptionElementWrapper,
+  OptionsWrapper,
+  OptionSpan,
+  ImgMark,
+  ImgCross
+} from "../style";
+import Button from "../../../Button";
+
 import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
 
@@ -17,7 +33,6 @@ class Test extends Component {
     taskEditFlag: false,
     info: {}
   };
-
 
   addOption = () => {
     const answer = "";
@@ -80,18 +95,16 @@ class Test extends Component {
   };
 
   infoChange = event => {
-    this.setState(
-      {
-        info: {
-          ...this.state.info,
-          [event.target.name]: event.target.value
-        }
+    this.setState({
+      info: {
+        ...this.state.info,
+        [event.target.name]: event.target.value
       }
-    );
+    });
   };
 
-  deleteTask = ( pageId, taskId) => {
-    this.props.deleteTask( pageId, taskId);
+  deleteTask = (pageId, taskId) => {
+    this.props.deleteTask(pageId, taskId);
   };
 
   selectChange = event => {
@@ -106,177 +119,177 @@ class Test extends Component {
   };
 
   getParams = (name, description, question, options, id) => {
-    this.setState(
-      {
-        taskEditFlag: true,
-        info: { name, description, question, options, id }
-      }
-    );
+    this.setState({
+      taskEditFlag: true,
+      info: { name, description, question, options, id }
+    });
   };
 
-  setParams = (event,  taskId, type, info, pageId) => {
+  setParams = (event, taskId, type, info, pageId) => {
     event.preventDefault();
-    this.props.changeTask( taskId, type, info, pageId);
+    this.props.changeTask(taskId, type, info, pageId);
     this.setState({ taskEditFlag: false, info: {} });
   };
 
   render() {
     const { name, description, question, options } = this.state.info;
     let list;
-    const { page, taskId, deleteTask } = this.props
-    
-    
-      list = page.tasks.map(task => {
-        if (task._id === taskId) {
-          if (this.state.taskEditFlag) {
-            return (
-              <>
-                <div>
-                  <div>
-                    <input
-                      name="name"
-                      placeholder="Name"
-                      value={name}
-                      onChange={this.infoChange}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      name="description"
-                      placeholder="Description"
-                      onChange={this.infoChange}
-                      value={description}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      name="question"
-                      placeholder="Question"
-                      onChange={this.infoChange}
-                      value={question}
-                    />
-                  </div>
-                  <div>
-                    <button onClick={this.addOption}>Add answer option</button>
-                  </div>
+    const { page, taskId, deleteTask } = this.props;
 
-                  <form onSubmit={this.setParams}>
-                    <div>
-                      {options.map(el => {
-                        return (
-                          <div className="form-check" key={el.index}>
-                            <div>
-                              <input
-                                name="answer"
-                                placeholder="Answer"
-                                value={el.answer}
-                                onChange={e => this.answerChange(el.index, e)}
-                              />
-                              <input
-                                type="checkbox"
-                                checked={el.right}
-                                onChange={e => this.setRight(el.index, e)}
-                              />
-                              <button
-                                onClick={() => this.deleteOption(el.index)}
-                              >
-                                Delete option
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </form>
-                  <button
-                    onClick={e =>
-                      this.setParams(
-                        e,
-                        
-                        task._id,
-                        task.type,
-                        this.state.info,
-                        page._id
-                      )
-                    }
-                  >
-                    Confirm
-                  </button>
+    list = page.tasks.map(task => {
+      if (task._id === taskId) {
+        if (this.state.taskEditFlag) {
+          return (
+            <>
+              <div>
+                <div>
+                  <input
+                    name="name"
+                    placeholder="Name"
+                    value={name}
+                    onChange={this.infoChange}
+                  />
                 </div>
-              </>
-            );
-          } else {
-           
-            return (
-              <ul>
-                <li key={task._id}>
-                  {task.info.name}
-                  <br />
-                  {task.info.description}
-                  <br />
-                  {task.info.question}
-                  <ul>
-                    {task.info.options.map(answ => {
+                <div>
+                  <input
+                    name="description"
+                    placeholder="Description"
+                    onChange={this.infoChange}
+                    value={description}
+                  />
+                </div>
+                <div>
+                  <input
+                    name="question"
+                    placeholder="Question"
+                    onChange={this.infoChange}
+                    value={question}
+                  />
+                </div>
+                <div>
+                  <button onClick={this.addOption}>Add answer option</button>
+                </div>
+
+                <form onSubmit={this.setParams}>
+                  <div>
+                    {options.map(el => {
                       return (
-                        <li key={answ.index}>
-                          {answ.answer}
-                          {answ.right ? (
-                            <img
-                              width="15px"
-                              height="15px"
-                              margin-left="5px"
-                              src={checkMark}
+                        <div className="form-check" key={el.index}>
+                          <div>
+                            <input
+                              name="answer"
+                              placeholder="Answer"
+                              value={el.answer}
+                              onChange={e => this.answerChange(el.index, e)}
                             />
-                          ) : (
-                            <img
-                              width="15px"
-                              height="15px"
-                              margin-left="5px"
-                              src={redCross}
+                            <input
+                              type="checkbox"
+                              checked={el.right}
+                              onChange={e => this.setRight(el.index, e)}
                             />
-                          )}
-                        </li>
+                            <button onClick={() => this.deleteOption(el.index)}>
+                              Delete option
+                            </button>
+                          </div>
+                        </div>
                       );
                     })}
-                  </ul>
-                  <button
-                    onClick={() =>
-                      this.getParams(
-                        task.info.name,
-                        task.info.description,
-                        task.info.question,
-                        task.info.options,
-                        task._id
-                      )
-                    }
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() =>
-                      deleteTask( page._id, task._id)
-                    }
-                  >
-                    Delete
-                  </button>
-                </li>
-              </ul>
-            );
-          }
+                  </div>
+                </form>
+                <button
+                  onClick={e =>
+                    this.setParams(
+                      e,
+
+                      task._id,
+                      task.type,
+                      this.state.info,
+                      page._id
+                    )
+                  }
+                >
+                  Confirm
+                </button>
+              </div>
+            </>
+          );
+        } else {
+          return (
+            <TaskWrapper>
+              <TaskElementWrapper key={task._id}>
+                <LabelElement>Title:</LabelElement>
+                <TitleSpan>{task.info.name}</TitleSpan>
+                <LabelElement>Description:</LabelElement>
+                <TitleSpan> {task.info.description}</TitleSpan>
+                <LabelElement>Question:</LabelElement>
+                <TitleSpan>{task.info.question}</TitleSpan>
+                <OptionsWrapper>
+                  {task.info.options.map(answ => {
+                    return (
+                      <OptionElementWrapper key={answ.index}>
+                        <OptionSpan>{answ.answer}</OptionSpan>
+                        {answ.right ? (
+                          <ImgMark
+                            width="15px"
+                            height="15px"
+                            margin-left="5px"
+                            src={checkMark}
+                          />
+                        ) : (
+                          <ImgCross
+                            width="15px"
+                            height="15px"
+                            margin-left="5px"
+                            src={redCross}
+                          />
+                        )}
+                      </OptionElementWrapper>
+                    );
+                  })}
+                </OptionsWrapper>
+                <ButtonsWrapper>
+                  <ButtonWrapper>
+                    <Button
+                      style={"outlined"}
+                      onClick={() =>
+                        this.getParams(
+                          task.info.name,
+                          task.info.description,
+                          task.info.question,
+                          task.info.options,
+                          task._id
+                        )
+                      }
+                    >
+                      Edit
+                    </Button>
+                  </ButtonWrapper>
+                  <ButtonWrapper>
+                    <Button
+                      style={"outlined"}
+                      onClick={() => deleteTask(page._id, task._id)}
+                    >
+                      Delete
+                    </Button>
+                  </ButtonWrapper>
+                </ButtonsWrapper>
+              </TaskElementWrapper>
+            </TaskWrapper>
+          );
         }
-      });
-  
-    return <>{list}</>;
+      }
+    });
+
+    return <Wrapper>{list}</Wrapper>;
   }
 }
 
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  deleteTask: ( pageId, taskid) =>
-    dispatch(deleteTask( pageId, taskid)),
-  changeTask: ( taskId, type, info, pageId) =>
-    dispatch(changeTask( taskId, type, info, pageId))
+  deleteTask: (pageId, taskid) => dispatch(deleteTask(pageId, taskid)),
+  changeTask: (taskId, type, info, pageId) =>
+    dispatch(changeTask(taskId, type, info, pageId))
 });
 
 export default connect(

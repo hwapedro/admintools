@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { EditorState } from "draft-js";
+import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import {
@@ -15,7 +15,8 @@ import {
 } from "./style";
 import Button from "../../../Button";
 import EditorText from "../../../EditorText";
-import { addTask } from "../../../../store/actions/actionLessons";
+import { addTask, changeTask } from "../../../../store/actions/actionLessons";
+import TaskList from "../TaskList";
 
 let index = 100;
 const type = "test";
@@ -28,6 +29,40 @@ class TestConstructor extends Component {
     },
     editorState: EditorState.createEmpty()
   };
+
+  componentDidMount() {
+    const { task } = this.props;
+    if (task) {
+      if (task.info.description !== "") {
+        const blocksFromHTML = convertFromHTML(task.info.description);
+        const state = ContentState.createFromBlockArray(
+          blocksFromHTML.contentBlocks,
+          blocksFromHTML.entityMap
+        );
+        this.setState({
+          ...this.state,
+          info: {
+            ...this.state.info,
+            name: task.info.name,
+            question: task.info.question,
+            options: task.info.options
+          },
+          editorState: EditorState.createWithContent(state)
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          info: {
+            ...this.state.info,
+            name: task.info.name,
+            question: task.info.question,
+            options: task.info.options
+          },
+          editorState: EditorState.createEmpty()
+        });
+      }
+    }
+  }
 
   addOption = () => {
     const answer = "";
@@ -95,17 +130,16 @@ class TestConstructor extends Component {
     });
   };
 
-  setParams = event => {
-    event.preventDefault();
-  };
-
   onSubmit = event => {
     event.preventDefault();
-    const { pageId, addTask } = this.props;
+    const { pageId, addTask, task } = this.props;
     const { info, editorState } = this.state;
     info.description = stateToHTML(editorState.getCurrentContent());
-    addTask(pageId, type, info);
-
+    if (task) {
+      changeTask(task._id, type, info, pageId);
+    } else {
+      addTask(pageId, type, info);
+    }
   };
 
   onEditorStateChange = editorState => {
@@ -115,9 +149,8 @@ class TestConstructor extends Component {
   };
 
   render() {
-    let token = localStorage.getItem("userId");
-    const { editorState } = this.state;
-    
+    const { editorState, info } = this.state;
+
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
@@ -125,6 +158,7 @@ class TestConstructor extends Component {
           <TitleInput
             name="name"
             placeholder="Name"
+            value={info.name}
             onChange={this.infoChange}
           />
 
@@ -138,6 +172,7 @@ class TestConstructor extends Component {
           <LabelElement>Question</LabelElement>
           <QuestionInput
             name="question"
+            value={info.question}
             placeholder="Question"
             onChange={this.infoChange}
           />
@@ -148,17 +183,19 @@ class TestConstructor extends Component {
           </ButtonWrapper>
 
           <div>
-            {this.state.info.options.map(el => {
+            {info.options.map(el => {
               return (
                 <div className="form-check" key={el.index}>
                   <OptionsWrapper>
                     <OptionInput
                       name="answer"
                       placeholder="Answer"
+                      value={el.answer}
                       onChange={e => this.answerChange(el.index, e)}
                     />
                     <CheckboxInput
                       type="checkbox"
+                      value={el.right}
                       onChange={e => this.setRight(el.index, e)}
                     />
                     <Button
@@ -188,7 +225,9 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>
-    dispatch(addTask(pageid, type, info, answer))
+    dispatch(addTask(pageid, type, info, answer)),
+  changeTask: (taskId, type, info, pageId) =>
+    dispatch(changeTask(taskId, type, info, pageId))
 });
 
 export default connect(
