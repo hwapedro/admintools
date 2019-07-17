@@ -2,29 +2,28 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  // getLesson,
-  deleteTask,
-  changeTask
-} from "../../../../store/actions/actionLessons";
-import {
   TaskElementWrapper,
-  TaskInfo,
   LabelElement,
   TitleSpan,
   ButtonWrapper,
   ButtonsWrapper,
   TaskWrapper,
-  Wrapper,
   OptionElementWrapper,
   OptionsWrapper,
   OptionSpan,
   ImgMark,
   ImgCross
 } from "../style";
-import Button from "../../../Button";
 
+import {
+  // getLesson,
+  deleteTask,
+  changeTask
+} from "../../../../store/actions/actionLessons";
+import Button from "../../../Button";
 import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
+import TestConstructor from "../TaskConstructors/TestConstructor";
 
 let index = 150;
 class Test extends Component {
@@ -140,6 +139,7 @@ class Test extends Component {
       if (task._id === taskId) {
         if (this.state.taskEditFlag) {
           return (
+            // <TestConstructor task={task} changeTask={this.setParams} />
             <>
               <div>
                 <div>
@@ -215,72 +215,75 @@ class Test extends Component {
           );
         } else {
           return (
-            <TaskWrapper>
-              <TaskElementWrapper key={task._id}>
-                <LabelElement>Title:</LabelElement>
-                <TitleSpan>{task.info.name}</TitleSpan>
-                <LabelElement>Description:</LabelElement>
-                <TitleSpan> {task.info.description}</TitleSpan>
-                <LabelElement>Question:</LabelElement>
-                <TitleSpan>{task.info.question}</TitleSpan>
-                <OptionsWrapper>
-                  {task.info.options.map(answ => {
-                    return (
-                      <OptionElementWrapper key={answ.index}>
-                        <OptionSpan>{answ.answer}</OptionSpan>
-                        {answ.right ? (
-                          <ImgMark
-                            width="15px"
-                            height="15px"
-                            margin-left="5px"
-                            src={checkMark}
-                          />
-                        ) : (
-                          <ImgCross
-                            width="15px"
-                            height="15px"
-                            margin-left="5px"
-                            src={redCross}
-                          />
-                        )}
-                      </OptionElementWrapper>
-                    );
-                  })}
-                </OptionsWrapper>
-                <ButtonsWrapper>
-                  <ButtonWrapper>
-                    <Button
-                      style={"outlined"}
-                      onClick={() =>
-                        this.getParams(
-                          task.info.name,
-                          task.info.description,
-                          task.info.question,
-                          task.info.options,
-                          task._id
-                        )
-                      }
-                    >
-                      Edit
-                    </Button>
-                  </ButtonWrapper>
-                  <ButtonWrapper>
-                    <Button
-                      style={"outlined"}
-                      onClick={() => deleteTask(page._id, task._id)}
-                    >
-                      Delete
-                    </Button>
-                  </ButtonWrapper>
-                </ButtonsWrapper>
-              </TaskElementWrapper>
-            </TaskWrapper>
+            <TaskElementWrapper key={task._id}>
+              <LabelElement>Title:</LabelElement>
+              <TitleSpan>{task.info.name}</TitleSpan>
+              <LabelElement>Description:</LabelElement>
+              <TitleSpan
+                dangerouslySetInnerHTML={{
+                  __html: task.info.description
+                }}
+              />
+              <LabelElement>Question:</LabelElement>
+              <TitleSpan>{task.info.question}</TitleSpan>
+              <LabelElement>Answer options:</LabelElement>
+              <OptionsWrapper>
+                {task.info.options.map(answ => {
+                  return (
+                    <OptionElementWrapper key={answ.index}>
+                      <OptionSpan>{answ.answer}</OptionSpan>
+                      {answ.right ? (
+                        <ImgMark
+                          width="15px"
+                          height="15px"
+                          margin-left="5px"
+                          src={checkMark}
+                        />
+                      ) : (
+                        <ImgCross
+                          width="15px"
+                          height="15px"
+                          margin-left="5px"
+                          src={redCross}
+                        />
+                      )}
+                    </OptionElementWrapper>
+                  );
+                })}
+              </OptionsWrapper>
+              <ButtonsWrapper>
+                <ButtonWrapper>
+                  <Button
+                    style={"outlined"}
+                    onClick={() =>
+                      this.getParams(
+                        task.info.name,
+                        task.info.description,
+                        task.info.question,
+                        task.info.options,
+                        task._id
+                      )
+                    }
+                  >
+                    Edit
+                  </Button>
+                </ButtonWrapper>
+                <ButtonWrapper>
+                  <Button
+                    style={"outlined"}
+                    onClick={() => deleteTask(page._id, task._id)}
+                  >
+                    Delete
+                  </Button>
+                </ButtonWrapper>
+              </ButtonsWrapper>
+            </TaskElementWrapper>
           );
         }
       }
     });
 
-    return <Wrapper>{list}</Wrapper>;
+    return <TaskWrapper>{list}</TaskWrapper>;
   }
 }
 

@@ -7,26 +7,23 @@ export const TaskInfo = styled.div`
 
 export const Wrapper = styled.div`
   padding-top: 1rem;
-  margin: 0 2rem;
   display: flex;
   flex-direction: column;
-  posiiton:
+  align-items: center;
   height: auto;
+`;
+
+export const TaskWrapper = styled.div`
   width: 960px;
+  height: auto;
 `;
 
-export const TaskWrapper = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
-
-export const TaskElementWrapper = styled.li`
+export const TaskElementWrapper = styled.div`
+  background-color: ${props => props.theme.courses};
   background-color: #dddddd;
   margin: 1.5rem 0;
   padding: 1rem;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
- 
-  flex-direction: column;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
 `;
 
 export const TaskListWrapper = styled.ul`
@@ -62,7 +59,7 @@ export const LabelElement = styled.span`
 `;
 
 export const OptionsWrapper = styled.ul`
-list-style-type: square
+  list-style-type: circle; !important;
   padding: 0 4rem;
 `;
 
@@ -70,7 +67,8 @@ export const OptionElementWrapper = styled.li`
   margin: 0.5rem 0;
   display: flex
   flex-direction: row;
-  justify-content: center;
+  
+  align-items: center;
 `;
 
 export const OptionSpan = styled.span`
@@ -78,7 +76,7 @@ export const OptionSpan = styled.span`
   justify-content: flex-start;
   align-items: center;
   margin: 1rem 0;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   color: black;
   padding-left: 0.7em;
   width: 100%;

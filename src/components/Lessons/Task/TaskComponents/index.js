@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import {
+  Wrapper
+} from "../style";
+
 import Test from "./Tests";
 import Text from "./Text";
 import { getLesson } from "../../../../store/actions/actionLessons";
@@ -58,12 +62,12 @@ class Tasks extends Component {
       }
     }
     return (
-      <>
+      <Wrapper>
         {task && (
-          <div>{this.constSwitch(page, task.type, taskId, lessonId)} </div>
+          <>{this.constSwitch(page, task.type, taskId, lessonId)} </>
         )}
         <Button style={"outlined"} onClick={() => this.goBack(this.props.lesson._id)}>Back</Button>
-      </>
+      </Wrapper>
     );
   }
 }

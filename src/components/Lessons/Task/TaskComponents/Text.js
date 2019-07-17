@@ -2,9 +2,26 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
+  TaskElementWrapper,
+  LabelElement,
+  TitleSpan,
+  ButtonWrapper,
+  ButtonsWrapper,
+  TaskWrapper,
+  Wrapper,
+  OptionElementWrapper,
+  OptionsWrapper,
+  OptionSpan,
+  ImgMark,
+  ImgCross
+} from "../style";
+
+import {
   deleteTask,
   changeTask
 } from "../../../../store/actions/actionLessons";
+
+import Button from "../../../Button";
 
 class Test extends Component {
   state = {
@@ -57,12 +74,12 @@ class Test extends Component {
   };
 
   render() {
-    const { name , text} = this.state.info;
+    const { name, text } = this.state.info;
     let list;
     const { page, taskId, deleteTask } = this.props;
 
     list = page.tasks.map(task => {
-      console.log(task)
+      console.log(task);
       if (task._id === taskId) {
         if (this.state.taskEditFlag) {
           return (
@@ -104,30 +121,45 @@ class Test extends Component {
           );
         } else {
           return (
-            <ul>
-              <li key={task._id}>
-                <div>{task.info.name}</div>
-
-                <div>{task.info.text}</div>
-
-                <button
+            <TaskElementWrapper key={task._id}>
+              <LabelElement> Title: </LabelElement>
+              <TitleSpan>{task.info.name}</TitleSpan>
+              <LabelElement> Description </LabelElement>
+              <TitleSpan
+                dangerouslySetInnerHTML={{
+                  __html: task.info.description
+                }}
+              />
+              <LabelElement>Question:</LabelElement>
+              <TitleSpan>{task.info.question}</TitleSpan>
+              <ButtonsWrapper>
+                <Button
+                  style={"outlined"}
                   onClick={() =>
-                    this.getParams(task.info.name, task.info.text, task.info.options, task._id)
+                    this.getParams(
+                      task.info.name,
+                      task.info.text,
+                      task.info.options,
+                      task._id
+                    )
                   }
                 >
                   Edit
-                </button>
-                <button onClick={() => deleteTask(page._id, task._id)}>
+                </Button>
+                <Button
+                  style={"outlined"}
+                  onClick={() => deleteTask(page._id, task._id)}
+                >
                   Delete
-                </button>
-              </li>
-            </ul>
+                </Button>
+              </ButtonsWrapper>
+            </TaskElementWrapper>
           );
         }
       }
     });
 
-    return <>{list}</>;
+    return <TaskWrapper>{list}</TaskWrapper>;
   }
 }
 
