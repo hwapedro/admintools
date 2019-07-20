@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Loader from "react-loader-spinner";
 
-import "./spinner.css";
-
 class Spinner extends Component {
   constructor(props) {
     super(props);
