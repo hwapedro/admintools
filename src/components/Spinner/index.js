@@ -1,23 +1,43 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import Loader from "react-loader-spinner";
 
 import "./spinner.css";
 
 class Spinner extends Component {
+  constructor(props) {
+    super(props);
+    this.timer = setTimeout(this.enableMessage, 250);
+  }
+
+  state = {
+    displayMessage: false
+  };
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  enableMessage = () => {
+    this.setState({ displayMessage: true });
+  };
+
   render() {
+    const { displayMessage } = this.state;
+
+    if (!displayMessage) {
+      return null;
+    }
     return (
-      <div id="floatingBarsG">
-        <div className="blockG" id="rotateG_01" />
-        <div className="blockG" id="rotateG_02" />
-        <div className="blockG" id="rotateG_03" />
-        <div className="blockG" id="rotateG_04" />
-        <div className="blockG" id="rotateG_05" />
-        <div className="blockG" id="rotateG_06" />
-        <div className="blockG" id="rotateG_07" />
-        <div className="blockG" id="rotateG_08" />
-      </div>
+      <SpinnerWrapper>
+        <Loader type="Oval" color="#000000" height="50" width="50" />
+      </SpinnerWrapper>
     );
   }
 }
 
 export default Spinner;
+
+const SpinnerWrapper = styled.div`
+  margin: 25% 50% auto ;
+`;

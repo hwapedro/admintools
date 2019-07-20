@@ -18,9 +18,6 @@ export default class BadgeConstructor extends Component {
     const { addBadge } = this.props;
     const { title, description, constructor } = this.state;
     addBadge(title, description, name);
-    this.setState({
-      constructor: !constructor
-    });
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });

@@ -33,9 +33,6 @@ export default class CourseCounstructor extends Component {
     const description = stateToHTML(this.state.editorState.getCurrentContent());
     showConstructor()
     addCourses(title, description, name);
-    this.setState({
-      constructor: !constructor
-    });
   };
 
   onEditorStateChange = editorState => {

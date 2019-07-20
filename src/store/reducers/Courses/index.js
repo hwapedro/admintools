@@ -143,21 +143,6 @@ function reducerCourses(state = initialState, action = {}) {
     case GET_COURSE_FAILURE:
       return stopLoading(state, action);
 
-    case ADD_LESSON_SUCCESS:
-      console.log("!!!");
-      return {
-        ...state,
-        error: false,
-        loading: false,
-        course:
-          state.course !== {}
-            ? {
-                ...state.course,
-                lessons: [...state.course.lessons, action.lessons]
-              }
-            : {}
-      };
-
     default:
       return {
         ...state

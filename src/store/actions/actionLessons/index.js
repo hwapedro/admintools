@@ -87,7 +87,8 @@ export const addLesson = (
     .then(response => {
       dispatch({
         type: ADD_LESSON_SUCCESS,
-        lessons: response.lesson
+        lessons: response.lesson,
+        name
       });
     })
     .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
