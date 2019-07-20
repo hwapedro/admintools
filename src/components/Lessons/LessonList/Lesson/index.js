@@ -20,81 +20,43 @@ import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
 
 export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
-  if (!course) {
-    return (
-      <ElementWrapper key={lesson._id}>
-        <LabelElement>Name of Lesson :</LabelElement>
-        <TitleSpan> {lesson.title}</TitleSpan>
-        <LabelElement>Description of Lesson : </LabelElement>
-        <DescriptionSpan
-          dangerouslySetInnerHTML={{
-            __html: lesson.description
-          }}
-        />
-        <LabelElement>EXAM :</LabelElement>
-        {lesson.exam ? (
-          <ImgMark src={checkMark} />
-        ) : (
-          <ImgCross src={redCross} />
-        )}
-        <br />
-        <LabelElement>Course Index :</LabelElement>
-        <TitleSpan> {lesson.courseIndex}</TitleSpan>
-        <ButtonWrapper>
-          <Button style={"outlined"} onClick={() => goTo(lesson._id)}>
-            CHANGE Lesson
-          </Button>
-          <Button
+  return (
+    <ElementWrapper key={lesson._id}>
+      <LabelElement>Name of Lesson :</LabelElement>
+      <TitleSpan> {lesson.title}</TitleSpan>
+      <LabelElement>Description of Lesson : </LabelElement>
+      <DescriptionSpan
+        dangerouslySetInnerHTML={{
+          __html: lesson.description
+        }}
+      />
+      <LabelElement>EXAM :</LabelElement>
+      {lesson.exam ? <ImgMark src={checkMark} /> : <ImgCross src={redCross} />}
+      <br />
+      {!course && (
+        <>
+          <LabelElement>Course Index :</LabelElement>
+          <TitleSpan> {lesson.courseIndex}</TitleSpan>
+        </>
+      )}
+
+      <ButtonWrapper>
+        <Button style={"outlined"} onClick={() => goTo(lesson._id)}>
+          CHANGE Lesson
+        </Button>
+        <Button
           style={"outlined"}
-            onClick={() => {
-              if (window.confirm("Delete the item?")) {
-                deleteItem(lesson._id);
-              }
-            }}
-          >
-            DELETE Lesson
-          </Button>
-        </ButtonWrapper>
-      </ElementWrapper>
-    );
-  } else {
-    return (
-      <LessonContainer lesson={lesson} index={index}>
-        <LabelElement>Name of Lesson :</LabelElement>
-        <TitleSpan> {lesson.title}</TitleSpan>
-        <LabelElement>Description of Lesson : </LabelElement>
-        <DescriptionSpan
-          dangerouslySetInnerHTML={{
-            __html: lesson.description
+          onClick={() => {
+            if (window.confirm("Delete the item?")) {
+              deleteItem(lesson._id);
+            }
           }}
-        />
-        <LabelElement>EXAM :</LabelElement>
-        {lesson.exam ? (
-          <ImgMark src={checkMark} />
-        ) : (
-          <ImgCross src={redCross} />
-        )}
-        <br />
-        <LabelElement>Course Index :</LabelElement>
-        <TitleSpan> {lesson.courseIndex}</TitleSpan>
-        <ButtonWrapper>
-          <Button style={"outlined"} onClick={() => goTo(lesson._id)}>
-            CHANGE Lesson
-          </Button>
-          <Button
-            style={"outlined"}
-            onClick={() => {
-              if (window.confirm("Delete the item?")) {
-                deleteItem(lesson._id);
-              }
-            }}
-          >
-            DELETE Lesson
-          </Button>
-        </ButtonWrapper>
-      </LessonContainer>
-    );
-  }
+        >
+          DELETE Lesson
+        </Button>
+      </ButtonWrapper>
+    </ElementWrapper>
+  );
 }
 
 Lesson.defaultProps = {
