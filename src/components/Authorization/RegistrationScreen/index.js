@@ -93,13 +93,13 @@ class RegistrationScreen extends React.Component {
               <ErrorMessage name="password" component={Error} />
 
               <ButtonWrapper>
-                <Button style={"outlined"} type="submit">
+                <Button buttonStyle={"outlined"} type="submit">
                   SIGN UP
                 </Button>
               </ButtonWrapper>
 
               <ButtonWrapper>
-                <Button style={"outlined"} onClick={this.toLogin}>
+                <Button buttonStyle={"outlined"} onClick={this.toLogin}>
                   Back
                 </Button>
               </ButtonWrapper>

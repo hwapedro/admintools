@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState} from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
@@ -14,7 +14,6 @@ import {
   TitleInput,
   ConsturctorForm,
   LabelElement,
-  ConstructorButton,
   ButtonWrapperConstructor,
   ButtonWrapper
 } from "../style";
@@ -29,7 +28,6 @@ export default class CourseCounstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addCourses, title, showConstructor } = this.props;
-    const { constructor } = this.state;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
     showConstructor()
     addCourses(title, description, name);
@@ -49,7 +47,7 @@ export default class CourseCounstructor extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <Button  style={"outlined"} onClick={showConstructor}>
+          <Button  buttonStyle={"outlined"} onClick={showConstructor}>
             ADD NEW COURSE
           </Button>
           {constructor && (
@@ -71,7 +69,7 @@ export default class CourseCounstructor extends Component {
                     onEditorStateChange={this.onEditorStateChange}
                   />
                   <ButtonWrapper>
-                    <Button  style={"outlined"} type="submit" >
+                    <Button  buttonStyle={"outlined"} type="submit" >
                       ADD NEW COURSE
                     </Button>
                   </ButtonWrapper>

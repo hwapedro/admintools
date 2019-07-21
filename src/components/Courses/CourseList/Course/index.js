@@ -37,11 +37,11 @@ export default function Course({ course, getParams, deleteItem, index, goTo }) {
             }}
           />
           <ButtonWrapper>
-            <Button style={"outlined"} onClick={() => goTo(course._id)}>
+            <Button buttonStyle={"outlined"} onClick={() => goTo(course._id)}>
               GO TO
             </Button>
             <Button
-              style={"outlined"}
+              buttonStyle={"outlined"}
               onClick={() =>
                 getParams(course.courseIndex, course.title, course.description)
               }
@@ -50,7 +50,7 @@ export default function Course({ course, getParams, deleteItem, index, goTo }) {
             </Button>
 
             <Button
-              style={"outlined"}
+              buttonStyle={"outlined"}
               onClick={() => {
                 if (window.confirm("ARE YOU SURE ?")) {
                   deleteItem(course._id);

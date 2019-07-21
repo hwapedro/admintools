@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import styled from "styled-components";
+
 
 import {
   TaskElementWrapper,
@@ -42,7 +42,7 @@ const TaskList = props => {
         <ButtonsWrapper>
           <ButtonWrapper>
             <Button
-              style={"outlined"}
+              buttonStyle={"outlined"}
               onClick={() => goTo(lessonId, task._id, props.history)}
             >
               Go To
@@ -51,7 +51,7 @@ const TaskList = props => {
 
           <ButtonWrapper>
             <Button
-              style={"outlined"}
+              buttonStyle={"outlined"}
               onClick={() => deleteTask(page._id, task._id)}
             >
               Delete Task

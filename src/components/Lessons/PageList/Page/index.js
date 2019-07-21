@@ -26,7 +26,7 @@ class Page extends Component {
                 deleteTask={deleteTask}
               />
               <ButtonWrapper>
-                <Button style={"outlined"} onClick={() => deletePage(page._id)}>
+                <Button buttonStyle={"outlined"} onClick={() => deletePage(page._id)}>
                   Delete page
                 </Button>
               </ButtonWrapper>

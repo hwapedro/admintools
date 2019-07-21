@@ -109,7 +109,17 @@ export const TextQuestion = styled.textarea`
   width: 100%;
   height: 10.4rem;
   resize: none;
-  
+`;
+export const Edit = styled.div`
+  background-color: ${props => props.theme.courses};
+  background-color: #e9e9e9;
+  margin: 1.5rem 0;
+  width: 960px;
+  height: auto;
+  padding: 1rem;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
+  z-index: 52;
+  position: absolute;
 `;
 
 export const ConsturctorForm = styled.form``;

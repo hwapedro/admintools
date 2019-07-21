@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../EditorText";
@@ -9,8 +9,6 @@ import Search from "../Search";
 import {
   ButtonWrapper,
   TitleInput,
-  DescriptionTextArea,
-  LessonButton as ConstructirButton,
   Wrapper,
   DarkGround,
   LabelElement,
@@ -150,7 +148,7 @@ class SetLessons extends Component {
               )}
 
               <ButtonWrapper>
-                <Button  style={"outlined"} type="submit">ADD NEW LESSON</Button>
+                <Button  buttonStyle={"outlined"} type="submit">ADD NEW LESSON</Button>
               </ButtonWrapper>
             </ConsturctorForm>
           </ConsturctorWrapper>
@@ -161,7 +159,7 @@ class SetLessons extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <Button style={"outlined"} onClick={this.showConstructor}>ADD NEW LESSON</Button>
+          <Button buttonStyle={"outlined"} onClick={this.showConstructor}>ADD NEW LESSON</Button>
         </ButtonWrapperConstructor>
       </Wrapper>
     );

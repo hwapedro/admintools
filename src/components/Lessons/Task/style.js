@@ -20,7 +20,7 @@ export const TaskWrapper = styled.div`
 
 export const TaskElementWrapper = styled.div`
   background-color: ${props => props.theme.courses};
-  background-color: #dddddd;
+  background-color: #e9e9e9;
   margin: 1.5rem 0;
   padding: 1rem;
   box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
@@ -95,3 +95,14 @@ export const ImgCross = styled.img`
   margin-left: 1rem;
   margin-bottom: -0.4rem;
 `;
+export const DarkGround = styled.div`
+  background: #000;
+  height: 100%;
+  opacity: 0.5;
+  position: fixed;
+  width: 100%;
+  z-index: 50;
+  top: 0;
+  left: 0;
+`;
+

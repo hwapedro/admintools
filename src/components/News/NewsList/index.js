@@ -11,7 +11,6 @@ import {
   Wrapper,
   TitleInput,
   LabelElement,
-  SignInButton,
   ButtonWrapper,
   ElementWrapper,
   ElementsWrapper,
@@ -92,7 +91,7 @@ class NewsList extends Component {
               />
 
               <ButtonWrapper>
-                <Button  style={"outlined"} type="submit">CONFIRM</Button>
+                <Button  buttonStyle={"outlined"} type="submit">CONFIRM</Button>
               </ButtonWrapper>
             </form>
           </ElementWrapper>

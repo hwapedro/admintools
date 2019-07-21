@@ -14,7 +14,6 @@ import {
   TitleInput,
   ConsturctorForm,
   LabelElement,
-  ConstructorButton,
   ButtonWrapper,
   ButtonWrapperConstructor
 } from "../style";
@@ -66,7 +65,7 @@ class SetArticle extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <Button style={"outlined"} onClick={showConstructor}>
+          <Button buttonStyle={"outlined"} onClick={showConstructor}>
             ADD NEW ARTICLE
           </Button>
         </ButtonWrapperConstructor>
@@ -89,7 +88,7 @@ class SetArticle extends Component {
                   onEditorStateChange={this.onEditorStateChange}
                 />
                 <ButtonWrapper>
-                  <Button  style={"outlined"} type="submit">
+                  <Button  buttonStyle={"outlined"} type="submit">
                     ADD NEW ARTICLE
                   </Button>
                 </ButtonWrapper>

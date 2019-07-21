@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
-import { fontSize } from "@material-ui/system";
+
 
 const SearchInput = withStyles({
   root: {

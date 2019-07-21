@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  Wrapper
-} from "../style";
+import { Wrapper } from "../style";
 
 import Test from "./Tests";
 import Text from "./Text";
 import { getLesson } from "../../../../store/actions/actionLessons";
 import Button from "../../../Button";
-
-const goTo = (lessonId, taskId, history) => {
-  history.push(`/task/${lessonId}/${taskId}`);
-};
+import Spinner from "../../../Spinner";
+import Error from "../../../Error";
 
 class Tasks extends Component {
   componentDidMount() {
@@ -50,7 +46,7 @@ class Tasks extends Component {
   };
 
   render() {
-    const { lessonId, taskId, lesson } = this.props;
+    const { lessonId, taskId, lesson, error, loading } = this.props;
     let page, task;
 
     for (let i = 0; i < lesson.pages.length; i++) {
@@ -62,18 +58,40 @@ class Tasks extends Component {
       }
     }
     return (
-      <Wrapper>
-        {task && (
-          <>{this.constSwitch(page, task.type, taskId, lessonId)} </>
+      <>
+        {error && (
+          <>
+            <Error name={"Task"} />
+          </>
         )}
-        <Button style={"outlined"} onClick={() => this.goBack(this.props.lesson._id)}>Back</Button>
-      </Wrapper>
+
+        {loading && (
+          <>
+            <Spinner />
+          </>
+        )}
+        {!error && !loading && (
+          <Wrapper>
+            <Button
+              buttonStyle={"outlined"}
+              onClick={() => this.goBack(this.props.lesson._id)}
+            >
+              Back
+            </Button>
+            {task && (
+              <>{this.constSwitch(page, task.type, taskId, lessonId)} </>
+            )}
+          </Wrapper>
+        )}
+      </>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  lesson: state.Lessons.lesson
+  lesson: state.Lessons.lesson,
+  loading: state.Lessons.loading,
+  error: state.Lessons.error
 });
 
 const mapDispatchToProps = dispatch => ({

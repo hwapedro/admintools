@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 
 import Button from '../Button'
 
-const token = localStorage.getItem("userId");
 const name = "badge";
 
 class badgeList extends Component {
@@ -78,7 +77,7 @@ class badgeList extends Component {
               />
 
               <ButtonWrapper>
-                <Button  style={"outlined"} type="submit">CONFIRM</Button>
+                <Button  buttonStyle={"outlined"} type="submit">CONFIRM</Button>
               </ButtonWrapper>
             </form>
           </ElementWrapper>
@@ -92,7 +91,7 @@ class badgeList extends Component {
             <DescriptionSpan>{badge.description}</DescriptionSpan>
             <ButtonWrapper>
               <Button
-              style={"outlined"}
+              buttonStyle={"outlined"}
                 onClick={() =>
                   this.getParams(
                     badge._id,
@@ -103,7 +102,7 @@ class badgeList extends Component {
               >
                 CHANGE badge
               </Button>
-              <Button  style={"outlined"} onClick={() => this.deleteItem(badge._id)}>
+              <Button  buttonStyle={"outlined"} onClick={() => this.deleteItem(badge._id)}>
                 DELETE badge
               </Button>
             </ButtonWrapper>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { EditorState } from "draft-js";
+import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import {
@@ -8,50 +8,66 @@ import {
   ConsturctorForm,
   TitleInput,
   ButtonWrapper,
-  TextQuestion
+  TextQuestion,
+  ConsturctorWrapper
 } from "./style";
 import Button from "../../../Button";
 import EditorText from "../../../EditorText";
-import { addTask } from "../../../../store/actions/actionLessons";
+import { addTask, changeTask } from "../../../../store/actions/actionLessons";
 
 class TextConstructor extends Component {
   state = {
-    info: {
-      name: "",
-      question: "",
-      options: []
-    },
+    name: "",
+    question: "",
+    options: [],
     editorState: EditorState.createEmpty()
   };
 
+  componentDidMount() {
+    const { task } = this.props;
+    if (task) {
+      if (task.info.description !== "") {
+        const blocksFromHTML = convertFromHTML(task.info.description);
+        const state = ContentState.createFromBlockArray(
+          blocksFromHTML.contentBlocks,
+          blocksFromHTML.entityMap
+        );
+        this.setState({
+          name: task.info.name,
+          question: task.info.question,
+          options: task.info.options,
+          editorState: EditorState.createWithContent(state)
+        });
+      } else {
+        this.setState({
+          name: task.info.name,
+          question: task.info.question,
+          options: task.info.options,
+          editorState: EditorState.createEmpty()
+        });
+      }
+    }
+  }
+
   infoChange = event => {
+    if (event.target.name === "question"){
+      this.parseAnswer(event.target.value)
+    }
     this.setState({
-      info: { ...this.state.info, [event.target.name]: event.target.value }
+      [event.target.name]: event.target.value
     });
   };
-  А;
 
-  parseAnswer = async string => {
+  parseAnswer = string => {
     const rr = new RegExp(/\~([^~]*?)\~/gi);
     let options = [];
     let m;
     while ((m = rr.exec(string))) {
       options.push(m[1]);
     }
-    await this.setState({ options: options });
-  };
-
-  addTextTask = async () => {
-    await this.parseAnswer(this.state.info.question);
-    const { info, editorState } = this.state;
-    const { pageId, addTask } = this.props;
-    const type = "text";
-    info.description = stateToHTML(editorState.getCurrentContent());
-    await addTask(pageId, type, info);
-  };
-
-  setParams = event => {
-    event.preventDefault();
+    this.setState({
+      options: options
+    });
   };
 
   onEditorStateChange = editorState => {
@@ -60,37 +76,61 @@ class TextConstructor extends Component {
     });
   };
 
+  onSubmit = event => {
+    event.preventDefault();
+    const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
+    const { name, question, options, editorState } = this.state;
+    const type = "text";
+    const description = stateToHTML(editorState.getCurrentContent());
+    const info = {
+      name: name,
+      description: description,
+      question: question,
+      options: options      
+    } 
+    if (task) {
+      changeTask(task._id, type, info, pageId);
+      changeEditFlag();
+    } else {
+      addTask(pageId, type, info);
+    }
+  };
+
   render() {
     const { editorState } = this.state;
+    const { name, question} = this.state;
     return (
-      <>
-        <ConsturctorForm>
-          <LabelElement>Title</LabelElement>
-          <TitleInput
-            name="name"
-            placeholder="Title"
-            onChange={this.infoChange}
-          />
-          <LabelElement>Description</LabelElement>
-          <EditorText
-            editorState={editorState}
-            onEditorStateChange={this.onEditorStateChange}
-          />
-          <LabelElement>Question</LabelElement>
-          <br />
-          <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
-          <TextQuestion
-            name="question"
-            placeholder="Question"
-            onChange={this.infoChange}
-          />
-        </ConsturctorForm>
+      <ConsturctorWrapper>
+      <ConsturctorForm onSubmit={this.onSubmit}>
+        <LabelElement>Title</LabelElement>
+        <TitleInput
+          name="name"
+          placeholder="Title"
+          value={name}
+          onChange={this.infoChange}
+        />
+        <LabelElement>Description</LabelElement>
+        <EditorText
+          editorState={editorState}
+          onEditorStateChange={this.onEditorStateChange}
+        />
+        <LabelElement>Question</LabelElement>
+        <br />
+        <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
+        <TextQuestion
+          name="question"
+          placeholder="Question"
+          value={question}
+          onChange={this.infoChange}
+        />
+
         <ButtonWrapper>
-          <Button buttonStyle={"outlined"} onClick={() => this.addTextTask()}>
+          <Button buttonStyle={"outlined"} type="submit">
             Save
           </Button>
         </ButtonWrapper>
-      </>
+      </ConsturctorForm>
+      </ConsturctorWrapper>
     );
   }
 }
@@ -99,7 +139,9 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>
-    dispatch(addTask(pageid, type, info, answer))
+    dispatch(addTask(pageid, type, info, answer)),
+  changeTask: (taskId, type, info, pageId) =>
+    dispatch(changeTask(taskId, type, info, pageId))
 });
 
 export default connect(

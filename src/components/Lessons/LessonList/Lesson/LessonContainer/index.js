@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import { ElementWrapper } from "../../../style.js";

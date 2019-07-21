@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { DragDropContext } from "react-beautiful-dnd";
+
 
 import { getAllElements, deletElement } from "../../store/actions";
 
@@ -38,7 +38,6 @@ class Lessons extends Component {
       lessons,
       addLesson,
       delLesson,
-      changeDndLesson
     } = this.props;
     const { search } = this.state;
     return (

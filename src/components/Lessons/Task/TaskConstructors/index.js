@@ -74,7 +74,7 @@ class TaskConstructor extends Component {
           </>
         ) : (
           <ButtonWrapper>
-            <Button style={"outlined"} onClick={this.displayConstructor}>
+            <Button buttonStyle={"outlined"} onClick={this.displayConstructor}>
               Add Task
             </Button>
           </ButtonWrapper>

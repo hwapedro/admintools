@@ -17,7 +17,6 @@ import {
 import {
   ButtonWrapper,
   TitleInput,
-  LessonButton,
   Wrapper,
   ElementWrapper,
   TitleSpan,
@@ -200,7 +199,7 @@ class Lesson extends Component {
                     />
 
                     <ButtonWrapper>
-                      <Button style={"outlined"} type="submit">
+                      <Button buttonStyle={"outlined"} type="submit">
                         CONFIRM
                       </Button>
                     </ButtonWrapper>
@@ -242,7 +241,7 @@ class Lesson extends Component {
                 </ElementWrapper>
 
                 <ButtonWrapper>
-                  <Button style={"outlined"} onClick={this.addPage}>
+                  <Button buttonStyle={"outlined"} onClick={this.addPage}>
                     Add Page
                   </Button>
                 </ButtonWrapper>

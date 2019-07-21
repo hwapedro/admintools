@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { changeDndLesson } from "../../../store/actions/actionLessons";
 
 import Lesson from "./Lesson";
 
@@ -114,36 +113,36 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const TitleSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`;
+// const TitleSpan = styled.span`
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   margin: 1rem 0;
+//   font-size: 1.3rem;
+// `;
 
-const TitleInput = styled.input`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-  color: black;
-`;
+// const TitleInput = styled.input`
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   margin: 1rem 0;
+//   font-size: 1.3rem;
+//   color: black;
+// `;
 
-const LabelElement = styled.span`
-  margin-top: 2rem;
-  font-weight: 900;
-  font-size: 1.8rem;
-`;
+// const LabelElement = styled.span`
+//   margin-top: 2rem;
+//   font-weight: 900;
+//   font-size: 1.8rem;
+// `;
 
-const DescriptionSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`;
+// const DescriptionSpan = styled.span`
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   margin: 1rem 0;
+//   font-size: 1.3rem;
+// `;
 
 // const DescriptionTextArea = styled.textarea`
 //   display: flex;
@@ -172,19 +171,19 @@ const ElementsWrapper = styled.ul`
   margin: 0;
 `;
 
-const ElementWrapper = styled.li`
-  background-color: ${props => props.theme.courses};
-  margin-top: 2rem;
-  padding: 1rem;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
-`;
+// const ElementWrapper = styled.li`
+//   background-color: ${props => props.theme.courses};
+//   margin-top: 2rem;
+//   padding: 1rem;
+//   box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
+// `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  margin-top: 0.5rem;
-`;
+// const ButtonWrapper = styled.div`
+//   display: flex;
+//   justify-content: flex-end;
+//   align-items: flex-end;
+//   margin-top: 0.5rem;
+// `;
 export const SignInButton = styled.button`
   width: 150px;
   height: 40px;

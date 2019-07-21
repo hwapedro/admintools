@@ -11,12 +11,13 @@ import {
   ButtonWrapper,
   OptionsWrapper,
   OptionInput,
-  CheckboxInput
+  CheckboxInput,
+  ConsturctorWrapper
 } from "./style";
 import Button from "../../../Button";
 import EditorText from "../../../EditorText";
 import { addTask, changeTask } from "../../../../store/actions/actionLessons";
-import TaskList from "../TaskList";
+
 
 let index = 100;
 const type = "test";
@@ -132,11 +133,12 @@ class TestConstructor extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { pageId, addTask, task, changeTask } = this.props;
+    const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
     const { info, editorState } = this.state;
     info.description = stateToHTML(editorState.getCurrentContent());
     if (task) {
       changeTask(task._id, type, info, pageId);
+      changeEditFlag();
     } else {
       addTask(pageId, type, info);
     }
@@ -152,7 +154,7 @@ class TestConstructor extends Component {
     const { editorState, info } = this.state;
 
     return (
-      <>
+      <ConsturctorWrapper>
         <ConsturctorForm onSubmit={this.onSubmit}>
           <LabelElement>Title</LabelElement>
           <TitleInput
@@ -177,7 +179,7 @@ class TestConstructor extends Component {
             onChange={this.infoChange}
           />
           <ButtonWrapper>
-            <Button style={"outlined"} onClick={this.addOption}>
+            <Button buttonStyle={"outlined"} onClick={this.addOption}>
               Add answer option
             </Button>
           </ButtonWrapper>
@@ -199,7 +201,7 @@ class TestConstructor extends Component {
                       onChange={e => this.setRight(el.index, e)}
                     />
                     <Button
-                      style={"outlined"}
+                      buttonStyle={"outlined"}
                       onClick={() => this.deleteOption(el.index)}
                     >
                       Delete option
@@ -211,12 +213,12 @@ class TestConstructor extends Component {
           </div>
 
           <ButtonWrapper>
-            <Button style={"outlined"} type="submit">
+            <Button buttonStyle={"outlined"} type="submit">
               Save
             </Button>
           </ButtonWrapper>
         </ConsturctorForm>
-      </>
+      </ConsturctorWrapper>
     );
   }
 }

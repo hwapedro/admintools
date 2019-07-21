@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Draggable } from "react-beautiful-dnd";
 import Button from "../../../Button";
 
 import {
@@ -9,7 +8,6 @@ import {
   LabelElement,
   DescriptionSpan,
   ButtonWrapper,
-  LessonButton,
   ImgMark,
   ImgCross
 } from "../../style.js";
@@ -41,11 +39,11 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
         <LabelElement>Course Index :</LabelElement>
         <TitleSpan> {lesson.courseIndex}</TitleSpan>
         <ButtonWrapper>
-          <Button style={"outlined"} onClick={() => goTo(lesson._id)}>
+          <Button buttonStyle={"outlined"} onClick={() => goTo(lesson._id)}>
             CHANGE Lesson
           </Button>
           <Button
-            style={"outlined"}
+            buttonStyle={"outlined"}
             onClick={() => {
               if (window.confirm("Delete the item?")) {
                 deleteItem(lesson._id);
@@ -76,11 +74,11 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
         )}
         <br />
         <ButtonWrapper>
-          <Button style={"outlined"} onClick={() => goTo(lesson._id)}>
+          <Button buttonStyle={"outlined"} onClick={() => goTo(lesson._id)}>
             CHANGE Lesson
           </Button>
           <Button
-            style={"outlined"}
+            buttonStyle={"outlined"}
             onClick={() => {
               if (window.confirm("Delete the item?")) {
                 deleteItem(lesson._id);

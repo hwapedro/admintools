@@ -9,7 +9,6 @@ import {
   LabelElement,
   DescriptionSpan,
   ButtonWrapper,
-  SignInButton
 } from "../../style.js";
 
 export default function Article({ news, getParams, deleteItem }) {
@@ -29,14 +28,14 @@ export default function Article({ news, getParams, deleteItem }) {
       </DescriptionSpan>
       <ButtonWrapper>
         <Button
-          style={"outlined"}
+          buttonStyle={"outlined"}
           onClick={() => getParams(news._id, news.title, news.description)}
         >
           CHANGE news
         </Button>
 
         <Button
-          style={"outlined"}
+          buttonStyle={"outlined"}
           onClick={() => {
             if (window.confirm("ARE YOU SURE ?")) {
               deleteItem(news._id);

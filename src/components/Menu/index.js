@@ -14,31 +14,31 @@ class Menu extends Component {
 
           <ButtonWrapper>
             <Link style={LinkStyle} to={route.courses}>
-              <Button style={"text"} color={'white'}>Courses</Button>
+              <Button buttonStyle={"text"} color={'white'}>Courses</Button>
             </Link>
           </ButtonWrapper>
 
           <ButtonWrapper>
             <Link style={LinkStyle} to={route.lessons}>
-              <Button style={"text"} color={'white'} >Lessons</Button>
+              <Button buttonStyle={"text"} color={'white'} >Lessons</Button>
             </Link>
           </ButtonWrapper>
 
           <ButtonWrapper>
             <Link style={LinkStyle} to={route.badges}>
-              <Button style={"text"} color={'white'}>Badges</Button>
+              <Button buttonStyle={"text"} color={'white'}>Badges</Button>
             </Link>
           </ButtonWrapper>
 
           <ButtonWrapper>
             <Link style={LinkStyle} to={route.news}>
-              <Button style={"text"} color={'white'}>News</Button>
+              <Button buttonStyle={"text"} color={'white'}>News</Button>
             </Link>
           </ButtonWrapper>
 
           <ButtonSignOut>
             <Button
-              style={"text"}
+              buttonStyle={"text"}
               color={'white'}
               onClick={() => {
                 localStorage.removeItem("token");

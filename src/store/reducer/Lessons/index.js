@@ -29,12 +29,9 @@ import {
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
   DELETE_TASK_FAILURE,
-  CHANGE_DND_LESSON_SUCCESS,
-  CHANGE_DND_FAILURE,
-  CHANGE_DND_REQUEST
 } from "../../constants";
 
-import { startLoading, stopLoading, DND } from "../../utils";
+import { startLoading, stopLoading } from "../../utils";
 
 const initialState = {
   token: null,

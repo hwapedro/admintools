@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { DragDropContext } from "react-beautiful-dnd";
+// import { DragDropContext } from "react-beautiful-dnd";
 
 import { getAllElements, deletElement, getCourse } from "../../store/actions";
 
@@ -117,11 +117,11 @@ export default connect(
 
 export const Wrapper = styled.div``;
 
-const SearchInput = styled.input`
-  padding-left: 0.5rem;
-  width: 48.7rem;
-  height: 40px;
-  border: 0.6px solid black;
-  border-radius: 1rem;
-  outline: none;
-`;
+// const SearchInput = styled.input`
+//   padding-left: 0.5rem;
+//   width: 48.7rem;
+//   height: 40px;
+//   border: 0.6px solid black;
+//   border-radius: 1rem;
+//   outline: none;
+// `;

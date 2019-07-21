@@ -16,7 +16,7 @@ export default class BadgeConstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addBadge } = this.props;
-    const { title, description, constructor } = this.state;
+    const { title, description } = this.state;
     addBadge(title, description, name);
   };
   onChange = event => {
@@ -37,7 +37,7 @@ export default class BadgeConstructor extends Component {
         <Wrapper>
           <ButtonWrapperConstructor>
             <Search onChange={onChange} value={value} />
-            <Button  style={"outlined"} onClick={this.showConstructor}>
+            <Button  buttonStyle={"outlined"} onClick={this.showConstructor}>
               ADD NEW badge
             </Button>
           </ButtonWrapperConstructor>
@@ -61,7 +61,7 @@ export default class BadgeConstructor extends Component {
                 onChange={this.onChange}
               />
               <ButtonWrapper>
-                <Button  style={"outlined"} type="submit">
+                <Button  buttonStyle={"outlined"} type="submit">
                   ADD NEW badge
                 </Button>
               </ButtonWrapper>
@@ -74,7 +74,7 @@ export default class BadgeConstructor extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
         <Search onChange={onChange} value={value} />
-          <Button  style={"outlined"} onClick={this.showConstructor}>
+          <Button  buttonStyle={"outlined"} onClick={this.showConstructor}>
             ADD NEW badge
           </Button>
         </ButtonWrapperConstructor>
