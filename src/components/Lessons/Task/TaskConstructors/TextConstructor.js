@@ -7,7 +7,6 @@ import {
   LabelElement,
   ConsturctorForm,
   TitleInput,
-  QuestionInput,
   ButtonWrapper,
   TextQuestion
 } from "./style";
@@ -87,7 +86,7 @@ class TextConstructor extends Component {
           />
         </ConsturctorForm>
         <ButtonWrapper>
-          <Button style={"outlined"} onClick={() => this.addTextTask()}>
+          <Button buttonStyle={"outlined"} onClick={() => this.addTextTask()}>
             Save
           </Button>
         </ButtonWrapper>

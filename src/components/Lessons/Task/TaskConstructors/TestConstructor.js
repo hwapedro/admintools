@@ -15,7 +15,7 @@ import {
 } from "./style";
 import Button from "../../../Button";
 import EditorText from "../../../EditorText";
-import { addTask } from "../../../../store/actions/actionLessons";
+import { addTask, changeTask } from "../../../../store/actions/actionLessons";
 import TaskList from "../TaskList";
 
 let index = 100;
@@ -226,6 +226,8 @@ const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>
     dispatch(addTask(pageid, type, info, answer)),
+  changeTask: (taskId, type, info, pageId) =>
+    dispatch(changeTask(taskId, type, info, pageId))
 });
 
 export default connect(

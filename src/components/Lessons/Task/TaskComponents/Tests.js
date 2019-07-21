@@ -139,79 +139,79 @@ class Test extends Component {
       if (task._id === taskId) {
         if (this.state.taskEditFlag) {
           return (
-            // <TestConstructor task={task} changeTask={this.setParams} />
-            <>
-              <div>
-                <div>
-                  <input
-                    name="name"
-                    placeholder="Name"
-                    value={name}
-                    onChange={this.infoChange}
-                  />
-                </div>
-                <div>
-                  <input
-                    name="description"
-                    placeholder="Description"
-                    onChange={this.infoChange}
-                    value={description}
-                  />
-                </div>
-                <div>
-                  <input
-                    name="question"
-                    placeholder="Question"
-                    onChange={this.infoChange}
-                    value={question}
-                  />
-                </div>
-                <div>
-                  <button onClick={this.addOption}>Add answer option</button>
-                </div>
+            <TestConstructor task={task} changeTask={this.setParams} />
+            // <>
+            //   <div>
+            //     <div>
+            //       <input
+            //         name="name"
+            //         placeholder="Name"
+            //         value={name}
+            //         onChange={this.infoChange}
+            //       />
+            //     </div>
+            //     <div>
+            //       <input
+            //         name="description"
+            //         placeholder="Description"
+            //         onChange={this.infoChange}
+            //         value={description}
+            //       />
+            //     </div>
+            //     <div>
+            //       <input
+            //         name="question"
+            //         placeholder="Question"
+            //         onChange={this.infoChange}
+            //         value={question}
+            //       />
+            //     </div>
+            //     <div>
+            //       <button onClick={this.addOption}>Add answer option</button>
+            //     </div>
 
-                <form onSubmit={this.setParams}>
-                  <div>
-                    {options.map(el => {
-                      return (
-                        <div className="form-check" key={el.index}>
-                          <div>
-                            <input
-                              name="answer"
-                              placeholder="Answer"
-                              value={el.answer}
-                              onChange={e => this.answerChange(el.index, e)}
-                            />
-                            <input
-                              type="checkbox"
-                              checked={el.right}
-                              onChange={e => this.setRight(el.index, e)}
-                            />
-                            <button onClick={() => this.deleteOption(el.index)}>
-                              Delete option
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </form>
-                <button
-                  onClick={e =>
-                    this.setParams(
-                      e,
+            //     <form onSubmit={this.setParams}>
+            //       <div>
+            //         {options.map(el => {
+            //           return (
+            //             <div className="form-check" key={el.index}>
+            //               <div>
+            //                 <input
+            //                   name="answer"
+            //                   placeholder="Answer"
+            //                   value={el.answer}
+            //                   onChange={e => this.answerChange(el.index, e)}
+            //                 />
+            //                 <input
+            //                   type="checkbox"
+            //                   checked={el.right}
+            //                   onChange={e => this.setRight(el.index, e)}
+            //                 />
+            //                 <button onClick={() => this.deleteOption(el.index)}>
+            //                   Delete option
+            //                 </button>
+            //               </div>
+            //             </div>
+            //           );
+            //         })}
+            //       </div>
+            //     </form>
+            //     <button
+            //       onClick={e =>
+            //         this.setParams(
+            //           e,
 
-                      task._id,
-                      task.type,
-                      this.state.info,
-                      page._id
-                    )
-                  }
-                >
-                  Confirm
-                </button>
-              </div>
-            </>
+            //           task._id,
+            //           task.type,
+            //           this.state.info,
+            //           page._id
+            //         )
+            //       }
+            //     >
+            //       Confirm
+            //     </button>
+            //   </div>
+            // </>
           );
         } else {
           return (
