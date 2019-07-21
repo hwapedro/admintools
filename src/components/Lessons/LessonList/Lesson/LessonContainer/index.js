@@ -3,7 +3,7 @@ import { Draggable } from "react-beautiful-dnd";
 
 import { ElementWrapper } from "../../../style.js";
 
-export default function Lesson({ lesson, index, children }) {
+export default function LessonContainer({ lesson, index, children }) {
   return (
     <Draggable
       key={lesson._id}

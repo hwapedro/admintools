@@ -41,7 +41,7 @@ class Badge extends Component {
     } = this.props;
 
     const { search } = this.state;
-
+    console.log(loading,error)
     return (
       <>
         {error && (
@@ -104,8 +104,8 @@ Badge.propTypes = {
 
 const mapStateToProps = state => ({
   badges: state.Badges.badges,
-  loading: state.Badges.loading,
-  error: state.Badges.error
+  loading: state.reducer.loading,
+  error: state.reducer.error
 });
 
 const mapDispatchToProps = dispatch => ({

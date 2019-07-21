@@ -139,8 +139,8 @@ Courses.propTypes = {
 
 const mapStateToProps = state => ({
   courses: state.Courses.courses,
-  loading: state.Courses.loading,
-  error: state.Courses.error
+  loading: state.reducer.loading,
+  error: state.reducer.error
 });
 
 const mapDispatchToProps = dispatch => ({

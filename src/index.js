@@ -4,8 +4,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
-// import { DragDropContext } from "react-beautiful-dnd";
-
 import store from "./store";
 import GlobalStyle from "./components/GlobalStyles";
 import { theme } from "./styles/theme";

@@ -95,12 +95,25 @@ function reducerLesson(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case DELETE_LESSON_SUCCESS:
-      return {
-        ...state,
-        lessons: state.lessons.filter(lesson => lesson._id !== action.index),
-        loading: false,
-        error: false
-      };
+      if (action.name === "lesson") {
+        return {
+          ...state,
+          lessons: state.lessons.filter(lesson => lesson._id !== action.index),
+          loading: false,
+          error: false
+        };
+      } else
+        return {
+          ...state,
+          course: {
+            ...state.course,
+            lessons:
+              state.course.lessons &&
+              state.course.lessons.filter(lesson => lesson._id !== action.index)
+          },
+          loading: false,
+          error: false
+        };
 
     case DELETE_ELEMENT_FAILURE:
       return stopLoading(state, action);

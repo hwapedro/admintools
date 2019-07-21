@@ -25,7 +25,9 @@ import {
   DELETE_TASK_FAILURE,
   CHANGE_DND_REQUEST,
   CHANGE_DND_FAILURE,
-  CHANGE_DND_LESSON_SUCCESS
+  CHANGE_DND_LESSON_SUCCESS,
+  ADD_ELEMENT_SUCCESS,
+  CHANGE_ELEMENT_SUCCESS
 } from "../../constants";
 
 import AdminService from "../../../service";
@@ -53,7 +55,8 @@ export const changeLesson = (
         lesson: response.lesson
       });
     })
-    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE, error: true }));
+    .then(() => dispatch({ type: CHANGE_ELEMENT_SUCCESS }))
+    .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE }));
 };
 
 export const getLesson = id => dispatch => {
@@ -69,7 +72,7 @@ export const getLesson = id => dispatch => {
         lesson: response.lesson
       });
     })
-    .catch(error => dispatch({ type: GET_LESSON_FAILURE, error: true }));
+    .catch(error => dispatch({ type: GET_LESSON_FAILURE }));
 };
 
 export const addLesson = (
@@ -91,7 +94,8 @@ export const addLesson = (
         name
       });
     })
-    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE, error: true }));
+    .then(() => dispatch({ type: ADD_ELEMENT_SUCCESS }))
+    .catch(error => dispatch({ type: ADD_ELEMENT_FAILURE }));
 };
 
 export const addPage = (id, text, tasks, needToComplete) => dispatch => {

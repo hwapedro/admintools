@@ -92,8 +92,8 @@ OneCourse.propTypes = {
 
 const mapStateToProps = state => ({
   course: state.Courses.course,
-  loading: state.Courses.loading,
-  error: state.Courses.error
+  loading: state.reducer.loading,
+  error: state.reducer.error
 });
 
 const mapDispatchToProps = dispatch => ({

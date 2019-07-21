@@ -176,6 +176,6 @@ SetLessons.defaultProps = {
 };
 
 SetLessons.propTypes = {
-  course: PropTypes.func,
+  course: PropTypes.object,
   addLesson: PropTypes.func
 };

@@ -19,6 +19,6 @@ import {
           token: response.body.token
         });
       })
-      .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE, error: true }));
+      .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE }));
   };
   

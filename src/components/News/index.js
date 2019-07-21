@@ -119,8 +119,8 @@ News.propTypes = {
 
 const mapStateToProps = state => ({
   news: state.News.news,
-  loading: state.News.loading,
-  error: state.News.error
+  loading: state.reducer.loading,
+  error: state.reducer.error
 });
 
 const mapDispatchToProps = dispatch => ({

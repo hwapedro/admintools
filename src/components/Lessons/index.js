@@ -97,8 +97,8 @@ Lessons.propTypes = {
 
 const mapStateToProps = state => ({
   lessons: state.Lessons.lessons,
-  loading: state.Lessons.loading,
-  error: state.Lessons.error
+  loading: state.reducer.loading,
+  error: state.reducer.error
 });
 
 const mapDispatchToProps = dispatch => ({
