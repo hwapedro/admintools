@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import CustomInput from "../CustomInput";
+import Input from "../../Input";
 import Button from "../../Button";
 
 const signUpSchema = Yup.object().shape({
@@ -69,7 +69,7 @@ class RegistrationScreen extends React.Component {
                 label="Username"
                 placeholder="Введите никнейм"
                 invalid={touched.username && errors.username}
-                component={CustomInput}
+                component={Input}
               />
               <ErrorMessage name="username" component={Error} />
 
@@ -78,7 +78,7 @@ class RegistrationScreen extends React.Component {
                 label="Password"
                 placeholder="Введите пароль"
                 invalid={touched.password && errors.password}
-                component={CustomInput}
+                component={Input}
               />
               <ErrorMessage name="password" component={Error} />
 
@@ -87,7 +87,7 @@ class RegistrationScreen extends React.Component {
                 label="Confirm password"
                 placeholder="Подтвердите пароль"
                 invalid={touched.password && errors.password}
-                component={CustomInput}
+                component={Input}
               />
 
               <ErrorMessage name="password" component={Error} />
