@@ -26,8 +26,6 @@ import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
 import TestConstructor from "../TaskConstructors/TestConstructor";
 
-
-
 class Test extends Component {
   state = {
     taskType: "test",
@@ -143,9 +141,7 @@ class Test extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   deleteTask: (pageId, taskid) => dispatch(deleteTask(pageId, taskid)),

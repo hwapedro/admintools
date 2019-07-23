@@ -38,7 +38,6 @@ import redCross from "../../../img/bad.png";
 
 const name = "lesson";
 let options = [];
-const adminService = new AdminService();
 
 class Lesson extends Component {
   state = {
@@ -55,7 +54,7 @@ class Lesson extends Component {
     const token = localStorage.getItem("token");
     getLesson(itemId);
 
-    adminService
+    AdminService
       .getLesson(token, itemId)
       .then(response => {
         const courseIndex = response.lesson.courseIndex;
@@ -65,7 +64,7 @@ class Lesson extends Component {
       })
       .catch(console.error());
 
-    adminService
+    AdminService
       .getAll(token, "course")
       .then(response => {
         options = response.courses.map((element, index) => {

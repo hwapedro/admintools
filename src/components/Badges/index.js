@@ -7,6 +7,7 @@ import {
   addElement,
   deletElement
 } from "../../store/actions";
+// import { changeIconBadge } from "../../store/actions/actionBadges";
 
 import BadgeConstructor from "./BadgeConstructor";
 import BadgesList from "../Badges/BadgesList";
@@ -37,11 +38,11 @@ class Badge extends Component {
       addBadge,
       getAllBadges,
       delBadge,
+      changeIconBadge,
       error
     } = this.props;
 
     const { search } = this.state;
-    console.log(loading,error)
     return (
       <>
         {error && (
@@ -61,18 +62,20 @@ class Badge extends Component {
               addBadge={(title, description, name) =>
                 addBadge(title, description, name)
               }
+              // changeIconBadge={(icon, id) => changeIconBadge(icon, id)}
               getAllBadges={name => getAllBadges(name)}
               onChange={this.onChange}
               value={search}
             />
 
             <BadgesList
-              changeBadge={(courseIndex, title, description, name) =>
-                changeBadge(courseIndex, title, description, name)
-              }
-              delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
               badges={badges}
               search={search}
+              changeBadge={(courseIndex, title, description, name, icon, id) =>
+                changeBadge(courseIndex, title, description, name, icon, id)
+              }
+              delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
+              // changeIconBadge={(icon, id) => changeIconBadge(icon, id)}
             />
           </>
         )}
@@ -88,7 +91,8 @@ Badge.defaultProps = {
   addBadge() {},
   delBadge() {},
   getAllBadges() {},
-  changeBadge() {}
+  changeBadge() {},
+  changeIconBadge() {}
 };
 
 Badge.propTypes = {
@@ -99,7 +103,8 @@ Badge.propTypes = {
   addBadge: PropTypes.func,
   delBadge: PropTypes.func,
   getAllBadges: PropTypes.func,
-  changeBadge: PropTypes.func
+  changeBadge: PropTypes.func,
+  changeIconBadge: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -116,8 +121,8 @@ const mapDispatchToProps = dispatch => ({
 
   getAllBadges: name => dispatch(getAllElements(name)),
 
-  changeBadge: (courseIndex, title, description, name) =>
-    dispatch(changeElement(courseIndex, title, description, name))
+  changeBadge: (courseIndex, title, description, name, icon, id) =>
+    dispatch(changeElement(courseIndex, title, description, name, icon, id)),
 });
 
 export default connect(

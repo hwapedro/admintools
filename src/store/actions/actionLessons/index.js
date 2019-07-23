@@ -32,7 +32,6 @@ import {
 
 import AdminService from "../../../service";
 
-const adminService = new AdminService();
 const token = localStorage.getItem("token");
 
 export const changeLesson = (
@@ -47,7 +46,7 @@ export const changeLesson = (
     type: CHANGE_ELEMENT_REQUEST
   });
 
-  adminService
+  AdminService
     .changeLesson(index, title, description, exam, token, name, courseIndex)
     .then(response => {
       dispatch({
@@ -64,7 +63,7 @@ export const getLesson = id => dispatch => {
     type: GET_LESSON_REQUEST
   });
 
-  adminService
+  AdminService
     .getLesson(token, id)
     .then(response => {
       dispatch({
@@ -85,7 +84,7 @@ export const addLesson = (
   dispatch({
     type: ADD_ELEMENT_REQUEST
   });
-  adminService
+  AdminService
     .addLesson(title, description, exam, token, name, courseIndex)
     .then(response => {
       dispatch({
@@ -102,7 +101,7 @@ export const addPage = (id, text, tasks, needToComplete) => dispatch => {
   dispatch({
     type: ADD_PAGE_REQUEST
   });
-  adminService
+  AdminService
     .addPage(token, id, text, tasks, needToComplete)
     .then(response => {
       dispatch({
@@ -116,7 +115,7 @@ export const addPage = (id, text, tasks, needToComplete) => dispatch => {
 export const deletePage = id => dispatch => {
   dispatch({ type: DELETE_PAGE_REQUEST });
 
-  adminService
+  AdminService
     .deletePage(token, id)
     .then(response => {
       dispatch({
@@ -132,7 +131,7 @@ export const addTask = (pageId, type, info) => dispatch => {
     type: ADD_TASK_REQUEST
   });
 
-  adminService
+  AdminService
     .createTask(token, pageId, type, info)
     .then(response => {
       dispatch({
@@ -148,7 +147,7 @@ export const changeTask = (taskId, type, info, pageId) => dispatch => {
   dispatch({
     type: CHANGE_TASK_REQUEST
   });
-  adminService
+  AdminService
     .changeTask(token, taskId, type, info)
     .then(response => {
       dispatch({
@@ -164,7 +163,7 @@ export const changeTask = (taskId, type, info, pageId) => dispatch => {
 export const deleteTask = (pageId, taskid) => dispatch => {
   dispatch({ type: DELETE_TASK_REQUEST });
 
-  adminService
+  AdminService
     .deleteTask(token, pageId, taskid)
     .then(response => {
       dispatch({
@@ -180,7 +179,7 @@ export const changeDndLesson = (id1, id2, courseIndex) => dispatch => {
   dispatch({
     type: CHANGE_DND_REQUEST
   });
-  adminService
+  AdminService
     .DragAndDropLesson(token, id1, id2, courseIndex)
     .then(response => {
       dispatch({

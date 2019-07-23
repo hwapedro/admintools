@@ -5,10 +5,9 @@ import {
   
   import AdminService from "../../../service";
   
-  const adminService = new AdminService();
   
   export const register = (username, password, email) => dispatch => {
-    adminService
+    AdminService
       .register(username, password)
       .then(response => {
         localStorage.setItem("token", response.body.token);

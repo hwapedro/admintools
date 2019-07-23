@@ -1,10 +1,9 @@
 import request from "superagent";
 // import file from "../photo.PNG"
 
-
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 
-export default class AdminService {
+class AdminService {
   async register(username, password) {
     let response = await request
       .post(`${_apiBase}/auth/register`)
@@ -246,18 +245,16 @@ export default class AdminService {
     return response.body;
   }
 
-  // async icon(token, id) {
-  //   console.log(file)
-  //   let response = await request
-  //     .put(`${_apiBase}/badge/${id}/icon`)
-  //     .set({
-  //       Authorization: "Bearer " + token
-  //     })
-  //     .send(file);
-  //   return response.body;
-  // }
-
- 
+  async postIconBadges(token, icon, id) {
+    console.log(icon)
+    let response = await request
+      .put(`${_apiBase}/badge/${id}/icon`)
+      .set({
+        Authorization: "Bearer " + token,
+      })
+      .send(icon);
+    return response.body;
+  }
 
   // async changeNews(token, id) {
   //   let response = await request
@@ -270,5 +267,5 @@ export default class AdminService {
   // }
 }
 
+export default new AdminService();
 //const swapi = new AdminService();
-

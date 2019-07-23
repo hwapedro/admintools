@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
-import Button from '../Button'
+import ButtonMaterial from "@material-ui/core/Button";
+import Button from "../Button";
 
 const name = "badge";
 
@@ -11,7 +12,8 @@ class badgeList extends Component {
     title: "",
     description: "",
     changeFlag: false,
-    badgeIndex: null
+    badgeIndex: null,
+    picture: null
   };
 
   getParams = (badgeIndex, title, description) => {
@@ -19,28 +21,40 @@ class badgeList extends Component {
       changeFlag: true,
       badgeIndex: badgeIndex,
       title: title,
-      description: description
+      description: description,
+      picture: null
     });
   };
 
-  setParams = event => {
+  setParams = (event, id) => {
     event.preventDefault();
-    const {changeBadge} = this.props
-    const { title, description } = this.state;
+    const { changeBadge } = this.props;
+    const { title, description, picture } = this.state;
+    var formData = new FormData();
+    formData.append("image", picture);
+    // this.props.changeIconBadge(formData, id);
+
     if (title && description)
       changeBadge(
         this.state.badgeIndex,
         this.state.title,
         this.state.description,
-        
-        name
+        name,
+        formData,
+        id
       );
+
     this.setState({ changeFlag: false, badgeIndex: null });
   };
 
+  setPicture = event => {
+    console.log(this.props.changeIconBadge);
+    this.setState({ picture: event.target.files[0] });
+  };
+
   deleteItem = badgeIndex => {
-    const {delBadge} = this.props
-    delBadge(badgeIndex,  name);
+    const { delBadge } = this.props;
+    delBadge(badgeIndex, name);
   };
 
   onChange = event => {
@@ -48,68 +62,79 @@ class badgeList extends Component {
   };
 
   render() {
-    const { badges, search } = this.props
-    let list = badges.filter(badge => {
-      if ( badge.title.toLowerCase().indexOf(search.toLowerCase()) !== -1){
-        return true;
-      }
-      return false
-    })
-    .map(badge => {
-      if (
-        this.state.changeFlag &&
-        badge._id === this.state.badgeIndex
-      ) {
-        return (
-          <ElementWrapper key={badge._id}>
-            <form onSubmit={this.setParams}>
-              <LabelElement>Name of badge :</LabelElement>
-              <TitleInput
-                name="title"
-                onChange={this.onChange}
-                value={this.state.title}
-              />
-              <LabelElement>Description of badge : </LabelElement>
-              <DescriptionTextArea
-                name="description"
-                onChange={this.onChange}
-                value={this.state.description}
-              />
+    const { badges, search } = this.props;
+    let list = badges
+      .filter(badge => {
+        if (badge.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+          return true;
+        }
+        return false;
+      })
+      .map(badge => {
+        if (this.state.changeFlag && badge._id === this.state.badgeIndex) {
+          return (
+            <ElementWrapper key={badge._id}>
+              <form onSubmit={event => this.setParams(event, badge._id)}>
+                <LabelElement>Name of badge :</LabelElement>
+                <TitleInput
+                  name="title"
+                  onChange={this.onChange}
+                  value={this.state.title}
+                />
+                <LabelElement>Description of badge : </LabelElement>
+                <DescriptionTextArea
+                  name="description"
+                  onChange={this.onChange}
+                  value={this.state.description}
+                />
+                <input
+                  accept="image/*"
+                  id="text-button-file"
+                  multiple
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={this.setPicture}
+                />
+                <label htmlFor="text-button-file">
+                  <ButtonMaterial component="span">Upload</ButtonMaterial>
+                </label>
+                <span>{this.state.picture && this.state.picture.name}</span>
 
+                <ButtonWrapper>
+                  <Button buttonStyle={"outlined"} type="submit">
+                    CONFIRM
+                  </Button>
+                </ButtonWrapper>
+              </form>
+            </ElementWrapper>
+          );
+        } else {
+          return (
+            <ElementWrapper key={badge._id}>
+              <LabelElement>Name of badge :</LabelElement>
+              <TitleSpan> {badge.title}</TitleSpan>
+              <LabelElement>Description of badge : </LabelElement>
+              <DescriptionSpan>{badge.description}</DescriptionSpan>
               <ButtonWrapper>
-                <Button  buttonStyle={"outlined"} type="submit">CONFIRM</Button>
+                <Button
+                  buttonStyle={"outlined"}
+                  onClick={() =>
+                    this.getParams(badge._id, badge.title, badge.description)
+                  }
+                >
+                  CHANGE badge
+                </Button>
+                <Button
+                  buttonStyle={"outlined"}
+                  onClick={() => this.deleteItem(badge._id)}
+                >
+                  DELETE badge
+                </Button>
               </ButtonWrapper>
-            </form>
-          </ElementWrapper>
-        );
-      } else {
-        return (
-          <ElementWrapper key={badge._id}>
-            <LabelElement>Name of badge :</LabelElement>
-            <TitleSpan> {badge.title}</TitleSpan>
-            <LabelElement>Description of badge : </LabelElement>
-            <DescriptionSpan>{badge.description}</DescriptionSpan>
-            <ButtonWrapper>
-              <Button
-              buttonStyle={"outlined"}
-                onClick={() =>
-                  this.getParams(
-                    badge._id,
-                    badge.title,
-                    badge.description
-                  )
-                }
-              >
-                CHANGE badge
-              </Button>
-              <Button  buttonStyle={"outlined"} onClick={() => this.deleteItem(badge._id)}>
-                DELETE badge
-              </Button>
-            </ButtonWrapper>
-          </ElementWrapper>
-        );
-      }
-    });
+            </ElementWrapper>
+          );
+        }
+      });
     return (
       <Wrapper>
         <ElementsWrapper>{list}</ElementsWrapper>
@@ -126,16 +151,16 @@ badgeList.defaultProps = {
   error: false,
   delBadge() {},
   changeBadge() {}
-}
+};
 
 badgeList.propTypes = {
-  badge:  PropTypes.arrayOf(PropTypes.object),
+  badge: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,
 
   delBadge: PropTypes.func,
-  changeBadge: PropTypes.func,
-}
+  changeBadge: PropTypes.func
+};
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -199,7 +224,7 @@ const ElementWrapper = styled.li`
   background-color: ${props => props.theme.courses};
   margin-top: 2rem;
   padding: 1rem;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
 `;
 
 const ButtonWrapper = styled.div`

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import Button from '../../Button'
+import ButtonMaterial from "@material-ui/core/Button";
+import Button from "../../Button";
 import Search from "../../Search";
 const name = "badge";
 
@@ -10,7 +11,8 @@ export default class BadgeConstructor extends Component {
   state = {
     title: "",
     description: "",
-    constructor: false
+    constructor: false,
+    picture: null
   };
 
   onSubmit = event => {
@@ -18,9 +20,17 @@ export default class BadgeConstructor extends Component {
     const { addBadge } = this.props;
     const { title, description } = this.state;
     addBadge(title, description, name);
+    
   };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+  setPicture = event => {
+    console.log(this.props.changeIconBadge)
+    var formData = new FormData();
+    formData.append('image',event.target.files[0])
+    this.setState({picture:event.target.files[0]})
+    this.props.changeIconBadge(formData,"5d1315a2b0839c5a915d63ad")
   };
   showConstructor = () => {
     const { constructor } = this.state;
@@ -31,13 +41,13 @@ export default class BadgeConstructor extends Component {
 
   render() {
     const { constructor, title, description } = this.state;
-    const {onChange, value} = this.props
+    const { onChange, value } = this.props;
     if (constructor) {
       return (
         <Wrapper>
           <ButtonWrapperConstructor>
             <Search onChange={onChange} value={value} />
-            <Button  buttonStyle={"outlined"} onClick={this.showConstructor}>
+            <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
               ADD NEW badge
             </Button>
           </ButtonWrapperConstructor>
@@ -60,8 +70,23 @@ export default class BadgeConstructor extends Component {
                 type="text"
                 onChange={this.onChange}
               />
+
+              <input
+                accept="image/*"
+                id="text-button-file"
+                multiple
+                type="file"
+                style={{ display: "none" }}
+                onChange={this.setPicture}
+              />
+              <label htmlFor="text-button-file">
+                <ButtonMaterial component="span" >
+                  Upload
+                </ButtonMaterial>
+              </label>
+              <span>{this.state.picture && this.state.picture}</span>
               <ButtonWrapper>
-                <Button  buttonStyle={"outlined"} type="submit">
+                <Button buttonStyle={"outlined"} type="submit">
                   ADD NEW badge
                 </Button>
               </ButtonWrapper>
@@ -73,8 +98,8 @@ export default class BadgeConstructor extends Component {
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
-        <Search onChange={onChange} value={value} />
-          <Button  buttonStyle={"outlined"} onClick={this.showConstructor}>
+          <Search onChange={onChange} value={value} />
+          <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
             ADD NEW badge
           </Button>
         </ButtonWrapperConstructor>
@@ -189,10 +214,10 @@ export const ConstructorButton = styled.button`
   margin-right: 1rem;
 `;
 export const ButtonWrapperConstructor = styled.div`
-  padding-left:40px;
+  padding-left: 40px;
   width: 1000px;
   display: flex;
   justify-content: space-between;
-  align-items:space-between;
+  align-items: space-between;
   margin-top: 0.3rem;
 `;

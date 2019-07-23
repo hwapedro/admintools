@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import TextField from '@material-ui/core/TextField';
 import {Field, Input, Label} from "./style"
 
 const CustomInput = ({
@@ -11,6 +12,13 @@ const CustomInput = ({
 }) => (
   <Field>
     <Label htmlFor={name}>{label}</Label>
+    {/* <TextField
+        id="outlined-bare"
+        defaultValue="Bare"
+        margin="normal"
+        variant="outlined"
+        inputProps={{ 'aria-label': 'bare' }}
+      /> */}
     <Input
       name={name}
       value={value}

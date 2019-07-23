@@ -32,12 +32,12 @@ import {
   GET_COURSE_FAILURE,
   CHANGE_ELEMENT_SUCCESS,
   FETCH_COURSE_SUCCESS,
-  FETCH_DND_SUCCESS
+  FETCH_DND_SUCCESS,
+  CHANGE_BADGE_ICON_SUCCESS
 } from "../constants";
 
 import AdminService from "../../service";
 
-const adminService = new AdminService();
 const token = localStorage.getItem("token");
 
 export const getAllElements = name => dispatch => {
@@ -45,8 +45,7 @@ export const getAllElements = name => dispatch => {
     type: GETALL_ELEMENT_REQUEST
   });
 
-  adminService
-    .getAll(token, name)
+  AdminService.getAll(token, name)
     .then(response => {
       switch (name) {
         case "course":
@@ -86,8 +85,7 @@ export const addElement = (title, description, name) => dispatch => {
     type: ADD_ELEMENT_REQUEST
   });
 
-  adminService
-    .add(title, description, token, name)
+  AdminService.add(title, description, token, name)
     .then(response => {
       dispatch({ type: ADD_ELEMENT_SUCCESS });
       switch (name) {
@@ -122,8 +120,7 @@ export const deletElement = (index, name) => dispatch => {
     type: DELETE_ELEMENT_REQUEST
   });
 
-  adminService
-    .delet(index, token, name)
+  AdminService.delet(index, token, name)
     .then(response => {
       switch (name) {
         case "course":
@@ -158,14 +155,20 @@ export const deletElement = (index, name) => dispatch => {
     .catch(error => dispatch({ type: DELETE_ELEMENT_FAILURE }));
 };
 
-export const changeElement = (index, title, description, name) => dispatch => {
+export const changeElement = (
+  index,
+  title,
+  description,
+  name,
+  icon,
+  id
+) => dispatch => {
   dispatch({
     type: CHANGE_ELEMENT_REQUEST
   });
 
-  adminService
-    .change(index, title, description, token, name)
-    .then(response => {
+  AdminService.change(index, title, description, token, name, icon, id)
+    .then(async response => {
       switch (name) {
         case "course":
           dispatch({
@@ -174,10 +177,16 @@ export const changeElement = (index, title, description, name) => dispatch => {
           });
           break;
         case "badge":
-          dispatch({
-            type: CHANGE_BADGE_SUCCESS,
-            badge: response.badge
-          });
+          const res = response;
+          await AdminService.postIconBadges(token, icon, id)
+            .then(response => {
+              dispatch({
+                type: CHANGE_BADGE_SUCCESS,
+                badge: { ...res.badge, icon: response.links }
+              });
+            })
+            .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE }));
+
           break;
         case "news":
           dispatch({
@@ -197,8 +206,7 @@ export const changeDnD = (id1, id2) => dispatch => {
   dispatch({
     type: CHANGE_DND_REQUEST
   });
-  adminService
-    .DragAndDropCourse(token, id1, id2)
+  AdminService.DragAndDropCourse(token, id1, id2)
     .then(() => {
       dispatch({
         type: CHANGE_DND_SUCCESS,
@@ -216,8 +224,7 @@ export const getCourse = id => async dispatch => {
   dispatch({
     type: GET_COURSE_REQUEST
   });
-  adminService
-    .getOneCourse(token, id)
+  AdminService.getOneCourse(token, id)
     .then(response => {
       dispatch({
         type: GET_COURSE_SUCCESS,
