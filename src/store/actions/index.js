@@ -160,14 +160,13 @@ export const changeElement = (
   title,
   description,
   name,
-  icon,
-  id
+  icon
 ) => dispatch => {
   dispatch({
     type: CHANGE_ELEMENT_REQUEST
   });
-
-  AdminService.change(index, title, description, token, name, icon, id)
+  console.log(index)
+  AdminService.change(index, title, description, token, name)
     .then(async response => {
       switch (name) {
         case "course":
@@ -178,7 +177,7 @@ export const changeElement = (
           break;
         case "badge":
           const res = response;
-          await AdminService.postIconBadges(token, icon, id)
+          await AdminService.postIconBadges(token, icon, index)
             .then(response => {
               dispatch({
                 type: CHANGE_BADGE_SUCCESS,

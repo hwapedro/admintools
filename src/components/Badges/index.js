@@ -71,8 +71,8 @@ class Badge extends Component {
             <BadgesList
               badges={badges}
               search={search}
-              changeBadge={(courseIndex, title, description, name, icon, id) =>
-                changeBadge(courseIndex, title, description, name, icon, id)
+              changeBadge={(courseIndex, title, description, name, icon) =>
+                changeBadge(courseIndex, title, description, name, icon)
               }
               delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
               // changeIconBadge={(icon, id) => changeIconBadge(icon, id)}
@@ -121,8 +121,8 @@ const mapDispatchToProps = dispatch => ({
 
   getAllBadges: name => dispatch(getAllElements(name)),
 
-  changeBadge: (courseIndex, title, description, name, icon, id) =>
-    dispatch(changeElement(courseIndex, title, description, name, icon, id)),
+  changeBadge: (courseIndex, title, description, name, icon) =>
+    dispatch(changeElement(courseIndex, title, description, name, icon)),
 });
 
 export default connect(

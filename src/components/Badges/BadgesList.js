@@ -1,11 +1,21 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import base64Img from "base64-img";
 
 import ButtonMaterial from "@material-ui/core/Button";
 import Button from "../Button";
 
 const name = "badge";
+
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 
 class badgeList extends Component {
   state = {
@@ -26,23 +36,26 @@ class badgeList extends Component {
     });
   };
 
-  setParams = (event, id) => {
+  setParams = event => {
     event.preventDefault();
     const { changeBadge } = this.props;
-    const { title, description, picture } = this.state;
+    const {
+      title,
+      description,
+      picture,
+      badgeIndex
+    } = this.state;
+
     var formData = new FormData();
     formData.append("image", picture);
     // this.props.changeIconBadge(formData, id);
-
-    if (title && description)
-      changeBadge(
-        this.state.badgeIndex,
-        this.state.title,
-        this.state.description,
-        name,
-        formData,
-        id
-      );
+    console.log(this.state.badgeIndex);
+    let icon;
+    getBase64(picture).then(base64 => {
+      icon = base64;
+      if (title && description)
+        changeBadge(badgeIndex, title, description, name, icon);
+    });
 
     this.setState({ changeFlag: false, badgeIndex: null });
   };
@@ -74,7 +87,7 @@ class badgeList extends Component {
         if (this.state.changeFlag && badge._id === this.state.badgeIndex) {
           return (
             <ElementWrapper key={badge._id}>
-              <form onSubmit={event => this.setParams(event, badge._id)}>
+              <form onSubmit={this.setParams}>
                 <LabelElement>Name of badge :</LabelElement>
                 <TitleInput
                   name="title"
