@@ -87,18 +87,11 @@ export const addElement = (title, description, name) => dispatch => {
 
   AdminService.add(title, description, token, name)
     .then(response => {
-      dispatch({ type: ADD_ELEMENT_SUCCESS });
       switch (name) {
         case "course":
           dispatch({
             type: ADD_COURSE_SUCCESS,
             courses: response.course
-          });
-          break;
-        case "badge":
-          dispatch({
-            type: ADD_BADGE_SUCCESS,
-            badges: response.badge
           });
           break;
         case "news":
@@ -121,7 +114,7 @@ export const deletElement = (index, name) => dispatch => {
   });
 
   AdminService.delet(index, token, name)
-    .then(response => {
+    .then(() => {
       switch (name) {
         case "course":
           dispatch({
@@ -159,13 +152,11 @@ export const changeElement = (
   index,
   title,
   description,
-  name,
-  icon
+  name
 ) => dispatch => {
   dispatch({
     type: CHANGE_ELEMENT_REQUEST
   });
-  console.log(index)
   AdminService.change(index, title, description, token, name)
     .then(async response => {
       switch (name) {
@@ -175,18 +166,7 @@ export const changeElement = (
             course: response.course
           });
           break;
-        case "badge":
-          const res = response;
-          await AdminService.postIconBadges(token, icon, index)
-            .then(response => {
-              dispatch({
-                type: CHANGE_BADGE_SUCCESS,
-                badge: { ...res.badge, icon: response.links }
-              });
-            })
-            .catch(error => dispatch({ type: CHANGE_ELEMENT_FAILURE }));
 
-          break;
         case "news":
           dispatch({
             type: CHANGE_NEWS_SUCCESS,

@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  changeElement,
-  getAllElements,
-  addElement,
-  deletElement
-} from "../../store/actions";
-// import { changeIconBadge } from "../../store/actions/actionBadges";
+import { getAllElements, deletElement } from "../../store/actions";
+
+import { changeBadge, createBadge } from "../../store/actions/actionBadges";
 
 import BadgeConstructor from "./BadgeConstructor";
-import BadgesList from "../Badges/BadgesList";
+import BadgesList from "./BadgeList/BadgesList";
 import Spinner from "../Spinner";
 import Error from "../Error";
 
@@ -35,10 +31,9 @@ class Badge extends Component {
       loading,
       badges,
       changeBadge,
-      addBadge,
+      createBadge,
       getAllBadges,
       delBadge,
-      changeIconBadge,
       error
     } = this.props;
 
@@ -59,13 +54,12 @@ class Badge extends Component {
         {!error && !loading && (
           <>
             <BadgeConstructor
-              addBadge={(title, description, name) =>
-                addBadge(title, description, name)
+             value={search}
+              createBadge={(title, description, name) =>
+                createBadge(title, description, name)
               }
-              // changeIconBadge={(icon, id) => changeIconBadge(icon, id)}
               getAllBadges={name => getAllBadges(name)}
               onChange={this.onChange}
-              value={search}
             />
 
             <BadgesList
@@ -75,7 +69,6 @@ class Badge extends Component {
                 changeBadge(courseIndex, title, description, name, icon)
               }
               delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
-              // changeIconBadge={(icon, id) => changeIconBadge(icon, id)}
             />
           </>
         )}
@@ -114,15 +107,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addBadge: (title, description, name) =>
-    dispatch(addElement(title, description, name)),
+  createBadge: (title, description, icon) =>
+    dispatch(createBadge(title, description, icon)),
 
   delBadge: (courseIndex, name) => dispatch(deletElement(courseIndex, name)),
 
   getAllBadges: name => dispatch(getAllElements(name)),
 
-  changeBadge: (courseIndex, title, description, name, icon) =>
-    dispatch(changeElement(courseIndex, title, description, name, icon)),
+  changeBadge: (token, index, title, description, icon) => dispatch(changeBadge(token, index, title, description, icon))
 });
 
 export default connect(

@@ -3,7 +3,6 @@ import {
   ADD_BADGE_SUCCESS,
   DELETE_BADGE_SUCCESS,
   CHANGE_BADGE_SUCCESS,
-  CHANGE_BADGE_ICON_SUCCESS
 } from "../../constants";
 
 const initialState = {
@@ -38,11 +37,6 @@ function reducerBadges(state = initialState, action = {}) {
           action.badge._id === badge._id ? action.badge : badge
         )
       };
-
-    case CHANGE_BADGE_ICON_SUCCESS:
-      return{
-        ...state
-      }
 
     default:
       return {

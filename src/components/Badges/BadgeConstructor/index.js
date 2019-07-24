@@ -5,33 +5,37 @@ import PropTypes from "prop-types";
 import ButtonMaterial from "@material-ui/core/Button";
 import Button from "../../Button";
 import Search from "../../Search";
-const name = "badge";
+
+import { getBase64 } from "../../../store/utils";
 
 export default class BadgeConstructor extends Component {
   state = {
     title: "",
     description: "",
     constructor: false,
-    picture: null
+    icon: null
   };
 
   onSubmit = event => {
     event.preventDefault();
-    const { addBadge } = this.props;
-    const { title, description } = this.state;
-    addBadge(title, description, name);
-    
+    const { createBadge } = this.props;
+    const { title, description, icon } = this.state;
+    console.log(icon)
+    createBadge(title, description, icon);
   };
+
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
   setPicture = event => {
-    console.log(this.props.changeIconBadge)
-    var formData = new FormData();
-    formData.append('image',event.target.files[0])
-    this.setState({picture:event.target.files[0]})
-    this.props.changeIconBadge(formData,"5d1315a2b0839c5a915d63ad")
+    getBase64(event.target.files[0]).then(icon => {
+      this.setState({ icon: icon });
+    });
+    // var formData = new FormData();
+    // formData.append("image", event.target.files[0]);
   };
+
   showConstructor = () => {
     const { constructor } = this.state;
     this.setState({
@@ -80,9 +84,7 @@ export default class BadgeConstructor extends Component {
                 onChange={this.setPicture}
               />
               <label htmlFor="text-button-file">
-                <ButtonMaterial component="span" >
-                  Upload
-                </ButtonMaterial>
+                <ButtonMaterial component="span">Upload</ButtonMaterial>
               </label>
               <span>{this.state.picture && this.state.picture}</span>
               <ButtonWrapper>

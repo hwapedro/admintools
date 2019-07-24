@@ -1,29 +1,20 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-//import base64Img from "base64-img";
 
 import ButtonMaterial from "@material-ui/core/Button";
-import Button from "../Button";
+import Button from "../../Button";
+
+import { getBase64 } from "../../../store/utils";
 
 const name = "badge";
-
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
 
 class badgeList extends Component {
   state = {
     title: "",
     description: "",
     changeFlag: false,
-    badgeIndex: null,
-    picture: null
+    badgeIndex: null
   };
 
   getParams = (badgeIndex, title, description) => {
@@ -32,37 +23,22 @@ class badgeList extends Component {
       badgeIndex: badgeIndex,
       title: title,
       description: description,
-      picture: null
     });
   };
 
   setParams = event => {
     event.preventDefault();
     const { changeBadge } = this.props;
-    const {
-      title,
-      description,
-      picture,
-      badgeIndex
-    } = this.state;
-
-    var formData = new FormData();
-    formData.append("image", picture);
-    // this.props.changeIconBadge(formData, id);
-    console.log(this.state.badgeIndex);
-    let icon;
-    getBase64(picture).then(base64 => {
-      icon = base64;
-      if (title && description)
-        changeBadge(badgeIndex, title, description, name, icon);
-    });
-
+    const { title, description, badgeIndex} = this.state;
+    const icon = localStorage.getItem("icon");
+    changeBadge(badgeIndex, title, description, icon);
     this.setState({ changeFlag: false, badgeIndex: null });
   };
 
   setPicture = event => {
-    console.log(this.props.changeIconBadge);
-    this.setState({ picture: event.target.files[0] });
+    getBase64(event.target.files[0]).then(icon => {
+      localStorage.setItem("icon", icon);
+    });
   };
 
   deleteItem = badgeIndex => {
@@ -111,7 +87,6 @@ class badgeList extends Component {
                 <label htmlFor="text-button-file">
                   <ButtonMaterial component="span">Upload</ButtonMaterial>
                 </label>
-                <span>{this.state.picture && this.state.picture.name}</span>
 
                 <ButtonWrapper>
                   <Button buttonStyle={"outlined"} type="submit">
@@ -124,6 +99,7 @@ class badgeList extends Component {
         } else {
           return (
             <ElementWrapper key={badge._id}>
+              <img src={badge.icon} alt="icon" style={{width:"70px", height:"70px"}}/>
               <LabelElement>Name of badge :</LabelElement>
               <TitleSpan> {badge.title}</TitleSpan>
               <LabelElement>Description of badge : </LabelElement>
@@ -132,7 +108,12 @@ class badgeList extends Component {
                 <Button
                   buttonStyle={"outlined"}
                   onClick={() =>
-                    this.getParams(badge._id, badge.title, badge.description)
+                    this.getParams(
+                      badge._id,
+                      badge.title,
+                      badge.description,
+                      badge.icon
+                    )
                   }
                 >
                   CHANGE badge
