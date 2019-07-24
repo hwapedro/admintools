@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import base64Img from "base64-img";
+//import base64Img from "base64-img";
 
 import ButtonMaterial from "@material-ui/core/Button";
 import Button from "../Button";

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Droppable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 
+import { Wrapper, EmptyMessage, ElementsWrapper, ImgMark, ImgCross } from "../style"
 
 import Lesson from "./Lesson";
 
@@ -105,114 +106,3 @@ LessonsList.propTypes = {
   delLesson: PropTypes.func
 };
 
-const Wrapper = styled.div`
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-// const TitleSpan = styled.span`
-//   display: flex;
-//   justify-content: flex-start;
-//   align-items: center;
-//   margin: 1rem 0;
-//   font-size: 1.3rem;
-// `;
-
-// const TitleInput = styled.input`
-//   display: flex;
-//   justify-content: flex-start;
-//   align-items: center;
-//   margin: 1rem 0;
-//   font-size: 1.3rem;
-//   color: black;
-// `;
-
-// const LabelElement = styled.span`
-//   margin-top: 2rem;
-//   font-weight: 900;
-//   font-size: 1.8rem;
-// `;
-
-// const DescriptionSpan = styled.span`
-//   display: flex;
-//   justify-content: flex-start;
-//   align-items: center;
-//   margin: 1rem 0;
-//   font-size: 1.3rem;
-// `;
-
-// const DescriptionTextArea = styled.textarea`
-//   display: flex;
-//   justify-content: flex-start;
-//   width: 100%;
-//   height: 400px;
-//   max-height: 100%;
-//   max-width: 100%;
-//   resize: none;
-//   align-items: center;
-//   margin-top: 2rem;
-//   font-size: 1.3rem;
-//   color: black;
-// `;
-const EmptyMessage = styled.div`
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 2.5rem;
-  top: 50%;
-  margin-top: 270px;
-`;
-
-const ElementsWrapper = styled.ul`
-  list-style-type: none;
-  width: 1000px;
-  margin: 0;
-`;
-
-// const ElementWrapper = styled.li`
-//   background-color: ${props => props.theme.courses};
-//   margin-top: 2rem;
-//   padding: 1rem;
-//   box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
-// `;
-
-// const ButtonWrapper = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: flex-end;
-//   margin-top: 0.5rem;
-// `;
-export const SignInButton = styled.button`
-  width: 150px;
-  height: 40px;
-  border: 0;
-  border-radius: 10px;
-  background-color: ${props => props.theme.button};
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-    cursor: pointer;
-  }
-  margin-right: 1rem;
-`;
-
-export const ImgMark = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-left: 1rem;
-  margin-bottom: -0.4rem;
-`;
-
-export const ImgCross = styled.img`
-  width: 2rem;
-  height: 2rem;
-  margin-left: 1rem;
-  margin-bottom: -0.4rem;
-`;

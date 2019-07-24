@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 
 import Page from "../PageList/Page";
 import PageNav from "../PageNav";
+
+import { ElementWrapper,  PageMenu} from "./style"
 
 class PageList extends Component {
 
@@ -38,14 +39,3 @@ class PageList extends Component {
 
 export default PageList;
 
-const ElementWrapper = styled.div`
-  background-color: ${props => props.theme.courses};
-  width: 960px;
-  margin-top: 2rem;
-  padding: 1rem;
-  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
-`
-
-const PageMenu = styled.div`
-  margin-top:32px;
-`

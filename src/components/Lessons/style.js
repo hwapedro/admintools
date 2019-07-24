@@ -9,6 +9,14 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
+export const EmptyMessage = styled.div`
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 2.5rem;
+  top: 50%;
+  margin-top: 270px;
+`;
+
 export const ImgMark = styled.img`
   width: 2.5rem;
   height: 2.5rem;
@@ -279,4 +287,23 @@ export const TaskOptionWrapper = styled.li`
   border-radius: 1px;
   padding: 0.3rem;
   list-style-type: none;
+`;
+
+export const SignInButton = styled.button`
+  width: 150px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background-color: ${props => props.theme.button};
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+  margin-right: 1rem;
 `;

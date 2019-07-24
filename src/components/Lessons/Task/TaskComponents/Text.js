@@ -52,14 +52,14 @@ class Test extends Component {
         return (
           <>
             {taskEditFlag ? (
-              <>
-                <DarkGround onClick={this.changeEditFlag} />
+              <TaskElementWrapper>
+                
                 <TextConstructor
                   task={task}
                   pageId={page._id}
                   changeEditFlag={this.changeEditFlag}
                 />
-              </>
+              </TaskElementWrapper>
             ) : (
               <TaskElementWrapper key={task._id}>
                 <LabelElement> Title: </LabelElement>

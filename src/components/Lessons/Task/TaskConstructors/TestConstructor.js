@@ -12,8 +12,7 @@ import {
   OptionsWrapper,
   OptionInput,
   CheckboxInput,
-  ConsturctorWrapper
-} from "./style";
+} from "../style";
 import Button from "../../../Button";
 import EditorText from "../../../EditorText";
 import { addTask, changeTask } from "../../../../store/actions/actionLessons";
@@ -154,7 +153,7 @@ class TestConstructor extends Component {
     const { editorState, info } = this.state;
 
     return (
-      <ConsturctorWrapper>
+      <>
         <ConsturctorForm onSubmit={this.onSubmit}>
           <LabelElement>Title</LabelElement>
           <TitleInput
@@ -218,7 +217,7 @@ class TestConstructor extends Component {
             </Button>
           </ButtonWrapper>
         </ConsturctorForm>
-      </ConsturctorWrapper>
+      </>
     );
   }
 }

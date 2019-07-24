@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import styled from "styled-components";
+
 
 import Button from "../../../Button";
 import TaskList from "../../Task/TaskList";
 import TaskConstructor from "../../Task/TaskConstructors/";
+import { PageNumber, PagesWrapper, ButtonWrapper} from "../style"
 // import Error from "../../../Error";
 
 class Page extends Component {
@@ -44,17 +45,4 @@ class Page extends Component {
 
 export default withRouter(Page);
 
-const PageNumber = styled.span`
-  margin-top: 2rem;
-  font-weight: 900;
-  font-size: 1.8rem;
-`;
 
-const PagesWrapper = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
-
-const ButtonWrapper = styled.div`
-  text-align: right;
-`;

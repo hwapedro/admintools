@@ -9,8 +9,7 @@ import {
   TitleInput,
   ButtonWrapper,
   TextQuestion,
-  ConsturctorWrapper
-} from "./style";
+} from "../style";
 import Button from "../../../Button";
 import EditorText from "../../../EditorText";
 import { addTask, changeTask } from "../../../../store/actions/actionLessons";
@@ -100,7 +99,7 @@ class TextConstructor extends Component {
     const { editorState } = this.state;
     const { name, question} = this.state;
     return (
-      <ConsturctorWrapper>
+      <>
       <ConsturctorForm onSubmit={this.onSubmit}>
         <LabelElement>Title</LabelElement>
         <TitleInput
@@ -130,7 +129,7 @@ class TextConstructor extends Component {
           </Button>
         </ButtonWrapper>
       </ConsturctorForm>
-      </ConsturctorWrapper>
+      </>
     );
   }
 }
