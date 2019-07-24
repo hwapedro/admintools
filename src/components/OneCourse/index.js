@@ -4,16 +4,19 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 // import { DragDropContext } from "react-beautiful-dnd";
 
-import { getAllElements, deletElement, getCourse } from "../../store/actions";
-
-import { changeDndLesson, addLesson } from "../../store/actions/actionLessons";
+import { getAllElements, getCourse } from "../../store/actions";
+import {
+  changeDndLesson,
+  addLesson,
+  deleteLesson
+} from "../../store/actions/actionLessons";
 
 import LessonList from "../Lessons/LessonList/LessonList";
-import SetLesson from "../Lessons/SetLesson";
+import LessonConstructor from "../Lessons/LessonConstructor";
 import Spinner from "../Spinner";
 import Error from "../Error";
 
-const name = "course"
+const name = "course";
 class OneCourse extends Component {
   state = {
     search: ""
@@ -29,7 +32,14 @@ class OneCourse extends Component {
   };
 
   render() {
-    const { addLesson, course, delLesson, changeDndLesson, error, loading } = this.props;
+    const {
+      addLesson,
+      course,
+      delLesson,
+      changeDndLesson,
+      error,
+      loading
+    } = this.props;
     const { search } = this.state;
 
     return (
@@ -47,9 +57,9 @@ class OneCourse extends Component {
         )}
         {!error && !loading && (
           <>
-            <SetLesson
-              addLesson={(title, description, exam, name, courseIndex) =>
-                addLesson(title, description, exam, name, courseIndex)
+            <LessonConstructor
+              addLesson={(title, description, exam, name, courseIndex, flag) =>
+                addLesson(title, description, exam, name, courseIndex, flag)
               }
               onChange={this.onChange}
               value={search}
@@ -57,7 +67,9 @@ class OneCourse extends Component {
             />
 
             <LessonList
-              delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
+              delLesson={(lessonsIndex, name, flag) =>
+                delLesson(lessonsIndex, name, flag)
+              }
               lessons={course.lessons}
               search={search}
               course={course}
@@ -97,10 +109,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam, name, courseIndex) =>
-    dispatch(addLesson(title, description, exam, name, courseIndex)),
+  addLesson: (title, description, exam, name, courseIndex, flag) =>
+    dispatch(addLesson(title, description, exam, name, courseIndex, flag)),
 
-  delLesson: (lessonsIndex, name) => dispatch(deletElement(lessonsIndex, name)),
+  delLesson: (lessonsIndex, name, flag) =>
+    dispatch(deleteLesson(lessonsIndex, name, flag)),
 
   getAllLessons: name => dispatch(getAllElements(name)),
 

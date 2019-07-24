@@ -6,7 +6,7 @@ import { getAllElements, deletElement } from "../../store/actions";
 import { changeBadge, createBadge } from "../../store/actions/actionBadges";
 
 import BadgeConstructor from "./BadgeConstructor";
-import BadgesList from "./BadgeList/BadgesList";
+import BadgesList from "./BadgeList";
 import Spinner from "../Spinner";
 import Error from "../Error";
 

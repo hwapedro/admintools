@@ -128,12 +128,6 @@ export const deletElement = (index, name) => dispatch => {
             index: index
           });
           break;
-        case "lesson":
-          dispatch({
-            type: DELETE_LESSON_SUCCESS,
-            index: index
-          });
-          break;
         case "news":
           dispatch({
             type: DELETE_NEWS_SUCCESS,

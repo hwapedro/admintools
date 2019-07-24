@@ -2,15 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-
-import { getAllElements, deletElement } from "../../store/actions";
-
+import { getAllElements } from "../../store/actions";
 import { changeDndLesson } from "../../store/actions/actionLessons";
-
-import { addLesson } from "../../store/actions/actionLessons";
+import { addLesson, deleteLesson } from "../../store/actions/actionLessons";
 
 //import Search from "../Search";
-import SetLesson from "../Lessons/SetLesson";
+import LessonConstructor from "./LessonConstructor";
 import LessonList from "./LessonList/LessonList";
 import Spinner from "../Spinner";
 import Error from "../Error";
@@ -32,13 +29,7 @@ class Lessons extends Component {
   };
 
   render() {
-    const {
-      error,
-      loading,
-      lessons,
-      addLesson,
-      delLesson,
-    } = this.props;
+    const { error, loading, lessons, addLesson, delLesson } = this.props;
     const { search } = this.state;
     return (
       <>
@@ -55,16 +46,18 @@ class Lessons extends Component {
         )}
         {!error && !loading && (
           <>
-            <SetLesson
-              addLesson={(title, description, exam, name, courseIndex) =>
-                addLesson(title, description, exam, name, courseIndex)
+            <LessonConstructor
+              addLesson={(title, description, exam, name, courseIndex, flag) =>
+                addLesson(title, description, exam, name, courseIndex, flag)
               }
               onChange={this.onChange}
               value={search}
             />
             <LessonList
               onChange={this.onChange}
-              delLesson={(lessonsIndex, name) => delLesson(lessonsIndex, name)}
+              delLesson={(lessonsIndex, name, flag) =>
+                delLesson(lessonsIndex, name, flag)
+              }
               lessons={lessons}
               search={search}
             />
@@ -101,10 +94,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam, name, courseIndex) =>
-    dispatch(addLesson(title, description, exam, name, courseIndex)),
+  addLesson: (title, description, exam, name, courseIndex, flag) =>
+    dispatch(addLesson(title, description, exam, name, courseIndex, flag)),
 
-  delLesson: (lessonsIndex, name) => dispatch(deletElement(lessonsIndex, name)),
+  delLesson: (lessonsIndex, name, flag) =>
+    dispatch(deleteLesson(lessonsIndex, name, flag)),
 
   getAllLessons: name => dispatch(getAllElements(name)),
 

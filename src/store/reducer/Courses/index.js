@@ -6,7 +6,8 @@ import {
   CHANGE_DND_SUCCESS,
   GET_COURSE_SUCCESS,
   DELETE_LESSON_SUCCESS,
-  CHANGE_DND_LESSON_SUCCESS
+  CHANGE_DND_LESSON_SUCCESS,
+  ADD_LESSON_SUCCESS
 } from "../../constants";
 
 import { DND } from "../../utils";
@@ -40,17 +41,6 @@ function reducerCourses(state = initialState, action = {}) {
           })
       };
 
-    case DELETE_LESSON_SUCCESS:
-      return {
-        ...state,
-        course: {
-          ...state.course,
-          lessons:
-            state.course.lessons &&
-            state.course.lessons.filter(lesson => lesson._id !== action.index)
-        }
-      };
-
     case CHANGE_COURSE_SUCCESS:
       return {
         ...state,
@@ -67,11 +57,41 @@ function reducerCourses(state = initialState, action = {}) {
     case GET_COURSE_SUCCESS:
       return {
         ...state,
-        course: action.course,
+        course: action.course
       };
 
     case CHANGE_DND_LESSON_SUCCESS:
       return DND(state, action.payload.id1, action.payload.id2, "lessons");
+
+    case ADD_LESSON_SUCCESS:
+      if (action.flag === "course") {
+        return {
+          ...state,
+          error: false,
+          loading: false,
+          course: {
+            ...state.course,
+            lessons: [...state.course.lessons, action.lessons]
+          }
+        };
+      }
+      return { ...state };
+
+    case DELETE_LESSON_SUCCESS:
+      if (action.flag === "course") {
+        return {
+          ...state,
+          course: {
+            ...state.course,
+            lessons:
+              state.course.lessons &&
+              state.course.lessons.filter(lesson => lesson._id !== action.index)
+          },
+          loading: false,
+          error: false
+        };
+      }
+      return { ...state };
 
     default:
       return {

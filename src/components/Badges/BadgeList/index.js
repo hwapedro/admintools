@@ -120,7 +120,11 @@ class badgeList extends Component {
                 </Button>
                 <Button
                   buttonStyle={"outlined"}
-                  onClick={() => this.deleteItem(badge._id)}
+                  onClick={() => {
+                    if (window.confirm("Delete the item?")) {
+                      this.deleteItem(badge._id)
+                    }
+                  }}
                 >
                   DELETE badge
                 </Button>

@@ -5,7 +5,13 @@ import { withRouter } from "react-router-dom";
 import { Droppable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { Wrapper, EmptyMessage, ElementsWrapper, ImgMark, ImgCross } from "../style"
+import {
+  Wrapper,
+  EmptyMessage,
+  ElementsWrapper,
+  ImgMark,
+  ImgCross
+} from "../style";
 
 import Lesson from "./Lesson";
 
@@ -19,8 +25,9 @@ class LessonsList extends Component {
   };
 
   deleteItem = _id => {
-    const { delLesson } = this.props;
-    delLesson(_id, name);
+    const { delLesson,course } = this.props;
+    const flag = course ? "course" : name;
+    delLesson(_id, name, flag);
   };
 
   goTo = id => {
@@ -94,6 +101,7 @@ LessonsList.defaultProps = {
   loading: false,
   error: false,
   course: null,
+  
   delLesson() {}
 };
 
@@ -105,4 +113,3 @@ LessonsList.propTypes = {
 
   delLesson: PropTypes.func
 };
-

@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 import Spinner from "../../Spinner";
 import EditorText from "../../EditorText";
 import Course from "./Course";
-import Button from '../../Button'
+import Button from "../../Button";
 
 import {
   Wrapper,
@@ -61,10 +61,12 @@ class CourseList extends Component {
     delCourse(courseIndex, name);
   };
 
+  //TEXT HANDLER
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  //EDITOR HANDLER
   onEditorStateChange = editorState => {
     this.setState({
       editorState
@@ -76,16 +78,8 @@ class CourseList extends Component {
   };
 
   render() {
-    const { courses, loading, search } = this.props;
+    const { courses, search } = this.props;
     const { editorState, changeFlag, courseIndex, title } = this.state;
-
-    if (loading) {
-      return (
-        <>
-          <Spinner />
-        </>
-      );
-    }
 
     let list = courses
       .filter(course => {
@@ -112,7 +106,9 @@ class CourseList extends Component {
                 />
 
                 <ButtonWrapper>
-                  <Button  buttonStyle={"outlined"} type="submit">CONFIRM</Button>
+                  <Button buttonStyle={"outlined"} type="submit">
+                    CONFIRM
+                  </Button>
                 </ButtonWrapper>
               </form>
             </ElementWrapper>
@@ -125,7 +121,7 @@ class CourseList extends Component {
               index={index}
               getParams={this.getParams}
               deleteItem={this.deleteItem}
-              goTo = {this.goTo}
+              goTo={this.goTo}
             />
           );
         }
@@ -153,19 +149,19 @@ class CourseList extends Component {
   }
 }
 
-export default  withRouter(CourseList);
+export default withRouter(CourseList);
 
 CourseList.defaultProps = {
   courses: [],
-  loading: false,
   error: false,
+
+  changeCourse() {},
   delCourse() {}
 };
 
 CourseList.propTypes = {
   courses: PropTypes.arrayOf(PropTypes.object),
-  loading: PropTypes.bool,
   error: PropTypes.bool,
-
-  delCourse: PropTypes.func
+  delCourse: PropTypes.func,
+  changeCourse: PropTypes.func
 };

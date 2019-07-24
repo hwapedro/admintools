@@ -48,26 +48,15 @@ function reducerLesson(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case ADD_LESSON_SUCCESS:
-      if (action.name === "lesson") {
+      if (action.flag === "lesson") {
         return {
           ...state,
           error: false,
           loading: false,
           lessons: [...state.lessons, action.lessons]
         };
-      } else
-        return {
-          ...state,
-          error: false,
-          loading: false,
-          course:
-            state.course !== {}
-              ? {
-                  ...state.course,
-                  lessons: [...state.course.lessons, action.lessons]
-                }
-              : {}
-        };
+      } 
+      return {...state}
 
     case ADD_ELEMENT_FAILURE:
       return stopLoading(state, action);
@@ -92,25 +81,15 @@ function reducerLesson(state = initialState, action = {}) {
       return startLoading(state, action);
 
     case DELETE_LESSON_SUCCESS:
-      if (action.name === "lesson") {
+      if (action.flag === "lesson") {
         return {
           ...state,
           lessons: state.lessons.filter(lesson => lesson._id !== action.index),
           loading: false,
           error: false
         };
-      } else
-        return {
-          ...state,
-          course: {
-            ...state.course,
-            lessons:
-              state.course.lessons &&
-              state.course.lessons.filter(lesson => lesson._id !== action.index)
-          },
-          loading: false,
-          error: false
-        };
+      } 
+      return {...state}
 
     case DELETE_ELEMENT_FAILURE:
       return stopLoading(state, action);
