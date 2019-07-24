@@ -116,12 +116,3 @@ export default connect(
 )(OneCourse);
 
 export const Wrapper = styled.div``;
-
-// const SearchInput = styled.input`
-//   padding-left: 0.5rem;
-//   width: 48.7rem;
-//   height: 40px;
-//   border: 0.6px solid black;
-//   border-radius: 1rem;
-//   outline: none;
-// `;
