@@ -12,7 +12,7 @@ import {
   OptionsWrapper,
   OptionInput,
   CheckboxInput,
-} from "../style";
+} from "../styleLocal";
 import Button from "../../../Button";
 import EditorText from "../../../EditorText";
 import { addTask, changeTask } from "../../../../store/actions/actionLessons";

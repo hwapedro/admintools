@@ -7,7 +7,8 @@ import { withRouter } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { Wrapper, ButtonWrapper, Error } from "../style"
+import { ButtonWrapper, Error } from "../styleLocal"
+import { Wrapper } from "../../GlobalStyles/styleGlobal"
 
 import Input from "../../Input";
 import Button from "../../Button";

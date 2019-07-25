@@ -15,16 +15,18 @@ import {
 } from "../../../store/actions/actionLessons";
 
 import {
-  ButtonWrapper,
   TitleInput,
-  Wrapper,
-  ElementWrapper,
-  TitleSpan,
   DescriptionSpan,
-  LabelElement,
   ImgMark,
-  ImgCross
-} from "../style";
+  ImgCross,
+  ElementWrapper
+} from "../styleLocal";
+import {
+  Wrapper,
+  LabelElement,
+  TitleSpan,
+  ButtonWrapper
+} from "../../GlobalStyles/styleGlobal";
 
 import EditorText from "../../EditorText";
 import Button from "../../Button";
@@ -54,8 +56,7 @@ class Lesson extends Component {
     const token = localStorage.getItem("token");
     getLesson(itemId);
 
-    AdminService
-      .getLesson(token, itemId)
+    AdminService.getLesson(token, itemId)
       .then(response => {
         const courseIndex = response.lesson.courseIndex;
         this.setState({
@@ -64,8 +65,7 @@ class Lesson extends Component {
       })
       .catch(console.error());
 
-    AdminService
-      .getAll(token, "course")
+    AdminService.getAll(token, "course")
       .then(response => {
         options = response.courses.map((element, index) => {
           const option = index + 1;

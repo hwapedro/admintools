@@ -6,12 +6,9 @@ import { Droppable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import {
-  Wrapper,
-  EmptyMessage,
   ElementsWrapper,
-  ImgMark,
-  ImgCross
-} from "../style";
+} from "../styleLocal";
+import { Wrapper, EmptyMessage } from "../../GlobalStyles/styleGlobal"
 
 import Lesson from "./Lesson";
 

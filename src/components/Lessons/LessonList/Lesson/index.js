@@ -2,15 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../../Button";
 
+import { DescriptionSpan, ElementWrapper, ImgMark, ImgCross } from "../../styleLocal.js";
 import {
-  ElementWrapper,
-  TitleSpan,
-  LabelElement,
-  DescriptionSpan,
   ButtonWrapper,
-  ImgMark,
-  ImgCross
-} from "../../style.js";
+  LabelElement,
+  TitleSpan,
+} from "../../../GlobalStyles/styleGlobal";
 
 import LessonContainer from "./LessonContainer";
 

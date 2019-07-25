@@ -5,20 +5,18 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { withRouter } from "react-router-dom";
 
-import Spinner from "../../Spinner";
 import EditorText from "../../EditorText";
 import Course from "./Course";
 import Button from "../../Button";
 
+import { TitleInput, ElementsWrapper } from "../styleLocal";
 import {
   Wrapper,
-  TitleInput,
+  EmptyMessage,
   LabelElement,
-  ButtonWrapper,
   ElementWrapper,
-  ElementsWrapper,
-  EmptyMessage
-} from "../style";
+  ButtonWrapper
+} from "../../GlobalStyles/styleGlobal";
 
 const name = "course";
 

@@ -4,13 +4,12 @@ import { Draggable } from "react-beautiful-dnd";
 
 import Button from "../../../Button";
 
+import { TitleSpan, DescriptionSpan } from "../../styleLocal.js";
 import {
-  ElementWrapper,
-  TitleSpan,
+  ButtonWrapper,
   LabelElement,
-  DescriptionSpan,
-  ButtonWrapper
-} from "../../style.js";
+  ElementWrapper
+} from "../../../GlobalStyles/styleGlobal";
 
 export default function Course({ course, getParams, deleteItem, index, goTo }) {
   return (

@@ -15,7 +15,7 @@ import {
   ElementWrapper,
   ElementsWrapper,
   EmptyMessage
-} from "../style";
+} from "../styleLocal";
 
 const name = "news";
 

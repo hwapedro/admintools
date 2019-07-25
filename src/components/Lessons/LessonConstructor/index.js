@@ -7,17 +7,20 @@ import { stateToHTML } from "draft-js-export-html";
 import EditorText from "../../EditorText";
 import Search from "../../Search";
 import {
-  ButtonWrapper,
   TitleInput,
-  Wrapper,
   DarkGround,
-  LabelElement,
   ConsturctorForm,
   ConsturctorWrapper,
   ImgMark,
   ImgCross,
   ButtonWrapperConstructor
-} from "../style";
+} from "../styleLocal";
+import {
+  Wrapper,
+  LabelElement,
+  ButtonWrapper
+} from "../../GlobalStyles/styleGlobal";
+
 
 import Button from "../../Button";
 import AdminService from "../../../service";

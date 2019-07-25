@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
 
-import { ButtonWrapper, ConsturctorWrapper, DarkGround } from "../style";
+import { ButtonWrapper, ConsturctorWrapper, DarkGround } from "../styleLocal";
 import Button from "../../../Button";
 import TestConstructor from "./TestConstructor";
 import TextConstructor from "./TextConstructor";

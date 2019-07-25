@@ -16,7 +16,7 @@ import {
   LabelElement,
   ButtonWrapper,
   ButtonWrapperConstructor
-} from "../style";
+} from "../styleLocal";
 
 const name = "news";
 

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Page from "../PageList/Page";
 import PageNav from "../PageNav";
 
-import { ElementWrapper,  PageMenu} from "./style"
+import { ElementWrapper,  PageMenu} from "./styleLocal"
 
 class PageList extends Component {
 

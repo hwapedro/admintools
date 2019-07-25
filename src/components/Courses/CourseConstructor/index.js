@@ -1,23 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { EditorState} from "draft-js";
+import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
-import Button from '../../Button'
+import Button from "../../Button";
 
 import {
-  Wrapper,
   DarkGround,
   ConsturctorWrapper,
   TitleInput,
   ConsturctorForm,
+  ButtonWrapperConstructor
+} from "../styleLocal";
+import {
+  Wrapper,
   LabelElement,
-  ButtonWrapperConstructor,
   ButtonWrapper
-} from "../style";
-
+} from "../../GlobalStyles/styleGlobal";
 const name = "course";
 
 export default class CourseCounstructor extends Component {
@@ -29,7 +30,7 @@ export default class CourseCounstructor extends Component {
     event.preventDefault();
     const { addCourses, title, showConstructor } = this.props;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
-    showConstructor()
+    showConstructor();
     addCourses(title, description, name);
   };
 
@@ -42,12 +43,12 @@ export default class CourseCounstructor extends Component {
   render() {
     const { onChange, title, value, constructor, showConstructor } = this.props;
     const { editorState } = this.state;
-    
+
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <Button  buttonStyle={"outlined"} onClick={showConstructor}>
+          <Button buttonStyle={"outlined"} onClick={showConstructor}>
             ADD NEW COURSE
           </Button>
           {constructor && (
@@ -69,7 +70,7 @@ export default class CourseCounstructor extends Component {
                     onEditorStateChange={this.onEditorStateChange}
                   />
                   <ButtonWrapper>
-                    <Button  buttonStyle={"outlined"} type="submit" >
+                    <Button buttonStyle={"outlined"} type="submit">
                       ADD NEW COURSE
                     </Button>
                   </ButtonWrapper>

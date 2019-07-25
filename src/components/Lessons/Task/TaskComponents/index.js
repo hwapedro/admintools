@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Wrapper } from "../style";
+import { Wrapper } from "../styleLocal";
 
 import Test from "./Tests";
 import Text from "./Text";

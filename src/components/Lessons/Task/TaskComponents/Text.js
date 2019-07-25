@@ -7,8 +7,7 @@ import {
   TitleSpan,
   ButtonsWrapper,
   TaskWrapper,
-  DarkGround
-} from "../style";
+} from "../styleLocal";
 
 import {
   deleteTask,

@@ -9,7 +9,7 @@ import {
   LabelElement,
   DescriptionSpan,
   ButtonWrapper,
-} from "../../style.js";
+} from "../../styleLocal.js";
 
 export default function Article({ news, getParams, deleteItem }) {
   return (

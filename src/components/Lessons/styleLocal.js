@@ -138,7 +138,7 @@ export const ConsturctorWrapper = styled.div`
   padding: 1rem;
   position: fixed;
   width: 700px;
-  height: 800px;
+  height: auto;
   top: 35%;
   left: 50%;
   z-index: 101;

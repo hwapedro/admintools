@@ -6,16 +6,15 @@ import Button from "../../Button";
 import Search from "../../Search";
 
 import {
-  Wrapper,
   DarkGround,
   ConsturctorForm,
   ConsturctorWrapper,
   ButtonWrapperConstructor,
   ButtonWrapper,
-  LabelElement,
   DescriptionTextArea,
   TitleInput
-} from "../style";
+} from "../styleLocal";
+import { Wrapper, LabelElement } from "../../GlobalStyles/styleGlobal";
 import { getBase64 } from "../../../store/utils";
 
 export default class BadgeConstructor extends Component {

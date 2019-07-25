@@ -10,7 +10,7 @@ import {
   ButtonsWrapper,
   ButtonWrapper,
   TaskListWrapper
-} from "../style";
+} from "../styleLocal";
 import Button from "../../../Button";
 
 const goTo = (lessonId, taskId, history) => {

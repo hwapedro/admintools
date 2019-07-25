@@ -5,16 +5,14 @@ import ButtonMaterial from "@material-ui/core/Button";
 import Button from "../../Button";
 
 import {
-  Wrapper,
-  TitleSpan,
   TitleInput,
-  LabelElement,
   DescriptionSpan,
   DescriptionTextArea,
   ElementWrapper,
   ElementsWrapper,
   ButtonWrapper
-} from "../style";
+} from "../styleLocal";
+import { Wrapper, TitleSpan, LabelElement } from "../../GlobalStyles/styleGlobal"
 import { getBase64 } from "../../../store/utils";
 
 const name = "badge";

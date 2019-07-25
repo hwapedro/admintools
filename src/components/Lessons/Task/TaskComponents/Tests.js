@@ -13,8 +13,7 @@ import {
   OptionSpan,
   ImgMark,
   ImgCross,
-  DarkGround
-} from "../style";
+} from "../styleLocal";
 
 import {
   // getLesson,

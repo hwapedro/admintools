@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import Button from "../../../Button";
 import TaskList from "../../Task/TaskList";
 import TaskConstructor from "../../Task/TaskConstructors/";
-import { PageNumber, PagesWrapper, ButtonWrapper} from "../style"
+import { PageNumber, PagesWrapper, ButtonWrapper} from "../styleLocal"
 // import Error from "../../../Error";
 
 class Page extends Component {
