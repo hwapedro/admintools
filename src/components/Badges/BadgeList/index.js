@@ -1,10 +1,20 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import ButtonMaterial from "@material-ui/core/Button";
 import Button from "../../Button";
 
+import {
+  Wrapper,
+  TitleSpan,
+  TitleInput,
+  LabelElement,
+  DescriptionSpan,
+  DescriptionTextArea,
+  ElementWrapper,
+  ElementsWrapper,
+  ButtonWrapper
+} from "../style";
 import { getBase64 } from "../../../store/utils";
 
 const name = "badge";
@@ -22,14 +32,14 @@ class badgeList extends Component {
       changeFlag: true,
       badgeIndex: badgeIndex,
       title: title,
-      description: description,
+      description: description
     });
   };
 
   setParams = event => {
     event.preventDefault();
     const { changeBadge } = this.props;
-    const { title, description, badgeIndex} = this.state;
+    const { title, description, badgeIndex } = this.state;
     const icon = localStorage.getItem("icon");
     changeBadge(badgeIndex, title, description, icon);
     this.setState({ changeFlag: false, badgeIndex: null });
@@ -99,7 +109,11 @@ class badgeList extends Component {
         } else {
           return (
             <ElementWrapper key={badge._id}>
-              <img src={badge.icon} alt="icon" style={{width:"70px", height:"70px"}}/>
+              <img
+                src={badge.icon}
+                alt="icon"
+                style={{ width: "70px", height: "70px" }}
+              />
               <LabelElement>Name of badge :</LabelElement>
               <TitleSpan> {badge.title}</TitleSpan>
               <LabelElement>Description of badge : </LabelElement>
@@ -122,7 +136,7 @@ class badgeList extends Component {
                   buttonStyle={"outlined"}
                   onClick={() => {
                     if (window.confirm("Delete the item?")) {
-                      this.deleteItem(badge._id)
+                      this.deleteItem(badge._id);
                     }
                   }}
                 >
@@ -159,93 +173,3 @@ badgeList.propTypes = {
   delBadge: PropTypes.func,
   changeBadge: PropTypes.func
 };
-
-const Wrapper = styled.div`
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TitleSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`;
-
-const TitleInput = styled.input`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-  color: black;
-`;
-
-const LabelElement = styled.span`
-  margin-top: 2rem;
-  font-weight: 900;
-  font-size: 1.8rem;
-`;
-
-const DescriptionSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`;
-
-const DescriptionTextArea = styled.textarea`
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  height: 400px;
-  max-height: 100%;
-  max-width: 100%;
-  resize: none;
-  align-items: center;
-  margin-top: 2rem;
-  font-size: 1.3rem;
-  color: black;
-`;
-
-const ElementsWrapper = styled.ul`
-  list-style-type: none;
-  width: 1000px;
-`;
-
-const ElementWrapper = styled.li`
-  background-color: ${props => props.theme.courses};
-  margin-top: 2rem;
-  padding: 1rem;
-  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  margin-top: 0.5rem;
-`;
-export const SignInButton = styled.button`
-  width: 150px;
-  height: 40px;
-  border: 0;
-  border-radius: 10px;
-  background-color: ${props => props.theme.button};
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-    cursor: pointer;
-  }
-  margin-right: 1rem;
-`;
