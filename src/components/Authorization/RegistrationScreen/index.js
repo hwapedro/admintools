@@ -3,15 +3,14 @@ import { connect } from "react-redux";
 import { register } from "../../../store/actions/actionRegister";
 import { withRouter } from "react-router-dom";
 
-
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { ButtonWrapper, Error } from "../styleLocal"
-import { Wrapper } from "../../GlobalStyles/styleGlobal"
+import { ButtonWrapper, Error } from "../styleLocal";
+import { Wrapper } from "../../GlobalStyles/styleGlobal";
 
-import Input from "../../Input";
-import Button from "../../Button";
+import Input from "../../Shared/Input";
+import Button from "../../Shared/Button";
 
 const signUpSchema = Yup.object().shape({
   // email: Yup.string()
@@ -131,4 +130,3 @@ export default withRouter(
     mapDispatchToProps
   )(RegistrationScreen)
 );
-

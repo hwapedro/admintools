@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Draggable } from "react-beautiful-dnd";
 
-import Button from "../../../Button";
+import Button from "../../../Shared/Button";
 
 import { TitleSpan, DescriptionSpan } from "../../styleLocal.js";
 import {

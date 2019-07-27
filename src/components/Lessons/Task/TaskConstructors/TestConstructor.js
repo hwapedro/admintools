@@ -13,7 +13,7 @@ import {
   OptionInput,
   CheckboxInput,
 } from "../styleLocal";
-import Button from "../../../Button";
+import Button from "../../../Shared/Button";
 import EditorText from "../../../EditorText";
 import { addTask, changeTask } from "../../../../store/actions/actionLessons";
 

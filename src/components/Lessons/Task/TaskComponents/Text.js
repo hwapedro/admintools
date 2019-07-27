@@ -14,7 +14,7 @@ import {
   changeTask
 } from "../../../../store/actions/actionLessons";
 
-import Button from "../../../Button";
+import Button from "../../../Shared/Button";
 import TextConstructor from "../TaskConstructors/TextConstructor";
 
 

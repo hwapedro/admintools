@@ -20,7 +20,7 @@ import {
   deleteTask,
   changeTask
 } from "../../../../store/actions/actionLessons";
-import Button from "../../../Button";
+import Button from "../../../Shared/Button";
 import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
 import TestConstructor from "../TaskConstructors/TestConstructor";

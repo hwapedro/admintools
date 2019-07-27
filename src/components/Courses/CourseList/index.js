@@ -7,9 +7,10 @@ import { withRouter } from "react-router-dom";
 
 import EditorText from "../../EditorText";
 import Course from "./Course";
-import Button from "../../Button";
+import Button from "../../Shared/Button";
+import CustomInput from "../../Shared/Input";
 
-import { TitleInput, ElementsWrapper } from "../styleLocal";
+import { ElementsWrapper } from "../styleLocal";
 import {
   Wrapper,
   EmptyMessage,
@@ -78,7 +79,11 @@ class CourseList extends Component {
   render() {
     const { courses, search } = this.props;
     const { editorState, changeFlag, courseIndex, title } = this.state;
-
+    const field = {
+      name: "title",
+      value: title,
+      onChange: this.onChange
+    }
     let list = courses
       .filter(course => {
         if (course.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
@@ -92,10 +97,8 @@ class CourseList extends Component {
             <ElementWrapper key={course.courseIndex}>
               <form onSubmit={this.setParams}>
                 <LabelElement>Name of course :</LabelElement>
-                <TitleInput
-                  name="title"
-                  onChange={this.onChange}
-                  value={title}
+                <CustomInput
+                  field={field}
                 />
                 <LabelElement>Description of course : </LabelElement>
                 <EditorText

@@ -10,8 +10,8 @@ import * as Yup from "yup";
 import { ButtonWrapper, Error } from "../styleLocal"
 import { Wrapper } from "../../GlobalStyles/styleGlobal"
 
-import Input from "../../Input";
-import Button from '../../Button'
+import Input from "../../Shared/Input";
+import Button from '../../Shared/Button'
 
 
 const signInSchema = Yup.object().shape({

@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import ButtonMaterial from "@material-ui/core/Button";
-import Button from "../../Button";
+import Button from "../../Shared/Button";
+import CustomInput from "../../Shared/Input";
 
 import {
-  TitleInput,
   DescriptionSpan,
   DescriptionTextArea,
   ElementWrapper,
@@ -60,6 +60,12 @@ class badgeList extends Component {
 
   render() {
     const { badges, search } = this.props;
+    const { title, description } = this.state
+    const field = {
+      name: "title",
+      value: title,
+      onChange: this.onChange
+    }
     let list = badges
       .filter(badge => {
         if (badge.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
@@ -73,16 +79,14 @@ class badgeList extends Component {
             <ElementWrapper key={badge._id}>
               <form onSubmit={this.setParams}>
                 <LabelElement>Name of badge :</LabelElement>
-                <TitleInput
-                  name="title"
-                  onChange={this.onChange}
-                  value={this.state.title}
+                <CustomInput
+                  field={field}
                 />
                 <LabelElement>Description of badge : </LabelElement>
                 <DescriptionTextArea
                   name="description"
                   onChange={this.onChange}
-                  value={this.state.description}
+                  value={description}
                 />
                 <input
                   accept="image/*"

@@ -6,11 +6,11 @@ import { stateToHTML } from "draft-js-export-html";
 import {
   LabelElement,
   ConsturctorForm,
-  TitleInput,
   ButtonWrapper,
   TextQuestion,
 } from "../styleLocal";
-import Button from "../../../Button";
+import Button from "../../../Shared/Button";
+import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
 import { addTask, changeTask } from "../../../../store/actions/actionLessons";
 
@@ -98,15 +98,18 @@ class TextConstructor extends Component {
   render() {
     const { editorState } = this.state;
     const { name, question} = this.state;
+    const field = {
+      name: "name",
+      value: name,
+      onChange: this.infoChange
+    }
     return (
       <>
       <ConsturctorForm onSubmit={this.onSubmit}>
         <LabelElement>Title</LabelElement>
-        <TitleInput
-          name="name"
+        <CustomInput
           placeholder="Title"
-          value={name}
-          onChange={this.infoChange}
+          field={field}
         />
         <LabelElement>Description</LabelElement>
         <EditorText

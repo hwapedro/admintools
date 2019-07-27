@@ -5,12 +5,13 @@ import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
-import Button from "../../Button";
+import Button from "../../Shared/Button";
+import CustomInput from "../../Shared/Input"
+
 
 import {
   DarkGround,
   ConsturctorWrapper,
-  TitleInput,
   ConsturctorForm,
   ButtonWrapperConstructor
 } from "../styleLocal";
@@ -43,7 +44,11 @@ export default class CourseCounstructor extends Component {
   render() {
     const { onChange, title, value, constructor, showConstructor } = this.props;
     const { editorState } = this.state;
-
+    const field = {
+      name: "title",
+      value: title,
+      onChange: onChange
+    }
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
@@ -57,12 +62,10 @@ export default class CourseCounstructor extends Component {
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
                   <LabelElement>title</LabelElement>
-                  <TitleInput
-                    name="title"
+                  <CustomInput
                     placeholder="title"
                     type="text"
-                    value={title}
-                    onChange={onChange}
+                    field={field}
                   />
                   <LabelElement>description</LabelElement>
                   <EditorText

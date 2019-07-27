@@ -11,7 +11,7 @@ import {
   ButtonWrapper,
   TaskListWrapper
 } from "../styleLocal";
-import Button from "../../../Button";
+import Button from "../../../Shared/Button";
 
 const goTo = (lessonId, taskId, history) => {
   history.push(`/task/${lessonId}/${taskId}`);

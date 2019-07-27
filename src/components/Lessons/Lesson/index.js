@@ -15,7 +15,6 @@ import {
 } from "../../../store/actions/actionLessons";
 
 import {
-  TitleInput,
   DescriptionSpan,
   ImgMark,
   ImgCross,
@@ -29,7 +28,8 @@ import {
 } from "../../GlobalStyles/styleGlobal";
 
 import EditorText from "../../EditorText";
-import Button from "../../Button";
+import Button from "../../Shared/Button";
+import CustomInput from "../../Shared/Input";
 import Spinner from "../../Spinner";
 import PageList from "../PageList";
 import Error from "../../Error";
@@ -144,7 +144,12 @@ class Lesson extends Component {
 
   render() {
     const { lesson, loading, deletePage, deleteTask, error } = this.props;
-    const { editorState, changeFlag, courseIndex } = this.state;
+    const { editorState, changeFlag, courseIndex, title } = this.state;
+    const field = {
+      name: "title",
+      value: title,
+      onChange: this.onChange
+    }
     if (loading) {
       return (
         <>
@@ -173,10 +178,8 @@ class Lesson extends Component {
                 <ElementWrapper>
                   <form onSubmit={this.setParams}>
                     <LabelElement>Name of Lesson :</LabelElement>
-                    <TitleInput
-                      name="title"
-                      onChange={this.onChange}
-                      value={this.state.title}
+                    <CustomInput
+                      field={field}
                     />
                     <LabelElement>Description of Lesson : </LabelElement>
                     <EditorText

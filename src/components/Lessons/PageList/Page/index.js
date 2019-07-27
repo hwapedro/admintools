@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
 
-import Button from "../../../Button";
+import Button from "../../../Shared/Button";
 import TaskList from "../../Task/TaskList";
 import TaskConstructor from "../../Task/TaskConstructors/";
 import { PageNumber, PagesWrapper, ButtonWrapper} from "../styleLocal"

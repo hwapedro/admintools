@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import ButtonMaterial from "@material-ui/core/Button";
-import Button from "../../Button";
+import Button from "../../Shared/Button";
+import CustomInput from "../../Shared/Input";
 import Search from "../../Search";
 
 import {
@@ -12,7 +13,6 @@ import {
   ButtonWrapperConstructor,
   ButtonWrapper,
   DescriptionTextArea,
-  TitleInput
 } from "../styleLocal";
 import { Wrapper, LabelElement } from "../../GlobalStyles/styleGlobal";
 import { getBase64 } from "../../../store/utils";
@@ -55,6 +55,11 @@ export default class BadgeConstructor extends Component {
   render() {
     const { constructor, title, description } = this.state;
     const { onChange, value } = this.props;
+    const field = {
+      name: "title",
+      value: title,
+      onChange: this.onChange
+    }
     if (constructor) {
       return (
         <Wrapper>
@@ -68,12 +73,10 @@ export default class BadgeConstructor extends Component {
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
               <LabelElement>title</LabelElement>
-              <TitleInput
-                name="title"
+              <CustomInput
                 placeholder="title"
                 type="text"
-                value={title}
-                onChange={this.onChange}
+                field={field}
               />
               <LabelElement>description</LabelElement>
               <DescriptionTextArea

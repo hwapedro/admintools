@@ -5,11 +5,11 @@ import { stateToHTML } from "draft-js-export-html";
 
 import Article from "./Article";
 import EditorText from "../../EditorText";
-import Button from '../../Button'
+import Button from '../../Shared/Button'
+import CustomInput from '../../Shared/Input'
 
 import {
   Wrapper,
-  TitleInput,
   LabelElement,
   ButtonWrapper,
   ElementWrapper,
@@ -82,7 +82,7 @@ class NewsList extends Component {
           <ElementWrapper key={news._id}>
             <form onSubmit={this.setParams}>
               <LabelElement>Name of news :</LabelElement>
-              <TitleInput name="title" onChange={this.onChange} value={title} />
+              <CustomInput name="title" onChange={this.onChange} value={title} />
               <LabelElement>Description of news : </LabelElement>
 
               <EditorText

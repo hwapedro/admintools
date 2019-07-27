@@ -5,13 +5,13 @@ import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
-import Button from '../../Button'
+import Button from "../../Shared/Button";
+import CustomInput from "../../Shared/Input";
 
 import {
   Wrapper,
   DarkGround,
   ConsturctorWrapper,
-  TitleInput,
   ConsturctorForm,
   LabelElement,
   ButtonWrapper,
@@ -60,7 +60,11 @@ class SetArticle extends Component {
   render() {
     const { onChange, title, value, constructor, showConstructor } = this.props;
     const { editorState } = this.state;
-
+    const field = {
+      name: "title",
+      value: title,
+      onChange: onChange
+    };
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
@@ -75,20 +79,14 @@ class SetArticle extends Component {
             <ConsturctorWrapper>
               <ConsturctorForm onSubmit={this.onSubmit}>
                 <LabelElement>TITLE</LabelElement>
-                <TitleInput
-                  name="title"
-                  placeholder="title"
-                  type="text"
-                  value={title}
-                  onChange={onChange}
-                />
+                <CustomInput placeholder="title" type="text" field={field} />
                 <LabelElement>DESCRIPTION</LabelElement>
                 <EditorText
                   editorState={editorState}
                   onEditorStateChange={this.onEditorStateChange}
                 />
                 <ButtonWrapper>
-                  <Button  buttonStyle={"outlined"} type="submit">
+                  <Button buttonStyle={"outlined"} type="submit">
                     ADD NEW ARTICLE
                   </Button>
                 </ButtonWrapper>
