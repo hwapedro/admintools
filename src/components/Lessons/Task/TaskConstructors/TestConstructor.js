@@ -155,7 +155,6 @@ class TestConstructor extends Component {
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
-          <LabelElement>Title</LabelElement>
           <CustomInput
             placeholder="Title"
             field={{
@@ -172,7 +171,6 @@ class TestConstructor extends Component {
             onEditorStateChange={this.onEditorStateChange}
           />
 
-          <LabelElement>Question</LabelElement>
           <CustomInput
             field={{
               name: "question",

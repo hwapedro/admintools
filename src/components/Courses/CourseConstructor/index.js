@@ -55,7 +55,6 @@ export default class CourseCounstructor extends Component {
               <DarkGround onClick={showConstructor} />
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
-                  <LabelElement>title</LabelElement>
                   <CustomInput
                     placeholder="title"
                     type="text"

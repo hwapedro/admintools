@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Field, Input, Label } from "./style";
+import { Field, TitleInput, Label } from "./style";
 
 const CustomInput = ({
   label,
@@ -10,8 +10,8 @@ const CustomInput = ({
   field: { name, value, onChange }
 }) => (
   <Field>
-    <Label htmlFor={name}>{label}</Label>
-    <Input
+    <Label htmlFor={name}>{name}</Label>
+    <TitleInput
       name={name}
       value={value}
       placeholder={placeholder}

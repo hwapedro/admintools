@@ -29,7 +29,17 @@ export const Input = styled.input`
     outline-width: 4px;
   }
 `
-
+export const TitleInput = styled.input`
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 1.3rem;
+  color: black;
+  padding-left: 0.7em;
+  width: 100%;
+`;
 export const Label = styled.label`
   font-size: 1.5rem;
   color: black;

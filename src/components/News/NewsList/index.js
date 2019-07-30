@@ -83,7 +83,6 @@ class NewsList extends Component {
           return (
             <ElementWrapper key={news._id}>
               <form onSubmit={this.setParams}>
-                <LabelElement>Title :</LabelElement>
                 <CustomInput
                   onChange={this.onChange}
                   field={{

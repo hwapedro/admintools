@@ -116,7 +116,6 @@ class LessonConstructor extends Component {
               <DarkGround onClick={this.showConstructor} />
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
-                  <LabelElement>title</LabelElement>
                   <CustomInput
                     placeholder="title"
                     type="text"

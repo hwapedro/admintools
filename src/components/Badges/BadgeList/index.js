@@ -77,7 +77,6 @@ class badgeList extends Component {
           return (
             <ElementWrapper key={badge._id}>
               <form onSubmit={this.setParams}>
-                <LabelElement>Name of badge :</LabelElement>
                 <CustomInput
                   field={{
                     name: "title",

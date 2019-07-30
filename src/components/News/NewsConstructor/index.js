@@ -73,7 +73,6 @@ class SetArticle extends Component {
             <DarkGround onClick={showConstructor} />
             <ConsturctorWrapper>
               <ConsturctorForm onSubmit={this.onSubmit}>
-                <LabelElement>TITLE</LabelElement>
                 <CustomInput
                   placeholder="title"
                   type="text"

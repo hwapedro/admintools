@@ -92,7 +92,6 @@ class CourseList extends Component {
           return (
             <ElementWrapper key={course.courseIndex}>
               <form onSubmit={this.setParams}>
-                <LabelElement>Name of course :</LabelElement>
                 <CustomInput
                   field={{
                     name: "title",
