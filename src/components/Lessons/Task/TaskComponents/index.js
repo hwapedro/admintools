@@ -6,7 +6,7 @@ import { Wrapper } from "../styleLocal";
 import Test from "./Tests";
 import Text from "./Text";
 import { getLesson } from "../../../../store/actions/actionLessons";
-import Button from "../../../Button";
+import Button from "../../../Shared/Button";
 import Spinner from "../../../Spinner";
 import Error from "../../../Error";
 

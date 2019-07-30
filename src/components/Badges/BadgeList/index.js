@@ -12,7 +12,11 @@ import {
   ElementsWrapper,
   ButtonWrapper
 } from "../styleLocal";
-import { Wrapper, TitleSpan, LabelElement } from "../../GlobalStyles/styleGlobal"
+import {
+  Wrapper,
+  TitleSpan,
+  LabelElement
+} from "../../GlobalStyles/styleGlobal";
 import { getBase64 } from "../../../store/utils";
 
 const name = "badge";
@@ -60,12 +64,7 @@ class badgeList extends Component {
 
   render() {
     const { badges, search } = this.props;
-    const { title, description } = this.state
-    const field = {
-      name: "title",
-      value: title,
-      onChange: this.onChange
-    }
+    const { title, description } = this.state;
     let list = badges
       .filter(badge => {
         if (badge.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
@@ -80,7 +79,11 @@ class badgeList extends Component {
               <form onSubmit={this.setParams}>
                 <LabelElement>Name of badge :</LabelElement>
                 <CustomInput
-                  field={field}
+                  field={{
+                    name: "title",
+                    value: title,
+                    onChange: this.onChange
+                  }}
                 />
                 <LabelElement>Description of badge : </LabelElement>
                 <DescriptionTextArea

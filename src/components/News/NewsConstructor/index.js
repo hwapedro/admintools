@@ -60,11 +60,6 @@ class SetArticle extends Component {
   render() {
     const { onChange, title, value, constructor, showConstructor } = this.props;
     const { editorState } = this.state;
-    const field = {
-      name: "title",
-      value: title,
-      onChange: onChange
-    };
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
@@ -79,7 +74,15 @@ class SetArticle extends Component {
             <ConsturctorWrapper>
               <ConsturctorForm onSubmit={this.onSubmit}>
                 <LabelElement>TITLE</LabelElement>
-                <CustomInput placeholder="title" type="text" field={field} />
+                <CustomInput
+                  placeholder="title"
+                  type="text"
+                  field={{
+                    name: "title",
+                    value: title,
+                    onChange: onChange
+                  }}
+                />
                 <LabelElement>DESCRIPTION</LabelElement>
                 <EditorText
                   editorState={editorState}

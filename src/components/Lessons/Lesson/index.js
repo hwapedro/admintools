@@ -145,11 +145,6 @@ class Lesson extends Component {
   render() {
     const { lesson, loading, deletePage, deleteTask, error } = this.props;
     const { editorState, changeFlag, courseIndex, title } = this.state;
-    const field = {
-      name: "title",
-      value: title,
-      onChange: this.onChange
-    }
     if (loading) {
       return (
         <>
@@ -179,7 +174,11 @@ class Lesson extends Component {
                   <form onSubmit={this.setParams}>
                     <LabelElement>Name of Lesson :</LabelElement>
                     <CustomInput
-                      field={field}
+                      field={{
+                        name: "title",
+                        value: title,
+                        onChange: this.onChange
+                      }}
                     />
                     <LabelElement>Description of Lesson : </LabelElement>
                     <EditorText

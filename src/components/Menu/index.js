@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 
 import {Wrapper, LinkStyle, Title, ButtonWrapper, ButtonSignOut} from "./styleLocal"
-import Button from "../Button";
+import Button from "../Shared/Button";
 import * as route from "../Route/constants";
 
 class Menu extends Component {

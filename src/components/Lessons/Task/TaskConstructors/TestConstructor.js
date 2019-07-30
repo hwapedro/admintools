@@ -11,12 +11,12 @@ import {
   ButtonWrapper,
   OptionsWrapper,
   OptionInput,
-  CheckboxInput,
+  CheckboxInput
 } from "../styleLocal";
 import Button from "../../../Shared/Button";
+import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
 import { addTask, changeTask } from "../../../../store/actions/actionLessons";
-
 
 let index = 100;
 const type = "test";
@@ -156,11 +156,13 @@ class TestConstructor extends Component {
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
           <LabelElement>Title</LabelElement>
-          <TitleInput
-            name="name"
-            placeholder="Name"
-            value={info.name}
-            onChange={this.infoChange}
+          <CustomInput
+            placeholder="Title"
+            field={{
+              name: "name",
+              value: info.name,
+              onChange: this.infoChange
+            }}
           />
 
           <LabelElement>Description</LabelElement>
@@ -171,11 +173,13 @@ class TestConstructor extends Component {
           />
 
           <LabelElement>Question</LabelElement>
-          <QuestionInput
-            name="question"
-            value={info.question}
+          <CustomInput
+            field={{
+              name: "question",
+              value: info.question,
+              onChange: this.infoChange
+            }}
             placeholder="Question"
-            onChange={this.infoChange}
           />
           <ButtonWrapper>
             <Button buttonStyle={"outlined"} onClick={this.addOption}>

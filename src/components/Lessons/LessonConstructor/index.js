@@ -104,11 +104,6 @@ class LessonConstructor extends Component {
   render() {
     const { constructor, exam, courseIndex, editorState, title } = this.state;
     const { onChange, value, course } = this.props;
-    const field = {
-      name: "title",
-      value: title,
-      onChange: this.onChange
-    }
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
@@ -125,7 +120,11 @@ class LessonConstructor extends Component {
                   <CustomInput
                     placeholder="title"
                     type="text"
-                    field={field}
+                    field={{
+                      name: "title",
+                      value: title,
+                      onChange: this.onChange
+                    }}
                   />
                   <LabelElement>description</LabelElement>
                   <EditorText

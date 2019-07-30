@@ -12,7 +12,7 @@ import {
   ConsturctorWrapper,
   ButtonWrapperConstructor,
   ButtonWrapper,
-  DescriptionTextArea,
+  DescriptionTextArea
 } from "../styleLocal";
 import { Wrapper, LabelElement } from "../../GlobalStyles/styleGlobal";
 import { getBase64 } from "../../../store/utils";
@@ -55,11 +55,7 @@ export default class BadgeConstructor extends Component {
   render() {
     const { constructor, title, description } = this.state;
     const { onChange, value } = this.props;
-    const field = {
-      name: "title",
-      value: title,
-      onChange: this.onChange
-    }
+
     if (constructor) {
       return (
         <Wrapper>
@@ -76,7 +72,11 @@ export default class BadgeConstructor extends Component {
               <CustomInput
                 placeholder="title"
                 type="text"
-                field={field}
+                field={{
+                  name: "title",
+                  value: title,
+                  onChange: this.onChange
+                }}
               />
               <LabelElement>description</LabelElement>
               <DescriptionTextArea

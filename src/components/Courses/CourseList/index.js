@@ -79,11 +79,7 @@ class CourseList extends Component {
   render() {
     const { courses, search } = this.props;
     const { editorState, changeFlag, courseIndex, title } = this.state;
-    const field = {
-      name: "title",
-      value: title,
-      onChange: this.onChange
-    }
+
     let list = courses
       .filter(course => {
         if (course.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
@@ -98,7 +94,11 @@ class CourseList extends Component {
               <form onSubmit={this.setParams}>
                 <LabelElement>Name of course :</LabelElement>
                 <CustomInput
-                  field={field}
+                  field={{
+                    name: "title",
+                    value: title,
+                    onChange: this.onChange
+                  }}
                 />
                 <LabelElement>Description of course : </LabelElement>
                 <EditorText

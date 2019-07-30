@@ -7,7 +7,7 @@ import {
   LabelElement,
   ConsturctorForm,
   ButtonWrapper,
-  TextQuestion,
+  TextQuestion
 } from "../styleLocal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
@@ -49,8 +49,8 @@ class TextConstructor extends Component {
   }
 
   infoChange = event => {
-    if (event.target.name === "question"){
-      this.parseAnswer(event.target.value)
+    if (event.target.name === "question") {
+      this.parseAnswer(event.target.value);
     }
     this.setState({
       [event.target.name]: event.target.value
@@ -85,8 +85,8 @@ class TextConstructor extends Component {
       name: name,
       description: description,
       question: question,
-      options: options      
-    } 
+      options: options
+    };
     if (task) {
       changeTask(task._id, type, info, pageId);
       changeEditFlag();
@@ -97,41 +97,40 @@ class TextConstructor extends Component {
 
   render() {
     const { editorState } = this.state;
-    const { name, question} = this.state;
-    const field = {
-      name: "name",
-      value: name,
-      onChange: this.infoChange
-    }
+    const { name, question } = this.state;
     return (
       <>
-      <ConsturctorForm onSubmit={this.onSubmit}>
-        <LabelElement>Title</LabelElement>
-        <CustomInput
-          placeholder="Title"
-          field={field}
-        />
-        <LabelElement>Description</LabelElement>
-        <EditorText
-          editorState={editorState}
-          onEditorStateChange={this.onEditorStateChange}
-        />
-        <LabelElement>Question</LabelElement>
-        <br />
-        <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
-        <TextQuestion
-          name="question"
-          placeholder="Question"
-          value={question}
-          onChange={this.infoChange}
-        />
+        <ConsturctorForm onSubmit={this.onSubmit}>
+          <LabelElement>Title</LabelElement>
+          <CustomInput
+            placeholder="Title"
+            field={{
+              name: "name",
+              value: name,
+              onChange: this.infoChange
+            }}
+          />
+          <LabelElement>Description</LabelElement>
+          <EditorText
+            editorState={editorState}
+            onEditorStateChange={this.onEditorStateChange}
+          />
+          <LabelElement>Question</LabelElement>
+          <br />
+          <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
+          <TextQuestion
+            name="question"
+            placeholder="Question"
+            value={question}
+            onChange={this.infoChange}
+          />
 
-        <ButtonWrapper>
-          <Button buttonStyle={"outlined"} type="submit">
-            Save
-          </Button>
-        </ButtonWrapper>
-      </ConsturctorForm>
+          <ButtonWrapper>
+            <Button buttonStyle={"outlined"} type="submit">
+              Save
+            </Button>
+          </ButtonWrapper>
+        </ConsturctorForm>
       </>
     );
   }

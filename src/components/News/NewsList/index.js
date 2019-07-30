@@ -5,8 +5,8 @@ import { stateToHTML } from "draft-js-export-html";
 
 import Article from "./Article";
 import EditorText from "../../EditorText";
-import Button from '../../Shared/Button'
-import CustomInput from '../../Shared/Input'
+import Button from "../../Shared/Button";
+import CustomInput from "../../Shared/Input";
 
 import {
   Wrapper,
@@ -68,47 +68,58 @@ class NewsList extends Component {
   };
 
   render() {
-    const { news ,search} = this.props;
+    const { news, search } = this.props;
     const { editorState, _id, changeFlag, title } = this.state;
 
-    let list = news.filter(article => {
+    let list = news
+      .filter(article => {
         if (article.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
           return true;
         }
         return false;
-      }).map((news, index) => {
-      if (changeFlag && news._id === _id) {
-        return (
-          <ElementWrapper key={news._id}>
-            <form onSubmit={this.setParams}>
-              <LabelElement>Name of news :</LabelElement>
-              <CustomInput name="title" onChange={this.onChange} value={title} />
-              <LabelElement>Description of news : </LabelElement>
+      })
+      .map((news, index) => {
+        if (changeFlag && news._id === _id) {
+          return (
+            <ElementWrapper key={news._id}>
+              <form onSubmit={this.setParams}>
+                <LabelElement>Title :</LabelElement>
+                <CustomInput
+                  onChange={this.onChange}
+                  field={{
+                    name: "title",
+                    value: title,
+                    onChange: this.onChange
+                  }}
+                />
+                <LabelElement>Description of article : </LabelElement>
 
-              <EditorText
-                editorState={editorState}
-                onEditorStateChange={this.onEditorStateChange}
-              />
+                <EditorText
+                  editorState={editorState}
+                  onEditorStateChange={this.onEditorStateChange}
+                />
 
-              <ButtonWrapper>
-                <Button  buttonStyle={"outlined"} type="submit">CONFIRM</Button>
-              </ButtonWrapper>
-            </form>
-          </ElementWrapper>
-        );
-      } else {
-        return (
-          <Article
-            key={news._id}
-            news={news}
-            index={index}
-            getParams={this.getParams}
-            deleteItem={this.deleteItem}
-          />
-        );
-      }
-    });
-    console.log(news)
+                <ButtonWrapper>
+                  <Button buttonStyle={"outlined"} type="submit">
+                    CONFIRM
+                  </Button>
+                </ButtonWrapper>
+              </form>
+            </ElementWrapper>
+          );
+        } else {
+          return (
+            <Article
+              key={news._id}
+              news={news}
+              index={index}
+              getParams={this.getParams}
+              deleteItem={this.deleteItem}
+            />
+          );
+        }
+      });
+    console.log(news);
     return (
       <Wrapper>
         {news.length === 0 || list.length === 0 ? (
