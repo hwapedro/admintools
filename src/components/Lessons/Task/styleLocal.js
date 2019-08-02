@@ -72,7 +72,6 @@ export const OptionElementWrapper = styled.li`
   margin: 0.5rem 0;
   display: flex
   flex-direction: row;
-  
   align-items: center;
 `;
 
@@ -164,7 +163,6 @@ export const QuestionInput = styled.input`
   padding-left: 0.7em;
   width: 100%;
 `;
-
 
 
 export const OptionInput = styled.input`

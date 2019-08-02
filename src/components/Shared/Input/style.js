@@ -4,7 +4,7 @@ export const Field = styled.div`
   display: flex;
   flex-direction: column;
   :not(:first-child) {
-    margin-top: 55px;
+    margin-top: 35px;
   }
 `
 

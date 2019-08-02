@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { ButtonWrapper, Error } from "../styleLocal";
+import { FormWrapper, ButtonWrapper, Error } from "../styleLocal";
 import { Wrapper } from "../../GlobalStyles/styleGlobal";
 
 import Input from "../../Shared/Input";
@@ -56,8 +56,9 @@ class RegistrationScreen extends React.Component {
           validationSchema={signUpSchema}
           onSubmit={this.setLogin}
           render={({ errors, touched }) => (
-            <Form autoComplete="off">
-              {/* <Field
+            <FormWrapper>
+              <Form autoComplete="off">
+                {/* <Field
                 name="e-mail"
                 label="E-mail"
                 placeholder="Enter email"
@@ -66,46 +67,47 @@ class RegistrationScreen extends React.Component {
               />
               <ErrorMessage name="email" component={Error} /> */}
 
-              <Field
-                name="username"
-                label="Username"
-                placeholder="Введите никнейм"
-                invalid={touched.username && errors.username}
-                component={Input}
-              />
-              <ErrorMessage name="username" component={Error} />
+                <Field
+                  name="username"
+                  label="Username"
+                  placeholder="Введите никнейм"
+                  invalid={touched.username && errors.username}
+                  component={Input}
+                />
+                <ErrorMessage name="username" component={Error} />
 
-              <Field
-                name="password"
-                label="Password"
-                placeholder="Введите пароль"
-                invalid={touched.password && errors.password}
-                component={Input}
-              />
-              <ErrorMessage name="password" component={Error} />
+                <Field
+                  name="password"
+                  label="Password"
+                  placeholder="Введите пароль"
+                  invalid={touched.password && errors.password}
+                  component={Input}
+                />
+                <ErrorMessage name="password" component={Error} />
 
-              <Field
-                name="confirmPassword"
-                label="Confirm password"
-                placeholder="Подтвердите пароль"
-                invalid={touched.password && errors.password}
-                component={Input}
-              />
+                <Field
+                  name="confirmPassword"
+                  label="Confirm password"
+                  placeholder="Подтвердите пароль"
+                  invalid={touched.password && errors.password}
+                  component={Input}
+                />
 
-              <ErrorMessage name="password" component={Error} />
+                <ErrorMessage name="password" component={Error} />
 
-              <ButtonWrapper>
-                <Button buttonStyle={"outlined"} type="submit">
-                  SIGN UP
-                </Button>
-              </ButtonWrapper>
+                <ButtonWrapper>
+                  <Button buttonStyle={"outlined"} type="submit">
+                    SIGN UP
+                  </Button>
+                </ButtonWrapper>
 
-              <ButtonWrapper>
-                <Button buttonStyle={"outlined"} onClick={this.toLogin}>
-                  Back
-                </Button>
-              </ButtonWrapper>
-            </Form>
+                <ButtonWrapper>
+                  <Button buttonStyle={"outlined"} onClick={this.toLogin}>
+                    Back
+                  </Button>
+                </ButtonWrapper>
+              </Form>
+            </FormWrapper>
           )}
         />
         {error ? <div> Error {error} </div> : <div />}

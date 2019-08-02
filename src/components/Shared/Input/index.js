@@ -10,7 +10,7 @@ const CustomInput = ({
   field: { name, value, onChange }
 }) => (
   <Field>
-    <Label htmlFor={name}>{name}</Label>
+    <Label htmlFor={label}>{label}</Label>
     <TitleInput
       name={name}
       value={value}

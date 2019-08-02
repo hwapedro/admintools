@@ -76,6 +76,7 @@ class SetArticle extends Component {
                 <CustomInput
                   placeholder="title"
                   type="text"
+                  label="Title"
                   field={{
                     name: "title",
                     value: title,

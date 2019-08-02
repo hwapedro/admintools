@@ -3,16 +3,19 @@ import { connect } from "react-redux";
 import { login } from "../../../store/actions/actionLogin";
 import { withRouter } from "react-router-dom";
 
-
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { ButtonWrapper, Error } from "../styleLocal"
-import { Wrapper } from "../../GlobalStyles/styleGlobal"
+import {
+  FormWrapper,
+  ButtonsWrapper,
+  ButtonWrapper,
+  Error
+} from "../styleLocal";
+import { Wrapper } from "../../GlobalStyles/styleGlobal";
 
 import Input from "../../Shared/Input";
-import Button from '../../Shared/Button'
-
+import Button from "../../Shared/Button";
 
 const signInSchema = Yup.object().shape({
   username: Yup.string().required("Обязательно для заполнения"),
@@ -50,35 +53,39 @@ class LoginScreen extends React.Component {
           validationSchema={signInSchema}
           onSubmit={this.setLogin}
           render={({ errors, touched }) => (
-            <Form autoComplete="off">
-              <Field
-                name="username"
-                label="username"
-                placeholder="Введите никнейм"
-                invalid={touched.username && errors.username}
-                component={Input}
-              />
-              <ErrorMessage name="username" component={Error} />
+            <FormWrapper>
+              <Form autoComplete="off">
+                <Field
+                  name="username"
+                  label="username"
+                  placeholder="Введите никнейм"
+                  invalid={touched.username && errors.username}
+                  component={Input}
+                />
+                <ErrorMessage name="username" component={Error} />
 
-              <Field
-                name="password"
-                label="password"
-                placeholder="Введите пароль"
-                invalid={touched.password && errors.password}
-                component={Input}
-              />
-              <ErrorMessage name="password" component={Error} />
+                <Field
+                  name="password"
+                  label="password"
+                  placeholder="Введите пароль"
+                  invalid={touched.password && errors.password}
+                  component={Input}
+                />
+                <ErrorMessage name="password" component={Error} />
 
-              <ButtonWrapper>
-                <Button buttonStyle={"outlined"} type="submit">SIGN IN</Button>
-              </ButtonWrapper>
+                  <ButtonWrapper>
+                    <Button buttonStyle={"outlined"} type="submit">
+                      SIGN IN
+                    </Button>
+                  </ButtonWrapper>
 
-              <ButtonWrapper>
-                <button onClick={this.toRegister}>
-                  Not registered yet? Sign up now!
-                </button>
-              </ButtonWrapper>
-            </Form>
+                  <ButtonWrapper>
+                    <Button buttonStyle={"outlined"} onClick={this.toRegister}>
+                      Not registered yet? Sign up now!
+                    </Button>
+                  </ButtonWrapper>
+              </Form>
+            </FormWrapper>
           )}
         />
         {error ? <div> Error {error} </div> : <div />}
@@ -103,4 +110,3 @@ export default withRouter(
     mapDispatchToProps
   )(LoginScreen)
 );
-

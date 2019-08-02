@@ -117,6 +117,7 @@ class LessonConstructor extends Component {
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
                   <CustomInput
+                   label="Title"
                     placeholder="title"
                     type="text"
                     field={{

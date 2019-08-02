@@ -102,6 +102,7 @@ class TextConstructor extends Component {
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
           <CustomInput
+            label="Title"
             placeholder="Title"
             field={{
               name: "name",

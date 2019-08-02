@@ -173,6 +173,7 @@ class Lesson extends Component {
                 <ElementWrapper>
                   <form onSubmit={this.setParams}>
                     <CustomInput
+                     label="Title"
                       field={{
                         name: "title",
                         value: title,

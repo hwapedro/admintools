@@ -85,6 +85,7 @@ class NewsList extends Component {
               <form onSubmit={this.setParams}>
                 <CustomInput
                   onChange={this.onChange}
+                  label="Title"
                   field={{
                     name: "title",
                     value: title,

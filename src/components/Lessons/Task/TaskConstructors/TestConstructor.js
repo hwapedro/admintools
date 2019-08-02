@@ -6,10 +6,9 @@ import { stateToHTML } from "draft-js-export-html";
 import {
   LabelElement,
   ConsturctorForm,
-  TitleInput,
-  QuestionInput,
   ButtonWrapper,
   OptionsWrapper,
+  OptionElementWrapper,
   OptionInput,
   CheckboxInput
 } from "../styleLocal";
@@ -156,6 +155,7 @@ class TestConstructor extends Component {
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
           <CustomInput
+            label="Title"
             placeholder="Title"
             field={{
               name: "name",
@@ -172,6 +172,7 @@ class TestConstructor extends Component {
           />
 
           <CustomInput
+            label="Question"
             field={{
               name: "question",
               value: info.question,
@@ -188,13 +189,14 @@ class TestConstructor extends Component {
           <div>
             {info.options.map(el => {
               return (
-                <div className="form-check" key={el.index}>
-                  <OptionsWrapper>
+                <OptionsWrapper className="form-check" key={el.index}>
+                  <OptionElementWrapper>
                     <OptionInput
                       name="answer"
-                      placeholder="Answer"
                       value={el.answer}
                       onChange={e => this.answerChange(el.index, e)}
+                      label="Answer"
+                      placeholder="Answer"
                     />
                     <CheckboxInput
                       type="checkbox"
@@ -207,8 +209,8 @@ class TestConstructor extends Component {
                     >
                       Delete option
                     </Button>
-                  </OptionsWrapper>
-                </div>
+                  </OptionElementWrapper>
+                </OptionsWrapper>
               );
             })}
           </div>
