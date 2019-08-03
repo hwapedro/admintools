@@ -3,18 +3,17 @@ import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 
-
 const SearchInput = withStyles({
   root: {
     "& .MuiOutlinedInput-input": {
       padding: "10px 14px",
-      fontSize: '14px'
+      fontSize: "14px"
     }
   }
 })(TextField);
 
 function Search({ onChange, value, classes }) {
-  return ( 
+  return (
     <SearchInput
       id="standard-bare"
       name="search"
@@ -22,11 +21,13 @@ function Search({ onChange, value, classes }) {
       variant="outlined"
       value={value}
       onChange={onChange}
-      style = {{width: "82%"}}
+      style={{
+        minWidth: "75%",
+        width: "auto"
+      }}
     />
   );
 }
 export default Search;
 
 export const Wrapper = styled.div``;
-

@@ -135,8 +135,8 @@ export const ConsturctorForm = styled.form``;
 
 export const ConsturctorWrapper = styled.div`
   background: ${props => props.theme.courses};
-  padding: 1rem;
-  position: fixed;
+  padding: 1.5rem;
+  position: absolute;
   width: 700px;
   height: auto;
   top: 35%;
@@ -144,8 +144,7 @@ export const ConsturctorWrapper = styled.div`
   z-index: 101;
   margin-top: -200px;
   margin-left: -330px;
-  border: 1px solid white;
-  border-radius: 20px;
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
 `;
 
 export const ConstructorButton = styled.button`

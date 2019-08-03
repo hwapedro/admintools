@@ -8,13 +8,12 @@ import * as Yup from "yup";
 
 import {
   FormWrapper,
-  ButtonsWrapper,
   ButtonWrapper,
   Error
 } from "../styleLocal";
 import { Wrapper } from "../../GlobalStyles/styleGlobal";
 
-import Input from "../../Shared/Input";
+import CustomInput from "../../Shared/Input";
 import Button from "../../Shared/Button";
 
 const signInSchema = Yup.object().shape({
@@ -60,7 +59,7 @@ class LoginScreen extends React.Component {
                   label="username"
                   placeholder="Введите никнейм"
                   invalid={touched.username && errors.username}
-                  component={Input}
+                  component={CustomInput}
                 />
                 <ErrorMessage name="username" component={Error} />
 
@@ -69,7 +68,7 @@ class LoginScreen extends React.Component {
                   label="password"
                   placeholder="Введите пароль"
                   invalid={touched.password && errors.password}
-                  component={Input}
+                  component={CustomInput}
                 />
                 <ErrorMessage name="password" component={Error} />
 

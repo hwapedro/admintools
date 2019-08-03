@@ -85,17 +85,16 @@ export const DarkGround = styled.div`
 
 export const ConsturctorWrapper = styled.div`
   background: ${props => props.theme.courses};
-  padding: 1rem;
-  position: fixed;
+  padding: 1.5rem;
+  position: absolute;
   width: 700px;
   height: auto;
-  top: 45%;
+  top: 35%;
   left: 50%;
   z-index: 102;
   margin-top: -200px;
   margin-left: -330px;
-  border: 1px solid white;
-  border-radius: 20px;
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
 `;
 
 export const ConsturctorForm = styled.form``;

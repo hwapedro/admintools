@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
 import EditorText from "../../EditorText";
 import Search from "../../Search";
 import Button from "../../Shared/Button";
@@ -19,7 +22,9 @@ import {
   LabelElement,
   ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
+
 const name = "course";
+
 
 export default class CourseCounstructor extends Component {
   state = {
@@ -54,6 +59,24 @@ export default class CourseCounstructor extends Component {
             <>
               <DarkGround onClick={showConstructor} />
               <ConsturctorWrapper>
+                {/* <Formik 
+                  initialValues={{title: title}}
+                  onSubmit={this.onSubmit}
+                  validationSchema={CourseSchema}
+                  render={({errors, touched}) => (
+                   <Form autoComplete="off">
+                     <Field
+                     name="title"
+                     label="Title"
+                     placeholder="Title goes here"
+                     
+                     component={CustomInput}
+                     />
+                     <ErrorMessage name="title" component={Error} />
+
+                   </Form>
+
+                  )} /> */}
                 <ConsturctorForm onSubmit={this.onSubmit}>
                   <CustomInput
                     label="Title"

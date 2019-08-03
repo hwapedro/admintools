@@ -125,7 +125,7 @@ export const ConsturctorWrapper = styled.div`
   background: ${props => props.theme.courses};
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1.5rem;
   position: absolute;
   width: 700px;
   height: auto;
@@ -134,8 +134,7 @@ export const ConsturctorWrapper = styled.div`
   z-index: 101;
   margin-top: -300px;
   margin-left: -330px;
-  border: 1px solid white;
-  border-radius: 20px;
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
 `;
 
 
