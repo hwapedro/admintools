@@ -93,12 +93,12 @@ class CourseList extends Component {
             <ElementWrapper key={course.courseIndex}>
               <form onSubmit={this.setParams}>
                 <CustomInput
-                 label="Title"
-                  field={{
-                    name: "title",
-                    value: title,
-                    onChange: this.onChange
-                  }}
+                  label="Title"
+                  placeholder="Title goes here"
+                  name="title"
+                  value={title}
+                  onChange={this.onChange}
+                  required={true}
                 />
                 <LabelElement>Description of course : </LabelElement>
                 <EditorText

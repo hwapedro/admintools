@@ -103,12 +103,11 @@ class TextConstructor extends Component {
         <ConsturctorForm onSubmit={this.onSubmit}>
           <CustomInput
             label="Title"
-            placeholder="Title"
-            field={{
-              name: "name",
-              value: name,
-              onChange: this.infoChange
-            }}
+            placeholder="Title goes here"
+            name="name"
+            value={name}
+            onChange={this.infoChange}
+            required={true}
           />
           <LabelElement>Description</LabelElement>
           <EditorText

@@ -156,12 +156,11 @@ class TestConstructor extends Component {
         <ConsturctorForm onSubmit={this.onSubmit}>
           <CustomInput
             label="Title"
-            placeholder="Title"
-            field={{
-              name: "name",
-              value: info.name,
-              onChange: this.infoChange
-            }}
+            placeholder="Title goes here"
+            name="name"
+            value={info.name}
+            onChange={this.infoChange}
+            required={true}
           />
 
           <LabelElement>Description</LabelElement>
@@ -173,12 +172,11 @@ class TestConstructor extends Component {
 
           <CustomInput
             label="Question"
-            field={{
-              name: "question",
-              value: info.question,
-              onChange: this.infoChange
-            }}
-            placeholder="Question"
+            placeholder="Who are you?"
+            name="question"
+            value={info.question}
+            onChange={this.infoChange}
+            required={false}
           />
           <ButtonWrapper>
             <Button buttonStyle={"outlined"} onClick={this.addOption}>

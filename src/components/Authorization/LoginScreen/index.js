@@ -2,19 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { login } from "../../../store/actions/actionLogin";
 import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import {
-  FormWrapper,
-  ButtonWrapper,
-  Error
-} from "../styleLocal";
-import { Wrapper } from "../../GlobalStyles/styleGlobal";
+import CustomInput from "../CustomInput";
+import Button from '../../Shared/Button'
 
-import CustomInput from "../../Shared/Input";
-import Button from "../../Shared/Button";
 
 const signInSchema = Yup.object().shape({
   username: Yup.string().required("Обязательно для заполнения"),
@@ -52,39 +47,35 @@ class LoginScreen extends React.Component {
           validationSchema={signInSchema}
           onSubmit={this.setLogin}
           render={({ errors, touched }) => (
-            <FormWrapper>
-              <Form autoComplete="off">
-                <Field
-                  name="username"
-                  label="username"
-                  placeholder="Введите никнейм"
-                  invalid={touched.username && errors.username}
-                  component={CustomInput}
-                />
-                <ErrorMessage name="username" component={Error} />
+            <Form autoComplete="off">
+              <Field
+                name="username"
+                label="username"
+                placeholder="Введите никнейм"
+                invalid={touched.username && errors.username}
+                component={CustomInput}
+              />
+              <ErrorMessage name="username" component={Error} />
 
-                <Field
-                  name="password"
-                  label="password"
-                  placeholder="Введите пароль"
-                  invalid={touched.password && errors.password}
-                  component={CustomInput}
-                />
-                <ErrorMessage name="password" component={Error} />
+              <Field
+                name="password"
+                label="password"
+                placeholder="Введите пароль"
+                invalid={touched.password && errors.password}
+                component={CustomInput}
+              />
+              <ErrorMessage name="password" component={Error} />
 
-                  <ButtonWrapper>
-                    <Button buttonStyle={"outlined"} type="submit">
-                      SIGN IN
-                    </Button>
-                  </ButtonWrapper>
+              <ButtonWrapper>
+                <Button buttonStyle={"outlined"} type="submit">SIGN IN</Button>
+              </ButtonWrapper>
 
-                  <ButtonWrapper>
-                    <Button buttonStyle={"outlined"} onClick={this.toRegister}>
-                      Not registered yet? Sign up now!
-                    </Button>
-                  </ButtonWrapper>
-              </Form>
-            </FormWrapper>
+              <ButtonWrapper>
+                <button onClick={this.toRegister}>
+                  Not registered yet? Sign up now!
+                </button>
+              </ButtonWrapper>
+            </Form>
           )}
         />
         {error ? <div> Error {error} </div> : <div />}
@@ -109,3 +100,42 @@ export default withRouter(
     mapDispatchToProps
   )(LoginScreen)
 );
+
+export const Wrapper = styled.div`
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+`;
+export const SignInButton = styled.button`
+  width: 150px;
+  height: 40px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background-color: ${props => props.theme.button};
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffffff;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+`;
+export const Error = styled.span`
+  margin-top: 5px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  color: #eb5757;
+`;

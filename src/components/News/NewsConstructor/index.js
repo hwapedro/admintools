@@ -74,14 +74,12 @@ class SetArticle extends Component {
             <ConsturctorWrapper>
               <ConsturctorForm onSubmit={this.onSubmit}>
                 <CustomInput
-                  placeholder="title"
-                  type="text"
+                  placeholder="Title"
                   label="Title"
-                  field={{
-                    name: "title",
-                    value: title,
-                    onChange: onChange
-                  }}
+                  name="title"
+                  value={title}
+                  onChange={onChange}
+                  required={true}
                 />
                 <LabelElement>DESCRIPTION</LabelElement>
                 <EditorText

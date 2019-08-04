@@ -117,14 +117,12 @@ class LessonConstructor extends Component {
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
                   <CustomInput
-                   label="Title"
-                    placeholder="title"
-                    type="text"
-                    field={{
-                      name: "title",
-                      value: title,
-                      onChange: this.onChange
-                    }}
+                    label="Title"
+                    placeholder="Title goes here"
+                    name="title"
+                    value={title}
+                    onChange={this.onChange}
+                    required={true}
                   />
                   <LabelElement>description</LabelElement>
                   <EditorText

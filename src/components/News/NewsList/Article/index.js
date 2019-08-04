@@ -31,7 +31,7 @@ export default function Article({ news, getParams, deleteItem }) {
           buttonStyle={"outlined"}
           onClick={() => getParams(news._id, news.title, news.description)}
         >
-          CHANGE news
+          CHANGE Article
         </Button>
 
         <Button
@@ -42,7 +42,7 @@ export default function Article({ news, getParams, deleteItem }) {
             }
           }}
         >
-          DELETE news
+          DELETE Article
         </Button>
       </ButtonWrapper>
     </ElementWrapper>

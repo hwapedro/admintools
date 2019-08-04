@@ -174,11 +174,11 @@ class Lesson extends Component {
                   <form onSubmit={this.setParams}>
                     <CustomInput
                      label="Title"
-                      field={{
-                        name: "title",
-                        value: title,
-                        onChange: this.onChange
-                      }}
+                     placeholder="Title goes here"
+                     name="title"
+                     value={title}
+                     onChange={this.onChange}
+                     required={true}
                     />
                     <LabelElement>Description of Lesson : </LabelElement>
                     <EditorText

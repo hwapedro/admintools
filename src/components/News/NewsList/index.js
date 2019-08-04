@@ -85,12 +85,11 @@ class NewsList extends Component {
               <form onSubmit={this.setParams}>
                 <CustomInput
                   onChange={this.onChange}
+                  placeholder="Title"
                   label="Title"
-                  field={{
-                    name: "title",
-                    value: title,
-                    onChange: this.onChange
-                  }}
+                  name="title"
+                  value={title}
+                  required={true}
                 />
                 <LabelElement>Description of article : </LabelElement>
 

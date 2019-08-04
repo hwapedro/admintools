@@ -69,16 +69,14 @@ export default class BadgeConstructor extends Component {
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
               <CustomInput
-                placeholder="title"
-                type="text"
-                label="Title"
-                field={{
-                  name: "title",
-                  value: title,
-                  onChange: this.onChange
-                }}
+                 label="Title"
+                 placeholder="Title goes here"
+                 name="title"
+                 value={title}
+                 onChange={this.onChange}
+                 required={true}
               />
-              <LabelElement>description</LabelElement>
+              <LabelElement>Description</LabelElement>
               <DescriptionTextArea
                 name="description"
                 placeholder="description"
