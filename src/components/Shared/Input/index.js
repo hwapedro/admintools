@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 
-import { Field, TitleInput, Label } from "./style";
+import { Field, Label } from "./style";
 
 const CustomInput = withStyles({
   root: {
@@ -35,36 +35,20 @@ export default function Input({ onChange, name, value, label, placeholder, requi
   );
 }
 
-// const CustomInput = ({
-//   label,
-//   placeholder,
-//   invalid,
-//   field: { name, value, onChange }
-// }) => (
-//   <Field>
-//     <Label htmlFor={label}>{label}</Label>
-//     <TitleInput
-//       name={name}
-//       value={value}
-//       placeholder={placeholder}
-//       onChange={onChange}
-//       invalid={invalid}
-//     />
-//   </Field>
-// );
 
-// CustomInput.propTypes = {
-//   label: PropTypes.string,
-//   placeholder: PropTypes.string,
-//   field: PropTypes.objectOf(
-//     PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.string])
-//   )
-// };
+CustomInput.propTypes = {
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  name: PropTypes.string,
+  value: PropTypes.string,
+  required: PropTypes.bool,
+  onChange: PropTypes.func
+};
 
-// CustomInput.defaultProps = {
-//   label: "",
-//   placeholder: "",
-//   field: {}
-// };
-
-// export default CustomInput;
+CustomInput.defaultProps = {
+  name: "",
+  value: "",
+  label: "",
+  placeholder: "",
+  required: false,
+};
