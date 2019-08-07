@@ -9,6 +9,7 @@ import {
   ButtonWrapper,
   TextQuestion
 } from "../styleLocal";
+
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
@@ -58,11 +59,11 @@ class TextConstructor extends Component {
   };
 
   parseAnswer = string => {
-    const rr = new RegExp(/\~([^~]*?)\~/gi);
+    const regular = new RegExp(/\~([^~]*?)\~/gi);
     let options = [];
-    let m;
-    while ((m = rr.exec(string))) {
-      options.push(m[1]);
+    let answer;
+    while ((answer = regular.exec(string))) {
+      options.push(answer[1]);
     }
     this.setState({
       options: options
@@ -135,8 +136,6 @@ class TextConstructor extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
-
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>
     dispatch(addTask(pageid, type, info, answer)),
@@ -145,6 +144,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(TextConstructor);

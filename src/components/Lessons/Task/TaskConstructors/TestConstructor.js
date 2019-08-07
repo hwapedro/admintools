@@ -17,8 +17,9 @@ import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
 import { addTask, changeTask } from "../../../../store/actions/actionLessons";
 
-let index = 100;
+let index = 2017;
 const type = "test";
+
 class TestConstructor extends Component {
   state = {
     info: {
@@ -64,31 +65,32 @@ class TestConstructor extends Component {
   }
 
   addOption = () => {
+    const { info } = this.state;
     const answer = "";
     const right = false;
     index++;
     this.setState({
       info: {
-        ...this.state.info,
-        options: [...this.state.info.options, { answer, right, index }]
+        info,
+        options: [info.options, { answer, right, index }]
       }
     });
   };
 
   deleteOption = index => {
-    let newOptions = this.state.info.options.filter(
-      option => option.index !== index
-    );
+    const { info } = this.state;
+    let newOptions = info.options.filter(option => option.index !== index);
     this.setState({
       info: {
-        ...this.state.info,
+        info,
         options: newOptions
       }
     });
   };
 
   answerChange = (id, event) => {
-    let newOptions = this.state.info.options.map(option =>
+    const { info } = this.state;
+    let newOptions = info.options.map(option =>
       id === option.index
         ? {
             answer: event.target.value,
@@ -97,16 +99,18 @@ class TestConstructor extends Component {
           }
         : option
     );
+
     this.setState({
       info: {
-        ...this.state.info,
+        info,
         options: newOptions
       }
     });
   };
 
   setRight = (id, event) => {
-    let newOptions = this.state.info.options.map(option =>
+    const { info } = this.state;
+    let newOptions = info.options.map(option =>
       id === option.index
         ? {
             answer: option.answer,
@@ -115,17 +119,19 @@ class TestConstructor extends Component {
           }
         : option
     );
+
     this.setState({
       info: {
-        ...this.state.info,
+        info,
         options: newOptions
       }
     });
   };
 
   infoChange = event => {
+    const { info } = this.state;
     this.setState({
-      info: { ...this.state.info, [event.target.name]: event.target.value }
+      info: { info, [event.target.name]: event.target.value }
     });
   };
 
@@ -199,6 +205,7 @@ class TestConstructor extends Component {
                     <CheckboxInput
                       type="checkbox"
                       value={el.right}
+                      checked={el.right}
                       onChange={e => this.setRight(el.index, e)}
                     />
                     <Button
@@ -224,8 +231,6 @@ class TestConstructor extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
-
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>
     dispatch(addTask(pageid, type, info, answer)),
@@ -234,6 +239,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(TestConstructor);
