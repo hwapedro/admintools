@@ -1,12 +1,20 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
-import Page from "../PageList/Page";
 import PageNav from "../PageNav";
+import Button from "../../Shared/Button";
+import TaskList from "../Task/TaskList";
+import TaskConstructor from "../Task/TaskConstructors/";
+import {
+  PageNumber,
+  ButtonWrapper,
+  PageHeader
+} from "./styleLocal";
 
-import { ElementWrapper,  PageMenu} from "./styleLocal"
+import { ElementWrapper, PageMenu } from "./styleLocal";
 
 class PageList extends Component {
-
   state = {
     pageNumber: 0
   };
@@ -16,26 +24,65 @@ class PageList extends Component {
   };
 
   render() {
-    const { pageNumber} = this.state
+    const { pageNumber } = this.state;
     const { lessonId, pages, deletePage, deleteTask } = this.props;
+
+    let list;
+    if (pages) {
+      list = pages.map((page, index) => {
+        if (page.tasks && index === pageNumber) {
+          return (
+            <div key={page._id}>
+              <PageHeader>
+                <PageNumber>{page.text}</PageNumber>
+                <ButtonWrapper>
+                  <TaskConstructor pageId={page._id} />
+                  <ButtonWrapper>
+                    <Button
+                      buttonStyle={"outlined"}
+                      onClick={() => deletePage(page._id)}
+                    >
+                      Delete page
+                    </Button>
+                  </ButtonWrapper>
+                </ButtonWrapper>
+              </PageHeader>
+              <TaskList
+                lessonId={lessonId}
+                page={page}
+                deleteTask={deleteTask}
+              />
+            </div>
+          );
+        }
+      });
+    }
+
     return (
       <>
-      <PageMenu>
-        <PageNav amount={pages} changePage={this.changePage} />
-      </PageMenu>
-      <ElementWrapper>
-        <Page
-          pageNumber={pageNumber}
-          lessonId={lessonId}
-          pages={pages}
-          deletePage={deletePage}
-          deleteTask={deleteTask}
-        />
-      </ElementWrapper>
+        <PageMenu>
+          <PageNav amount={pages} changePage={this.changePage} />
+        </PageMenu>
+        <ElementWrapper>{list}</ElementWrapper>
       </>
     );
   }
 }
 
-export default PageList;
+PageList.defaultProps = {
+  pages: [],
+  lessonId: null,
 
+  deletePage() {},
+  deleteTask() {}
+};
+
+PageList.propTypes = {
+  pages: PropTypes.array,
+  lessonId: PropTypes.string.isRequired,
+
+  deletePage: PropTypes.func,
+  deleteTask: PropTypes.func
+};
+
+export default withRouter(PageList);

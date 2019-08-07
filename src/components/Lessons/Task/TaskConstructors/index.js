@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import Select from "react-select";
 
-import { ConsturctorWrapper, DarkGround, AddButtonWrapper } from "../styleLocal";
+import {
+  ConsturctorWrapper,
+  DarkGround
+} from "../styleLocal";
+
 import Button from "../../../Shared/Button";
 import TestConstructor from "./TestConstructor";
 import TextConstructor from "./TextConstructor";
@@ -73,11 +77,9 @@ class TaskConstructor extends Component {
             </ConsturctorWrapper>
           </>
         ) : (
-          <AddButtonWrapper>
-            <Button buttonStyle={"outlined"} onClick={this.displayConstructor}>
-              Add Task
-            </Button>
-          </AddButtonWrapper>
+          <Button buttonStyle={"outlined"} onClick={this.displayConstructor}>
+            Add Task
+          </Button>
         )}
       </>
     );

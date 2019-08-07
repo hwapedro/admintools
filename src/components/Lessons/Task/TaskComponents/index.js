@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { Wrapper } from "../styleLocal";
 
-import Test from "./Tests";
+import {
+  deleteTask,
+  changeTask
+} from "../../../../store/actions/actionLessons";
+
+import Task from "./Test";
 import Text from "./Text";
 import { getLesson } from "../../../../store/actions/actionLessons";
 import Button from "../../../Shared/Button";
 import Spinner from "../../../Spinner";
 import Error from "../../../Error";
 
-class Tasks extends Component {
+class TaskContainer extends Component {
   componentDidMount() {
     const { getLesson, lessonId } = this.props;
     getLesson(lessonId);
@@ -20,15 +26,32 @@ class Tasks extends Component {
     this.props.history.push(`/lesson/${id}`);
   };
 
+  deleteTask = (pageId, taskId) => {
+    this.props.deleteTask(pageId, taskId);
+  };
+
+  getParams = (name, description, question, options, id) => {
+    this.setState({
+      taskEditFlag: true,
+      info: { name, description, question, options, id }
+    });
+  };
+
+  changeEditFlag = () =>
+    this.setState({
+      taskEditFlag: false
+    });
+
   constSwitch = (page, type, taskId, lessonId) => {
+    const { lesson } = this.props;
     switch (type) {
       case "test":
         return (
-          <Test
+          <Task
             page={page}
             taskId={taskId}
             lessonId={lessonId}
-            lesson={this.props.lesson}
+            lesson={lesson}
           />
         );
       case "text":
@@ -37,7 +60,7 @@ class Tasks extends Component {
             page={page}
             taskId={taskId}
             lessonId={lessonId}
-            lesson={this.props.lesson}
+            lesson={lesson}
           />
         );
       default:
@@ -48,15 +71,16 @@ class Tasks extends Component {
   render() {
     const { lessonId, taskId, lesson, error, loading } = this.props;
     let page, task;
+    console.log(lesson);
+    lesson.pages.map(pageElemnt =>
+      pageElemnt.tasks.map(taskElemet => {
+        if (taskElemet._id === taskId) {
+          task = taskElemet;
+          page = pageElemnt;
+        }
+      })
+    );
 
-    for (let i = 0; i < lesson.pages.length; i++) {
-      if (
-        lesson.pages[i].tasks.find(task => task._id === taskId) !== undefined
-      ) {
-        page = lesson.pages[i];
-        task = lesson.pages[i].tasks.find(task => task._id === taskId);
-      }
-    }
     return (
       <>
         {error && (
@@ -78,6 +102,14 @@ class Tasks extends Component {
             >
               Back
             </Button>
+           {task && 
+           <Task
+              task={task}
+              taskId={taskId}
+              lessonId={lessonId}
+              lesson={lesson}
+            />}
+
             {task && (
               <>{this.constSwitch(page, task.type, taskId, lessonId)} </>
             )}
@@ -87,6 +119,21 @@ class Tasks extends Component {
     );
   }
 }
+TaskContainer.defaultProps = {
+  lesson: {},
+  loading: false,
+  error: false,
+
+  getLesson() {}
+};
+
+TaskContainer.propTypes = {
+  lesson: PropTypes.object,
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+
+  getLesson: PropTypes.func
+};
 
 const mapStateToProps = state => ({
   lesson: state.Lessons.lesson,
@@ -95,10 +142,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getLesson: id => dispatch(getLesson(id))
+  getLesson: id => dispatch(getLesson(id)),
+  deleteTask: (pageId, taskid) => dispatch(deleteTask(pageId, taskid)),
+  changeTask: (taskId, type, info, pageId) =>
+    dispatch(changeTask(taskId, type, info, pageId))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Tasks);
+)(TaskContainer);

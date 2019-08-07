@@ -47,11 +47,6 @@ export const ButtonWrapper = styled.div`
   text-align: end;
 `;
 
-export const AddButtonWrapper = styled.div`
-  margin: 0.5rem 0
-  text-align: center;
-`;
-
 export const ButtonsWrapper = styled.div`
   display: flex;
   flex-direction: row;

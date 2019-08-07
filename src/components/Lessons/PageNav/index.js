@@ -1,5 +1,6 @@
 import React from "react";
-import styled from "styled-components";
+
+import {MenuButton} from '../styleLocal'
 
 export default function PageNav({ amount, changePage }) {
   const list = amount.map((page, index) => {
@@ -12,9 +13,3 @@ export default function PageNav({ amount, changePage }) {
   return <>{list}</>;
 }
 
-const MenuButton = styled.button`
-  border: none;
-  background-color: white;
-  margin: 0 15px;
-  font-size: 18px;
-`;

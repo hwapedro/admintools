@@ -2,11 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../../Shared/Button";
 
-import { DescriptionSpan, ElementWrapper, ImgMark, ImgCross } from "../../styleLocal.js";
+import {
+  DescriptionSpan,
+  ElementWrapper,
+  ExamPropContainer,
+  ImgMark,
+  ImgCross
+} from "../../styleLocal.js";
+
 import {
   ButtonWrapper,
   LabelElement,
-  TitleSpan,
+  TitleSpan
 } from "../../../GlobalStyles/styleGlobal";
 
 import LessonContainer from "./LessonContainer";
@@ -26,13 +33,14 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
             __html: lesson.description
           }}
         />
-        <LabelElement>EXAM :</LabelElement>
-        {lesson.exam ? (
-          <ImgMark src={checkMark} />
-        ) : (
-          <ImgCross src={redCross} />
-        )}
-        <br />
+        <ExamPropContainer>
+          <LabelElement>EXAM :</LabelElement>
+          {lesson.exam ? (
+            <ImgMark src={checkMark} />
+          ) : (
+            <ImgCross src={redCross} />
+          )}
+        </ExamPropContainer>
         <LabelElement>Course Index :</LabelElement>
         <TitleSpan> {lesson.courseIndex}</TitleSpan>
         <ButtonWrapper>
@@ -63,13 +71,14 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
             __html: lesson.description
           }}
         />
-        <LabelElement>EXAM :</LabelElement>
-        {lesson.exam ? (
-          <ImgMark src={checkMark} />
-        ) : (
-          <ImgCross src={redCross} />
-        )}
-        <br />
+        <ExamPropContainer>
+          <LabelElement>EXAM :</LabelElement>
+          {lesson.exam ? (
+            <ImgMark src={checkMark} />
+          ) : (
+            <ImgCross src={redCross} />
+          )}
+        </ExamPropContainer>
         <ButtonWrapper>
           <Button buttonStyle={"outlined"} onClick={() => goTo(lesson._id)}>
             CHANGE Lesson
@@ -91,20 +100,18 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
 }
 
 Lesson.defaultProps = {
-  lesson: [],
-  loading: false,
-  error: false,
+  lesson: {},
   course: null,
-
-  getParams() {},
+  index: null,
+  
+  goTo() {},
   deleteItem() {}
 };
 
 Lesson.propTypes = {
   lesson: PropTypes.object,
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
   course: PropTypes.object,
+  index: PropTypes.number,
 
   goTo: PropTypes.func,
   deleteItem: PropTypes.func

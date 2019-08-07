@@ -306,3 +306,14 @@ export const SignInButton = styled.button`
   }
   margin-right: 1rem;
 `;
+
+export const ExamPropContainer = styled.div`
+  margin-bottom:20px;
+`
+
+export const MenuButton = styled.button`
+  border: none;
+  background-color: white;
+  margin: 0 21px;
+  font-size: 20px;
+`;

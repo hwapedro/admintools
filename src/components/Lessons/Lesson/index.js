@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
@@ -18,13 +17,16 @@ import {
   DescriptionSpan,
   ImgMark,
   ImgCross,
-  ElementWrapper
+  ElementWrapper,
+  ExamPropContainer
 } from "../styleLocal";
+
 import {
   Wrapper,
   LabelElement,
   TitleSpan,
-  ButtonWrapper
+  ButtonWrapper,
+  EmptyMessage
 } from "../../GlobalStyles/styleGlobal";
 
 import EditorText from "../../EditorText";
@@ -45,9 +47,9 @@ class Lesson extends Component {
   state = {
     title: "",
     description: "",
-    courseIndex: 0,
     changeFlag: false,
-    _id: null,
+    courseIndex: { value: null, label: null },
+    lessonId: null,
     exam: null
   };
 
@@ -56,22 +58,12 @@ class Lesson extends Component {
     const token = localStorage.getItem("token");
     getLesson(itemId);
 
-    AdminService.getLesson(token, itemId)
-      .then(response => {
-        const courseIndex = response.lesson.courseIndex;
-        this.setState({
-          courseIndex: { value: courseIndex, label: courseIndex }
-        });
-      })
-      .catch(console.error());
-
     AdminService.getAll(token, "course")
       .then(response => {
         options = response.courses.map((element, index) => {
           const option = index + 1;
           return { value: option, label: option };
         });
-        console.log(options[0].value);
       })
       .catch(console.error());
   }
@@ -80,11 +72,11 @@ class Lesson extends Component {
     this.setState({ courseIndex });
   };
 
-  changeExamMark = exam => {
+  changeExamProp = exam => {
     this.setState({ exam: !exam });
   };
 
-  getParams = (_id, title, description, exam) => {
+  getParams = (lessonId, title, description, exam, courseIndex) => {
     if (description !== "") {
       const blocksFromHTML = convertFromHTML(description);
       const state = ContentState.createFromBlockArray(
@@ -93,16 +85,17 @@ class Lesson extends Component {
       );
       this.setState({
         changeFlag: true,
-        _id: _id,
+        lessonId: lessonId,
         title: title,
         description: description,
         exam: exam,
-        editorState: EditorState.createWithContent(state)
+        editorState: EditorState.createWithContent(state),
+        courseIndex: courseIndex
       });
     } else {
       this.setState({
         changeFlag: true,
-        _id: _id,
+        lessonId: lessonId,
         title: title,
         description: description,
         exam: exam,
@@ -114,13 +107,12 @@ class Lesson extends Component {
   setParams = event => {
     event.preventDefault();
     const { changeLesson } = this.props;
-    const { title, _id, exam, courseIndex } = this.state;
-
+    const { title, lessonId, exam, courseIndex } = this.state;
     const description = stateToHTML(this.state.editorState.getCurrentContent());
 
     if (title && description)
-      changeLesson(_id, title, description, exam, name, courseIndex.value);
-    this.setState({ changeFlag: false, _id: null });
+      changeLesson(lessonId, title, description, exam, name, courseIndex.value);
+    this.setState({ changeFlag: false, lessonId: null });
   };
 
   onChange = event => {
@@ -128,7 +120,8 @@ class Lesson extends Component {
   };
 
   addPage = () => {
-    this.props.addPage(
+    const { addPage } = this.props;
+    addPage(
       this.props.lesson._id,
       `Page ${this.props.lesson.pages.length + 1}`,
       [],
@@ -144,14 +137,7 @@ class Lesson extends Component {
 
   render() {
     const { lesson, loading, deletePage, deleteTask, error } = this.props;
-    const { editorState, changeFlag, courseIndex, title } = this.state;
-    if (loading) {
-      return (
-        <>
-          <Spinner />
-        </>
-      );
-    }
+    const { editorState, changeFlag, courseIndex, title, exam } = this.state;
 
     return (
       <>
@@ -173,29 +159,29 @@ class Lesson extends Component {
                 <ElementWrapper>
                   <form onSubmit={this.setParams}>
                     <CustomInput
-                     label="Title"
-                     placeholder="Title goes here"
-                     name="title"
-                     value={title}
-                     onChange={this.onChange}
-                     required={true}
+                      label="Title"
+                      placeholder="Title goes here"
+                      name="title"
+                      value={title}
+                      onChange={this.onChange}
+                      required={true}
                     />
                     <LabelElement>Description of Lesson : </LabelElement>
                     <EditorText
                       editorState={editorState}
                       onEditorStateChange={this.onEditorStateChange}
                     />
-                    <LabelElement>EXAM :</LabelElement>
-
-                    <ImgMark
-                      src={this.state.exam ? checkMark : redCross}
-                      onClick={() => this.changeExamMark(this.state.exam)}
-                    />
-
+                    <ExamPropContainer>
+                      <LabelElement>EXAM :</LabelElement>
+                      <ImgMark
+                        src={exam ? checkMark : redCross}
+                        onClick={() => this.changeExamProp(exam)}
+                      />
+                    </ExamPropContainer>
                     <LabelElement>Course Index :</LabelElement>
                     <Select
                       value={courseIndex}
-                      onChange={this.handleChange}
+                      onChange={value => this.handleChange(value)}
                       options={options}
                     />
 
@@ -205,7 +191,7 @@ class Lesson extends Component {
                       </Button>
                     </ButtonWrapper>
                   </form>
-                </ElementWrapper>{" "}
+                </ElementWrapper>
               </>
             ) : (
               <>
@@ -217,7 +203,7 @@ class Lesson extends Component {
                       lesson.title,
                       lesson.description,
                       lesson.exam,
-                      lesson.courseIndex
+                      { value: lesson.courseIndex, label: lesson.courseIndex }
                     )
                   }
                 >
@@ -229,13 +215,14 @@ class Lesson extends Component {
                       __html: lesson.description
                     }}
                   />
-
-                  <LabelElement>EXAM :</LabelElement>
-                  {lesson.exam ? (
-                    <ImgMark src={checkMark} />
-                  ) : (
-                    <ImgCross src={redCross} />
-                  )}
+                  <ExamPropContainer>
+                    <LabelElement>EXAM :</LabelElement>
+                    {lesson.exam ? (
+                      <ImgMark src={checkMark} />
+                    ) : (
+                      <ImgCross src={redCross} />
+                    )}
+                  </ExamPropContainer>
 
                   <LabelElement>Course Index :</LabelElement>
                   <TitleSpan> {lesson.courseIndex}</TitleSpan>
@@ -267,10 +254,9 @@ class Lesson extends Component {
 }
 
 Lesson.defaultProps = {
-  lesson: [],
+  lesson: {},
   loading: false,
   error: false,
-  pages: [],
 
   getLesson() {},
   changeLesson() {}
@@ -289,7 +275,6 @@ const mapStateToProps = state => ({
   lesson: state.Lessons.lesson,
   loading: state.Lessons.loading,
   error: state.Lessons.error,
-  pages: state.Lessons.pages
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -308,11 +293,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Lesson);
-
-const EmptyMessage = styled.div`
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 2.5rem;
-  top: 50%;
-  margin-top: 270px;
-`;

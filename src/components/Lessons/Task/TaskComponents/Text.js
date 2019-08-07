@@ -49,9 +49,9 @@ class Test extends Component {
     list = page.tasks.map(task => {
       if (task._id === taskId) {
         return (
-          <>
+          <div key={task._id}>
             {taskEditFlag ? (
-              <TaskElementWrapper>
+              <TaskElementWrapper >
                 
                 <TextConstructor
                   task={task}
@@ -73,7 +73,7 @@ class Test extends Component {
                 <TitleSpan>{task.info.question}</TitleSpan>
 
                 <LabelElement>Answers:</LabelElement>
-                <TitleSpan>{task.info.options}</TitleSpan>
+                <TitleSpan>{task.info.options.join(' , ')}</TitleSpan>
 
                 <ButtonsWrapper>
                   <Button
@@ -98,7 +98,7 @@ class Test extends Component {
                 </ButtonsWrapper>
               </TaskElementWrapper>
             )}
-          </>
+          </div>
         );
       }
     });

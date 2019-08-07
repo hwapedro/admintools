@@ -65,7 +65,7 @@ class LessonConstructor extends Component {
       courseIndex: 0,
       editorState: EditorState.createEmpty()
     });
-    const index = course ? course.courseIndex : courseIndex;
+    const index = course ? course.courseIndex : courseIndex.value;
     const flag = course ? "course" : name;
     addLesson(title, description, exam, name, index, flag);
   };
@@ -93,12 +93,8 @@ class LessonConstructor extends Component {
     });
   };
 
-  ChangeExamTrue = () => {
-    this.setState({ exam: true });
-  };
-
-  ChangeExamFalse = () => {
-    this.setState({ exam: false });
+  changeExamProp = (flag) => {
+    this.setState({ exam: flag });
   };
 
   render() {
@@ -134,13 +130,13 @@ class LessonConstructor extends Component {
                   <ImgMark
                     style={!exam ? { filter: "grayscale(100%)" } : {}}
                     src={checkMark}
-                    onClick={this.ChangeExamTrue}
+                    onClick={()=>this.changeExamProp(true)}
                   />
                   <ImgCross
                     style={exam ? { filter: "grayscale(100%)" } : {}}
                     src={redCross}
-                    onClick={this.ChangeExamFalse}
-                  />
+                    onClick={()=>this.changeExamProp(false)}                  
+                    />
                   <br />
                   {!course && (
                     <>
