@@ -114,8 +114,8 @@ TaskContainer.propTypes = {
 
 const mapStateToProps = state => ({
   lesson: state.Lessons.lesson,
-  loading: state.Lessons.loading,
-  error: state.Lessons.error
+  loading: state.reducer.loading,
+  error: state.reducer.error
 });
 
 const mapDispatchToProps = dispatch => ({

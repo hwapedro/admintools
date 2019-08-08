@@ -56,7 +56,6 @@ class Test extends Component {
                 buttonStyle={"outlined"}
                 onClick={() => {
                   if (window.confirm("ARE YOU SURE ?")) {
-                    console.log(deleteTask)
                     deleteTask(page._id, task._id, lessonId)
                   }
                 }}

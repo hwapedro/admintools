@@ -28,7 +28,7 @@ import {
   CHANGE_TASK_FAILURE,
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_FAILURE,
+  DELETE_TASK_FAILURE
 } from "../../constants";
 
 import { startLoading, stopLoading } from "../../utils";
@@ -43,71 +43,35 @@ const initialState = {
 
 function reducerLesson(state = initialState, action = {}) {
   switch (action.type) {
-    //ADD BLOCK
-    case ADD_ELEMENT_REQUEST:
-      return startLoading(state, action);
-
     case ADD_LESSON_SUCCESS:
       if (action.flag === "lesson") {
         return {
           ...state,
-          error: false,
-          loading: false,
           lessons: [...state.lessons, action.lessons]
         };
-      } 
-      return {...state}
-
-    case ADD_ELEMENT_FAILURE:
-      return stopLoading(state, action);
-
-    //GET ALL BLOCK
-    case GETALL_ELEMENT_REQUEST:
-      return startLoading(state, action);
+      }
+      return { ...state };
 
     case GETALL_LESSON_SUCCESS:
       return {
         ...state,
-        lessons: action.lessons,
-        loading: false,
-        error: false
+        lessons: action.lessons
       };
-
-    case GETALL_ELEMENT_FAILURE:
-      return stopLoading(state, action);
-
-    //DELETE COURSES BLOCK
-    case DELETE_ELEMENT_REQUEST:
-      return startLoading(state, action);
 
     case DELETE_LESSON_SUCCESS:
       if (action.flag === "lesson") {
         return {
           ...state,
-          lessons: state.lessons.filter(lesson => lesson._id !== action.index),
-          loading: false,
-          error: false
+          lessons: state.lessons.filter(lesson => lesson._id !== action.index)
         };
-      } 
-      return {...state}
-
-    case DELETE_ELEMENT_FAILURE:
-      return stopLoading(state, action);
-
-    //CHANGE BLOCK
-    case CHANGE_ELEMENT_REQUEST:
-      return startLoading(state, action);
+      }
+      return { ...state };
 
     case CHANGE_LESSON_SUCCESS:
       return {
         ...state,
-        lesson: action.lesson,
-        loading: false,
-        error: false
+        lesson: action.lesson
       };
-
-    case CHANGE_ELEMENT_FAILURE:
-      return stopLoading(state, action);
 
     //GET LESSON
     case GET_LESSON_REQUEST:
@@ -117,6 +81,7 @@ function reducerLesson(state = initialState, action = {}) {
       return {
         ...state,
         lesson: action.lesson,
+        
         loading: false,
         error: false
       };
@@ -124,34 +89,17 @@ function reducerLesson(state = initialState, action = {}) {
     case GET_LESSON_FAILURE:
       return stopLoading(state, action);
 
-    case ADD_PAGE_REQUEST:
-      return startLoading(state, action);
-
     case ADD_PAGE_SUCCESS:
       return {
         ...state,
-        lesson: action.lesson,
-        error: false,
-        loading: false
+        lesson: action.lesson
       };
-    case ADD_PAGE_FAILURE:
-      return stopLoading(state, action);
-
-    case DELETE_PAGE_REQUEST:
-      return startLoading(state, action);
 
     case DELETE_PAGE_SUCCESS:
       return {
         ...state,
-        lesson: action.lesson,
-        error: false,
-        loading: false
+        lesson: action.lesson
       };
-    case DELETE_PAGE_FAILURE:
-      return stopLoading(state, action);
-
-    case ADD_TASK_REQUEST:
-      return startLoading(state, action);
 
     case ADD_TASK_SUCCESS:
       return {
@@ -163,15 +111,8 @@ function reducerLesson(state = initialState, action = {}) {
               ? { ...page, tasks: [...page.tasks, action.task] }
               : page
           )
-        },
-        error: false,
-        loading: false
+        }
       };
-    case ADD_TASK_FAILURE:
-      return stopLoading(state, action);
-
-    case CHANGE_TASK_REQUEST:
-      return startLoading(state, action);
 
     //unfinished
     case CHANGE_TASK_SUCCESS:
@@ -190,26 +131,14 @@ function reducerLesson(state = initialState, action = {}) {
                 }
               : page
           )
-        },
-
-        error: false,
-        loading: false
+        }
       };
-    case CHANGE_TASK_FAILURE:
-      return stopLoading(state, action);
-
-    case DELETE_TASK_REQUEST:
-      return startLoading(state, action);
 
     case DELETE_TASK_SUCCESS:
       return {
         ...state,
-        lesson: { ...action.lesson, pages: action.lesson.pages },
-        error: false,
-        loading: false
+        lesson: { ...action.lesson, pages: action.lesson.pages }
       };
-    case DELETE_TASK_FAILURE:
-      return stopLoading(state, action);
 
     default:
       return {

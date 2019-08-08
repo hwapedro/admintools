@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-
 import {
   TaskElementWrapper,
   TaskInfo,
@@ -52,7 +51,11 @@ const TaskList = props => {
           <ButtonWrapper>
             <Button
               buttonStyle={"outlined"}
-              onClick={() => deleteTask(page._id, task._id)}
+              onClick={() => {
+                if (window.confirm("ARE YOU SURE ?")) {
+                  deleteTask(page._id, task._id);
+                }
+              }}
             >
               Delete Task
             </Button>

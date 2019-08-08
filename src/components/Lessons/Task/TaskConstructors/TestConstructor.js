@@ -22,75 +22,61 @@ const type = "test";
 
 class TestConstructor extends Component {
   state = {
-    info: {
-      name: "",
-      question: "",
-      options: []
-    },
+    name: "",
+    question: "",
+    options: [],
     editorState: EditorState.createEmpty()
   };
 
   componentDidMount() {
     const { task } = this.props;
-    if (task) {
-      if (task.info.description !== "") {
-        const blocksFromHTML = convertFromHTML(task.info.description);
-        const state = ContentState.createFromBlockArray(
-          blocksFromHTML.contentBlocks,
-          blocksFromHTML.entityMap
-        );
-        this.setState({
-          ...this.state,
-          info: {
-            ...this.state.info,
-            name: task.info.name,
-            question: task.info.question,
-            options: task.info.options
-          },
-          editorState: EditorState.createWithContent(state)
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          info: {
-            ...this.state.info,
-            name: task.info.name,
-            question: task.info.question,
-            options: task.info.options
-          },
-          editorState: EditorState.createEmpty()
-        });
-      }
+    if(task){
+    if (task.info.description !== "") {
+      const blocksFromHTML = convertFromHTML(task.info.description);
+      const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+      );
+      this.setState({
+        ...this.state,
+        name: task.info.name,
+        question: task.info.question,
+        options: task.info.options,
+        editorState: EditorState.createWithContent(state)
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        name: task.info.name,
+        question: task.info.question,
+        options: task.info.options,
+        editorState: EditorState.createEmpty()
+      });
     }
+  }
   }
 
   addOption = () => {
-    const { info } = this.state;
+    const { options } = this.state;
     const answer = "";
     const right = false;
     index++;
     this.setState({
-      info: {
-        info,
-        options: [info.options, { answer, right, index }]
-      }
+      options: [...options, { answer, right, index }]
     });
   };
 
   deleteOption = index => {
-    const { info } = this.state;
-    let newOptions = info.options.filter(option => option.index !== index);
+    const { options } = this.state;
+    let newOptions = options.filter(option => option.index !== index);
     this.setState({
-      info: {
-        info,
-        options: newOptions
-      }
+      options: newOptions
     });
   };
 
   answerChange = (id, event) => {
-    const { info } = this.state;
-    let newOptions = info.options.map(option =>
+    const { options } = this.state;
+    let newOptions = options.map(option =>
       id === option.index
         ? {
             answer: event.target.value,
@@ -101,16 +87,13 @@ class TestConstructor extends Component {
     );
 
     this.setState({
-      info: {
-        info,
-        options: newOptions
-      }
+      options: newOptions
     });
   };
 
   setRight = (id, event) => {
-    const { info } = this.state;
-    let newOptions = info.options.map(option =>
+    const { options } = this.state;
+    let newOptions = options.map(option =>
       id === option.index
         ? {
             answer: option.answer,
@@ -121,25 +104,29 @@ class TestConstructor extends Component {
     );
 
     this.setState({
-      info: {
-        info,
         options: newOptions
-      }
     });
   };
 
   infoChange = event => {
-    const { info } = this.state;
     this.setState({
-      info: { info, [event.target.name]: event.target.value }
+      [event.target.name]: event.target.value 
     });
   };
 
   onSubmit = event => {
     event.preventDefault();
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
-    const { info, editorState } = this.state;
-    info.description = stateToHTML(editorState.getCurrentContent());
+    const { options, name, editorState, question } = this.state;
+    const description = stateToHTML(editorState.getCurrentContent());
+
+    const info = {
+      name: name,
+      description: description,
+      question: question,
+      options: options
+    };
+
     if (task) {
       changeTask(task._id, type, info, pageId);
       changeEditFlag();
@@ -155,8 +142,8 @@ class TestConstructor extends Component {
   };
 
   render() {
-    const { editorState, info } = this.state;
-
+    const { options, name, editorState, question } = this.state;
+    
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
@@ -164,7 +151,7 @@ class TestConstructor extends Component {
             label="Title"
             placeholder="Title goes here"
             name="name"
-            value={info.name}
+            value={name}
             onChange={this.infoChange}
             required={true}
           />
@@ -180,7 +167,7 @@ class TestConstructor extends Component {
             label="Question"
             placeholder="Who are you?"
             name="question"
-            value={info.question}
+            value={question}
             onChange={this.infoChange}
             required={false}
           />
@@ -191,7 +178,7 @@ class TestConstructor extends Component {
           </ButtonWrapper>
 
           <div>
-            {info.options.map(el => {
+            {options.map(el => {
               return (
                 <OptionsWrapper className="form-check" key={el.index}>
                   <OptionElementWrapper>
