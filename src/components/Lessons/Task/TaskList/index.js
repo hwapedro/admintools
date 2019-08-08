@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import {
   TaskElementWrapper,
@@ -66,4 +67,17 @@ const TaskList = props => {
   });
   return <TaskListWrapper>{taskList}</TaskListWrapper>;
 };
+
+TaskList.defaultProps = {
+  lessonId: null,
+  page: {},
+  deleteTask() {}
+};
+
+TaskList.propTypes = {
+  lessonId: PropTypes.string.isRequired,
+  page: PropTypes.object,
+  deleteTask: PropTypes.func
+};
+
 export default withRouter(TaskList);

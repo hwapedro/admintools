@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import {
   TaskElementWrapper,
@@ -11,7 +12,7 @@ import {
 import Button from "../../../../../Shared/Button";
 import TextConstructor from "../../../TaskConstructors/TextConstructor";
 
-class Test extends Component {
+class Text extends Component {
   render() {
     const {
       task,
@@ -70,5 +71,23 @@ class Test extends Component {
   }
 }
 
+Text.defaultProps = {
+  task: {},
+  page: {},
+  lessonId: null,
+  taskEditFlag: false,
+  changeEditFlag: false,
+  deleteTask() {}
+};
 
-export default Test;
+Text.propTypes = {
+  task: PropTypes.object,
+  page: PropTypes.object,
+  lessonId: PropTypes.string.isRequired,
+  taskEditFlag: PropTypes.bool,
+  changeEditFlag: PropTypes.bool,
+  deleteTask: PropTypes.func
+};
+
+
+export default Text;

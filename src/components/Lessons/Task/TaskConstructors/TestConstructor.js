@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import PropTypes from "prop-types";
+
 
 import {
   LabelElement,
@@ -217,6 +219,17 @@ class TestConstructor extends Component {
     );
   }
 }
+
+TestConstructor.defaultProps = {
+  addTask() {},
+  changeTask() {}
+};
+
+TestConstructor.propTypes = {
+  addTask: PropTypes.func,
+  changeTask: PropTypes.func
+};
+
 
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import {
   TaskElementWrapper,
@@ -108,5 +109,22 @@ class Test extends Component {
     );
   }
 }
+Test.defaultProps = {
+  task: {},
+  page: {},
+  lessonId: null,
+  taskEditFlag: false,
+  changeEditFlag: false,
+  deleteTask() {}
+};
+
+Test.propTypes = {
+  task: PropTypes.object,
+  page: PropTypes.object,
+  lessonId: PropTypes.string.isRequired,
+  taskEditFlag: PropTypes.bool,
+  changeEditFlag: PropTypes.bool,
+  deleteTask: PropTypes.func
+};
 
 export default Test;
