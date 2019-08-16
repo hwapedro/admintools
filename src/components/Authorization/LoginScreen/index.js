@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import CustomInput from "../CustomInput";
+import AuthorizationInput from "../AuthorizationInput";
 import Button from '../../Shared/Button'
 
 
@@ -53,7 +53,7 @@ class LoginScreen extends React.Component {
                 label="username"
                 placeholder="Введите никнейм"
                 invalid={touched.username && errors.username}
-                component={CustomInput}
+                component={AuthorizationInput}
               />
               <ErrorMessage name="username" component={Error} />
 
@@ -62,7 +62,7 @@ class LoginScreen extends React.Component {
                 label="password"
                 placeholder="Введите пароль"
                 invalid={touched.password && errors.password}
-                component={CustomInput}
+                component={AuthorizationInput}
               />
               <ErrorMessage name="password" component={Error} />
 

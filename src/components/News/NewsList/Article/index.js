@@ -6,10 +6,10 @@ import Button from "../../../Shared/Button";
 import {
   ElementWrapper,
   TitleSpan,
-  LabelElement,
   DescriptionSpan,
-  ButtonWrapper,
+  ButtonWrapper
 } from "../../styleLocal.js";
+import { LabelElement } from "../../../GlobalStyles/styleGlobal";
 
 export default function Article({ news, getParams, deleteItem }) {
   return (
