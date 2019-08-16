@@ -4,13 +4,13 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import PropTypes from "prop-types";
 
+import { TextQuestion } from "../styleLocal";
+
 import {
   LabelElement,
   ConsturctorForm,
-  ButtonWrapper,
-  TextQuestion
-} from "../styleLocal";
-
+  ButtonWrapper
+} from "../../../GlobalStyles/styleGlobal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";

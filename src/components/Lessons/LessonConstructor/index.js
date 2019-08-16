@@ -6,20 +6,15 @@ import { stateToHTML } from "draft-js-export-html";
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
-import {
-  DarkGround,
-  ConsturctorForm,
-  ConsturctorWrapper,
-  ImgMark,
-  ImgCross,
-  ButtonWrapperConstructor
-} from "../styleLocal";
+import { ImgMark, ImgCross, ButtonWrapperConstructor } from "../styleLocal";
 import {
   Wrapper,
   LabelElement,
-  ButtonWrapper
+  ButtonWrapper,
+  ConsturctorWrapper,
+  ConsturctorForm,
+  DarkGround
 } from "../../GlobalStyles/styleGlobal";
-
 
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
@@ -93,7 +88,7 @@ class LessonConstructor extends Component {
     });
   };
 
-  changeExamProp = (flag) => {
+  changeExamProp = flag => {
     this.setState({ exam: flag });
   };
 
@@ -120,7 +115,7 @@ class LessonConstructor extends Component {
                     onChange={this.onChange}
                     required={true}
                   />
-                  <LabelElement>description</LabelElement>
+                  <LabelElement>Description</LabelElement>
                   <EditorText
                     editorState={editorState}
                     onEditorStateChange={this.onEditorStateChange}
@@ -130,13 +125,13 @@ class LessonConstructor extends Component {
                   <ImgMark
                     style={!exam ? { filter: "grayscale(100%)" } : {}}
                     src={checkMark}
-                    onClick={()=>this.changeExamProp(true)}
+                    onClick={() => this.changeExamProp(true)}
                   />
                   <ImgCross
                     style={exam ? { filter: "grayscale(100%)" } : {}}
                     src={redCross}
-                    onClick={()=>this.changeExamProp(false)}                  
-                    />
+                    onClick={() => this.changeExamProp(false)}
+                  />
                   <br />
                   {!course && (
                     <>

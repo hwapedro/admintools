@@ -3,28 +3,22 @@ import PropTypes from "prop-types";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-
 import EditorText from "../../EditorText";
 import Search from "../../Search";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
 
-import {
-  DarkGround,
-  ConsturctorWrapper,
-  ConsturctorForm,
-  ButtonWrapperConstructor
-} from "../styleLocal";
+import { ButtonWrapperConstructor } from "../styleLocal";
 import {
   Wrapper,
   LabelElement,
-  ButtonWrapper
+  ButtonWrapper,
+  DarkGround,
+  ConsturctorWrapper,
+  ConsturctorForm
 } from "../../GlobalStyles/styleGlobal";
 
 const name = "course";
-
 
 export default class CourseCounstructor extends Component {
   state = {
@@ -68,7 +62,7 @@ export default class CourseCounstructor extends Component {
                     onChange={onChange}
                     required={true}
                   />
-                  <LabelElement>description</LabelElement>
+                  <LabelElement>Description</LabelElement>
                   <EditorText
                     editorState={editorState}
                     onEditorStateChange={this.onEditorStateChange}

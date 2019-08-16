@@ -4,16 +4,18 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import PropTypes from "prop-types";
 
-
 import {
-  LabelElement,
-  ConsturctorForm,
-  ButtonWrapper,
   OptionsWrapper,
   OptionElementWrapper,
   OptionInput,
   CheckboxInput
 } from "../styleLocal";
+
+import {
+  LabelElement,
+  ConsturctorForm,
+  ButtonWrapper
+} from "../../../GlobalStyles/styleGlobal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
@@ -32,30 +34,30 @@ class TestConstructor extends Component {
 
   componentDidMount() {
     const { task } = this.props;
-    if(task){
-    if (task.info.description !== "") {
-      const blocksFromHTML = convertFromHTML(task.info.description);
-      const state = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
-      );
-      this.setState({
-        ...this.state,
-        name: task.info.name,
-        question: task.info.question,
-        options: task.info.options,
-        editorState: EditorState.createWithContent(state)
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        name: task.info.name,
-        question: task.info.question,
-        options: task.info.options,
-        editorState: EditorState.createEmpty()
-      });
+    if (task) {
+      if (task.info.description !== "") {
+        const blocksFromHTML = convertFromHTML(task.info.description);
+        const state = ContentState.createFromBlockArray(
+          blocksFromHTML.contentBlocks,
+          blocksFromHTML.entityMap
+        );
+        this.setState({
+          ...this.state,
+          name: task.info.name,
+          question: task.info.question,
+          options: task.info.options,
+          editorState: EditorState.createWithContent(state)
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          name: task.info.name,
+          question: task.info.question,
+          options: task.info.options,
+          editorState: EditorState.createEmpty()
+        });
+      }
     }
-  }
   }
 
   addOption = () => {
@@ -106,13 +108,13 @@ class TestConstructor extends Component {
     );
 
     this.setState({
-        options: newOptions
+      options: newOptions
     });
   };
 
   infoChange = event => {
     this.setState({
-      [event.target.name]: event.target.value 
+      [event.target.name]: event.target.value
     });
   };
 
@@ -145,7 +147,7 @@ class TestConstructor extends Component {
 
   render() {
     const { options, name, editorState, question } = this.state;
-    
+
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
@@ -229,7 +231,6 @@ TestConstructor.propTypes = {
   addTask: PropTypes.func,
   changeTask: PropTypes.func
 };
-
 
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>

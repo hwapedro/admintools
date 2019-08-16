@@ -49,7 +49,7 @@ export const TitleInput = styled.input`
   color: black;
 `;
 
-export const LabelElement = styled.span`
+export const LabelElement = styled.label`
   margin-top: 2rem;
   font-weight: 900;
   font-size: 1.8rem;
@@ -99,72 +99,7 @@ export const ButtonWrapper = styled.div`
   margin-top: 0.5rem;
 `;
 
-export const LessonButton = styled.button`
-  width: 150px;
-  height: 40px;
-  border: 0;
-  border-radius: 10px;
-  background-color: ${props => props.theme.button};
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-    cursor: pointer;
-  }
-  margin-right: 1rem;
-`;
-
 //SET LESSON CONSTRUCTION
-
-export const DarkGround = styled.div`
-  background: #000;
-  height: 100%;
-  opacity: 0.5;
-  position: fixed;
-  width: 100%;
-  z-index: 100;
-  top: 0;
-  left: 0;
-`;
-
-export const ConsturctorForm = styled.form``;
-
-export const ConsturctorWrapper = styled.div`
-  background: ${props => props.theme.courses};
-  padding: 1.5rem;
-  position: absolute;
-  width: 700px;
-  height: auto;
-  top: 35%;
-  left: 50%;
-  z-index: 101;
-  margin-top: -200px;
-  margin-left: -330px;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
-`;
-
-export const ConstructorButton = styled.button`
-  width: 150px;
-  height: 40px;
-  border: 0;
-  border-radius: 10px;
-  background-color: ${props => props.theme.button};
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-    cursor: pointer;
-  }
-  margin-right: 1rem;
-`;
 
 export const ButtonWrapperConstructor = styled.div`
   padding-left: 40px;
@@ -176,24 +111,6 @@ export const ButtonWrapperConstructor = styled.div`
 `;
 
 // TASK STYLES
-export const TaskButton = styled.button`
-  width: 120px;
-  height: 30px;
-  border: 0;
-  border-radius: 10px;
-  background-color: ${props => props.theme.button};
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-    cursor: pointer;
-  }
-  margin-right: 1rem;
-`;
 
 export const TaskElementWrapper = styled.li`
   display: flex;

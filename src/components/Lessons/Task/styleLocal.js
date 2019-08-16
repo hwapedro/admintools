@@ -94,16 +94,7 @@ export const ImgCross = styled.img`
   margin-left: 1rem;
   margin-bottom: -0.4rem;
 `;
-export const DarkGround = styled.div`
-  background: #000;
-  height: 100%;
-  opacity: 0.5;
-  position: fixed;
-  width: 100%;
-  z-index: 50;
-  top: 0;
-  left: 0;
-`;
+
 
 export const Select = styled.select`
   border: 1px solid #ddd;
@@ -114,24 +105,6 @@ export const Select = styled.select`
   color: black;
   padding-left: 0.7em;
 `;
-
-
-export const ConsturctorWrapper = styled.div`
-  background: ${props => props.theme.courses};
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  position: absolute;
-  width: 700px;
-  height: auto;
-  top: 40%;
-  left: 50%;
-  z-index: 101;
-  margin-top: -300px;
-  margin-left: -330px;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
-`;
-
 
 
 export const TitleInput = styled.input`

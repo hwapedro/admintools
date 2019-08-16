@@ -8,15 +8,15 @@ import Search from "../../Search";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
 
+import { ButtonWrapperConstructor } from "../styleLocal";
 import {
   Wrapper,
-  DarkGround,
-  ConsturctorWrapper,
-  ConsturctorForm,
   LabelElement,
   ButtonWrapper,
-  ButtonWrapperConstructor
-} from "../styleLocal";
+  DarkGround,
+  ConsturctorWrapper,
+  ConsturctorForm
+} from "../../GlobalStyles/styleGlobal";
 
 const name = "news";
 
@@ -81,7 +81,7 @@ class SetArticle extends Component {
                   onChange={onChange}
                   required={true}
                 />
-                <LabelElement>DESCRIPTION</LabelElement>
+                <LabelElement>Text of article</LabelElement>
                 <EditorText
                   editorState={editorState}
                   onEditorStateChange={this.onEditorStateChange}

@@ -9,13 +9,13 @@ import {
   DescriptionSpan,
   DescriptionTextArea,
   ElementWrapper,
-  ElementsWrapper,
-  ButtonWrapper
+  ElementsWrapper
 } from "../styleLocal";
 import {
   Wrapper,
   TitleSpan,
-  LabelElement
+  LabelElement,
+  ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
 import { getBase64 } from "../../../store/utils";
 
@@ -78,12 +78,12 @@ class badgeList extends Component {
             <ElementWrapper key={badge._id}>
               <form onSubmit={this.setParams}>
                 <CustomInput
-                label="Title"
-                placeholder="Title goes here"
-                name="title"
-                value={title}
-                onChange={this.onChange}
-                required={true}
+                  label="Title"
+                  placeholder="Title goes here"
+                  name="title"
+                  value={title}
+                  onChange={this.onChange}
+                  required={true}
                 />
                 <LabelElement>Description of badge : </LabelElement>
                 <DescriptionTextArea

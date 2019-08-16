@@ -4,7 +4,7 @@ import Select from "react-select";
 import {
   ConsturctorWrapper,
   DarkGround
-} from "../styleLocal";
+} from "../../../GlobalStyles/styleGlobal";
 
 import Button from "../../../Shared/Button";
 import TestConstructor from "./TestConstructor";
