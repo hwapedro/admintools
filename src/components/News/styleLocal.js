@@ -68,33 +68,6 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const DarkGround = styled.div`
-  background: #000;
-  height: 100%;
-  opacity: 0.5;
-  position: fixed;
-  width: 100%;
-  z-index: 100;
-  top: 0;
-  left: 0;
-`;
-
-export const ConsturctorWrapper = styled.div`
-  background: ${props => props.theme.courses};
-  padding: 1.5rem;
-  position: absolute;
-  width: 700px;
-  height: auto;
-  top: 35%;
-  left: 50%;
-  z-index: 101;
-  margin-top: -200px;
-  margin-left: -330px;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
-`;
-
-export const ConsturctorForm = styled.form``;
-
 export const TitleInput = styled.input`
   border: 1px solid #ddd;
   display: flex;
@@ -106,11 +79,6 @@ export const TitleInput = styled.input`
   padding-left: 0.7em;
 `;
 
-export const LabelElement = styled.span`
-  margin-top: 2rem;
-  font-weight: 900;
-  font-size: 1.8rem;
-`;
 
 export const ButtonWrapper = styled.div`
   display: flex;

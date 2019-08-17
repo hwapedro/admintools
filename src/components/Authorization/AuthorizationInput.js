@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
-const CustomInput = ({
+const AuthorizationInput = ({
   label,
   placeholder,
   invalid,
@@ -20,7 +20,7 @@ const CustomInput = ({
   </Field>
 )
 
-CustomInput.propTypes = {
+AuthorizationInput.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   field: PropTypes.objectOf(
@@ -28,13 +28,13 @@ CustomInput.propTypes = {
   )
 }
 
-CustomInput.defaultProps = {
+AuthorizationInput.defaultProps = {
   label: '',
   placeholder: '',
   field: {}
 }
 
-export default CustomInput
+export default AuthorizationInput
 
 const Field = styled.div`
   display: flex;

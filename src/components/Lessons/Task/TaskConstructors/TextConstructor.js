@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import PropTypes from "prop-types";
+
+import { TextQuestion } from "../styleLocal";
 
 import {
   LabelElement,
   ConsturctorForm,
-  ButtonWrapper,
-  TextQuestion
-} from "../styleLocal";
-
+  ButtonWrapper
+} from "../../../GlobalStyles/styleGlobal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
@@ -135,6 +136,16 @@ class TextConstructor extends Component {
     );
   }
 }
+
+TextConstructor.defaultProps = {
+  addTask() {},
+  changeTask() {}
+};
+
+TextConstructor.propTypes = {
+  addTask: PropTypes.func,
+  changeTask: PropTypes.func
+};
 
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>

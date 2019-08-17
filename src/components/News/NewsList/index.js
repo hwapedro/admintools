@@ -8,14 +8,13 @@ import EditorText from "../../EditorText";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
 
+import { ElementWrapper, ElementsWrapper, EmptyMessage } from "../styleLocal";
+
 import {
   Wrapper,
   LabelElement,
-  ButtonWrapper,
-  ElementWrapper,
-  ElementsWrapper,
-  EmptyMessage
-} from "../styleLocal";
+  ButtonWrapper
+} from "../../GlobalStyles/styleGlobal";
 
 const name = "news";
 

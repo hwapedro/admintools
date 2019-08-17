@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import Test from "./TaskTypes/Test";
 import Text from "./TaskTypes/Text";
@@ -55,5 +56,25 @@ class Task extends Component {
     return <>{task && <>{this.constSwitch()} </>}</>;
   }
 }
+
+Task.defaultProps = {
+  lesson: {},
+  task: {},
+  page: {},
+  lessonId: null,
+  taskEditFlag: false,
+  changeEditFlag: false,
+  deleteTask() {}
+};
+
+Task.propTypes = {
+  lesson: PropTypes.object,
+  task: PropTypes.object,
+  page: PropTypes.object,
+  lessonId: PropTypes.string.isRequired,
+  taskEditFlag: PropTypes.bool,
+  changeEditFlag: PropTypes.bool,
+  deleteTask: PropTypes.func
+};
 
 export default Task;

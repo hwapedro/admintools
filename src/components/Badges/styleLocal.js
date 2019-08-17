@@ -25,12 +25,6 @@ font-size: 1.3rem;
 color: black;
 `;
 
-export const LabelElement = styled.span`
-margin-top: 2rem;
-font-weight: 900;
-font-size: 1.8rem;
-`;
-
 export const DescriptionSpan = styled.span`
 display: flex;
 justify-content: flex-start;
@@ -48,7 +42,6 @@ max-height: 100%;
 max-width: 100%;
 resize: none;
 align-items: center;
-margin-top: 2rem;
 font-size: 1.3rem;
 color: black;
 `;
