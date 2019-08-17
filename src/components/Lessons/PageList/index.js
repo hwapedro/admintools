@@ -6,13 +6,14 @@ import PageNav from "../PageNav";
 import Button from "../../Shared/Button";
 import TaskList from "../Task/TaskList";
 import TaskConstructor from "../Task/TaskConstructors/";
+
 import {
   PageNumber,
   ButtonWrapper,
-  PageHeader
+  PageHeader,
+  ElementWrapper,
+  PageMenu
 } from "./styleLocal";
-
-import { ElementWrapper, PageMenu } from "./styleLocal";
 
 class PageList extends Component {
   state = {
@@ -34,7 +35,7 @@ class PageList extends Component {
           return (
             <div key={page._id}>
               <PageHeader>
-                <PageNumber>{page.text}</PageNumber>
+                <PageNumber>Page {index + 1}</PageNumber>
                 <ButtonWrapper>
                   <TaskConstructor pageId={page._id} />
                   <ButtonWrapper>
@@ -61,7 +62,7 @@ class PageList extends Component {
     return (
       <>
         <PageMenu>
-          <PageNav amount={pages} changePage={this.changePage} />
+          <PageNav amount={pages} changePage={this.changePage} pageNumber={pageNumber}/>
         </PageMenu>
         <ElementWrapper>{list}</ElementWrapper>
       </>

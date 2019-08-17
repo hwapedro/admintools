@@ -144,7 +144,7 @@ export const ConsturctorWrapper = styled.div`
   z-index: 101;
   margin-top: -200px;
   margin-left: -330px;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
 `;
 
 export const ConstructorButton = styled.button`
@@ -308,12 +308,21 @@ export const SignInButton = styled.button`
 `;
 
 export const ExamPropContainer = styled.div`
-  margin-bottom:20px;
-`
+  margin-bottom: 20px;
+`;
 
 export const MenuButton = styled.button`
-  border: none;
   background-color: white;
+  border: none;
   margin: 0 21px;
+  padding: 5px 13px;
+  font-size: 20px;
+`;
+
+export const CurrentMenuButton = styled.button`
+  background-color: white;
+  border: 0.3px solid #3f51b5;;
+  margin: 0 21px;
+  padding: 5px 13px;
   font-size: 20px;
 `;
