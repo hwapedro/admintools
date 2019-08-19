@@ -199,7 +199,7 @@ export const changeDndLesson = (id1, id2, courseIndex) => dispatch => {
     type: CHANGE_DND_REQUEST
   });
   AdminService.DragAndDropLesson(token, id1, id2, courseIndex)
-    .then(response => {
+    .then(() => {
       dispatch({
         type: CHANGE_DND_LESSON_SUCCESS,
         payload: {

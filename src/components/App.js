@@ -3,7 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
 import CoursesContainer from "../components/Containers/CoursesContainer";
-import Lessons from "../components/Lessons";
+import LessonsContainer from "../components/Containers/LessonsContainer";
+// import Lessons from "../components/Lessons";
 // import Test from "../components/Lessons/Task/TaskComponents/Tests"
 import Tasks from "../components/Lessons/Task/TaskComponents";
 import Lesson from "../components/Lessons/Lesson";
@@ -22,7 +23,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 class App extends Component {
   routes = [
     { path: route.courses, Component: CoursesContainer },
-    { path: route.lessons, Component: Lessons },
+    { path: route.lessons, Component: LessonsContainer },
     { path: route.badges, Component: Badges },
     { path: route.news, Component: News }
   ];

@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   changeCourse: (courseIndex, title, description, name) =>
     dispatch(CoursesModule.changeElement(courseIndex, title, description, name)),
 
-  changeDnD: (id1, id2) => dispatch(CoursesModule.changeDnD(id1, id2))
+  changeDnD: (id1, id2) => dispatch(CoursesModule.changeDnD(id1, id2, 'courses'))
 });
 
 export default connect(

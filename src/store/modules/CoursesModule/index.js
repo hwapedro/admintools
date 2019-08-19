@@ -3,22 +3,9 @@ import AdminService from "../../../service";
 import { DND } from "../../utils";
 import {
   DELETE_LESSON_SUCCESS,
-  GETALL_ELEMENT_REQUEST,
-  GETALL_ELEMENT_SUCCESS,
-  GETALL_ELEMENT_FAILURE,
-  ADD_ELEMENT_REQUEST,
-  ADD_ELEMENT_SUCCESS,
-  ADD_ELEMENT_FAILURE,
-  DELETE_ELEMENT_REQUEST,
-  DELETE_ELEMENT_SUCCESS,
-  DELETE_ELEMENT_FAILURE,
-  CHANGE_DND_REQUEST,
-  FETCH_DND_SUCCESS,
-  CHANGE_DND_FAILURE,
-  CHANGE_ELEMENT_REQUEST,
-  CHANGE_ELEMENT_SUCCESS,
-  CHANGE_ELEMENT_FAILURE
+  ADD_LESSON_SUCCESS
 } from "../../constants";
+
 import ViewModule from "../ViewModule";
 
 const token = localStorage.getItem("token");
@@ -76,7 +63,12 @@ class CoursesModule extends DuckModule {
         };
 
       case this.CHANGE_DND_SUCCESS:
-        return DND(state, action.payload.id1, action.payload.id2, "courses");
+        return DND(
+          state,
+          action.payload.id1,
+          action.payload.id2,
+          action.payload.name
+        );
 
       case this.GET_COURSE_SUCCESS:
         return {
@@ -84,10 +76,7 @@ class CoursesModule extends DuckModule {
           course: action.course
         };
 
-      case this.CHANGE_DND_LESSON_SUCCESS:
-        return DND(state, action.payload.id1, action.payload.id2, "lessons");
-
-      case this.ADD_LESSON_SUCCESS:
+      case ADD_LESSON_SUCCESS:
         if (action.flag === "course") {
           return {
             ...state,
@@ -183,20 +172,36 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  changeDnD = (id1, id2) => dispatch => {
+  changeDnD = (id1, id2, name, courseIndex = 0) => dispatch => {
     dispatch(ViewModule.setLoading(true));
-    AdminService.DragAndDropCourse(token, id1, id2)
-      .then(() => {
-        dispatch({
-          type: this.CHANGE_DND_SUCCESS,
-          payload: {
-            id1: id1,
-            id2: id2
-          }
-        });
-      })
-      .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
+    if (name === "lessons") {
+      AdminService.DragAndDropLesson(token, id1, id2, courseIndex)
+        .then(() => {
+          dispatch({
+            type: this.CHANGE_DND_SUCCESS,
+            payload: {
+              id1,
+              id2,
+              name
+            }
+          });
+        })
+        .then(() => dispatch(ViewModule.setLoading(false)))
+        .catch(error => dispatch(ViewModule.setError(true)));
+    } else
+      AdminService.DragAndDropCourse(token, id1, id2)
+        .then(() => {
+          dispatch({
+            type: this.CHANGE_DND_SUCCESS,
+            payload: {
+              id1,
+              id2,
+              name
+            }
+          });
+        })
+        .then(() => dispatch(ViewModule.setLoading(false)))
+        .catch(error => dispatch(ViewModule.setError(true)));
   };
 
   getOneCourse = id => async dispatch => {
@@ -219,7 +224,6 @@ class CoursesModule extends DuckModule {
   getCourse = state => {
     return this.getRoot(state).course;
   };
-
 }
 
 export default new CoursesModule("/COURSE/", state => state.Courses);

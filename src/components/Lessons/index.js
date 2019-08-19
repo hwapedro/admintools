@@ -14,7 +14,7 @@ import Error from "../Error";
 
 const name = "lesson";
 
-class Lessons extends Component {
+export default class Lessons extends Component {
   state = {
     search: ""
   };
@@ -86,27 +86,3 @@ Lessons.propTypes = {
   delLesson: PropTypes.func,
   getAllLessons: PropTypes.func
 };
-
-const mapStateToProps = state => ({
-  lessons: state.Lessons.lessons,
-  loading: state.reducer.loading,
-  error: state.reducer.error
-});
-
-const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam, name, courseIndex, flag) =>
-    dispatch(addLesson(title, description, exam, name, courseIndex, flag)),
-
-  delLesson: (lessonsIndex, name, flag) =>
-    dispatch(deleteLesson(lessonsIndex, name, flag)),
-
-  getAllLessons: name => dispatch(getAllElements(name)),
-
-  changeDndLesson: (id1, id2, courseIndex) =>
-    dispatch(changeDndLesson(id1, id2, courseIndex))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Lessons);
