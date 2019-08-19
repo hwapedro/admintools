@@ -101,7 +101,6 @@ export const ButtonWrapper = styled.div`
 
 //SET LESSON CONSTRUCTION
 
-<<<<<<< HEAD
 export const DarkGround = styled.div`
   background: #000;
   height: 100%;
@@ -148,8 +147,6 @@ export const ConstructorButton = styled.button`
   margin-right: 1rem;
 `;
 
-=======
->>>>>>> ab12641ae57d64a725f962c87acbefef52649c26
 export const ButtonWrapperConstructor = styled.div`
   padding-left: 40px;
   width: 1000px;

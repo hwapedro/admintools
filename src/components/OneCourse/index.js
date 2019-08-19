@@ -4,12 +4,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 // import { DragDropContext } from "react-beautiful-dnd";
 
-import { getAllElements, getCourse } from "../../store/actions";
-import {
-  changeDndLesson,
-  addLesson,
-  deleteLesson
-} from "../../store/actions/actionLessons";
 
 import LessonList from "../Lessons/LessonList/LessonList";
 import LessonConstructor from "../Lessons/LessonConstructor";
@@ -17,7 +11,7 @@ import Spinner from "../Spinner";
 import Error from "../Error";
 
 const name = "course";
-class OneCourse extends Component {
+export default class OneCourse extends Component {
   state = {
     search: ""
   };
@@ -65,7 +59,7 @@ class OneCourse extends Component {
               value={search}
               course={course}
             />
-
+            <div>{course.title} {course.courseIndex}</div>
             <LessonList
               delLesson={(lessonsIndex, name, flag) =>
                 delLesson(lessonsIndex, name, flag)
@@ -102,30 +96,3 @@ OneCourse.propTypes = {
   getAllLessons: PropTypes.func
 };
 
-const mapStateToProps = state => ({
-  course: state.Courses.course,
-  loading: state.reducer.loading,
-  error: state.reducer.error
-});
-
-const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam, name, courseIndex, flag) =>
-    dispatch(addLesson(title, description, exam, name, courseIndex, flag)),
-
-  delLesson: (lessonsIndex, name, flag) =>
-    dispatch(deleteLesson(lessonsIndex, name, flag)),
-
-  getAllLessons: name => dispatch(getAllElements(name)),
-
-  changeDndLesson: (id1, id2, courseIndex) =>
-    dispatch(changeDndLesson(id1, id2, courseIndex)),
-
-  getCourse: id => dispatch(getCourse(id))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OneCourse);
-
-export const Wrapper = styled.div``;

@@ -1,15 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
-
-import {
-  changeElement,
-  getAllElements,
-  addElement,
-  deletElement,
-  changeDnD
-} from "../../store/actions";
 
 import CourseConstructor from "./CourseConstructor";
 import CoursesList from "./CourseList/";
@@ -18,7 +9,7 @@ import Error from "../Error";
 
 const name = "course";
 
-class Courses extends Component {
+export default class Courses extends Component {
   state = {
     title: "",
     search: "",
@@ -137,27 +128,3 @@ Courses.propTypes = {
   changeCourse: PropTypes.func
 };
 
-const mapStateToProps = state => ({
-  courses: state.Courses.courses,
-  loading: state.reducer.loading,
-  error: state.reducer.error
-});
-
-const mapDispatchToProps = dispatch => ({
-  addCourses: (title, description, name) =>
-    dispatch(addElement(title, description, name)),
-
-  delCourse: (courseIndex, name) => dispatch(deletElement(courseIndex, name)),
-
-  getAllCourses: name => dispatch(getAllElements(name)),
-
-  changeCourse: (courseIndex, title, description, name) =>
-    dispatch(changeElement(courseIndex, title, description, name)),
-
-  changeDnD: (id1, id2) => dispatch(changeDnD(id1, id2))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Courses);

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
-import Courses from "../components/Courses";
+import CoursesContainer from "../components/Containers/CoursesContainer";
 import Lessons from "../components/Lessons";
 // import Test from "../components/Lessons/Task/TaskComponents/Tests"
 import Tasks from "../components/Lessons/Task/TaskComponents";
@@ -12,7 +12,8 @@ import News from "../components/News";
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/Authorization/LoginScreen";
 import RegistrationScreen from "../components/Authorization/RegistrationScreen";
-import OneCourse from "../components/OneCourse";
+import OneCourseContainer from "../components/Containers/OneCourseContainer";
+// import OneCourse from "../components/OneCourse";
 
 import * as route from "../components/Route/constants";
 
@@ -20,7 +21,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 class App extends Component {
   routes = [
-    { path: route.courses, Component: Courses },
+    { path: route.courses, Component: CoursesContainer },
     { path: route.lessons, Component: Lessons },
     { path: route.badges, Component: Badges },
     { path: route.news, Component: News }
@@ -61,7 +62,7 @@ class App extends Component {
               path={route.course}
               render={({ match }) => {
                 const { id } = match.params;
-                return <OneCourse itemId={id} />;
+                return <OneCourseContainer itemId={id} />;
               }}
             />
             <Route

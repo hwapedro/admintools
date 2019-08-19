@@ -9790,6 +9790,14 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
+simple-duck@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/simple-duck/-/simple-duck-0.0.16.tgz#c54718d407e87acc9d62f71b357e628dec42d678"
+  integrity sha512-KStj7YWBXtZwr1OeTS+47D6W+xIFf/mwXHKvxa6lygEdctUT6076f8iFW6ZVDz1nE2P24A5V7oWqu3nGZriT4Q==
+  dependencies:
+    lodash.camelcase "^4.3.0"
+    lodash.get "^4.4.2"
+
 simple-swizzle@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/simple-swizzle/-/simple-swizzle-0.2.2.tgz#a4da6b635ffcccca33f70d17cb92592de95e557a"
