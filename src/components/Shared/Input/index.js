@@ -4,19 +4,26 @@ import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 
 import { Field } from "./style";
-import { LabelElement } from "../../GlobalStyles/styleGlobal"
+import { LabelElement } from "../../GlobalStyles/styleGlobal";
 
 const CustomInput = withStyles({
   root: {
     "& .MuiOutlinedInput-input": {
       padding: "10px 14px",
       fontSize: "14px",
-      backgroundColor: 'white'
+      backgroundColor: "white"
     }
   }
 })(TextField);
 
-export default function Input({ onChange, name, value, label, placeholder, required }) {
+export default function Input({
+  onChange,
+  name,
+  value,
+  label,
+  placeholder,
+  required
+}) {
   return (
     <Field>
       <LabelElement htmlFor={label}>{label}</LabelElement>
@@ -36,7 +43,6 @@ export default function Input({ onChange, name, value, label, placeholder, requi
   );
 }
 
-
 CustomInput.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
@@ -51,5 +57,5 @@ CustomInput.defaultProps = {
   value: "",
   label: "",
   placeholder: "",
-  required: false,
+  required: false
 };

@@ -70,5 +70,5 @@ export const EmptyMessage = styled.div`
   font-weight: 700;
   font-size: 2.5rem;
   top: 50%;
-  margin-top: 270px;
+  margin-top: 5rem;
 `;
