@@ -7,7 +7,8 @@ import LessonsContainer from "../components/Containers/LessonsContainer";
 // import Lessons from "../components/Lessons";
 // import Test from "../components/Lessons/Task/TaskComponents/Tests"
 import Tasks from "../components/Lessons/Task/TaskComponents";
-import Lesson from "../components/Lessons/Lesson";
+// import Lesson from "../components/Lessons/Lesson";
+import LessonContainer from "../components/Containers/LessonContainer";
 import Badges from "../components/Badges";
 import News from "../components/News";
 import Layout from "./hoc/Layout";
@@ -56,7 +57,7 @@ class App extends Component {
               path={route.lesson}
               render={({ match }) => {
                 const { id } = match.params;
-                return <Lesson itemId={id} />;
+                return <LessonContainer itemId={id} />;
               }}
             />
             <Route

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import PropTypes from "prop-types";
@@ -14,9 +13,8 @@ import {
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
-import { addTask, changeTask } from "../../../../store/actions/actionLessons";
 
-class TextConstructor extends Component {
+export default class TextConstructor extends Component {
   state = {
     name: "",
     question: "",
@@ -93,6 +91,7 @@ class TextConstructor extends Component {
       changeTask(task._id, type, info, pageId);
       changeEditFlag();
     } else {
+      console.log(pageId)
       addTask(pageId, type, info);
     }
   };
@@ -146,15 +145,3 @@ TextConstructor.propTypes = {
   addTask: PropTypes.func,
   changeTask: PropTypes.func
 };
-
-const mapDispatchToProps = dispatch => ({
-  addTask: (pageid, type, info, answer) =>
-    dispatch(addTask(pageid, type, info, answer)),
-  changeTask: (taskId, type, info, pageId) =>
-    dispatch(changeTask(taskId, type, info, pageId))
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(TextConstructor);

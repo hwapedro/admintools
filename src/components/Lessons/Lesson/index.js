@@ -1,17 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import Select from "react-select";
 
-import {
-  getLesson,
-  changeLesson,
-  addPage,
-  deletePage,
-  deleteTask
-} from "../../../store/actions/actionLessons";
 
 import {
   DescriptionSpan,
@@ -43,7 +35,7 @@ import redCross from "../../../img/bad.png";
 const name = "lesson";
 let options = [];
 
-class Lesson extends Component {
+export default class Lesson extends Component {
   state = {
     title: "",
     description: "",
@@ -271,25 +263,4 @@ Lesson.propTypes = {
   changeLesson: PropTypes.func
 };
 
-const mapStateToProps = state => ({
-  lesson: state.Lessons.lesson,
-  loading: state.reducer.loading,
-  error: state.reducer.error,
-});
 
-const mapDispatchToProps = dispatch => ({
-  getLesson: id => dispatch(getLesson(id)),
-  changeLesson: (lessonsIndex, title, description, exam, name, courseIndex) =>
-    dispatch(
-      changeLesson(lessonsIndex, title, description, exam, name, courseIndex)
-    ),
-  addPage: (id, text, tasks, needToComplete) =>
-    dispatch(addPage(id, text, tasks, needToComplete)),
-  deletePage: id => dispatch(deletePage(id)),
-  deleteTask: (pageId, taskid) => dispatch(deleteTask(pageId, taskid))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Lesson);

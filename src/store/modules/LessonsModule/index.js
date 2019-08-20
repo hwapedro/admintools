@@ -1,10 +1,7 @@
 import DuckModule from "simple-duck";
 import AdminService from "../../../service";
 import { DND } from "../../utils";
-import {
-  DELETE_LESSON_SUCCESS,
-  ADD_LESSON_SUCCESS
-} from "../../constants";
+import { DELETE_LESSON_SUCCESS, ADD_LESSON_SUCCESS } from "../../constants";
 import ViewModule from "../ViewModule";
 
 const token = localStorage.getItem("token");
@@ -24,6 +21,11 @@ class LessonModule extends DuckModule {
     this.CHANGE_LESSON_SUCCESS = `${this.prefix}CHANGE_LESSON_SUCCESS`;
     this.GET_LESSON_SUCCESS = `${this.prefix}GET_LESSON_SUCCESS`;
     this.CHANGE_DND_LESSON_SUCCESS = `${this.prefix}CHANGE_DND_LESSON_SUCCESS`;
+    this.ADD_PAGE_SUCCESS = `${this.prefix}ADD_PAGE_SUCCESS`;
+    this.DELETE_PAGE_SUCCESS = `${this.prefix}ADD_PAGE_SUCCESS`;
+    this.ADD_TASK_SUCCESS = `${this.prefix}ADD_TASK_SUCCESS`;
+    this.CHANGE_TASK_SUCCESS = `${this.prefix}CHANGE_TASK_SUCCESS`;
+    this.DELETE_TASK_SUCCESS = `${this.prefix}DELETE_TASK_SUCCESS`;
   }
 
   reduce = (state = initialState, action) => {
@@ -69,6 +71,56 @@ class LessonModule extends DuckModule {
 
       case this.CHANGE_DND_LESSON_SUCCESS:
         return DND(state, action.payload.id1, action.payload.id2, "lessons");
+
+      case this.ADD_PAGE_SUCCESS:
+        return {
+          ...state,
+          lesson: action.lesson
+        };
+
+      case this.DELETE_PAGE_SUCCESS:
+        return {
+          ...state,
+          lesson: action.lesson
+        };
+
+      case this.ADD_TASK_SUCCESS:
+        return {
+          ...state,
+          lesson: {
+            ...state.lesson,
+            pages: state.lesson.pages.map(page =>
+              page._id === action.pageId
+                ? { ...page, tasks: [...page.tasks, action.task] }
+                : page
+            )
+          }
+        };
+
+      case this.CHANGE_TASK_SUCCESS:
+        return {
+          ...state,
+
+          lesson: {
+            ...state.lesson,
+            pages: state.lesson.pages.map(page =>
+              page._id === action.pageId
+                ? {
+                    ...page,
+                    tasks: page.tasks.map(task =>
+                      task._id === action.taskId ? action.task : task
+                    )
+                  }
+                : page
+            )
+          }
+        };
+
+      case this.DELETE_TASK_SUCCESS:
+        return {
+          ...state,
+          lesson: { ...action.lesson, pages: action.lesson.pages }
+        };
 
       default:
         return {
@@ -172,8 +224,85 @@ class LessonModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
+  addPage = (id, text, tasks, needToComplete) => dispatch => {
+    dispatch(ViewModule.setLoading(true));
+
+    AdminService.addPage(token, id, text, tasks, needToComplete)
+      .then(response => {
+        dispatch({
+          type: this.ADD_PAGE_SUCCESS,
+          lesson: response.lesson
+        });
+      })
+      .then(() => dispatch(ViewModule.setLoading(false)))
+      .catch(error => dispatch(ViewModule.setError(true)));
+  };
+
+  deletePage = id => dispatch => {
+    dispatch(ViewModule.setLoading(true));
+
+    AdminService.deletePage(token, id)
+      .then(response => {
+        dispatch({
+          type: this.DELETE_PAGE_SUCCESS,
+          lesson: response.body.lesson
+        });
+      })
+      .then(() => dispatch(ViewModule.setLoading(false)))
+      .catch(error => dispatch(ViewModule.setError(true)));
+  };
+
+  addTask = (pageId, type, info) => dispatch => {
+    dispatch(ViewModule.setLoading(true));
+
+    AdminService.createTask(token, pageId, type, info)
+      .then(response => {
+        dispatch({
+          type: this.ADD_TASK_SUCCESS,
+          task: response.body.task,
+          pageId: pageId
+        });
+      })
+      .then(() => dispatch(ViewModule.setLoading(false)))
+      .catch(error => dispatch(ViewModule.setError(true)));
+  };
+
+  changeTask = (taskId, type, info, pageId) => dispatch => {
+    dispatch(ViewModule.setLoading(true));
+
+    AdminService.changeTask(token, taskId, type, info)
+      .then(response => {
+        dispatch({
+          type: this.CHANGE_TASK_SUCCESS,
+          task: response.body.task,
+          taskId: taskId,
+          pageId: pageId
+        });
+      })
+      .then(() => dispatch(ViewModule.setLoading(false)))
+      .catch(error => dispatch(ViewModule.setError(true)));
+  };
+
+  deleteTask = (pageId, taskid) => dispatch => {
+    dispatch(ViewModule.setLoading(true));
+    AdminService.deleteTask(token, pageId, taskid)
+      .then(response => {
+        dispatch({
+          type: this.DELETE_TASK_SUCCESS,
+          lesson: response.body.lesson,
+          pageId: pageId
+        });
+      })
+      .then(() => dispatch(ViewModule.setLoading(false)))
+      .catch(error => dispatch(ViewModule.setError(true)));
+  };
+
   getLessons = state => {
     return this.getRoot(state).lessons;
+  };
+
+  getOneLesson = state => {
+    return this.getRoot(state).lesson;
   };
 }
 

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import PageNav from "../PageNav";
 import Button from "../../Shared/Button";
 import TaskList from "../Task/TaskList";
-import TaskConstructor from "../Task/TaskConstructors/";
+import TaskConstructorContainer from "../../Containers/TaskConstructorContainer";
 
 import {
   PageNumber,
@@ -37,7 +37,7 @@ class PageList extends Component {
               <PageHeader>
                 <PageNumber>Page {index + 1}</PageNumber>
                 <ButtonWrapper>
-                  <TaskConstructor pageId={page._id} />
+                  <TaskConstructorContainer pageId={page._id} />
                   <ButtonWrapper>
                     <Button
                       buttonStyle={"outlined"}

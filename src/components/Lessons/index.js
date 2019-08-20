@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
-import { getAllElements } from "../../store/actions";
-import { changeDndLesson } from "../../store/actions/actionLessons";
-import { addLesson, deleteLesson } from "../../store/actions/actionLessons";
 
 //import Search from "../Search";
 import LessonConstructor from "./LessonConstructor";

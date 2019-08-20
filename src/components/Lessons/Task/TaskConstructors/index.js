@@ -12,10 +12,10 @@ import TextConstructor from "./TextConstructor";
 
 const options = [
   { value: "test", label: "Test" },
-  { value: "text", label: "Text" },
-  { value: "placeholder", label: "Placeholder" }
+  { value: "text", label: "Text" }
 ];
-class TaskConstructor extends Component {
+
+export default class TaskConstructor extends Component {
   state = {
     displayConstructor: false,
     displayTaskConstructor: { value: "test", label: "Test" },
@@ -34,6 +34,7 @@ class TaskConstructor extends Component {
   };
 
   constSwitch = displayTaskConstructor => {
+    const { addTask, changeTask } = this.props;
     switch (displayTaskConstructor.value) {
       case "test":
         return (
@@ -41,10 +42,18 @@ class TaskConstructor extends Component {
             oldInfo={this.state.info}
             edited={false}
             pageId={this.props.pageId}
+            addTask={(pageid, type, info, answer) => addTask(pageid, type, info, answer)}
+            changeTask={(taskId, type, info, pageId) => changeTask(taskId, type, info, pageId)}
           />
         );
       case "text":
-        return <TextConstructor pageId={this.props.pageId} />;
+        return (
+          <TextConstructor
+            pageId={this.props.pageId}
+            addTask={(pageid, type, info, answer) => addTask(pageid, type, info, answer)}
+            changeTask={(taskId, type, info, pageId) => changeTask(taskId, type, info, pageId)}
+          />
+        );
       default:
         return <div />;
     }
@@ -85,5 +94,3 @@ class TaskConstructor extends Component {
     );
   }
 }
-
-export default TaskConstructor;
