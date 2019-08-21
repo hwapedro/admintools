@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getAllElements, deletElement } from "../../store/actions";
 
@@ -12,7 +11,7 @@ import Error from "../Error";
 
 const name = "badge";
 
-class Badge extends Component {
+export default class Badge extends Component {
   state = {
     search: ""
   };
@@ -100,24 +99,3 @@ Badge.propTypes = {
   changeIconBadge: PropTypes.func
 };
 
-const mapStateToProps = state => ({
-  badges: state.Badges.badges,
-  loading: state.reducer.loading,
-  error: state.reducer.error
-});
-
-const mapDispatchToProps = dispatch => ({
-  createBadge: (title, description, icon) =>
-    dispatch(createBadge(title, description, icon)),
-
-  delBadge: (courseIndex, name) => dispatch(deletElement(courseIndex, name)),
-
-  getAllBadges: name => dispatch(getAllElements(name)),
-
-  changeBadge: (token, index, title, description, icon) => dispatch(changeBadge(token, index, title, description, icon))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Badge);

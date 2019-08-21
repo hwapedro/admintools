@@ -4,12 +4,13 @@ import styled from "styled-components";
 
 import CoursesContainer from "../components/Containers/CoursesContainer";
 import LessonsContainer from "../components/Containers/LessonsContainer";
+import BadgesContainer from "../components/Containers/BadgesContainer";
 // import Lessons from "../components/Lessons";
 // import Test from "../components/Lessons/Task/TaskComponents/Tests"
 import Tasks from "../components/Lessons/Task/TaskComponents";
 // import Lesson from "../components/Lessons/Lesson";
 import LessonContainer from "../components/Containers/LessonContainer";
-import Badges from "../components/Badges";
+// import Badges from "../components/Badges";
 import News from "../components/News";
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/Authorization/LoginScreen";
@@ -25,7 +26,7 @@ class App extends Component {
   routes = [
     { path: route.courses, Component: CoursesContainer },
     { path: route.lessons, Component: LessonsContainer },
-    { path: route.badges, Component: Badges },
+    { path: route.badges, Component: BadgesContainer },
     { path: route.news, Component: News }
   ];
 

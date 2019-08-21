@@ -1,68 +1,87 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-padding-top: 1rem;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const TitleSpan = styled.span`
-display: flex;
-justify-content: flex-start;
-align-items: center;
-margin: 1rem 0;
-font-size: 1.3rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 1.3rem;
 `;
 
 export const TitleInput = styled.input`
-display: flex;
-justify-content: flex-start;
-align-items: center;
-margin: 1rem 0;
-font-size: 1.3rem;
-color: black;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 1.3rem;
+  color: black;
 `;
 
 export const DescriptionSpan = styled.span`
-display: flex;
-justify-content: flex-start;
-align-items: center;
-margin: 1rem 0;
-font-size: 1.3rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 1.3rem;
 `;
 
 export const DescriptionTextArea = styled.textarea`
-display: flex;
-justify-content: flex-start;
-width: 100%;
-height: 400px;
-max-height: 100%;
-max-width: 100%;
-resize: none;
-align-items: center;
-font-size: 1.3rem;
-color: black;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: 400px;
+  max-height: 100%;
+  max-width: 100%;
+  resize: none;
+  align-items: center;
+  font-size: 1.3rem;
+  color: black;
 `;
 
 export const ElementsWrapper = styled.ul`
-list-style-type: none;
-width: 1000px;
+  list-style-type: none;
+  width: 1000px;
+`;
+
+export const InfoWrapper = styled.div`
+  width: 75%;
+`;
+
+export const BadgeWrapper = styled.div`
+  width: 25%;
+`;
+
+export const BadgeImg = styled.img`
+  height: 130px;
+  width: 130px;
+  display: block;
+  margin: auto;
+  margin-top:30%;
 `;
 
 export const ElementWrapper = styled.li`
-background-color: ${props => props.theme.courses};
-margin-top: 2rem;
-padding: 1rem;
-box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
+  background-color: ${props => props.theme.courses};
+  margin-top: 2rem;
+  padding: 1rem;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: row;
+  
 `;
 
 export const ButtonWrapper = styled.div`
-display: flex;
-justify-content: flex-end;
-align-items: flex-end;
-margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 0.5rem;
 `;
 
 export const DarkGround = styled.div`
@@ -87,7 +106,7 @@ export const ConsturctorWrapper = styled.div`
   z-index: 102;
   margin-top: -200px;
   margin-left: -330px;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
 `;
 
 export const ConsturctorForm = styled.form``;

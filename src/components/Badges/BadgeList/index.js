@@ -9,7 +9,10 @@ import {
   DescriptionSpan,
   DescriptionTextArea,
   ElementWrapper,
-  ElementsWrapper
+  ElementsWrapper,
+  BadgeImg,
+  BadgeWrapper,
+  InfoWrapper
 } from "../styleLocal";
 import {
   Wrapper,
@@ -114,40 +117,43 @@ class badgeList extends Component {
         } else {
           return (
             <ElementWrapper key={badge._id}>
-              <img
-                src={badge.icon}
-                alt="icon"
-                style={{ width: "70px", height: "70px" }}
-              />
-              <LabelElement>Name of badge :</LabelElement>
-              <TitleSpan> {badge.title}</TitleSpan>
-              <LabelElement>Description of badge : </LabelElement>
-              <DescriptionSpan>{badge.description}</DescriptionSpan>
-              <ButtonWrapper>
-                <Button
-                  buttonStyle={"outlined"}
-                  onClick={() =>
-                    this.getParams(
-                      badge._id,
-                      badge.title,
-                      badge.description,
-                      badge.icon
-                    )
-                  }
-                >
-                  CHANGE badge
-                </Button>
-                <Button
-                  buttonStyle={"outlined"}
-                  onClick={() => {
-                    if (window.confirm("Delete the item?")) {
-                      this.deleteItem(badge._id);
+              <BadgeWrapper>
+                <BadgeImg
+                  src={badge.icon}
+                  alt="icon"
+                />
+              </BadgeWrapper>
+              <InfoWrapper>
+                <LabelElement>Name of badge :</LabelElement>
+                <TitleSpan> {badge.title}</TitleSpan>
+                <LabelElement>Description of badge : </LabelElement>
+                <DescriptionSpan>{badge.description}</DescriptionSpan>
+                <ButtonWrapper>
+                  <Button
+                    buttonStyle={"outlined"}
+                    onClick={() =>
+                      this.getParams(
+                        badge._id,
+                        badge.title,
+                        badge.description,
+                        badge.icon
+                      )
                     }
-                  }}
-                >
-                  DELETE badge
-                </Button>
-              </ButtonWrapper>
+                  >
+                    CHANGE badge
+                  </Button>
+                  <Button
+                    buttonStyle={"outlined"}
+                    onClick={() => {
+                      if (window.confirm("Delete the item?")) {
+                        this.deleteItem(badge._id);
+                      }
+                    }}
+                  >
+                    DELETE badge
+                  </Button>
+                </ButtonWrapper>
+              </InfoWrapper>
             </ElementWrapper>
           );
         }
