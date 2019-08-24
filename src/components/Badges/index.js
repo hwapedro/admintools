@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getAllElements, deletElement } from "../../store/actions";
-
-import { changeBadge, createBadge } from "../../store/actions/actionBadges";
-
 import BadgeConstructor from "./BadgeConstructor";
 import BadgesList from "./BadgeList";
 import Spinner from "../Spinner";

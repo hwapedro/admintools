@@ -20,4 +20,3 @@ import {
       })
       .catch(error => dispatch({ type: FETCH_LOGIN_FAILURE }));
   };
-  

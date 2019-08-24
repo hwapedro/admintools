@@ -1,11 +1,8 @@
 import { combineReducers } from "redux";
 
 import Auth from "./Auth";
-// import Badges from "./Badges";
-// import Courses from "./Courses";
-// import Lessons from "./Lessons";
-// import News from "./News";
-import reducer from "./reducer";
+
+
 import CoursesModule from "../modules/CoursesModule";
 import ViewModule from "../modules/ViewModule";
 import LessonsModule from "../modules/LessonsModule";
@@ -24,6 +21,5 @@ export default combineReducers({
   Lessons,
   News,
   Badges,
-  view,
-  reducer
+  view
 });

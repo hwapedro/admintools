@@ -86,8 +86,8 @@ class LoginScreen extends React.Component {
 
 const mapStateToProps = state => ({
   token: state.Auth.token,
-  loading: state.reducer.loading,
-  error: state.reducer.error
+  loading: false,
+  error: false
 });
 
 const mapDispatchToProps = dispatch => ({
