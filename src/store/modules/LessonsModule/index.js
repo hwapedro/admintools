@@ -122,10 +122,6 @@ class LessonModule extends DuckModule {
           lesson: { ...action.lesson, pages: action.lesson.pages }
         };
 
-      default:
-        return {
-          ...state
-        };
     }
     return super.reduce(state, action);
   };

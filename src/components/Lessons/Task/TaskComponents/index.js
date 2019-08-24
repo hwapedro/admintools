@@ -1,21 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Wrapper } from "../styleLocal";
 
-import {
-  deleteTask,
-  changeTask
-} from "../../../../store/actions/actionLessons";
-
 import Task from "./Task";
-import { getLesson } from "../../../../store/actions/actionLessons";
 import Button from "../../../Shared/Button";
 import Spinner from "../../../Spinner";
 import Error from "../../../Error";
 
-class TaskContainer extends Component {
+export default class TaskContainer extends Component {
   state = {
     taskEditFlag: false
   };
@@ -42,7 +35,7 @@ class TaskContainer extends Component {
 
   render() {
     const { taskEditFlag } = this.state;
-    const { lessonId, taskId, lesson, error, loading } = this.props;
+    const { lessonId, taskId, lesson, error, loading, changeTask } = this.props;
     let page, task;
 
     lesson.pages.map(pageElemnt =>
@@ -85,6 +78,9 @@ class TaskContainer extends Component {
                 taskEditFlag={taskEditFlag}
                 deleteTask={this.deleteTask}
                 changeEditFlag={this.changeEditFlag}
+                changeTask={(taskId, type, info, pageId) =>
+                  changeTask(taskId, type, info, pageId)
+                }
               />
             )}
           </Wrapper>
@@ -111,21 +107,3 @@ TaskContainer.propTypes = {
   getLesson: PropTypes.func,
   deleteTask: PropTypes.func
 };
-
-const mapStateToProps = state => ({
-  lesson: state.Lessons.lesson,
-  loading: state.reducer.loading,
-  error: state.reducer.error
-});
-
-const mapDispatchToProps = dispatch => ({
-  getLesson: id => dispatch(getLesson(id)),
-  deleteTask: (pageId, taskid) => dispatch(deleteTask(pageId, taskid)),
-  changeTask: (taskId, type, info, pageId) =>
-    dispatch(changeTask(taskId, type, info, pageId))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TaskContainer);

@@ -1,23 +1,15 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import NewsList from "./NewsList";
 import NewsConstructor from "./NewsConstructor";
-
-import {
-  changeElement,
-  getAllElements,
-  addElement,
-  deletElement
-} from "../../store/actions";
 
 import Spinner from "../Spinner";
 import Error from "../Error";
 
 const name = "news";
 
-class News extends Component {
+export default class News extends Component {
 
   state = {
     title: "",
@@ -116,26 +108,3 @@ News.propTypes = {
   getAllNews: PropTypes.func,
   changeArticle: PropTypes.func
 };
-
-const mapStateToProps = state => ({
-  news: state.News.news,
-  loading: state.reducer.loading,
-  error: state.reducer.error
-});
-
-const mapDispatchToProps = dispatch => ({
-  addNews: (title, description, name) =>
-    dispatch(addElement(title, description, name)),
-
-  delArticle: (index, name) => dispatch(deletElement(index, name)),
-
-  getAllNews: name => dispatch(getAllElements(name)),
-
-  changeArticle: (articleIndex, title, description, name) =>
-    dispatch(changeElement(articleIndex, title, description, name))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(News);

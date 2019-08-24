@@ -20,7 +20,8 @@ class Text extends Component {
       deleteTask,
       changeEditFlag,
       taskEditFlag,
-      lessonId
+      lessonId,
+      changeTask
     } = this.props;
 
     return (
@@ -31,6 +32,7 @@ class Text extends Component {
               task={task}
               pageId={page._id}
               changeEditFlag={changeEditFlag}
+              changeTask={changeTask}
             />
           </TaskElementWrapper>
         ) : (

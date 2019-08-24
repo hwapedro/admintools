@@ -91,7 +91,6 @@ export default class TextConstructor extends Component {
       changeTask(task._id, type, info, pageId);
       changeEditFlag();
     } else {
-      console.log(pageId)
       addTask(pageId, type, info);
     }
   };

@@ -6,7 +6,6 @@ import {
 } from "../../constants";
 
 const initialState = {
-  token: null,
   news: []
 };
 

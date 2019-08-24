@@ -7,11 +7,14 @@ import LessonsContainer from "../components/Containers/LessonsContainer";
 import BadgesContainer from "../components/Containers/BadgesContainer";
 // import Lessons from "../components/Lessons";
 // import Test from "../components/Lessons/Task/TaskComponents/Tests"
-import Tasks from "../components/Lessons/Task/TaskComponents";
+// import Tasks from "../components/Lessons/Task/TaskComponents";
+import TasksContainer from "../components/Containers/TaskContainer"
 // import Lesson from "../components/Lessons/Lesson";
 import LessonContainer from "../components/Containers/LessonContainer";
 // import Badges from "../components/Badges";
 import News from "../components/News";
+import NewsContainer from "../components/Containers/NewsContainer";
+
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/Authorization/LoginScreen";
 import RegistrationScreen from "../components/Authorization/RegistrationScreen";
@@ -27,7 +30,7 @@ class App extends Component {
     { path: route.courses, Component: CoursesContainer },
     { path: route.lessons, Component: LessonsContainer },
     { path: route.badges, Component: BadgesContainer },
-    { path: route.news, Component: News }
+    { path: route.news, Component: NewsContainer }
   ];
 
   render() {
@@ -73,7 +76,7 @@ class App extends Component {
               render={({ match, history }) => {
                 const { lessonId, taskId } = match.params;
                 return (
-                  <Tasks
+                  <TasksContainer
                     lessonId={lessonId}
                     taskId={taskId}
                     history={history}

@@ -74,7 +74,6 @@ export const ElementWrapper = styled.li`
   box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
   display: flex;
   flex-direction: row;
-  
 `;
 
 export const ButtonWrapper = styled.div`

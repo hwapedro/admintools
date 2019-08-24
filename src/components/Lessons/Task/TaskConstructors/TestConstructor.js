@@ -31,6 +31,7 @@ export default class TestConstructor extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props)
     const { task } = this.props;
     if (task) {
       if (task.info.description !== "") {

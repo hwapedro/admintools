@@ -18,7 +18,8 @@ class Task extends Component {
       lessonId,
       taskEditFlag,
       changeEditFlag,
-      deleteTask
+      deleteTask,
+      changeTask
     } = this.props;
 
     switch (task.type) {
@@ -32,6 +33,7 @@ class Task extends Component {
             taskEditFlag={taskEditFlag}
             changeEditFlag={changeEditFlag}
             deleteTask={deleteTask}
+            changeTask={changeTask}
           />
         );
       case "text":
@@ -44,6 +46,7 @@ class Task extends Component {
             taskEditFlag={taskEditFlag}
             changeEditFlag={changeEditFlag}
             deleteTask={deleteTask}
+            changeTask={changeTask}
           />
         );
       default:
