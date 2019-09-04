@@ -67,6 +67,13 @@ export const BadgeImg = styled.img`
   margin-top:30%;
 `;
 
+export const ElementWrapperConstructor = styled.li`
+  background-color: ${props => props.theme.courses};
+  margin-top: 2rem;
+  padding: 1rem;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
+`;
+
 export const ElementWrapper = styled.li`
   background-color: ${props => props.theme.courses};
   margin-top: 2rem;

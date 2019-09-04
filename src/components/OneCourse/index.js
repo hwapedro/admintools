@@ -8,6 +8,7 @@ import LessonConstructor from "../Lessons/LessonConstructor";
 import Spinner from "../Spinner";
 import Error from "../Error";
 
+import {OneCourseTitle,CourseTitle} from './styleLocal'
 const name = "course";
 export default class OneCourse extends Component {
   state = {
@@ -57,7 +58,10 @@ export default class OneCourse extends Component {
               value={search}
               course={course}
             />
-            <div>{course.title} {course.courseIndex}</div>
+            <CourseTitle>
+            <OneCourseTitle>
+              Name : {course.title}<br /> Number : {course.courseIndex}
+              </OneCourseTitle></CourseTitle>
             <LessonList
               delLesson={(lessonsIndex, name, flag) =>
                 delLesson(lessonsIndex, name, flag)

@@ -12,7 +12,8 @@ import {
   ElementsWrapper,
   BadgeImg,
   BadgeWrapper,
-  InfoWrapper
+  InfoWrapper,
+  ElementWrapperConstructor
 } from "../styleLocal";
 import {
   Wrapper,
@@ -78,7 +79,7 @@ class badgeList extends Component {
       .map(badge => {
         if (this.state.changeFlag && badge._id === this.state.badgeIndex) {
           return (
-            <ElementWrapper key={badge._id}>
+            <ElementWrapperConstructor key={badge._id}>
               <form onSubmit={this.setParams}>
                 <CustomInput
                   label="Title"
@@ -112,7 +113,7 @@ class badgeList extends Component {
                   </Button>
                 </ButtonWrapper>
               </form>
-            </ElementWrapper>
+            </ElementWrapperConstructor>
           );
         } else {
           return (
