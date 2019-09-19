@@ -9,13 +9,18 @@ const name = "badge";
 
 export default class Badge extends Component {
   state = {
-    search: ""
+    search: "",
+    activeLanguage: {label: "Russian", value: "ru"}
   };
 
   componentDidMount() {
     const { getAllBadges } = this.props;
     getAllBadges(name);
   }
+
+  handleLangChange = activeLanguage => {
+    this.setState({ activeLanguage });
+  };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -32,7 +37,7 @@ export default class Badge extends Component {
       error
     } = this.props;
 
-    const { search } = this.state;
+    const { search, activeLanguage } = this.state;
     return (
       <>
         {error && (
@@ -55,6 +60,8 @@ export default class Badge extends Component {
               }
               getAllBadges={name => getAllBadges(name)}
               onChange={this.onChange}
+              activeLanguage={activeLanguage}
+              handleLangChange={activeLanguage => this.handleLangChange(activeLanguage)}
             />
 
             <BadgesList
@@ -63,6 +70,7 @@ export default class Badge extends Component {
               changeBadge={(courseIndex, title, description, name, icon) =>
                 changeBadge(courseIndex, title, description, name, icon)
               }
+              activeLanguage={activeLanguage}
               delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
             />
           </>

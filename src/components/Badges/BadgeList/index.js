@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import Select from "react-select";
 import ButtonMaterial from "@material-ui/core/Button";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
@@ -21,14 +21,15 @@ import {
   LabelElement,
   ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
-import { getBase64 } from "../../../store/utils";
+import { getBase64, i18n } from "../../../store/utils";
 
 const name = "badge";
 
 class badgeList extends Component {
   state = {
     title: "",
-    description: "",
+    descriptionText: "",
+    language: { label: "Russian", value: "ru" },
     changeFlag: false,
     badgeIndex: null
   };
@@ -45,9 +46,13 @@ class badgeList extends Component {
   setParams = event => {
     event.preventDefault();
     const { changeBadge } = this.props;
-    const { title, description, badgeIndex } = this.state;
+    const { title, descriptionText, language, badgeIndex } = this.state;
+    const theTitle = { [language.value]: title };
+    const description = {
+      [language.value]: descriptionText
+    };
     const icon = localStorage.getItem("icon");
-    changeBadge(badgeIndex, title, description, icon);
+    changeBadge(badgeIndex, theTitle, description, icon);
     this.setState({ changeFlag: false, badgeIndex: null });
   };
 
@@ -55,6 +60,12 @@ class badgeList extends Component {
     getBase64(event.target.files[0]).then(icon => {
       localStorage.setItem("icon", icon);
     });
+  };
+
+  //SELECTOR HANDLER
+  handleChange = language => {
+    console.log(language);
+    this.setState({ language });
   };
 
   deleteItem = badgeIndex => {
@@ -67,11 +78,20 @@ class badgeList extends Component {
   };
 
   render() {
-    const { badges, search } = this.props;
-    const { title, description } = this.state;
+    const { badges, search, activeLanguage } = this.props;
+    const { title, descriptionText, language } = this.state;
+
     let list = badges
       .filter(badge => {
-        if (badge.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+        if (activeLanguage.value !== Object.keys(badge.title)[0]) {
+          return false;
+        }
+
+        if (
+          badge.title[activeLanguage.value]
+            .toLowerCase()
+            .indexOf(search.toLowerCase()) !== -1
+        ) {
           return true;
         }
         return false;
@@ -81,6 +101,13 @@ class badgeList extends Component {
           return (
             <ElementWrapperConstructor key={badge._id}>
               <form onSubmit={this.setParams}>
+                <LabelElement>Choose language</LabelElement>
+                <Select
+                  value={language}
+                  onChange={this.handleChange}
+                  options={i18n}
+                  maxMenuHeight={100}
+                />
                 <CustomInput
                   label="Title"
                   placeholder="Title goes here"
@@ -91,9 +118,9 @@ class badgeList extends Component {
                 />
                 <LabelElement>Description of badge : </LabelElement>
                 <DescriptionTextArea
-                  name="description"
+                  name="descriptionText"
                   onChange={this.onChange}
-                  value={description}
+                  value={descriptionText}
                 />
                 <input
                   accept="image/*"
@@ -119,16 +146,13 @@ class badgeList extends Component {
           return (
             <ElementWrapper key={badge._id}>
               <BadgeWrapper>
-                <BadgeImg
-                  src={badge.icon}
-                  alt="icon"
-                />
+                <BadgeImg src={badge.icon} alt="icon" />
               </BadgeWrapper>
               <InfoWrapper>
                 <LabelElement>Name of badge :</LabelElement>
-                <TitleSpan> {badge.title}</TitleSpan>
+                <TitleSpan> {badge.title[activeLanguage.value]}</TitleSpan>
                 <LabelElement>Description of badge : </LabelElement>
-                <DescriptionSpan>{badge.description}</DescriptionSpan>
+                <DescriptionSpan>{badge.description[activeLanguage.value]}</DescriptionSpan>
                 <ButtonWrapper>
                   <Button
                     buttonStyle={"outlined"}

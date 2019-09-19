@@ -114,8 +114,8 @@ class RegistrationScreen extends React.Component {
 
 const mapStateToProps = state => ({
   token: state.Auth.token,
-  loading: state.reducer.loading,
-  error: state.reducer.error
+  //loading: state.reducer.loading,
+  //error: state.reducer.error
 });
 
 const mapDispatchToProps = dispatch => ({

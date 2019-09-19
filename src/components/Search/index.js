@@ -22,7 +22,7 @@ function Search({ onChange, value, classes }) {
       value={value}
       onChange={onChange}
       style={{
-        minWidth: "77%",
+        minWidth: "60%",
         width: "auto"
       }}
     />

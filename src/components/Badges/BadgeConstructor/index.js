@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import Select from "react-select";
 import ButtonMaterial from "@material-ui/core/Button";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
@@ -14,12 +14,31 @@ import {
   ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
 import { Wrapper, LabelElement } from "../../GlobalStyles/styleGlobal";
-import { getBase64 } from "../../../store/utils";
+import { getBase64, i18n } from "../../../store/utils";
+
+const selectStyles = {
+  valueContainer: base => ({
+    width: 100
+  }),
+  group: base => ({
+    width: 100
+  }),
+  container: base => ({
+    width: 100
+  }),
+  control: base => ({
+    width: 100
+  }),
+  singleValue: base => ({
+    width: 100
+  })
+};
 
 export default class BadgeConstructor extends Component {
   state = {
     title: "",
-    description: "",
+    descriptionText: "",
+    language: { label: "Russian", value: "ru" },
     constructor: false,
     icon: null
   };
@@ -27,9 +46,13 @@ export default class BadgeConstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { createBadge } = this.props;
-    const { title, description, icon } = this.state;
+    const { title, descriptionText, language, icon } = this.state;
+    const description = {
+      [language.value]: descriptionText
+    };
+    const theTitle = { [language.value]: title };
     console.log(icon);
-    createBadge(title, description, icon);
+    createBadge(theTitle, description, icon);
   };
 
   onChange = event => {
@@ -44,6 +67,11 @@ export default class BadgeConstructor extends Component {
     // formData.append("image", event.target.files[0]);
   };
 
+  //SELECTOR HANDLER
+  handleChange = language => {
+    this.setState({ language });
+  };
+
   showConstructor = () => {
     const { constructor } = this.state;
     this.setState({
@@ -52,14 +80,13 @@ export default class BadgeConstructor extends Component {
   };
 
   render() {
-    const { constructor, title, description } = this.state;
-    const { onChange, value } = this.props;
+    const { constructor, title, descriptionText, language } = this.state;
+    const { onChange, value, activeLanguage, handleLangChange } = this.props;
 
     if (constructor) {
       return (
         <Wrapper>
           <ButtonWrapperConstructor>
-            <Search onChange={onChange} value={value} />
             <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
               ADD NEW badge
             </Button>
@@ -67,6 +94,13 @@ export default class BadgeConstructor extends Component {
           <DarkGround onClick={this.showConstructor} />
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
+              <LabelElement>Choose language</LabelElement>
+              <Select
+                value={language}
+                onChange={this.handleChange}
+                options={i18n}
+                maxMenuHeight={100}
+              />
               <CustomInput
                 label="Title"
                 placeholder="Title goes here"
@@ -77,9 +111,9 @@ export default class BadgeConstructor extends Component {
               />
               <LabelElement>Description</LabelElement>
               <DescriptionTextArea
-                name="description"
+                name="descriptionText"
                 placeholder="description"
-                value={description}
+                value={descriptionText}
                 type="text"
                 onChange={this.onChange}
               />
@@ -110,6 +144,14 @@ export default class BadgeConstructor extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
+          <div style={{width: '150px'}}>
+          <Select
+            value={activeLanguage}
+            onChange={handleLangChange}
+            options={i18n}
+           
+          />
+          </div>
           <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
             ADD NEW badge
           </Button>

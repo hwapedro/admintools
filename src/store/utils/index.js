@@ -64,3 +64,11 @@ export const getBase64 = file => {
     reader.onerror = error => reject(error);
   });
 };
+
+// i18n constants 
+export const i18n = [
+  { label: "Russian", value: "ru" },
+  { label: "English", value: "en" },
+  { label: "Spanish", value: "sp" },
+  { label: "German", value: "ge" }
+];
