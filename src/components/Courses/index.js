@@ -13,6 +13,7 @@ export default class Courses extends Component {
   state = {
     title: "",
     search: "",
+    activeLanguage: {label: "Russian", value: "ru"},
     constructor: false
   };
 
@@ -20,6 +21,11 @@ export default class Courses extends Component {
     const { getAllCourses } = this.props;
     getAllCourses(name);
   }
+
+  handleLangChange = activeLanguage => {
+    this.setState({ activeLanguage });
+  };
+
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -46,7 +52,7 @@ export default class Courses extends Component {
       changeDnD
     } = this.props;
 
-    const { title, search, constructor } = this.state;
+    const { title, search, constructor, activeLanguage } = this.state;
 
     return (
       <>
@@ -88,6 +94,8 @@ export default class Courses extends Component {
                 title={title}
                 constructor={constructor}
                 showConstructor={() => this.showConstructor()}
+                activeLanguage={activeLanguage}
+                handleLangChange={activeLanguage => this.handleLangChange(activeLanguage)}
               />
 
               <CoursesList
@@ -96,7 +104,8 @@ export default class Courses extends Component {
                 }
                 delCourse={(courseIndex, name) => delCourse(courseIndex, name)}
                 courses={courses}
-                search={this.state.search}
+                search={search}
+                activeLanguage={activeLanguage}
               />
             </DragDropContext>
           </>

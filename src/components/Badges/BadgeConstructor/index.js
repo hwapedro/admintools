@@ -11,28 +11,11 @@ import {
   DarkGround,
   ConsturctorForm,
   ConsturctorWrapper,
-  ButtonWrapper
+  ButtonWrapper,
+  SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
 import { Wrapper, LabelElement } from "../../GlobalStyles/styleGlobal";
 import { getBase64, i18n } from "../../../store/utils";
-
-const selectStyles = {
-  valueContainer: base => ({
-    width: 100
-  }),
-  group: base => ({
-    width: 100
-  }),
-  container: base => ({
-    width: 100
-  }),
-  control: base => ({
-    width: 100
-  }),
-  singleValue: base => ({
-    width: 100
-  })
-};
 
 export default class BadgeConstructor extends Component {
   state = {
@@ -42,6 +25,7 @@ export default class BadgeConstructor extends Component {
     constructor: false,
     icon: null
   };
+
 
   onSubmit = event => {
     event.preventDefault();
@@ -144,14 +128,14 @@ export default class BadgeConstructor extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <div style={{width: '150px'}}>
+          <SelectWrapper >
           <Select
             value={activeLanguage}
             onChange={handleLangChange}
             options={i18n}
            
           />
-          </div>
+          </SelectWrapper>
           <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
             ADD NEW badge
           </Button>

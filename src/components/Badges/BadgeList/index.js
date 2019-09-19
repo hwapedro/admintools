@@ -34,12 +34,16 @@ class badgeList extends Component {
     badgeIndex: null
   };
 
+  //
   getParams = (badgeIndex, title, description) => {
+    const language = i18n.find( lang => lang.value === Object.keys(title)[0])
+    console.log(title, description)
     this.setState({
       changeFlag: true,
       badgeIndex: badgeIndex,
-      title: title,
-      description: description
+      title: title[language.value],
+      descriptionText: description[language.value],
+      language: language
     });
   };
 
@@ -64,7 +68,6 @@ class badgeList extends Component {
 
   //SELECTOR HANDLER
   handleChange = language => {
-    console.log(language);
     this.setState({ language });
   };
 
@@ -72,6 +75,7 @@ class badgeList extends Component {
     const { delBadge } = this.props;
     delBadge(badgeIndex, name);
   };
+
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -86,7 +90,6 @@ class badgeList extends Component {
         if (activeLanguage.value !== Object.keys(badge.title)[0]) {
           return false;
         }
-
         if (
           badge.title[activeLanguage.value]
             .toLowerCase()

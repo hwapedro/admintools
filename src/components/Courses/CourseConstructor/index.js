@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Select from "react-select";
 import PropTypes from "prop-types";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
@@ -15,13 +16,16 @@ import {
   ButtonWrapper,
   DarkGround,
   ConsturctorWrapper,
-  ConsturctorForm
+  ConsturctorForm,
+  SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
+import { i18n } from "../../../store/utils";
 
 const name = "course";
 
 export default class CourseCounstructor extends Component {
   state = {
+    language: { label: "Russian", value: "ru" },
     editorState: EditorState.createEmpty()
   };
 
@@ -38,14 +42,34 @@ export default class CourseCounstructor extends Component {
       editorState
     });
   };
+  
+  //SELECTOR HANDLER
+  handleChange = language => {
+    this.setState({ language });
+  };
 
   render() {
-    const { onChange, title, value, constructor, showConstructor } = this.props;
-    const { editorState } = this.state;
+    const {
+      onChange,
+      title,
+      value,
+      constructor,
+      showConstructor,
+      activeLanguage,
+      handleLangChange
+    } = this.props;
+    const { editorState, language } = this.state;
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
+          <SelectWrapper>
+            <Select
+              value={activeLanguage}
+              onChange={handleLangChange}
+              options={i18n}
+            />
+          </SelectWrapper>
           <Button buttonStyle={"outlined"} onClick={showConstructor}>
             ADD NEW COURSE
           </Button>
@@ -54,6 +78,13 @@ export default class CourseCounstructor extends Component {
               <DarkGround onClick={showConstructor} />
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
+                  <LabelElement>Choose language</LabelElement>
+                  <Select
+                    value={language}
+                    onChange={this.handleChange}
+                    options={i18n}
+                    maxMenuHeight={100}
+                  />
                   <CustomInput
                     label="Title"
                     placeholder="Title goes here"

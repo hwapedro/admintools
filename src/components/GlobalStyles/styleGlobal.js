@@ -72,3 +72,7 @@ export const EmptyMessage = styled.div`
   top: 50%;
   margin-top: 5rem;
 `;
+
+export const SelectWrapper = styled.div`
+  width: 10rem;
+`
