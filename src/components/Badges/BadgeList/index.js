@@ -84,12 +84,8 @@ class badgeList extends Component {
   render() {
     const { badges, search, activeLanguage } = this.props;
     const { title, descriptionText, language } = this.state;
-
     let list = badges
       .filter(badge => {
-        if (activeLanguage.value !== Object.keys(badge.title)[0]) {
-          return false;
-        }
         if (
           badge.title[activeLanguage.value]
             .toLowerCase()

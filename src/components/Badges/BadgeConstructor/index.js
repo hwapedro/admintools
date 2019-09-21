@@ -19,12 +19,21 @@ import { getBase64, i18n } from "../../../store/utils";
 
 export default class BadgeConstructor extends Component {
   state = {
-    title: { en: "", ru: "" },
-    description: { en: "", ru: "" },
+    title: null,
+    description: null,
     language: { label: "Russian", value: "ru" },
     constructor: false,
     icon: null
   };
+
+  componentDidMount() {
+    let i18nStart = {};
+    i18n.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
+    this.setState({
+      title: i18nStart,
+      description: i18nStart
+    });
+  }
 
   onSubmit = event => {
     event.preventDefault();
@@ -35,7 +44,7 @@ export default class BadgeConstructor extends Component {
 
   onChange = event => {
     const { language, title, description } = this.state;
-    console.log(title)
+
     switch (event.target.name) {
       case "description":
         this.setState({

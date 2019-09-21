@@ -69,6 +69,6 @@ export const getBase64 = file => {
 export const i18n = [
   { label: "Russian", value: "ru" },
   { label: "English", value: "en" },
-  { label: "Spanish", value: "sp" },
-  { label: "German", value: "ge" }
+  // { label: "Spanish", value: "sp" },
+  // { label: "German", value: "ge" }
 ];
