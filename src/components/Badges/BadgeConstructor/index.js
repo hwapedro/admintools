@@ -19,28 +19,43 @@ import { getBase64, i18n } from "../../../store/utils";
 
 export default class BadgeConstructor extends Component {
   state = {
-    title: "",
-    descriptionText: "",
+    title: { en: "", ru: "" },
+    description: { en: "", ru: "" },
     language: { label: "Russian", value: "ru" },
     constructor: false,
     icon: null
   };
 
-
   onSubmit = event => {
     event.preventDefault();
     const { createBadge } = this.props;
-    const { title, descriptionText, language, icon } = this.state;
-    const description = {
-      [language.value]: descriptionText
-    };
-    const theTitle = { [language.value]: title };
-    console.log(icon);
-    createBadge(theTitle, description, icon);
+    const { title, description, icon } = this.state;
+    createBadge(title, description, icon);
   };
 
   onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const { language, title, description } = this.state;
+    console.log(title)
+    switch (event.target.name) {
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      case "title":
+        this.setState({
+          [event.target.name]: {
+            ...title,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
+    }
   };
 
   setPicture = event => {
@@ -64,7 +79,7 @@ export default class BadgeConstructor extends Component {
   };
 
   render() {
-    const { constructor, title, descriptionText, language } = this.state;
+    const { constructor, title, description, language } = this.state;
     const { onChange, value, activeLanguage, handleLangChange } = this.props;
 
     if (constructor) {
@@ -89,15 +104,15 @@ export default class BadgeConstructor extends Component {
                 label="Title"
                 placeholder="Title goes here"
                 name="title"
-                value={title}
+                value={title[language.value]}
                 onChange={this.onChange}
                 required={true}
               />
               <LabelElement>Description</LabelElement>
               <DescriptionTextArea
-                name="descriptionText"
+                name="description"
                 placeholder="description"
-                value={descriptionText}
+                value={description[language.value]}
                 type="text"
                 onChange={this.onChange}
               />
@@ -128,13 +143,12 @@ export default class BadgeConstructor extends Component {
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
-          <SelectWrapper >
-          <Select
-            value={activeLanguage}
-            onChange={handleLangChange}
-            options={i18n}
-           
-          />
+          <SelectWrapper>
+            <Select
+              value={activeLanguage}
+              onChange={handleLangChange}
+              options={i18n}
+            />
           </SelectWrapper>
           <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
             ADD NEW badge
