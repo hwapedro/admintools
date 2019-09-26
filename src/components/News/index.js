@@ -10,11 +10,9 @@ import Error from "../Error";
 const name = "news";
 
 export default class News extends Component {
-
   state = {
-    title: "",
     search: "",
-    constructor: false
+    activeLanguage: { label: "Russian", value: "ru" }
   };
 
   componentDidMount() {
@@ -22,17 +20,12 @@ export default class News extends Component {
     getAllNews(name);
   }
 
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  handleLangChange = activeLanguage => {
+    this.setState({ activeLanguage });
   };
 
-  showConstructor = () => {
-    const { constructor } = this.state;
-
-    this.setState({
-      constructor: !constructor,
-      title: ""
-    });
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
@@ -44,8 +37,8 @@ export default class News extends Component {
       addNews,
       changeArticle
     } = this.props;
-    const { title, search, constructor } = this.state;
-    console.log(search)
+    const { search, activeLanguage } = this.state;
+
     return (
       <>
         {error && (
@@ -67,10 +60,11 @@ export default class News extends Component {
                 addNews(title, description, name)
               }
               onChange={this.onChange}
-               value={search}
-               title={title}
-               constructor={constructor}
-               showConstructor={() => this.showConstructor()}
+              value={search}
+              activeLanguage={activeLanguage}
+              handleLangChange={activeLanguage =>
+                this.handleLangChange(activeLanguage)
+              }
             />
             <NewsList
               changeArticle={(articleIndex, title, description, name) =>
@@ -78,6 +72,7 @@ export default class News extends Component {
               }
               delArticle={(index, name) => delArticle(index, name)}
               news={news}
+              activeLanguage={activeLanguage}
               search={search}
             />
           </>

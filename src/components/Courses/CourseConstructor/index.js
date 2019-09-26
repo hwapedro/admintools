@@ -3,6 +3,7 @@ import Select from "react-select";
 import PropTypes from "prop-types";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from "draft-js-import-html"
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
@@ -25,40 +26,81 @@ const name = "course";
 
 export default class CourseCounstructor extends Component {
   state = {
+    title: null,
+    description: null,
     language: { label: "Russian", value: "ru" },
-    editorState: EditorState.createEmpty()
+    editorState: EditorState.createEmpty(),
+    constructor: false
+  };
+
+  componentDidMount() {
+    let i18nStart = {};
+    i18n.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
+    this.setState({
+      title: i18nStart,
+      description: i18nStart
+    });
+  }
+
+  showConstructor = () => {
+    const { constructor } = this.state;
+    this.setState({
+      constructor: !constructor
+    });
   };
 
   onSubmit = event => {
     event.preventDefault();
-    const { addCourses, title, showConstructor } = this.props;
-    const description = stateToHTML(this.state.editorState.getCurrentContent());
-    showConstructor();
+    const { addCourses } = this.props;
+    const { title, description } = this.state
+    this.showConstructor();
     addCourses(title, description, name);
   };
 
   onEditorStateChange = editorState => {
+    const description = {
+      ...this.state.description,
+      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
+    };
+
     this.setState({
-      editorState
+      editorState: editorState,
+      description: description
     });
   };
-  
+
   //SELECTOR HANDLER
   handleChange = language => {
-    this.setState({ language });
+    const { description } = this.state
+    const contentState = stateFromHTML(description[language.value])
+      const editorState = EditorState.push(
+      this.state.editorState,
+      contentState
+    );
+    
+    this.setState({ language: language, editorState: editorState });
+  };
+
+  onChange = event => {
+    const { language, title } = this.state;
+
+    switch (event.target.name) {
+      case "title":
+        this.setState({
+          [event.target.name]: {
+            ...title,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
+    }
   };
 
   render() {
-    const {
-      onChange,
-      title,
-      value,
-      constructor,
-      showConstructor,
-      activeLanguage,
-      handleLangChange
-    } = this.props;
-    const { editorState, language } = this.state;
+    const { onChange, value, activeLanguage, handleLangChange } = this.props;
+    const { title, editorState, constructor, language } = this.state;
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
@@ -70,12 +112,12 @@ export default class CourseCounstructor extends Component {
               options={i18n}
             />
           </SelectWrapper>
-          <Button buttonStyle={"outlined"} onClick={showConstructor}>
+          <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
             ADD NEW COURSE
           </Button>
           {constructor && (
             <>
-              <DarkGround onClick={showConstructor} />
+              <DarkGround onClick={this.showConstructor} />
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
                   <LabelElement>Choose language</LabelElement>
@@ -89,8 +131,8 @@ export default class CourseCounstructor extends Component {
                     label="Title"
                     placeholder="Title goes here"
                     name="title"
-                    value={title}
-                    onChange={onChange}
+                    value={title[language.value]}
+                    onChange={this.onChange}
                     required={true}
                   />
                   <LabelElement>Description</LabelElement>

@@ -11,10 +11,8 @@ const name = "course";
 
 export default class Courses extends Component {
   state = {
-    title: "",
     search: "",
-    activeLanguage: {label: "Russian", value: "ru"},
-    constructor: false
+    activeLanguage: { label: "Russian", value: "ru" }
   };
 
   componentDidMount() {
@@ -26,18 +24,8 @@ export default class Courses extends Component {
     this.setState({ activeLanguage });
   };
 
-
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
-  };
-
-  showConstructor = () => {
-    const { constructor } = this.state;
-
-    this.setState({
-      constructor: !constructor,
-      title: ""
-    });
   };
 
   render() {
@@ -52,7 +40,7 @@ export default class Courses extends Component {
       changeDnD
     } = this.props;
 
-    const { title, search, constructor, activeLanguage } = this.state;
+    const { search, activeLanguage } = this.state;
 
     return (
       <>
@@ -91,11 +79,10 @@ export default class Courses extends Component {
                 getAllCourses={name => getAllCourses(name)}
                 onChange={this.onChange}
                 value={search}
-                title={title}
-                constructor={constructor}
-                showConstructor={() => this.showConstructor()}
                 activeLanguage={activeLanguage}
-                handleLangChange={activeLanguage => this.handleLangChange(activeLanguage)}
+                handleLangChange={activeLanguage =>
+                  this.handleLangChange(activeLanguage)
+                }
               />
 
               <CoursesList
@@ -136,4 +123,3 @@ Courses.propTypes = {
   getAllCourses: PropTypes.func,
   changeCourse: PropTypes.func
 };
-

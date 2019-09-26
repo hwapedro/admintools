@@ -11,15 +11,15 @@ import {
 } from "../../styleLocal.js";
 import { LabelElement } from "../../../GlobalStyles/styleGlobal";
 
-export default function Article({ news, getParams, deleteItem }) {
+export default function Article({ news, getParams, deleteItem, activeLanguage }) {
   return (
     <ElementWrapper>
       <LabelElement>Name of article :</LabelElement>
-      <TitleSpan> {news.title}</TitleSpan>
+      <TitleSpan> {news.title[activeLanguage.value]}</TitleSpan>
       <LabelElement>Description of article : </LabelElement>
       <DescriptionSpan
         dangerouslySetInnerHTML={{
-          __html: news.description
+          __html: news.description[activeLanguage.value]
         }}
       />
       <LabelElement>Published : </LabelElement>

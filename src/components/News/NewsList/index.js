@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Select from "react-select";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from "draft-js-import-html";
 
 import Article from "./Article";
 import EditorText from "../../EditorText";
@@ -15,20 +17,23 @@ import {
   LabelElement,
   ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
+import { i18n } from "../../../store/utils";
 
 const name = "news";
 
 class NewsList extends Component {
   state = {
-    title: "",
-    description: "",
+    title: null,
+    description: null,
+    language: { label: "Russian", value: "ru" },
     changeFlag: false,
     _id: null,
     editorState: EditorState.createEmpty()
   };
 
   getParams = (_id, title, description) => {
-    const blocksFromHTML = convertFromHTML(description);
+    const { language } = this.state;
+    const blocksFromHTML = convertFromHTML(description[language.value]);
     const state = ContentState.createFromBlockArray(
       blocksFromHTML.contentBlocks,
       blocksFromHTML.entityMap
@@ -42,17 +47,11 @@ class NewsList extends Component {
     });
   };
 
-  onEditorStateChange = editorState => {
-    this.setState({
-      editorState
-    });
-  };
-
   setParams = event => {
     event.preventDefault();
-    const { title, _id, editorState } = this.state;
+    const { title, description, _id } = this.state;
     const { changeArticle } = this.props;
-    const description = stateToHTML(editorState.getCurrentContent());
+
     if (title && description) changeArticle(_id, title, description, name);
     this.setState({ changeFlag: false, _id: null });
   };
@@ -62,17 +61,57 @@ class NewsList extends Component {
     delArticle(id, name);
   };
 
+  //EDITOR HANDLER
+  onEditorStateChange = editorState => {
+    const description = {
+      ...this.state.description,
+      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
+    };
+
+    this.setState({
+      editorState: editorState,
+      description: description
+    });
+  };
+
+  //TEXT HANDLER
   onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const { language, title } = this.state;
+
+    switch (event.target.name) {
+      case "title":
+        this.setState({
+          [event.target.name]: {
+            ...title,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
+    }
+  };
+
+  //SELECTOR HANDLER
+  handleChange = language => {
+    const { description } = this.state;
+    const contentState = stateFromHTML(description[language.value]);
+    const editorState = EditorState.push(this.state.editorState, contentState);
+    console.log(description);
+    this.setState({ language: language, editorState: editorState });
   };
 
   render() {
-    const { news, search } = this.props;
-    const { editorState, _id, changeFlag, title } = this.state;
+    const { news, search, activeLanguage } = this.props;
+    const { editorState, _id, changeFlag, title, language } = this.state;
 
     let list = news
       .filter(article => {
-        if (article.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+        if (
+          article.title[activeLanguage.value]
+            .toLowerCase()
+            .indexOf(search.toLowerCase()) !== -1
+        ) {
           return true;
         }
         return false;
@@ -82,12 +121,19 @@ class NewsList extends Component {
           return (
             <ElementWrapper key={news._id}>
               <form onSubmit={this.setParams}>
+                <LabelElement>Choose language</LabelElement>
+                <Select
+                  value={language}
+                  onChange={this.handleChange}
+                  options={i18n}
+                  maxMenuHeight={100}
+                />
                 <CustomInput
                   onChange={this.onChange}
                   placeholder="Title"
                   label="Title"
                   name="title"
-                  value={title}
+                  value={title[language.value]}
                   required={true}
                 />
                 <LabelElement>Description of article : </LabelElement>
@@ -113,11 +159,11 @@ class NewsList extends Component {
               index={index}
               getParams={this.getParams}
               deleteItem={this.deleteItem}
+              activeLanguage={activeLanguage}
             />
           );
         }
       });
-    console.log(news);
     return (
       <Wrapper>
         {news.length === 0 || list.length === 0 ? (

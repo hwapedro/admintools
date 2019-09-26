@@ -27,8 +27,8 @@ const name = "badge";
 
 class badgeList extends Component {
   state = {
-    title: "",
-    descriptionText: "",
+    title: null,
+    description: null,
     language: { label: "Russian", value: "ru" },
     changeFlag: false,
     badgeIndex: null
@@ -36,27 +36,20 @@ class badgeList extends Component {
 
   //
   getParams = (badgeIndex, title, description) => {
-    const language = i18n.find( lang => lang.value === Object.keys(title)[0])
-    console.log(title, description)
     this.setState({
       changeFlag: true,
       badgeIndex: badgeIndex,
-      title: title[language.value],
-      descriptionText: description[language.value],
-      language: language
+      title: title,
+      description: description,
     });
   };
 
   setParams = event => {
     event.preventDefault();
     const { changeBadge } = this.props;
-    const { title, descriptionText, language, badgeIndex } = this.state;
-    const theTitle = { [language.value]: title };
-    const description = {
-      [language.value]: descriptionText
-    };
+    const { title, description, badgeIndex } = this.state;
     const icon = localStorage.getItem("icon");
-    changeBadge(badgeIndex, theTitle, description, icon);
+    changeBadge(badgeIndex, title, description, icon);
     this.setState({ changeFlag: false, badgeIndex: null });
   };
 
@@ -78,12 +71,33 @@ class badgeList extends Component {
 
 
   onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const { language, title, description } = this.state;
+    
+    switch (event.target.name) {
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      case "title":
+        this.setState({
+          [event.target.name]: {
+            ...title,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
+      }
   };
 
   render() {
     const { badges, search, activeLanguage } = this.props;
-    const { title, descriptionText, language } = this.state;
+    const { title, description, language } = this.state;
     let list = badges
       .filter(badge => {
         if (
@@ -111,15 +125,15 @@ class badgeList extends Component {
                   label="Title"
                   placeholder="Title goes here"
                   name="title"
-                  value={title}
+                  value={title[language.value]}
                   onChange={this.onChange}
                   required={true}
                 />
                 <LabelElement>Description of badge : </LabelElement>
                 <DescriptionTextArea
-                  name="descriptionText"
+                  name="description"
                   onChange={this.onChange}
-                  value={descriptionText}
+                  value={description[language.value]}
                 />
                 <input
                   accept="image/*"

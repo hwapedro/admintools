@@ -11,7 +11,14 @@ import {
   ElementWrapper
 } from "../../../GlobalStyles/styleGlobal";
 
-export default function Course({ course, getParams, deleteItem, index, goTo }) {
+export default function Course({
+  course,
+  getParams,
+  deleteItem,
+  index,
+  goTo,
+  activeLanguage
+}) {
   return (
     <Draggable
       key={course.courseIndex}
@@ -28,11 +35,11 @@ export default function Course({ course, getParams, deleteItem, index, goTo }) {
           <LabelElement>Course number :</LabelElement>
           <TitleSpan> {course.courseIndex}</TitleSpan>
           <LabelElement>Course name :</LabelElement>
-          <TitleSpan> {course.title}</TitleSpan>
+          <TitleSpan> {course.title[activeLanguage.value]}</TitleSpan>
           <LabelElement>Course description : </LabelElement>
           <DescriptionSpan
             dangerouslySetInnerHTML={{
-              __html: course.description
+              __html: course.description[activeLanguage.value]
             }}
           />
           <ButtonWrapper>
