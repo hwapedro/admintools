@@ -35,7 +35,6 @@ export const DND = (state, id1, id2, name) => {
       };
 
     case "lessons":
-   
       let lessons = update(state.course.lessons, {
         $splice: [[id1, 1], [id2, 0, state.course.lessons[id1]]]
       });
@@ -44,7 +43,7 @@ export const DND = (state, id1, id2, name) => {
         course: {
           ...state.course,
           lessons: lessons.map((lesson, i) => {
-            console.log(lesson)
+            console.log(lesson);
             lesson.lessonIndex = i + 1;
             return lesson;
           })
@@ -65,10 +64,15 @@ export const getBase64 = file => {
   });
 };
 
-// i18n constants 
-export const i18n = [
+// i18n constants
+export const i18nSelector = [
   { label: "Russian", value: "ru" },
-  { label: "English", value: "en" },
+  { label: "English", value: "en" }
   // { label: "Spanish", value: "sp" },
   // { label: "German", value: "ge" }
 ];
+
+export const i18n = {
+  en: "",
+  ru: ""
+};

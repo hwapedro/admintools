@@ -71,6 +71,7 @@ export default class Badge extends Component {
                 changeBadge(courseIndex, title, description, name, icon)
               }
               activeLanguage={activeLanguage}
+              handleLangChange={activeLanguage => this.handleLangChange(activeLanguage)}
               delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
             />
           </>

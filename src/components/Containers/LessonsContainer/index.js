@@ -19,7 +19,9 @@ const mapDispatchToProps = dispatch => ({
   delLesson: (lessonsIndex, name, flag) =>
     dispatch(LessonsModule.deleteLesson(lessonsIndex, name, flag)),
 
-  getAllLessons: name => dispatch(LessonsModule.getAllLessons(name))
+  getAllLessons: name => dispatch(LessonsModule.getAllLessons(name)),
+
+  setLoading: loading => dispatch (ViewModule.setLoading(loading))
 });
 
 export default connect(

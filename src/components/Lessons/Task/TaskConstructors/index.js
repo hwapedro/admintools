@@ -42,16 +42,24 @@ export default class TaskConstructor extends Component {
             oldInfo={this.state.info}
             edited={false}
             pageId={this.props.pageId}
-            addTask={(pageid, type, info, answer) => addTask(pageid, type, info, answer)}
-            changeTask={(taskId, type, info, pageId) => changeTask(taskId, type, info, pageId)}
+            addTask={(pageid, type, info, answer) =>
+              addTask(pageid, type, info, answer)
+            }
+            changeTask={(taskId, type, info, pageId) =>
+              changeTask(taskId, type, info, pageId)
+            }
           />
         );
       case "text":
         return (
           <TextConstructor
             pageId={this.props.pageId}
-            addTask={(pageid, type, info, answer) => addTask(pageid, type, info, answer)}
-            changeTask={(taskId, type, info, pageId) => changeTask(taskId, type, info, pageId)}
+            addTask={(pageid, type, info, answer) =>
+              addTask(pageid, type, info, answer)
+            }
+            changeTask={(taskId, type, info, pageId) =>
+              changeTask(taskId, type, info, pageId)
+            }
           />
         );
       default:
@@ -67,7 +75,10 @@ export default class TaskConstructor extends Component {
   };
 
   render() {
-    const { displayConstructor, displayTaskConstructor } = this.state;
+    const {
+      displayConstructor,
+      displayTaskConstructor,
+    } = this.state;
 
     return (
       <>

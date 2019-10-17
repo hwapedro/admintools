@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
+import Select from "react-select";
+import { EditorState } from "draft-js";
+import { stateFromHTML } from "draft-js-import-html";
 import { stateToHTML } from "draft-js-export-html";
 import PropTypes from "prop-types";
 
@@ -18,49 +20,53 @@ import {
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
+import { i18nSelector, i18n } from "../../../../store/utils";
 
 let index = 2017;
 const type = "test";
 
 export default class TestConstructor extends Component {
-  state = {
-    name: "",
-    question: "",
-    options: [],
-    editorState: EditorState.createEmpty()
-  };
+  constructor() {
+    super();
+    this.state = {
+      name: i18n,
+      question: i18n,
+      description: i18n,
+      options: [],
+      language: { label: "Russian", value: "ru" },
+      editorState: EditorState.createEmpty()
+    };
+  }
+
 
   componentDidMount() {
     const { task } = this.props;
+
     if (task) {
-      if (task.info.description !== "") {
-        const blocksFromHTML = convertFromHTML(task.info.description);
-        const state = ContentState.createFromBlockArray(
-          blocksFromHTML.contentBlocks,
-          blocksFromHTML.entityMap
-        );
-        this.setState({
-          ...this.state,
-          name: task.info.name,
-          question: task.info.question,
-          options: task.info.options,
-          editorState: EditorState.createWithContent(state)
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          name: task.info.name,
-          question: task.info.question,
-          options: task.info.options,
-          editorState: EditorState.createEmpty()
-        });
-      }
+      const { language } = this.state;
+      const state = stateFromHTML(task.info.description[language.value]);
+
+      this.setState({
+        ...this.state,
+        name: task.info.name,
+        question: task.info.question,
+        options: task.info.options,
+        editorState: EditorState.createWithContent(state)
+      });
+    } else {
+      let i18nStart = {};
+      i18nSelector.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
+      this.setState({
+        name: i18nStart,
+        description: i18nStart,
+        question: i18nStart
+      });
     }
   }
 
   addOption = () => {
     const { options } = this.state;
-    const answer = "";
+    const answer = i18n;
     const right = false;
     index++;
     this.setState({
@@ -77,13 +83,12 @@ export default class TestConstructor extends Component {
   };
 
   answerChange = (id, event) => {
-    const { options } = this.state;
+    const { options, language } = this.state;
     let newOptions = options.map(option =>
       id === option.index
         ? {
-            answer: event.target.value,
-            right: option.right,
-            index: option.index
+            ...option,
+            answer: { ...option.answer, [language.value]: event.target.value }
           }
         : option
     );
@@ -110,17 +115,35 @@ export default class TestConstructor extends Component {
     });
   };
 
-  infoChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+  onChange = event => {
+    const { language, name, question } = this.state;
+    switch (event.target.name) {
+      case "name":
+        this.setState({
+          [event.target.name]: {
+            ...name,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      case "question":
+        this.setState({
+          [event.target.name]: {
+            ...question,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
+    }
   };
 
   onSubmit = event => {
     event.preventDefault();
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
-    const { options, name, editorState, question } = this.state;
-    const description = stateToHTML(editorState.getCurrentContent());
+    const { options, name, description, question } = this.state;
+    //  const description = stateToHTML(editorState.getCurrentContent());
 
     const info = {
       name: name,
@@ -137,24 +160,46 @@ export default class TestConstructor extends Component {
     }
   };
 
+  //SELECTOR HANDLER
+  handleChange = language => {
+    const { description } = this.state;
+    const contentState = stateFromHTML(description[language.value]);
+    const editorState = EditorState.push(this.state.editorState, contentState);
+
+    this.setState({ language: language, editorState: editorState });
+  };
+
+  //EDITOR HANDLER
   onEditorStateChange = editorState => {
+    const description = {
+      ...this.state.description,
+      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
+    };
+
     this.setState({
-      editorState
+      editorState: editorState,
+      description: description
     });
   };
 
   render() {
-    const { options, name, editorState, question } = this.state;
+    const { options, name, editorState, question, language } = this.state;
 
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
+          <Select
+            value={language}
+            onChange={this.handleChange}
+            options={i18nSelector}
+            maxMenuHeight={100}
+          />
           <CustomInput
             label="Title"
             placeholder="Title goes here"
             name="name"
-            value={name}
-            onChange={this.infoChange}
+            value={name[language.value]}
+            onChange={this.onChange}
             required={true}
           />
 
@@ -169,8 +214,8 @@ export default class TestConstructor extends Component {
             label="Question"
             placeholder="Who are you?"
             name="question"
-            value={question}
-            onChange={this.infoChange}
+            value={question[language.value]}
+            onChange={this.onChange}
             required={false}
           />
           <ButtonWrapper>
@@ -180,33 +225,35 @@ export default class TestConstructor extends Component {
           </ButtonWrapper>
 
           <div>
-            {options.map(el => {
-              return (
-                <OptionsWrapper className="form-check" key={el.index}>
-                  <OptionElementWrapper>
-                    <OptionInput
-                      name="answer"
-                      value={el.answer}
-                      onChange={e => this.answerChange(el.index, e)}
-                      label="Answer"
-                      placeholder="Answer"
-                    />
-                    <CheckboxInput
-                      type="checkbox"
-                      value={el.right}
-                      checked={el.right}
-                      onChange={e => this.setRight(el.index, e)}
-                    />
-                    <Button
-                      buttonStyle={"outlined"}
-                      onClick={() => this.deleteOption(el.index)}
-                    >
-                      Delete option
-                    </Button>
-                  </OptionElementWrapper>
-                </OptionsWrapper>
-              );
-            })}
+            {options.length !== 0 &&
+              options.map((el, index) => {
+                console.log(index);
+                return (
+                  <OptionsWrapper className="form-check" key={el.index}>
+                    <OptionElementWrapper>
+                      <OptionInput
+                        name="answer"
+                        value={el.answer[language.value]}
+                        onChange={e => this.answerChange(el.index, e)}
+                        label="Answer"
+                        placeholder="Answer"
+                      />
+                      <CheckboxInput
+                        type="checkbox"
+                        value={el.right}
+                        checked={el.right}
+                        onChange={e => this.setRight(el.index, e)}
+                      />
+                      <Button
+                        buttonStyle={"outlined"}
+                        onClick={() => this.deleteOption(el.index)}
+                      >
+                        Delete option
+                      </Button>
+                    </OptionElementWrapper>
+                  </OptionsWrapper>
+                );
+              })}
           </div>
 
           <ButtonWrapper>
@@ -229,4 +276,3 @@ TestConstructor.propTypes = {
   addTask: PropTypes.func,
   changeTask: PropTypes.func
 };
-

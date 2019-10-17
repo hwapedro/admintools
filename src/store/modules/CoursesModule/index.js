@@ -206,6 +206,7 @@ class CoursesModule extends DuckModule {
 
   getOneCourse = id => async dispatch => {
     dispatch(ViewModule.setLoading(true));
+    console.log("get one course")
     AdminService.getOneCourse(token, id)
       .then(response => {
         dispatch({

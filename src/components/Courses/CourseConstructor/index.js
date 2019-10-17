@@ -20,7 +20,7 @@ import {
   ConsturctorForm,
   SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
-import { i18n } from "../../../store/utils";
+import { i18nSelector } from "../../../store/utils";
 
 const name = "course";
 
@@ -35,7 +35,7 @@ export default class CourseCounstructor extends Component {
 
   componentDidMount() {
     let i18nStart = {};
-    i18n.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
+    i18nSelector.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
     this.setState({
       title: i18nStart,
       description: i18nStart
@@ -109,7 +109,7 @@ export default class CourseCounstructor extends Component {
             <Select
               value={activeLanguage}
               onChange={handleLangChange}
-              options={i18n}
+              options={i18nSelector}
             />
           </SelectWrapper>
           <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
@@ -124,7 +124,7 @@ export default class CourseCounstructor extends Component {
                   <Select
                     value={language}
                     onChange={this.handleChange}
-                    options={i18n}
+                    options={i18nSelector}
                     maxMenuHeight={100}
                   />
                   <CustomInput

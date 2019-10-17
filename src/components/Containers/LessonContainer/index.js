@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Lesson from "../../Lessons/Lesson";
+import Lesson from "../../Lessons/OneLesson";
 
 import ViewModule from "../../../store/modules/ViewModule";
 import LessonsModule from "../../../store/modules/LessonsModule";

@@ -28,14 +28,16 @@ class LessonsList extends Component {
   };
 
   goTo = id => {
+    this.props.setLoading(true)
     this.props.history.push(`/lesson/${id}`);
   };
 
   render() {
-    const { lessons, search, course, changeDndLesson } = this.props;
+    const { lessons, search, course, changeDndLesson, activeLanguage } = this.props;
+  
     let list = lessons
       .filter(lesson => {
-        if (lesson.title.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+        if (lesson.title[activeLanguage.value].toLowerCase().indexOf(search.toLowerCase()) !== -1) {
           return true;
         }
         return false;
@@ -49,6 +51,7 @@ class LessonsList extends Component {
             deleteItem={this.deleteItem}
             goTo={this.goTo}
             course={course}
+            activeLanguage={activeLanguage}
           />
         );
       });

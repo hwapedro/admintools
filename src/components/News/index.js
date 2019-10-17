@@ -73,6 +73,9 @@ export default class News extends Component {
               delArticle={(index, name) => delArticle(index, name)}
               news={news}
               activeLanguage={activeLanguage}
+              handleLangChange={activeLanguage =>
+                this.handleLangChange(activeLanguage)
+              }
               search={search}
             />
           </>

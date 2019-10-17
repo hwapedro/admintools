@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from "draft-js-import-html";
 
 import EditorText from "../../EditorText";
 import Search from "../../Search";
@@ -13,7 +14,8 @@ import {
   ButtonWrapper,
   ConsturctorWrapper,
   ConsturctorForm,
-  DarkGround
+  DarkGround,
+  SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
 
 import Button from "../../Shared/Button";
@@ -22,13 +24,16 @@ import AdminService from "../../../service";
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
+import { i18nSelector } from "../../../store/utils";
 
 const name = "lesson";
 let options = [];
 
 class LessonConstructor extends Component {
   state = {
-    title: "",
+    title: null,
+    description: null,
+    language: { label: "Russian", value: "ru" },
     editorState: EditorState.createEmpty(),
     exam: false,
     courseIndex: { value: 1, label: "course" },
@@ -36,6 +41,12 @@ class LessonConstructor extends Component {
   };
 
   componentDidMount() {
+    let i18nStart = {};
+    i18nSelector.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
+    this.setState({
+      title: i18nStart,
+      description: i18nStart
+    });
     const token = localStorage.getItem("token");
     AdminService.getAll(token, "course")
       .then(response => {
@@ -50,12 +61,12 @@ class LessonConstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addLesson, course } = this.props;
-    const { title, editorState, exam, courseIndex } = this.state;
-    const description = stateToHTML(editorState.getCurrentContent());
+    const { title, description, exam, courseIndex } = this.state;
+
     this.setState({
       constructor: !constructor,
-      title: "",
-      description: "",
+      title: null,
+      description: null,
       exam: false,
       courseIndex: 0,
       editorState: EditorState.createEmpty()
@@ -67,19 +78,54 @@ class LessonConstructor extends Component {
 
   //TEXT HANDLER
   onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const { language, title } = this.state;
+
+    switch (event.target.name) {
+      case "title":
+        this.setState({
+          [event.target.name]: {
+            ...title,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
+    }
   };
 
   //EDITOR HANDLER
   onEditorStateChange = editorState => {
+    const description = {
+      ...this.state.description,
+      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
+    };
+
     this.setState({
-      editorState
+      editorState: editorState,
+      description: description
     });
   };
 
   //SELECTOR HANDLER
-  handleChange = courseIndex => {
-    this.setState({ courseIndex });
+  //SELECTOR HANDLER
+  handleChange = (value, selectorType) => {
+    switch (selectorType) {
+      case "course":
+        this.setState({ courseIndex: value });
+        break;
+      case "language":
+        const { description } = this.state;
+        const contentState = stateFromHTML(description[value.value]);
+        const editorState = EditorState.push(
+          this.state.editorState,
+          contentState
+        );
+        this.setState({ language: value, editorState: editorState });
+        break;
+      default:
+        return
+    }
   };
 
   showConstructor = () => {
@@ -93,12 +139,32 @@ class LessonConstructor extends Component {
   };
 
   render() {
-    const { constructor, exam, courseIndex, editorState, title } = this.state;
-    const { onChange, value, course } = this.props;
+    const {
+      constructor,
+      exam,
+      courseIndex,
+      editorState,
+      title,
+      language
+    } = this.state;
+    const {
+      onChange,
+      value,
+      course,
+      activeLanguage,
+      handleLangChange
+    } = this.props;
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
           <Search onChange={onChange} value={value} />
+          <SelectWrapper>
+            <Select
+              value={activeLanguage}
+              onChange={handleLangChange}
+              options={i18nSelector}
+            />
+          </SelectWrapper>
           <Button buttonStyle={"outlined"} onClick={this.showConstructor}>
             ADD NEW LESSON
           </Button>
@@ -107,11 +173,19 @@ class LessonConstructor extends Component {
               <DarkGround onClick={this.showConstructor} />
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
+                  <Select
+                    value={language}
+                    onChange={(value, {}, selectorType = "language") =>
+                      this.handleChange(value, selectorType)
+                    }
+                    options={i18nSelector}
+                    maxMenuHeight={100}
+                  />
                   <CustomInput
                     label="Title"
                     placeholder="Title goes here"
                     name="title"
-                    value={title}
+                    value={title[language.value]}
                     onChange={this.onChange}
                     required={true}
                   />
@@ -138,7 +212,9 @@ class LessonConstructor extends Component {
                       <LabelElement>Course Index :</LabelElement>
                       <Select
                         value={courseIndex}
-                        onChange={this.handleChange}
+                        onChange={(value, {}, selectorType = "course") =>
+                          this.handleChange(value, selectorType)
+                        }
                         options={options}
                         maxMenuHeight={100}
                       />

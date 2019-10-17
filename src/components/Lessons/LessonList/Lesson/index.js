@@ -21,16 +21,16 @@ import LessonContainer from "./LessonContainer";
 import checkMark from "../../../../img/good.png";
 import redCross from "../../../../img/bad.png";
 
-export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
+export default function Lesson({ lesson, deleteItem, index, goTo, course, activeLanguage }) {
   if (!course) {
     return (
       <ElementWrapper key={lesson._id}>
         <LabelElement>Name of Lesson :</LabelElement>
-        <TitleSpan> {lesson.title}</TitleSpan>
+        <TitleSpan> {lesson.title[activeLanguage.value]}</TitleSpan>
         <LabelElement>Description of Lesson : </LabelElement>
         <DescriptionSpan
           dangerouslySetInnerHTML={{
-            __html: lesson.description
+            __html: lesson.description[activeLanguage.value]
           }}
         />
         <ExamPropContainer>
@@ -64,11 +64,11 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course }) {
     return (
       <LessonContainer lesson={lesson} index={index}>
         <LabelElement>Name of Lesson :</LabelElement>
-        <TitleSpan> {lesson.title}</TitleSpan>
+        <TitleSpan> {lesson.title[activeLanguage.value]}</TitleSpan>
         <LabelElement>Description of Lesson : </LabelElement>
         <DescriptionSpan
           dangerouslySetInnerHTML={{
-            __html: lesson.description
+            __html: lesson.description[activeLanguage.value]
           }}
         />
         <ExamPropContainer>

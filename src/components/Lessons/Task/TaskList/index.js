@@ -16,9 +16,10 @@ import Button from "../../../Shared/Button";
 const goTo = (lessonId, taskId, history) => {
   history.push(`/task/${lessonId}/${taskId}`);
 };
+
 let id = 1;
 const TaskList = props => {
-  const { lessonId, page, deleteTask } = props;
+  const { lessonId, page, deleteTask, activeLanguage } = props;
   const taskList = page.tasks.map(task => {
     return (
       <TaskElementWrapper key={id++}>
@@ -27,15 +28,15 @@ const TaskList = props => {
             <LabelElement>Task type:</LabelElement>
             <TitleSpan>{task.type}</TitleSpan>
             <LabelElement>Task title:</LabelElement>
-            <TitleSpan>{task.info.name}</TitleSpan>
+            <TitleSpan>{task.info.name[activeLanguage.value]}</TitleSpan>
             <LabelElement>Task description:</LabelElement>
             <TitleSpan
               dangerouslySetInnerHTML={{
-                __html: task.info.description
+                __html: task.info.description[activeLanguage.value]
               }}
             />
             <LabelElement>Question:</LabelElement>
-            <TitleSpan>{task.info.question}</TitleSpan>
+            <TitleSpan>{task.info.question[activeLanguage.value]}</TitleSpan>
           </TaskInfo>
         )}
 

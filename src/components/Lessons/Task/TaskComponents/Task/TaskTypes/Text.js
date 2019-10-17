@@ -21,7 +21,8 @@ class Text extends Component {
       changeEditFlag,
       taskEditFlag,
       lessonId,
-      changeTask
+      changeTask,
+      activeLanguage
     } = this.props;
 
     return (
@@ -38,15 +39,15 @@ class Text extends Component {
         ) : (
           <TaskElementWrapper key={task._id}>
             <LabelElement> Title: </LabelElement>
-            <TitleSpan>{task.info.name}</TitleSpan>
+            <TitleSpan>{task.info.name[activeLanguage.value]}</TitleSpan>
             <LabelElement> Description </LabelElement>
             <TitleSpan
               dangerouslySetInnerHTML={{
-                __html: task.info.description
+                __html: task.info.description[activeLanguage.value]
               }}
             />
             <LabelElement>Question:</LabelElement>
-            <TitleSpan>{task.info.question}</TitleSpan>
+            <TitleSpan>{task.info.question[activeLanguage.value]}</TitleSpan>
 
             <LabelElement>Answers:</LabelElement>
             <TitleSpan>{task.info.options.join(" , ")}</TitleSpan>

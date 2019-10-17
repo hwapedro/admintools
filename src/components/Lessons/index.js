@@ -11,7 +11,8 @@ const name = "lesson";
 
 export default class Lessons extends Component {
   state = {
-    search: ""
+    search: "",
+    activeLanguage: { label: "Russian", value: "ru" }
   };
 
   componentDidMount() {
@@ -19,13 +20,17 @@ export default class Lessons extends Component {
     getAllLessons(name);
   }
 
+  handleLangChange = activeLanguage => {
+    this.setState({ activeLanguage });
+  };
+
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
-    const { error, loading, lessons, addLesson, delLesson } = this.props;
-    const { search } = this.state;
+    const { error, loading, lessons, addLesson, delLesson, setLoading } = this.props;
+    const { search, activeLanguage } = this.state;
     return (
       <>
         {error && (
@@ -45,16 +50,24 @@ export default class Lessons extends Component {
               addLesson={(title, description, exam, name, courseIndex, flag) =>
                 addLesson(title, description, exam, name, courseIndex, flag)
               }
+              handleLangChange={activeLanguage =>
+                this.handleLangChange(activeLanguage)
+              }
               onChange={this.onChange}
               value={search}
+              activeLanguage={activeLanguage}
+              
             />
             <LessonList
               onChange={this.onChange}
               delLesson={(lessonsIndex, name, flag) =>
                 delLesson(lessonsIndex, name, flag)
               }
+              setLoading={loading => setLoading(loading)}
               lessons={lessons}
               search={search}
+              activeLanguage={activeLanguage}
+              
             />
           </>
         )}
@@ -69,7 +82,8 @@ Lessons.defaultProps = {
   error: false,
   addLesson() {},
   delLesson() {},
-  getAllLessons() {}
+  getAllLessons() {},
+  setLoading() {},
 };
 
 Lessons.propTypes = {
@@ -79,5 +93,6 @@ Lessons.propTypes = {
 
   addCoursest: PropTypes.func,
   delLesson: PropTypes.func,
-  getAllLessons: PropTypes.func
+  getAllLessons: PropTypes.func,
+  setLoading: PropTypes.func
 };

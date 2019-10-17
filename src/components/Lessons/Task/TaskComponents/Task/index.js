@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Select from "react-select";
 
 import Test from "./TaskTypes/Test";
 import Text from "./TaskTypes/Text";
 
+import { SelectWrapper } from "../../../../GlobalStyles/styleGlobal";
+import { i18nSelector } from "../../../../../store/utils";
+
 class Task extends Component {
   state = {
     taskEditFlag: false,
-    info: {}
+    activeLanguage: { label: "Russian", value: "ru" }
   };
 
   constSwitch = () => {
@@ -22,6 +26,8 @@ class Task extends Component {
       changeTask
     } = this.props;
 
+    const { activeLanguage } = this.state;
+
     switch (task.type) {
       case "test":
         return (
@@ -34,6 +40,7 @@ class Task extends Component {
             changeEditFlag={changeEditFlag}
             deleteTask={deleteTask}
             changeTask={changeTask}
+            activeLanguage={activeLanguage}
           />
         );
       case "text":
@@ -47,6 +54,7 @@ class Task extends Component {
             changeEditFlag={changeEditFlag}
             deleteTask={deleteTask}
             changeTask={changeTask}
+            activeLanguage={activeLanguage}
           />
         );
       default:
@@ -54,9 +62,26 @@ class Task extends Component {
     }
   };
 
+  handleLangChange = activeLanguage => {
+    this.setState({ activeLanguage });
+  };
+
   render() {
     const { task } = this.props;
-    return <>{task && <>{this.constSwitch()} </>}</>;
+    const { activeLanguage } = this.state;
+    return (
+      <>
+        <SelectWrapper>
+          <Select
+            value={activeLanguage}
+            onChange={this.handleLangChange}
+            options={i18nSelector}
+            maxMenuHeight={100}
+          />
+        </SelectWrapper>
+        {task && <>{this.constSwitch()} </>}
+      </>
+    );
   }
 }
 

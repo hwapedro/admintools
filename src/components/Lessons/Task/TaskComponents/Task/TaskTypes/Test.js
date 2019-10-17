@@ -30,7 +30,8 @@ class Test extends Component {
       changeEditFlag,
       taskEditFlag,
       lessonId,
-      changeTask
+      changeTask,
+      activeLanguage
     } = this.props;
 
     return (
@@ -48,21 +49,21 @@ class Test extends Component {
           ) : (
             <TaskElementWrapper key={task._id}>
               <LabelElement>Title:</LabelElement>
-              <TitleSpan>{task.info.name}</TitleSpan>
+              <TitleSpan>{task.info.name[activeLanguage.value]}</TitleSpan>
               <LabelElement>Description:</LabelElement>
               <TitleSpan
                 dangerouslySetInnerHTML={{
-                  __html: task.info.description
+                  __html: task.info.description[activeLanguage.value]
                 }}
               />
               <LabelElement>Question:</LabelElement>
-              <TitleSpan>{task.info.question}</TitleSpan>
+              <TitleSpan>{task.info.question[activeLanguage.value]}</TitleSpan>
               <LabelElement>Answer options:</LabelElement>
               <OptionsWrapper>
                 {task.info.options.map(answ => {
                   return (
                     <OptionElementWrapper key={answ.index}>
-                      <OptionSpan>{answ.answer}</OptionSpan>
+                      <OptionSpan>{answ.answer[activeLanguage.value]}</OptionSpan>
                       {answ.right ? (
                         <ImgMark
                           width="15px"

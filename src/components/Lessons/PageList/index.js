@@ -26,7 +26,7 @@ class PageList extends Component {
 
   render() {
     const { pageNumber } = this.state;
-    const { lessonId, pages, deletePage, deleteTask } = this.props;
+    const { lessonId, pages, deletePage, deleteTask, activeLanguage } = this.props;
 
     let list;
     if (pages) {
@@ -52,6 +52,7 @@ class PageList extends Component {
                 lessonId={lessonId}
                 page={page}
                 deleteTask={deleteTask}
+                activeLanguage={activeLanguage}
               />
             </div>
           );

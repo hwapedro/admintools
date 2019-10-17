@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import OneCourse from '../../OneCourse'
+import OneCourse from '../../Courses/OneCourse'
 
 import CoursesModule from "../../../store/modules/CoursesModule"
 import ViewModule from '../../../store/modules/ViewModule'
@@ -22,7 +22,9 @@ const mapStateToProps = state => ({
   
     changeDndLesson: (id1, id2, courseIndex) =>
     dispatch(CoursesModule.changeDnD(id1, id2, "lessons", courseIndex)),
-  
+ 
+    setLoading: loading => dispatch (ViewModule.setLoading(loading)),
+    
     getCourse: id => dispatch(CoursesModule.getOneCourse(id))
   });
   

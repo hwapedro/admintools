@@ -17,7 +17,7 @@ import {
   LabelElement,
   ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
-import { i18n } from "../../../store/utils";
+import { i18nSelector } from "../../../store/utils";
 
 const name = "news";
 
@@ -125,7 +125,7 @@ class NewsList extends Component {
                 <Select
                   value={language}
                   onChange={this.handleChange}
-                  options={i18n}
+                  options={i18nSelector}
                   maxMenuHeight={100}
                 />
                 <CustomInput

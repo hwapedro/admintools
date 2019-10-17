@@ -20,7 +20,7 @@ import {
   ElementWrapper,
   ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
-import { i18n } from "../../../store/utils";
+import { i18nSelector } from "../../../store/utils";
 
 const name = "course";
 
@@ -30,6 +30,7 @@ class CourseList extends Component {
     description: null,
     language: { label: "Russian", value: "ru" },
     changeFlag: false,
+    //editorState: EditorState.createEmpty(),
     courseIndex: null
   };
 
@@ -105,6 +106,7 @@ class CourseList extends Component {
   };
 
   goTo = id => {
+    this.props.setLoading(true)
     this.props.history.push(`/course/${id}`);
   };
 
@@ -138,14 +140,14 @@ class CourseList extends Component {
                 <Select
                   value={language}
                   onChange={this.handleChange}
-                  options={i18n}
+                  options={i18nSelector}
                   maxMenuHeight={100}
                 />
                 <CustomInput
                   label="Title"
                   placeholder="Title goes here"
                   name="title"
-                  value={title[activeLanguage.value]}
+                  value={title[language.value]}
                   onChange={this.onChange}
                   required={true}
                 />

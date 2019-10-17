@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
+import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from "draft-js-import-html";
 import Select from "react-select";
-
 
 import {
   DescriptionSpan,
@@ -18,7 +18,8 @@ import {
   LabelElement,
   TitleSpan,
   ButtonWrapper,
-  EmptyMessage
+  EmptyMessage,
+  SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
 
 import EditorText from "../../EditorText";
@@ -31,18 +32,21 @@ import AdminService from "../../../service";
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
+import { i18nSelector } from "../../../store/utils";
 
 const name = "lesson";
 let options = [];
 
 export default class Lesson extends Component {
   state = {
-    title: "",
-    description: "",
+    title: null,
+    description: null,
+    language: { label: "Russian", value: "ru" },
     changeFlag: false,
     courseIndex: { value: null, label: null },
     lessonId: null,
-    exam: null
+    exam: null,
+    activeLanguage: { label: "Russian", value: "ru" }
   };
 
   componentDidMount() {
@@ -60,8 +64,26 @@ export default class Lesson extends Component {
       .catch(console.error());
   }
 
-  handleChange = courseIndex => {
-    this.setState({ courseIndex });
+  //SELECTOR HANDLER
+  handleChange = (value, selectorType) => {
+    switch (selectorType) {
+      case "course":
+        this.setState({ courseIndex: value });
+        break;
+      case "languagePage":
+        const { description } = this.state;
+        const contentState = stateFromHTML(description[value.value]);
+        const editorState = EditorState.push(
+          this.state.editorState,
+          contentState
+        );
+        this.setState({ language: value, editorState: editorState });
+        break;
+      case "languageConstructor":
+          this.setState({ activeLanguage: value });
+      default:
+        break;
+    }
   };
 
   changeExamProp = exam => {
@@ -69,46 +91,70 @@ export default class Lesson extends Component {
   };
 
   getParams = (lessonId, title, description, exam, courseIndex) => {
-    if (description !== "") {
-      const blocksFromHTML = convertFromHTML(description);
-      const state = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
-      );
-      this.setState({
-        changeFlag: true,
-        lessonId: lessonId,
-        title: title,
-        description: description,
-        exam: exam,
-        editorState: EditorState.createWithContent(state),
-        courseIndex: courseIndex
-      });
-    } else {
-      this.setState({
-        changeFlag: true,
-        lessonId: lessonId,
-        title: title,
-        description: description,
-        exam: exam,
-        editorState: EditorState.createEmpty()
-      });
-    }
+    const { language } = this.state;
+    const state = stateFromHTML(description[language.value]);
+    this.setState({
+      lessonId: lessonId,
+      changeFlag: true,
+      courseIndex: courseIndex,
+      exam: exam,
+      title: title,
+      description: description,
+      editorState: EditorState.createWithContent(state)
+    });
+    // if (description !== "") {
+    //   const blocksFromHTML = convertFromHTML(description);
+    //   const state = ContentState.createFromBlockArray(
+    //     blocksFromHTML.contentBlocks,
+    //     blocksFromHTML.entityMap
+    //   );
+    //   this.setState({
+    //     changeFlag: true,
+    //     lessonId: lessonId,
+    //     title: title,
+    //     description: description,
+    //     exam: exam,
+    //     editorState: EditorState.createWithContent(state),
+    //     courseIndex: courseIndex
+    //   });
+    // } else {
+    //   this.setState({
+    //     changeFlag: true,
+    //     lessonId: lessonId,
+    //     title: title,
+    //     description: description,
+    //     exam: exam,
+    //     editorState: EditorState.createEmpty()
+    //   });
+    // }
   };
 
   setParams = event => {
     event.preventDefault();
     const { changeLesson } = this.props;
-    const { title, lessonId, exam, courseIndex } = this.state;
-    const description = stateToHTML(this.state.editorState.getCurrentContent());
+    const { title, description, lessonId, exam, courseIndex } = this.state;
 
     if (title && description)
       changeLesson(lessonId, title, description, exam, name, courseIndex.value);
     this.setState({ changeFlag: false, lessonId: null });
   };
 
+  //TEXT HANDLER
   onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const { language, title } = this.state;
+
+    switch (event.target.name) {
+      case "title":
+        this.setState({
+          [event.target.name]: {
+            ...title,
+            [language.value]: event.target.value
+          }
+        });
+        break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
+    }
   };
 
   addPage = () => {
@@ -121,15 +167,30 @@ export default class Lesson extends Component {
     );
   };
 
+  //EDITOR HANDLER
   onEditorStateChange = editorState => {
+    const description = {
+      ...this.state.description,
+      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
+    };
+
     this.setState({
-      editorState
+      editorState: editorState,
+      description: description
     });
   };
 
   render() {
     const { lesson, loading, deletePage, deleteTask, error } = this.props;
-    const { editorState, changeFlag, courseIndex, title, exam } = this.state;
+    const {
+      editorState,
+      changeFlag,
+      courseIndex,
+      title,
+      exam,
+      language,
+      activeLanguage
+    } = this.state;
 
     return (
       <>
@@ -150,11 +211,19 @@ export default class Lesson extends Component {
               <>
                 <ElementWrapper>
                   <form onSubmit={this.setParams}>
+                    <Select
+                      value={language}
+                      onChange={(value, {}, selectorType = "languagePage") =>
+                        this.handleChange(value, selectorType)
+                      }
+                      options={i18nSelector}
+                      maxMenuHeight={100}
+                    />
                     <CustomInput
                       label="Title"
                       placeholder="Title goes here"
                       name="title"
-                      value={title}
+                      value={title[language.value]}
                       onChange={this.onChange}
                       required={true}
                     />
@@ -173,7 +242,9 @@ export default class Lesson extends Component {
                     <LabelElement>Course Index :</LabelElement>
                     <Select
                       value={courseIndex}
-                      onChange={value => this.handleChange(value)}
+                      onChange={(value, {}, selectorType = "course") =>
+                        this.handleChange(value, selectorType)
+                      }
                       options={options}
                     />
 
@@ -187,6 +258,15 @@ export default class Lesson extends Component {
               </>
             ) : (
               <>
+                <SelectWrapper>
+                  <Select
+                    value={activeLanguage}
+                    onChange={(value, {}, selectorType = "languageConstructor") =>
+                        this.handleChange(value, selectorType)
+                      }
+                    options={i18nSelector}
+                  />
+                </SelectWrapper>
                 <ElementWrapper
                   key={lesson._id}
                   onClick={() =>
@@ -200,11 +280,11 @@ export default class Lesson extends Component {
                   }
                 >
                   <LabelElement>Name of Lesson :</LabelElement>
-                  <TitleSpan> {lesson.title}</TitleSpan>
+                  <TitleSpan> {lesson.title[activeLanguage.value]}</TitleSpan>
                   <LabelElement>Description of Lesson : </LabelElement>
                   <DescriptionSpan
                     dangerouslySetInnerHTML={{
-                      __html: lesson.description
+                      __html: lesson.description[activeLanguage.value]
                     }}
                   />
                   <ExamPropContainer>
@@ -236,6 +316,7 @@ export default class Lesson extends Component {
                 id={lesson._id}
                 deletePage={deletePage}
                 deleteTask={deleteTask}
+                activeLanguage={activeLanguage}
               />
             )}
           </Wrapper>
@@ -262,5 +343,3 @@ Lesson.propTypes = {
   getLesson: PropTypes.func,
   changeLesson: PropTypes.func
 };
-
-

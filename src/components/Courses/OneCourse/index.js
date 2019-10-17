@@ -2,23 +2,29 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 // import { DragDropContext } from "react-beautiful-dnd";
 
+import LessonList from "../../Lessons/LessonList/LessonList";
+import LessonConstructor from "../../Lessons/LessonConstructor";
+import Spinner from "../../Spinner";
+import Error from "../../Error";
 
-import LessonList from "../Lessons/LessonList/LessonList";
-import LessonConstructor from "../Lessons/LessonConstructor";
-import Spinner from "../Spinner";
-import Error from "../Error";
-
-import {OneCourseTitle,CourseTitle} from './styleLocal'
+import { OneCourseTitle, CourseTitle } from "./styleLocal";
 const name = "course";
+
 export default class OneCourse extends Component {
   state = {
-    search: ""
+    search: "",
+    activeLanguage: { label: "Russian", value: "ru" }
   };
 
   componentDidMount() {
     const { getCourse } = this.props;
     getCourse(this.props.itemId);
   }
+
+  //language selector handler
+  handleLangChange = activeLanguage => {
+    this.setState({ activeLanguage });
+  };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -31,10 +37,10 @@ export default class OneCourse extends Component {
       delLesson,
       changeDndLesson,
       error,
-      loading
+      loading,
+      setLoading
     } = this.props;
-    const { search } = this.state;
-
+    const { search, activeLanguage } = this.state;
     return (
       <>
         {error && (
@@ -54,22 +60,30 @@ export default class OneCourse extends Component {
               addLesson={(title, description, exam, name, courseIndex, flag) =>
                 addLesson(title, description, exam, name, courseIndex, flag)
               }
+              handleLangChange={activeLanguage =>
+                this.handleLangChange(activeLanguage)
+              }
               onChange={this.onChange}
               value={search}
+              activeLanguage={activeLanguage}
               course={course}
             />
             <CourseTitle>
-            <OneCourseTitle>
-              Name : {course.title}<br /> Number : {course.courseIndex}
-              </OneCourseTitle></CourseTitle>
+              <OneCourseTitle>
+                Name : {course.title[activeLanguage.value]}
+                <br /> Number : {course.courseIndex}
+              </OneCourseTitle>
+            </CourseTitle>
             <LessonList
               delLesson={(lessonsIndex, name, flag) =>
                 delLesson(lessonsIndex, name, flag)
               }
+              setLoading={loading => setLoading(loading)}
               lessons={course.lessons}
               search={search}
               course={course}
               changeDndLesson={changeDndLesson}
+              activeLanguage={activeLanguage}
             />
           </>
         )}
@@ -97,4 +111,3 @@ OneCourse.propTypes = {
   delLesson: PropTypes.func,
   getAllLessons: PropTypes.func
 };
-

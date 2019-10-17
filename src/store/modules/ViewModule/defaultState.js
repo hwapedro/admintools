@@ -1,4 +1,4 @@
 export const DEFAULT_STATE = {
-  loading: false,
+  loading: true,
   error: false
 };

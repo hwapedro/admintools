@@ -17,6 +17,7 @@ export default class Courses extends Component {
 
   componentDidMount() {
     const { getAllCourses } = this.props;
+
     getAllCourses(name);
   }
 
@@ -37,7 +38,8 @@ export default class Courses extends Component {
       addCourses,
       getAllCourses,
       delCourse,
-      changeDnD
+      changeDnD,
+      setLoading
     } = this.props;
 
     const { search, activeLanguage } = this.state;
@@ -77,12 +79,12 @@ export default class Courses extends Component {
                   addCourses(title, description, name)
                 }
                 getAllCourses={name => getAllCourses(name)}
-                onChange={this.onChange}
-                value={search}
-                activeLanguage={activeLanguage}
                 handleLangChange={activeLanguage =>
                   this.handleLangChange(activeLanguage)
                 }
+                onChange={this.onChange}
+                value={search}
+                activeLanguage={activeLanguage}
               />
 
               <CoursesList
@@ -90,6 +92,7 @@ export default class Courses extends Component {
                   changeCourse(courseIndex, title, description, name)
                 }
                 delCourse={(courseIndex, name) => delCourse(courseIndex, name)}
+                setLoading={loading => setLoading(loading)}
                 courses={courses}
                 search={search}
                 activeLanguage={activeLanguage}
@@ -110,7 +113,9 @@ Courses.defaultProps = {
   addCourses() {},
   delCourse() {},
   getAllCourses() {},
-  changeCourse() {}
+  changeCourse() {},
+  changeDnD() {},
+  setLoading() {}
 };
 
 Courses.propTypes = {
@@ -121,5 +126,7 @@ Courses.propTypes = {
   addCourses: PropTypes.func,
   delCourse: PropTypes.func,
   getAllCourses: PropTypes.func,
-  changeCourse: PropTypes.func
+  changeCourse: PropTypes.func,
+  changeDnD: PropTypes.func,
+  setLoading: PropTypes.func
 };

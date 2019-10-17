@@ -15,20 +15,19 @@ import {
   SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
 import { Wrapper, LabelElement } from "../../GlobalStyles/styleGlobal";
-import { getBase64, i18n } from "../../../store/utils";
+import { getBase64, i18nSelector } from "../../../store/utils";
 
 export default class BadgeConstructor extends Component {
   state = {
     title: null,
     description: null,
-    language: { label: "Russian", value: "ru" },
     constructor: false,
     icon: null
   };
 
   componentDidMount() {
     let i18nStart = {};
-    i18n.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
+    i18nSelector.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
     this.setState({
       title: i18nStart,
       description: i18nStart
@@ -43,14 +42,15 @@ export default class BadgeConstructor extends Component {
   };
 
   onChange = event => {
-    const { language, title, description } = this.state;
+    const { title, description } = this.state;
+    const { activeLanguage } = this.props
 
     switch (event.target.name) {
       case "description":
         this.setState({
           [event.target.name]: {
             ...description,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -58,7 +58,7 @@ export default class BadgeConstructor extends Component {
         this.setState({
           [event.target.name]: {
             ...title,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -75,11 +75,6 @@ export default class BadgeConstructor extends Component {
     // formData.append("image", event.target.files[0]);
   };
 
-  //SELECTOR HANDLER
-  handleChange = language => {
-    this.setState({ language });
-  };
-
   showConstructor = () => {
     const { constructor } = this.state;
     this.setState({
@@ -88,7 +83,7 @@ export default class BadgeConstructor extends Component {
   };
 
   render() {
-    const { constructor, title, description, language } = this.state;
+    const { constructor, title, description } = this.state;
     const { onChange, value, activeLanguage, handleLangChange } = this.props;
 
     if (constructor) {
@@ -104,16 +99,16 @@ export default class BadgeConstructor extends Component {
             <ConsturctorForm onSubmit={this.onSubmit}>
               <LabelElement>Choose language</LabelElement>
               <Select
-                value={language}
-                onChange={this.handleChange}
-                options={i18n}
+                value={activeLanguage}
+                onChange={handleLangChange}
+                options={i18nSelector}
                 maxMenuHeight={100}
               />
               <CustomInput
                 label="Title"
                 placeholder="Title goes here"
                 name="title"
-                value={title[language.value]}
+                value={title[activeLanguage.value]}
                 onChange={this.onChange}
                 required={true}
               />
@@ -121,7 +116,7 @@ export default class BadgeConstructor extends Component {
               <DescriptionTextArea
                 name="description"
                 placeholder="description"
-                value={description[language.value]}
+                value={description[activeLanguage.value]}
                 type="text"
                 onChange={this.onChange}
               />
@@ -156,7 +151,7 @@ export default class BadgeConstructor extends Component {
             <Select
               value={activeLanguage}
               onChange={handleLangChange}
-              options={i18n}
+              options={i18nSelector}
             />
           </SelectWrapper>
           <Button buttonStyle={"outlined"} onClick={this.showConstructor}>

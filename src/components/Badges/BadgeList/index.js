@@ -21,7 +21,7 @@ import {
   LabelElement,
   ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
-import { getBase64, i18n } from "../../../store/utils";
+import { getBase64, i18nSelector } from "../../../store/utils";
 
 const name = "badge";
 
@@ -29,7 +29,6 @@ class badgeList extends Component {
   state = {
     title: null,
     description: null,
-    language: { label: "Russian", value: "ru" },
     changeFlag: false,
     badgeIndex: null
   };
@@ -59,10 +58,6 @@ class badgeList extends Component {
     });
   };
 
-  //SELECTOR HANDLER
-  handleChange = language => {
-    this.setState({ language });
-  };
 
   deleteItem = badgeIndex => {
     const { delBadge } = this.props;
@@ -71,14 +66,15 @@ class badgeList extends Component {
 
 
   onChange = event => {
-    const { language, title, description } = this.state;
+    const { title, description } = this.state;
+    const { activeLanguage } = this.props
     
     switch (event.target.name) {
       case "description":
         this.setState({
           [event.target.name]: {
             ...description,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -86,7 +82,7 @@ class badgeList extends Component {
         this.setState({
           [event.target.name]: {
             ...title,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -96,8 +92,8 @@ class badgeList extends Component {
   };
 
   render() {
-    const { badges, search, activeLanguage } = this.props;
-    const { title, description, language } = this.state;
+    const { badges, search, activeLanguage, handleLangChange } = this.props;
+    const { title, description } = this.state;
     let list = badges
       .filter(badge => {
         if (
@@ -116,16 +112,16 @@ class badgeList extends Component {
               <form onSubmit={this.setParams}>
                 <LabelElement>Choose language</LabelElement>
                 <Select
-                  value={language}
-                  onChange={this.handleChange}
-                  options={i18n}
+                  value={activeLanguage}
+                  onChange={handleLangChange}
+                  options={i18nSelector}
                   maxMenuHeight={100}
                 />
                 <CustomInput
                   label="Title"
                   placeholder="Title goes here"
                   name="title"
-                  value={title[language.value]}
+                  value={title[activeLanguage.value]}
                   onChange={this.onChange}
                   required={true}
                 />
@@ -133,7 +129,7 @@ class badgeList extends Component {
                 <DescriptionTextArea
                   name="description"
                   onChange={this.onChange}
-                  value={description[language.value]}
+                  value={description[activeLanguage.value]}
                 />
                 <input
                   accept="image/*"
