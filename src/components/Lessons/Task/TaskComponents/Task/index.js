@@ -67,18 +67,23 @@ class Task extends Component {
   };
 
   render() {
-    const { task } = this.props;
+    const { task, taskEditFlag } = this.props;
     const { activeLanguage } = this.state;
     return (
       <>
-        <SelectWrapper>
-          <Select
-            value={activeLanguage}
-            onChange={this.handleLangChange}
-            options={i18nSelector}
-            maxMenuHeight={100}
-          />
-        </SelectWrapper>
+        {taskEditFlag ? (
+          <></>
+        ) : (
+          <SelectWrapper>
+            <Select
+              value={activeLanguage}
+              onChange={this.handleLangChange}
+              options={i18nSelector}
+              maxMenuHeight={100}
+            />
+          </SelectWrapper>
+        )}
+
         {task && <>{this.constSwitch()} </>}
       </>
     );
@@ -91,7 +96,7 @@ Task.defaultProps = {
   page: {},
   lessonId: null,
   taskEditFlag: false,
-  changeEditFlag: false,
+  changeEditFlag() {},
   deleteTask() {}
 };
 
@@ -101,7 +106,7 @@ Task.propTypes = {
   page: PropTypes.object,
   lessonId: PropTypes.string.isRequired,
   taskEditFlag: PropTypes.bool,
-  changeEditFlag: PropTypes.bool,
+  changeEditFlag: PropTypes.func,
   deleteTask: PropTypes.func
 };
 

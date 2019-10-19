@@ -98,11 +98,11 @@ class CourseList extends Component {
 
   //SELECTOR HANDLER
   handleChange = language => {
-    const { description } = this.state;
+    const { description, editorState } = this.state;
     const contentState = stateFromHTML(description[language.value]);
-    const editorState = EditorState.push(this.state.editorState, contentState);
+    const edState = EditorState.push(editorState, contentState);
 
-    this.setState({ language: language, editorState: editorState });
+    this.setState({ language: language, editorState: edState });
   };
 
   goTo = id => {

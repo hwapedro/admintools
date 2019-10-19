@@ -102,31 +102,6 @@ export default class Lesson extends Component {
       description: description,
       editorState: EditorState.createWithContent(state)
     });
-    // if (description !== "") {
-    //   const blocksFromHTML = convertFromHTML(description);
-    //   const state = ContentState.createFromBlockArray(
-    //     blocksFromHTML.contentBlocks,
-    //     blocksFromHTML.entityMap
-    //   );
-    //   this.setState({
-    //     changeFlag: true,
-    //     lessonId: lessonId,
-    //     title: title,
-    //     description: description,
-    //     exam: exam,
-    //     editorState: EditorState.createWithContent(state),
-    //     courseIndex: courseIndex
-    //   });
-    // } else {
-    //   this.setState({
-    //     changeFlag: true,
-    //     lessonId: lessonId,
-    //     title: title,
-    //     description: description,
-    //     exam: exam,
-    //     editorState: EditorState.createEmpty()
-    //   });
-    // }
   };
 
   setParams = event => {

@@ -43,7 +43,6 @@ export const DND = (state, id1, id2, name) => {
         course: {
           ...state.course,
           lessons: lessons.map((lesson, i) => {
-            console.log(lesson);
             lesson.lessonIndex = i + 1;
             return lesson;
           })

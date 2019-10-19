@@ -79,7 +79,7 @@ Text.defaultProps = {
   page: {},
   lessonId: null,
   taskEditFlag: false,
-  changeEditFlag: false,
+  changeEditFlag() {},
   deleteTask() {}
 };
 
@@ -88,7 +88,7 @@ Text.propTypes = {
   page: PropTypes.object,
   lessonId: PropTypes.string.isRequired,
   taskEditFlag: PropTypes.bool,
-  changeEditFlag: PropTypes.bool,
+  changeEditFlag: PropTypes.func,
   deleteTask: PropTypes.func
 };
 

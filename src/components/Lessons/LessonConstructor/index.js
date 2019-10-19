@@ -107,7 +107,7 @@ class LessonConstructor extends Component {
     });
   };
 
-  //SELECTOR HANDLER
+ 
   //SELECTOR HANDLER
   handleChange = (value, selectorType) => {
     switch (selectorType) {

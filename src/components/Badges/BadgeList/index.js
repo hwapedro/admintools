@@ -25,7 +25,7 @@ import { getBase64, i18nSelector } from "../../../store/utils";
 
 const name = "badge";
 
-class badgeList extends Component {
+class BadgeList extends Component {
   state = {
     title: null,
     description: null,
@@ -200,9 +200,9 @@ class badgeList extends Component {
   }
 }
 
-export default badgeList;
+export default BadgeList;
 
-badgeList.defaultProps = {
+BadgeList.defaultProps = {
   badge: [],
   loading: false,
   error: false,
@@ -210,7 +210,7 @@ badgeList.defaultProps = {
   changeBadge() {}
 };
 
-badgeList.propTypes = {
+BadgeList.propTypes = {
   badge: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,

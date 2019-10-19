@@ -22,7 +22,6 @@ import CustomInput from "../../../Shared/Input";
 import EditorText from "../../../EditorText";
 import { i18nSelector, i18n } from "../../../../store/utils";
 
-let index = 2017;
 const type = "test";
 
 export default class TestConstructor extends Component {
@@ -68,7 +67,7 @@ export default class TestConstructor extends Component {
     const { options } = this.state;
     const answer = i18n;
     const right = false;
-    index++;
+    const index = options.length;
     this.setState({
       options: [...options, { answer, right, index }]
     });
@@ -227,7 +226,6 @@ export default class TestConstructor extends Component {
           <div>
             {options.length !== 0 &&
               options.map((el, index) => {
-                console.log(index);
                 return (
                   <OptionsWrapper className="form-check" key={el.index}>
                     <OptionElementWrapper>
