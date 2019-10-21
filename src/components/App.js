@@ -5,25 +5,19 @@ import styled from "styled-components";
 import CoursesContainer from "../components/Containers/CoursesContainer";
 import LessonsContainer from "../components/Containers/LessonsContainer";
 import BadgesContainer from "../components/Containers/BadgesContainer";
-// import Lessons from "../components/Lessons";
-// import Test from "../components/Lessons/Task/TaskComponents/Tests"
-// import Tasks from "../components/Lessons/Task/TaskComponents";
 import TasksContainer from "../components/Containers/TaskContainer"
-// import Lesson from "../components/Lessons/Lesson";
 import LessonContainer from "../components/Containers/LessonContainer";
-// import Badges from "../components/Badges";
-import News from "../components/News";
 import NewsContainer from "../components/Containers/NewsContainer";
 
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/Authorization/LoginScreen";
 import RegistrationScreen from "../components/Authorization/RegistrationScreen";
 import OneCourseContainer from "../components/Containers/OneCourseContainer";
-// import OneCourse from "../components/OneCourse";
 
 import * as route from "../components/Route/constants";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "simplemde/dist/simplemde.min.css";
 
 class App extends Component {
   routes = [
@@ -41,20 +35,6 @@ class App extends Component {
         <Wrapper>
           <Layout className="container">
             {this.routes.map(({ path, Component }) => (
-              // <Route key={path} exact path={path}>
-              //   {({ match }) => (
-              //     <CSSTransition
-              //       in={match != null}
-              //       timeout={300}
-              //       classNames="page"
-              //       unmountOnExit
-              //     >
-              //       <div className="page">
-              //         <Component />
-              //       </div>
-              //     </CSSTransition>
-              //   )}
-              // </Route>
               <Route key={path} exact path={path} component={Component} />
             ))}
             <Route

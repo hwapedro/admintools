@@ -46,7 +46,7 @@ class AdminService {
   async delet(index, token, name) {
     let response = await request.del(`${_apiBase}/${name}/${index}`).set({
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token
+      Authorization: " " + token
     });
     return response;
   }
