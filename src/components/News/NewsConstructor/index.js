@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import PropTypes from "prop-types";
-import { EditorState } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
-import { stateFromHTML } from "draft-js-import-html";
 
-import EditorText from "../../EditorText";
+import Editor from "../../Shared/Editor";
 import Search from "../../Search";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
@@ -20,17 +17,15 @@ import {
   ConsturctorForm,
   SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
-import { i18nSelector } from "../../../store/utils";
+import { i18nSelector, i18n } from "../../../store/utils";
 
 const name = "news";
 
 class SetArticle extends Component {
   state = {
-    title: null,
-    description: null,
-    language: { label: "Russian", value: "ru" },
-    constructor: false,
-    editorState: EditorState.createEmpty()
+    title: i18n,
+    description: i18n,
+    constructor: false
   };
 
   componentDidMount() {
@@ -45,8 +40,8 @@ class SetArticle extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addNews } = this.props;
-    const { title, description } = this.state
-    
+    const { title, description } = this.state;
+
     addNews(title, description, name);
     this.showConstructor();
     this.setState({
@@ -54,36 +49,23 @@ class SetArticle extends Component {
     });
   };
 
-  onEditorStateChange = editorState => {
-    const description = {
-      ...this.state.description,
-      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
-    };
-
-    this.setState({
-      editorState: editorState,
-      description: description
-    });
-  };
-
-  //SELECTOR HANDLER
-  handleChange = language => {
-    const { description } = this.state;
-    const contentState = stateFromHTML(description[language.value]);
-    const editorState = EditorState.push(this.state.editorState, contentState);
-
-    this.setState({ language: language, editorState: editorState });
-  };
-
   onChange = event => {
-    const { language, title } = this.state;
-
+    const {  title, description } = this.state;
+    const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "title":
         this.setState({
           [event.target.name]: {
             ...title,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
+          }
+        });
+        break;
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -100,8 +82,9 @@ class SetArticle extends Component {
   };
 
   render() {
-    const { onChange,  value,  activeLanguage, handleLangChange } = this.props;
-    const { title, constructor, editorState, language } = this.state;
+    const { onChange, value, activeLanguage, handleLangChange } = this.props;
+    const { title, constructor, description } = this.state;
+
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
@@ -124,8 +107,8 @@ class SetArticle extends Component {
               <ConsturctorForm onSubmit={this.onSubmit}>
                 <LabelElement>Choose language</LabelElement>
                 <Select
-                  value={language}
-                  onChange={this.handleChange}
+                  value={activeLanguage}
+                  onChange={handleLangChange}
                   options={i18nSelector}
                   maxMenuHeight={100}
                 />
@@ -133,14 +116,16 @@ class SetArticle extends Component {
                   placeholder="Title"
                   label="Title"
                   name="title"
-                  value={title[language.value]}
+                  value={title[activeLanguage.value]}
                   onChange={this.onChange}
                   required={true}
                 />
                 <LabelElement>Text of article</LabelElement>
-                <EditorText
-                  editorState={editorState}
-                  onEditorStateChange={this.onEditorStateChange}
+                <Editor
+                  onChange={this.onChange}
+                  name="description"
+                  value={description[activeLanguage.value]}
+                  language={activeLanguage.value}
                 />
                 <ButtonWrapper>
                   <Button buttonStyle={"outlined"} type="submit">

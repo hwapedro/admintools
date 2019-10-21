@@ -93,6 +93,9 @@ export default class Courses extends Component {
                 }
                 delCourse={(courseIndex, name) => delCourse(courseIndex, name)}
                 setLoading={loading => setLoading(loading)}
+                handleLangChange={activeLanguage =>
+                  this.handleLangChange(activeLanguage)
+                }
                 courses={courses}
                 search={search}
                 activeLanguage={activeLanguage}

@@ -41,6 +41,9 @@ class Task extends Component {
             deleteTask={deleteTask}
             changeTask={changeTask}
             activeLanguage={activeLanguage}
+            handleLangChange={activeLanguage =>
+              this.handleLangChange(activeLanguage)
+            }
           />
         );
       case "text":
@@ -55,6 +58,9 @@ class Task extends Component {
             deleteTask={deleteTask}
             changeTask={changeTask}
             activeLanguage={activeLanguage}
+            handleLangChange={activeLanguage =>
+              this.handleLangChange(activeLanguage)
+            }
           />
         );
       default:

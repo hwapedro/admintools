@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { i18n } from "../../../store/utils"
+
 let _id = 0;
 const toolbar = [
   "bold",
@@ -25,7 +27,7 @@ const toolbar = [
   "|",
   "quote"
 ];
-const generateId = () => `simplemde-editor-${++_id}`; 
+const generateId = () => `simplemde-editor-${++_id}`;
 export default class Editor extends React.PureComponent {
   keyChange = false;
 
@@ -36,7 +38,7 @@ export default class Editor extends React.PureComponent {
   };
 
   state = {
-    value: this.props.value || ""
+    value: this.props.value === '' ? i18n : this.props.value
   };
 
   id = this.props.id ? this.props.id : generateId();
@@ -63,12 +65,14 @@ export default class Editor extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
+    const {value, language} = this.props
+    console.log(prevProps.value, value, this.state.value)
     if (
       !this.keyChange &&
-      this.props.value !== this.state.value && // This is somehow fixes moving cursor for controlled case
-      this.props.value !== prevProps.value // This one fixes no value change for uncontrolled input. If it's uncontrolled prevProps will be the same
+      value !== this.state.value[language] && // This is somehow fixes moving cursor for controlled case
+      value !== prevProps.value // This one fixes no value change for uncontrolled input. If it's uncontrolled prevProps will be the same
     ) {
-      this.simpleMde.value(this.props.value || "");
+      this.simpleMde.value(value || i18n);
     }
     this.keyChange = false;
   }
@@ -125,7 +129,6 @@ export default class Editor extends React.PureComponent {
       this.simpleMde.codemirror.on("cursorActivity", this.getCursor);
 
       const { events } = this.props;
-      console.log(events);
       // Handle custom events
       events &&
         Object.entries(events).forEach(([eventName, callback]) => {

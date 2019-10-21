@@ -22,7 +22,8 @@ class Text extends Component {
       taskEditFlag,
       lessonId,
       changeTask,
-      activeLanguage
+      activeLanguage,
+      handleLangChange
     } = this.props;
 
     return (
@@ -34,6 +35,8 @@ class Text extends Component {
               pageId={page._id}
               changeEditFlag={changeEditFlag}
               changeTask={changeTask}
+              activeLanguage={activeLanguage}
+              handleLangChange={handleLangChange}
             />
           </TaskElementWrapper>
         ) : (
@@ -60,7 +63,7 @@ class Text extends Component {
                 buttonStyle={"outlined"}
                 onClick={() => {
                   if (window.confirm("ARE YOU SURE ?")) {
-                    deleteTask(page._id, task._id, lessonId)
+                    deleteTask(page._id, task._id, lessonId);
                   }
                 }}
               >
@@ -91,6 +94,5 @@ Text.propTypes = {
   changeEditFlag: PropTypes.func,
   deleteTask: PropTypes.func
 };
-
 
 export default Text;

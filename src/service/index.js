@@ -46,7 +46,7 @@ class AdminService {
   async delet(index, token, name) {
     let response = await request.del(`${_apiBase}/${name}/${index}`).set({
       "Content-Type": "application/json",
-      Authorization: " " + token
+      Authorization: "Bearer " + token
     });
     return response;
   }
@@ -246,7 +246,7 @@ class AdminService {
   }
 
   async createBadge(token, data) {
-    console.log(data)
+    console.log(data);
     let response = await request
       .post(`${_apiBase}/badge/create`)
       .set({
@@ -282,4 +282,3 @@ class AdminService {
 export default new AdminService();
 // const swapi = new AdminService();
 // const token = localStorage.getItem("token");
-

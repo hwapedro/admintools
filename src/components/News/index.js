@@ -59,23 +59,23 @@ export default class News extends Component {
               addNews={(title, description, name) =>
                 addNews(title, description, name)
               }
-              onChange={this.onChange}
-              value={search}
-              activeLanguage={activeLanguage}
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
               }
+              onChange={this.onChange}
+              value={search}
+              activeLanguage={activeLanguage}
             />
             <NewsList
               changeArticle={(articleIndex, title, description, name) =>
                 changeArticle(articleIndex, title, description, name)
               }
               delArticle={(index, name) => delArticle(index, name)}
-              news={news}
-              activeLanguage={activeLanguage}
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
               }
+              news={news}
+              activeLanguage={activeLanguage}
               search={search}
             />
           </>

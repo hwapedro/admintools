@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
-import { stateFromHTML } from "draft-js-import-html";
 
 import Article from "./Article";
-import EditorText from "../../EditorText";
+import Editor from "../../Shared/Editor";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
 
@@ -25,25 +22,16 @@ class NewsList extends Component {
   state = {
     title: null,
     description: null,
-    language: { label: "Russian", value: "ru" },
     changeFlag: false,
-    _id: null,
-    editorState: EditorState.createEmpty()
+    _id: null
   };
 
   getParams = (_id, title, description) => {
-    const { language } = this.state;
-    const blocksFromHTML = convertFromHTML(description[language.value]);
-    const state = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
     this.setState({
       changeFlag: true,
       _id: _id,
       title: title,
-      description: description,
-      editorState: EditorState.createWithContent(state)
+      description: description
     });
   };
 
@@ -59,19 +47,6 @@ class NewsList extends Component {
   deleteItem = id => {
     const { delArticle } = this.props;
     delArticle(id, name);
-  };
-
-  //EDITOR HANDLER
-  onEditorStateChange = editorState => {
-    const description = {
-      ...this.state.description,
-      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
-    };
-
-    this.setState({
-      editorState: editorState,
-      description: description
-    });
   };
 
   //TEXT HANDLER
@@ -94,16 +69,12 @@ class NewsList extends Component {
 
   //SELECTOR HANDLER
   handleChange = language => {
-    const { description } = this.state;
-    const contentState = stateFromHTML(description[language.value]);
-    const editorState = EditorState.push(this.state.editorState, contentState);
-    console.log(description);
-    this.setState({ language: language, editorState: editorState });
+    this.setState({ language: language });
   };
 
   render() {
-    const { news, search, activeLanguage } = this.props;
-    const { editorState, _id, changeFlag, title, language } = this.state;
+    const { news, search, activeLanguage, handleLangChange } = this.props;
+    const { _id, changeFlag, title, description } = this.state;
 
     let list = news
       .filter(article => {
@@ -123,8 +94,8 @@ class NewsList extends Component {
               <form onSubmit={this.setParams}>
                 <LabelElement>Choose language</LabelElement>
                 <Select
-                  value={language}
-                  onChange={this.handleChange}
+                  value={activeLanguage}
+                  onChange={handleLangChange}
                   options={i18nSelector}
                   maxMenuHeight={100}
                 />
@@ -133,14 +104,16 @@ class NewsList extends Component {
                   placeholder="Title"
                   label="Title"
                   name="title"
-                  value={title[language.value]}
+                  value={title[activeLanguage.value]}
                   required={true}
                 />
                 <LabelElement>Description of article : </LabelElement>
 
-                <EditorText
-                  editorState={editorState}
-                  onEditorStateChange={this.onEditorStateChange}
+                <Editor
+                  onChange={this.onChange}
+                  name="description"
+                  value={description[activeLanguage.value]}
+                  language={activeLanguage.value}
                 />
 
                 <ButtonWrapper>

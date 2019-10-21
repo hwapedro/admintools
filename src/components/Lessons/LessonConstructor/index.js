@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { EditorState } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
-import { stateFromHTML } from "draft-js-import-html";
 
-import EditorText from "../../EditorText";
 import Search from "../../Search";
+import Editor from "../../Shared/Editor";
 import { ImgMark, ImgCross, ButtonWrapperConstructor } from "../styleLocal";
 import {
   Wrapper,
@@ -33,8 +30,6 @@ class LessonConstructor extends Component {
   state = {
     title: null,
     description: null,
-    language: { label: "Russian", value: "ru" },
-    editorState: EditorState.createEmpty(),
     exam: false,
     courseIndex: { value: 1, label: "course" },
     constructor: false
@@ -68,8 +63,7 @@ class LessonConstructor extends Component {
       title: null,
       description: null,
       exam: false,
-      courseIndex: 0,
-      editorState: EditorState.createEmpty()
+      courseIndex: 0
     });
     const index = course ? course.courseIndex : courseIndex.value;
     const flag = course ? "course" : name;
@@ -78,14 +72,22 @@ class LessonConstructor extends Component {
 
   //TEXT HANDLER
   onChange = event => {
-    const { language, title } = this.state;
-
+    const { title, description } = this.state;
+    const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "title":
         this.setState({
           [event.target.name]: {
             ...title,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
+          }
+        });
+        break;
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -94,38 +96,9 @@ class LessonConstructor extends Component {
     }
   };
 
-  //EDITOR HANDLER
-  onEditorStateChange = editorState => {
-    const description = {
-      ...this.state.description,
-      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
-    };
-
-    this.setState({
-      editorState: editorState,
-      description: description
-    });
-  };
-
- 
   //SELECTOR HANDLER
-  handleChange = (value, selectorType) => {
-    switch (selectorType) {
-      case "course":
-        this.setState({ courseIndex: value });
-        break;
-      case "language":
-        const { description } = this.state;
-        const contentState = stateFromHTML(description[value.value]);
-        const editorState = EditorState.push(
-          this.state.editorState,
-          contentState
-        );
-        this.setState({ language: value, editorState: editorState });
-        break;
-      default:
-        return
-    }
+  handleChange = value => {
+    this.setState({ courseIndex: value });
   };
 
   showConstructor = () => {
@@ -139,14 +112,7 @@ class LessonConstructor extends Component {
   };
 
   render() {
-    const {
-      constructor,
-      exam,
-      courseIndex,
-      editorState,
-      title,
-      language
-    } = this.state;
+    const { constructor, exam, courseIndex, description, title } = this.state;
     const {
       onChange,
       value,
@@ -174,10 +140,8 @@ class LessonConstructor extends Component {
               <ConsturctorWrapper>
                 <ConsturctorForm onSubmit={this.onSubmit}>
                   <Select
-                    value={language}
-                    onChange={(value, {}, selectorType = "language") =>
-                      this.handleChange(value, selectorType)
-                    }
+                    value={activeLanguage}
+                    onChange={handleLangChange}
                     options={i18nSelector}
                     maxMenuHeight={100}
                   />
@@ -185,14 +149,16 @@ class LessonConstructor extends Component {
                     label="Title"
                     placeholder="Title goes here"
                     name="title"
-                    value={title[language.value]}
+                    value={title[activeLanguage.value]}
                     onChange={this.onChange}
                     required={true}
                   />
                   <LabelElement>Description</LabelElement>
-                  <EditorText
-                    editorState={editorState}
-                    onEditorStateChange={this.onEditorStateChange}
+                  <Editor
+                    onChange={this.onChange}
+                    name="description"
+                    value={description[activeLanguage.value]}
+                    language={activeLanguage.value}
                   />
                   <LabelElement>EXAM :</LabelElement>
 
@@ -212,9 +178,7 @@ class LessonConstructor extends Component {
                       <LabelElement>Course Index :</LabelElement>
                       <Select
                         value={courseIndex}
-                        onChange={(value, {}, selectorType = "course") =>
-                          this.handleChange(value, selectorType)
-                        }
+                        onChange={value => this.handleChange(value)}
                         options={options}
                         maxMenuHeight={100}
                       />

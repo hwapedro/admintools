@@ -11,8 +11,8 @@ import {
       .login(username, password)
       .then(response => {
         localStorage.setItem("token", response.body.token);
-        // window.history.pushState({}, "", "/courses");
-        // window.history.go();
+        window.history.pushState({}, "", "/courses");
+        window.history.go();
         dispatch({
           type: FETCH_LOGIN_SUCCESS,
           token: response.body.token

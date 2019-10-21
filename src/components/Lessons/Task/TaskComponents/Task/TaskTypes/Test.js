@@ -31,7 +31,8 @@ class Test extends Component {
       taskEditFlag,
       lessonId,
       changeTask,
-      activeLanguage
+      activeLanguage,
+      handleLangChange
     } = this.props;
 
     return (
@@ -44,6 +45,8 @@ class Test extends Component {
                 pageId={page._id}
                 changeEditFlag={changeEditFlag}
                 changeTask={changeTask}
+                activeLanguage={activeLanguage}
+                handleLangChange={handleLangChange}
               />
             </TaskElementWrapper>
           ) : (

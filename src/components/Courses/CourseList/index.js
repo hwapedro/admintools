@@ -2,15 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import { Droppable } from "react-beautiful-dnd";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
-import { stateFromHTML } from "draft-js-import-html";
 import { withRouter } from "react-router-dom";
 
 import EditorText from "../../EditorText";
 import Course from "./Course";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
+import Editor from "../../Shared/Editor";
 
 import { ElementsWrapper } from "../styleLocal";
 import {
@@ -28,25 +26,16 @@ class CourseList extends Component {
   state = {
     title: null,
     description: null,
-    language: { label: "Russian", value: "ru" },
     changeFlag: false,
-    //editorState: EditorState.createEmpty(),
     courseIndex: null
   };
 
   getParams = (courseIndex, title, description) => {
-    const { language } = this.state;
-    const blocksFromHTML = convertFromHTML(description[language.value]);
-    const state = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
     this.setState({
       changeFlag: true,
       courseIndex: courseIndex,
       title: title,
       description: description,
-      editorState: EditorState.createWithContent(state)
     });
   };
 
@@ -67,14 +56,22 @@ class CourseList extends Component {
 
   //TEXT HANDLER
   onChange = event => {
-    const { language, title } = this.state;
-
+    const { title, description } = this.state;
+    const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "title":
         this.setState({
           [event.target.name]: {
             ...title,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
+          }
+        });
+        break;
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -83,41 +80,19 @@ class CourseList extends Component {
     }
   };
 
-  //EDITOR HANDLER
-  onEditorStateChange = editorState => {
-    const description = {
-      ...this.state.description,
-      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
-    };
-
-    this.setState({
-      editorState: editorState,
-      description: description
-    });
-  };
-
-  //SELECTOR HANDLER
-  handleChange = language => {
-    const { description, editorState } = this.state;
-    const contentState = stateFromHTML(description[language.value]);
-    const edState = EditorState.push(editorState, contentState);
-
-    this.setState({ language: language, editorState: edState });
-  };
 
   goTo = id => {
-    this.props.setLoading(true)
+    this.props.setLoading(true);
     this.props.history.push(`/course/${id}`);
   };
 
   render() {
-    const { courses, search, activeLanguage } = this.props;
+    const { courses, search, activeLanguage, handleLangChange } = this.props;
     const {
-      editorState,
       changeFlag,
       courseIndex,
       title,
-      language
+      description,
     } = this.state;
 
     let list = courses
@@ -138,8 +113,8 @@ class CourseList extends Component {
               <form onSubmit={this.setParams}>
                 <LabelElement>Choose language</LabelElement>
                 <Select
-                  value={language}
-                  onChange={this.handleChange}
+                  value={activeLanguage}
+                  onChange={handleLangChange}
                   options={i18nSelector}
                   maxMenuHeight={100}
                 />
@@ -147,14 +122,16 @@ class CourseList extends Component {
                   label="Title"
                   placeholder="Title goes here"
                   name="title"
-                  value={title[language.value]}
+                  value={title[activeLanguage.value]}
                   onChange={this.onChange}
                   required={true}
                 />
                 <LabelElement>Description of course : </LabelElement>
-                <EditorText
-                  editorState={editorState}
-                  onEditorStateChange={this.onEditorStateChange}
+                <Editor
+                  onChange={this.onChange}
+                  name="description"
+                  value={description[activeLanguage.value]}
+                  language={activeLanguage.value}
                 />
 
                 <ButtonWrapper>

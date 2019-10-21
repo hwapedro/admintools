@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import { EditorState } from "draft-js";
-import { stateFromHTML } from "draft-js-import-html";
-import { stateToHTML } from "draft-js-export-html";
+
 import PropTypes from "prop-types";
 
 import {
@@ -12,6 +10,7 @@ import {
   CheckboxInput
 } from "../styleLocal";
 
+import Editor from "../../../Shared/Editor";
 import {
   LabelElement,
   ConsturctorForm,
@@ -19,7 +18,6 @@ import {
 } from "../../../GlobalStyles/styleGlobal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
-import EditorText from "../../../EditorText";
 import { i18nSelector, i18n } from "../../../../store/utils";
 
 const type = "test";
@@ -31,30 +29,25 @@ export default class TestConstructor extends Component {
       name: i18n,
       question: i18n,
       description: i18n,
-      options: [],
-      language: { label: "Russian", value: "ru" },
-      editorState: EditorState.createEmpty()
+      options: []
     };
   }
 
-
   componentDidMount() {
     const { task } = this.props;
-
     if (task) {
-      const { language } = this.state;
-      const state = stateFromHTML(task.info.description[language.value]);
-
       this.setState({
         ...this.state,
         name: task.info.name,
         question: task.info.question,
         options: task.info.options,
-        editorState: EditorState.createWithContent(state)
+        description: task.info.description
       });
     } else {
       let i18nStart = {};
-      i18nSelector.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
+      i18nSelector.forEach(
+        el => (i18nStart = { ...i18nStart, [el.value]: "" })
+      );
       this.setState({
         name: i18nStart,
         description: i18nStart,
@@ -115,13 +108,22 @@ export default class TestConstructor extends Component {
   };
 
   onChange = event => {
-    const { language, name, question } = this.state;
+    const { language, name, question, description } = this.state;
+    const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "name":
         this.setState({
           [event.target.name]: {
             ...name,
             [language.value]: event.target.value
+          }
+        });
+        break;
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -142,7 +144,6 @@ export default class TestConstructor extends Component {
     event.preventDefault();
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
     const { options, name, description, question } = this.state;
-    //  const description = stateToHTML(editorState.getCurrentContent());
 
     const info = {
       name: name,
@@ -159,37 +160,15 @@ export default class TestConstructor extends Component {
     }
   };
 
-  //SELECTOR HANDLER
-  handleChange = language => {
-    const { description } = this.state;
-    const contentState = stateFromHTML(description[language.value]);
-    const editorState = EditorState.push(this.state.editorState, contentState);
-
-    this.setState({ language: language, editorState: editorState });
-  };
-
-  //EDITOR HANDLER
-  onEditorStateChange = editorState => {
-    const description = {
-      ...this.state.description,
-      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
-    };
-
-    this.setState({
-      editorState: editorState,
-      description: description
-    });
-  };
-
   render() {
-    const { options, name, editorState, question, language } = this.state;
-
+    const { options, name, description, question} = this.state;
+    const { activeLanguage, handleLangChange } = this.props;
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
           <Select
-            value={language}
-            onChange={this.handleChange}
+            value={activeLanguage}
+            onChange={handleLangChange}
             options={i18nSelector}
             maxMenuHeight={100}
           />
@@ -197,23 +176,24 @@ export default class TestConstructor extends Component {
             label="Title"
             placeholder="Title goes here"
             name="name"
-            value={name[language.value]}
+            value={name[activeLanguage.value]}
             onChange={this.onChange}
             required={true}
           />
 
           <LabelElement>Description</LabelElement>
 
-          <EditorText
-            editorState={editorState}
-            onEditorStateChange={this.onEditorStateChange}
+          <Editor
+            onChange={this.onChange}
+            name="description"
+            value={description[activeLanguage.value]}
+            language={activeLanguage.value}
           />
-
           <CustomInput
             label="Question"
             placeholder="Who are you?"
             name="question"
-            value={question[language.value]}
+            value={question[activeLanguage.value]}
             onChange={this.onChange}
             required={false}
           />
@@ -231,7 +211,7 @@ export default class TestConstructor extends Component {
                     <OptionElementWrapper>
                       <OptionInput
                         name="answer"
-                        value={el.answer[language.value]}
+                        value={el.answer[activeLanguage.value]}
                         onChange={e => this.answerChange(el.index, e)}
                         label="Answer"
                         placeholder="Answer"

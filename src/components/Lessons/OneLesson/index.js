@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { EditorState } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
-import { stateFromHTML } from "draft-js-import-html";
 import Select from "react-select";
 
 import {
@@ -22,13 +19,13 @@ import {
   SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
 
-import EditorText from "../../EditorText";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
 import Spinner from "../../Spinner";
 import PageList from "../PageList";
 import Error from "../../Error";
 import AdminService from "../../../service";
+import Editor from "../../Shared/Editor";
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
@@ -41,7 +38,6 @@ export default class Lesson extends Component {
   state = {
     title: null,
     description: null,
-    language: { label: "Russian", value: "ru" },
     changeFlag: false,
     courseIndex: { value: null, label: null },
     lessonId: null,
@@ -70,19 +66,10 @@ export default class Lesson extends Component {
       case "course":
         this.setState({ courseIndex: value });
         break;
-      case "languagePage":
-        const { description } = this.state;
-        const contentState = stateFromHTML(description[value.value]);
-        const editorState = EditorState.push(
-          this.state.editorState,
-          contentState
-        );
-        this.setState({ language: value, editorState: editorState });
-        break;
-      case "languageConstructor":
-          this.setState({ activeLanguage: value });
+      case "language":
+        this.setState({ activeLanguage: value });
       default:
-        break;
+        return;
     }
   };
 
@@ -91,16 +78,13 @@ export default class Lesson extends Component {
   };
 
   getParams = (lessonId, title, description, exam, courseIndex) => {
-    const { language } = this.state;
-    const state = stateFromHTML(description[language.value]);
     this.setState({
       lessonId: lessonId,
       changeFlag: true,
       courseIndex: courseIndex,
       exam: exam,
       title: title,
-      description: description,
-      editorState: EditorState.createWithContent(state)
+      description: description
     });
   };
 
@@ -116,14 +100,22 @@ export default class Lesson extends Component {
 
   //TEXT HANDLER
   onChange = event => {
-    const { language, title } = this.state;
-
+    const { language, title, description } = this.state;
+    const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "title":
         this.setState({
           [event.target.name]: {
             ...title,
             [language.value]: event.target.value
+          }
+        });
+        break;
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -142,30 +134,9 @@ export default class Lesson extends Component {
     );
   };
 
-  //EDITOR HANDLER
-  onEditorStateChange = editorState => {
-    const description = {
-      ...this.state.description,
-      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
-    };
-
-    this.setState({
-      editorState: editorState,
-      description: description
-    });
-  };
-
   render() {
     const { lesson, loading, deletePage, deleteTask, error } = this.props;
-    const {
-      editorState,
-      changeFlag,
-      courseIndex,
-      title,
-      exam,
-      language,
-      activeLanguage
-    } = this.state;
+    const { changeFlag, courseIndex, title, description, exam, activeLanguage } = this.state;
 
     return (
       <>
@@ -187,8 +158,8 @@ export default class Lesson extends Component {
                 <ElementWrapper>
                   <form onSubmit={this.setParams}>
                     <Select
-                      value={language}
-                      onChange={(value, {}, selectorType = "languagePage") =>
+                      value={activeLanguage}
+                      onChange={(value, {}, selectorType = "language") =>
                         this.handleChange(value, selectorType)
                       }
                       options={i18nSelector}
@@ -198,14 +169,16 @@ export default class Lesson extends Component {
                       label="Title"
                       placeholder="Title goes here"
                       name="title"
-                      value={title[language.value]}
+                      value={title[activeLanguage.value]}
                       onChange={this.onChange}
                       required={true}
                     />
                     <LabelElement>Description of Lesson : </LabelElement>
-                    <EditorText
-                      editorState={editorState}
-                      onEditorStateChange={this.onEditorStateChange}
+                    <Editor
+                      onChange={this.onChange}
+                      name="description"
+                      value={description[activeLanguage.value]}
+                      language={activeLanguage.value}
                     />
                     <ExamPropContainer>
                       <LabelElement>EXAM :</LabelElement>
@@ -236,9 +209,9 @@ export default class Lesson extends Component {
                 <SelectWrapper>
                   <Select
                     value={activeLanguage}
-                    onChange={(value, {}, selectorType = "languageConstructor") =>
-                        this.handleChange(value, selectorType)
-                      }
+                    onChange={(value, {}, selectorType = "language") =>
+                      this.handleChange(value, selectorType)
+                    }
                     options={i18nSelector}
                   />
                 </SelectWrapper>

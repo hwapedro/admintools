@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import { EditorState } from "draft-js";
-import { stateFromHTML } from "draft-js-import-html";
-import { stateToHTML } from "draft-js-export-html";
 import PropTypes from "prop-types";
 
 import { TextQuestion } from "../styleLocal";
 
+import Editor from "../../../Shared/Editor";
 import {
   LabelElement,
   ConsturctorForm,
@@ -24,24 +22,19 @@ export default class TextConstructor extends Component {
       name: i18n,
       question: i18n,
       description: i18n,
-      options: [],
-      language: { label: "Russian", value: "ru" },
-      editorState: EditorState.createEmpty()
+      options: []
     };
   }
 
   componentDidMount() {
     const { task } = this.props;
     if (task) {
-      const { language } = this.state;
-      const state = stateFromHTML(task.info.description[language.value]);
-
       this.setState({
         ...this.state,
         name: task.info.name,
         question: task.info.question,
         options: task.info.options,
-        editorState: EditorState.createWithContent(state)
+        description: task.info.description
       });
     }
   }
@@ -72,7 +65,7 @@ export default class TextConstructor extends Component {
   };
 
   parseAnswer = string => {
-    const { language } = this.props
+    const { language } = this.props;
     const regular = new RegExp(/\~([^~]*?)\~/gi);
     let options = [];
     let answer = i18n;
@@ -81,19 +74,6 @@ export default class TextConstructor extends Component {
     }
     this.setState({
       options: options
-    });
-  };
-
-  //EDITOR HANDLER
-  onEditorStateChange = editorState => {
-    const description = {
-      ...this.state.description,
-      [this.state.language.value]: stateToHTML(editorState.getCurrentContent())
-    };
-
-    this.setState({
-      editorState: editorState,
-      description: description
     });
   };
 
@@ -118,14 +98,15 @@ export default class TextConstructor extends Component {
   };
 
   render() {
-    const { name, question, language, editorState } = this.state;
+    const { name, question, description } = this.state;
+    const { activeLanguage, handleLangChange } = this.props;
 
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
           <Select
-            value={language}
-            onChange={this.handleChange}
+            value={activeLanguage}
+            onChange={handleLangChange}
             options={i18nSelector}
             maxMenuHeight={100}
           />
@@ -138,9 +119,11 @@ export default class TextConstructor extends Component {
             required={true}
           />
           <LabelElement>Description</LabelElement>
-          <EditorText
-            editorState={editorState}
-            onEditorStateChange={this.onEditorStateChange}
+          <Editor
+            onChange={this.onChange}
+            name="description"
+            value={description[activeLanguage.value]}
+            language={activeLanguage.value}
           />
           <LabelElement>Question</LabelElement>
           <br />
