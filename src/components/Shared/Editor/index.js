@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { i18n } from "../../../store/utils"
+import { i18n } from "../../../store/utils";
 
 let _id = 0;
 const toolbar = [
@@ -38,7 +38,7 @@ export default class Editor extends React.PureComponent {
   };
 
   state = {
-    value: this.props.value === '' ? i18n : this.props.value
+    value: this.props.value === "" ? i18n : this.props.value
   };
 
   id = this.props.id ? this.props.id : generateId();
@@ -55,6 +55,7 @@ export default class Editor extends React.PureComponent {
   }
 
   componentDidMount() {
+    console.log(this.state.value)
     if (typeof window !== undefined) {
       this.createEditor();
       this.addEvents();
@@ -65,14 +66,12 @@ export default class Editor extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {value, language} = this.props
-    console.log(prevProps.value, value, this.state.value)
+    const { value, language } = this.props;
     if (
-      !this.keyChange &&
-      value !== this.state.value[language] && // This is somehow fixes moving cursor for controlled case
+      language !== prevProps.language && // This is somehow fixes moving cursor for controlled case
       value !== prevProps.value // This one fixes no value change for uncontrolled input. If it's uncontrolled prevProps will be the same
     ) {
-      this.simpleMde.value(value || i18n);
+      this.simpleMde.value(value || i18n[language]);
     }
     this.keyChange = false;
   }
@@ -95,10 +94,10 @@ export default class Editor extends React.PureComponent {
   };
 
   eventWrapper = () => {
-    this.keyChange = true;
+    const {language} = this.props
     if (!this.props.value) {
       this.setState({
-        value: this.simpleMde.value()
+        value: {...this.state.value, [language]: this.simpleMde.value()}
       });
     }
     this.props.onChange({
