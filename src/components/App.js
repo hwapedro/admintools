@@ -16,7 +16,6 @@ import OneCourseContainer from "../components/Containers/OneCourseContainer";
 
 import * as route from "../components/Route/constants";
 
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "simplemde/dist/simplemde.min.css";
 
 class App extends Component {

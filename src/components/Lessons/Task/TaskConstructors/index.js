@@ -19,6 +19,7 @@ export default class TaskConstructor extends Component {
   state = {
     displayConstructor: false,
     displayTaskConstructor: { value: "test", label: "Test" },
+    activeLanguage: { label: "Russian", value: "ru" },
     taskEditFlag: false
   };
 
@@ -33,8 +34,13 @@ export default class TaskConstructor extends Component {
     });
   };
 
+  handleLangChange = activeLanguage => {
+    this.setState({ activeLanguage });
+  };
+
   constSwitch = displayTaskConstructor => {
     const { addTask, changeTask } = this.props;
+    const { activeLanguage } = this.state
     switch (displayTaskConstructor.value) {
       case "test":
         return (
@@ -42,6 +48,10 @@ export default class TaskConstructor extends Component {
             oldInfo={this.state.info}
             edited={false}
             pageId={this.props.pageId}
+            activeLanguage={activeLanguage}
+            handleLangChange={activeLanguage =>
+              this.handleLangChange(activeLanguage)
+            }
             addTask={(pageid, type, info, answer) =>
               addTask(pageid, type, info, answer)
             }
@@ -54,6 +64,10 @@ export default class TaskConstructor extends Component {
         return (
           <TextConstructor
             pageId={this.props.pageId}
+            activeLanguage={activeLanguage}
+            handleLangChange={activeLanguage =>
+              this.handleLangChange(activeLanguage)
+            }
             addTask={(pageid, type, info, answer) =>
               addTask(pageid, type, info, answer)
             }
@@ -75,10 +89,7 @@ export default class TaskConstructor extends Component {
   };
 
   render() {
-    const {
-      displayConstructor,
-      displayTaskConstructor,
-    } = this.state;
+    const { displayConstructor, displayTaskConstructor } = this.state;
 
     return (
       <>

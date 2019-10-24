@@ -108,14 +108,14 @@ export default class TestConstructor extends Component {
   };
 
   onChange = event => {
-    const { language, name, question, description } = this.state;
+    const { name, question, description } = this.state;
     const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "name":
         this.setState({
           [event.target.name]: {
             ...name,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -131,7 +131,7 @@ export default class TestConstructor extends Component {
         this.setState({
           [event.target.name]: {
             ...question,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -163,6 +163,7 @@ export default class TestConstructor extends Component {
   render() {
     const { options, name, description, question} = this.state;
     const { activeLanguage, handleLangChange } = this.props;
+    console.log(description, activeLanguage)
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>

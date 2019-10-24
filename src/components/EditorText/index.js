@@ -1,18 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Editor } from "react-draft-wysiwyg";
+
 
 export default function EditorText({editorState,onEditorStateChange}) {
   return (
     <EditorWrapper className="editor">
-      <Editor
-        editorState={editorState}
-        wrapperClassName="myEditor-wrapper"
-        editorClassName="myEditor-editor"
-        onEditorStateChange={onEditorStateChange}
-        placeholder="description"
-      />
     </EditorWrapper>
   );
 }

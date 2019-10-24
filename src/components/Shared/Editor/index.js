@@ -55,7 +55,7 @@ export default class Editor extends React.PureComponent {
   }
 
   componentDidMount() {
-    console.log(this.state.value)
+
     if (typeof window !== undefined) {
       this.createEditor();
       this.addEvents();
@@ -67,6 +67,7 @@ export default class Editor extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const { value, language } = this.props;
+ 
     if (
       language !== prevProps.language && // This is somehow fixes moving cursor for controlled case
       value !== prevProps.value // This one fixes no value change for uncontrolled input. If it's uncontrolled prevProps will be the same
