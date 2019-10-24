@@ -23,12 +23,12 @@ import { i18nSelector, i18n } from "../../../../store/utils";
 const type = "test";
 
 export default class TestConstructor extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      name: i18n,
-      question: i18n,
-      description: i18n,
+      name: props.task.info.name || i18n,
+      question: props.task.info.question || i18n,
+      description: props.task.info.description || i18n,
       options: []
     };
   }

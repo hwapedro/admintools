@@ -12,16 +12,15 @@ import {
 } from "../../../GlobalStyles/styleGlobal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
-import EditorText from "../../../EditorText";
 import { i18nSelector, i18n } from "../../../../store/utils";
 
 export default class TextConstructor extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      name: i18n,
-      question: i18n,
-      description: i18n,
+      name: props.task.info.name || i18n,
+      question: props.task.info.question || i18n,
+      description: props.task.info.description || i18n,
       options: []
     };
   }

@@ -4,7 +4,6 @@ import Select from "react-select";
 import { Droppable } from "react-beautiful-dnd";
 import { withRouter } from "react-router-dom";
 
-import EditorText from "../../EditorText";
 import Course from "./Course";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
