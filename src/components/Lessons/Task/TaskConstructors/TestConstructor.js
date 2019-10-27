@@ -7,15 +7,12 @@ import {
   OptionsWrapper,
   OptionElementWrapper,
   OptionInput,
-  CheckboxInput
+  CheckboxInput,
+  ConsturctorForm
 } from "../styleLocal";
 
 import Editor from "../../../Shared/Editor";
-import {
-  LabelElement,
-  ConsturctorForm,
-  ButtonWrapper
-} from "../../../GlobalStyles/styleGlobal";
+import { LabelElement, ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import { i18nSelector, i18n } from "../../../../store/utils";
@@ -26,9 +23,9 @@ export default class TestConstructor extends Component {
   constructor(props) {
     super();
     this.state = {
-      name: props.task.info.name || i18n,
-      question: props.task.info.question || i18n,
-      description: props.task.info.description || i18n,
+      name: props.task ? props.task.info.name : i18n,
+      question: props.task ? props.task.info.question : i18n,
+      description: props.task ? props.task.info.description : i18n,
       options: []
     };
   }
@@ -75,12 +72,16 @@ export default class TestConstructor extends Component {
   };
 
   answerChange = (id, event) => {
-    const { options, language } = this.state;
+    const { options } = this.state;
+    const { activeLanguage } = this.props;
     let newOptions = options.map(option =>
       id === option.index
         ? {
             ...option,
-            answer: { ...option.answer, [language.value]: event.target.value }
+            answer: {
+              ...option.answer,
+              [activeLanguage.value]: event.target.value
+            }
           }
         : option
     );
@@ -161,9 +162,9 @@ export default class TestConstructor extends Component {
   };
 
   render() {
-    const { options, name, description, question} = this.state;
+    const { options, name, description, question } = this.state;
     const { activeLanguage, handleLangChange } = this.props;
-    console.log(description, activeLanguage)
+    console.log(description, activeLanguage);
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>

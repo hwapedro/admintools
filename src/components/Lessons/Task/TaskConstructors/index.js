@@ -40,7 +40,7 @@ export default class TaskConstructor extends Component {
 
   constSwitch = displayTaskConstructor => {
     const { addTask, changeTask } = this.props;
-    const { activeLanguage } = this.state
+    const { activeLanguage } = this.state;
     switch (displayTaskConstructor.value) {
       case "test":
         return (
@@ -96,7 +96,7 @@ export default class TaskConstructor extends Component {
         {displayConstructor ? (
           <>
             <DarkGround onClick={this.displayConstructor} />
-            <ConsturctorWrapper>
+            <ConsturctorWrapper style={{ textAlign: "left" }}>
               <Select
                 value={displayTaskConstructor}
                 options={options}

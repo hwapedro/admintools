@@ -9,8 +9,8 @@ export const Wrapper = styled.div`
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  height: auto;
 `;
 
 export const TaskWrapper = styled.div`
@@ -43,7 +43,7 @@ export const TitleSpan = styled.span`
 `;
 
 export const ButtonWrapper = styled.div`
-  margin: 0.5rem 0
+  margin: 0.5rem 0;
   text-align: end;
 `;
 
@@ -53,19 +53,20 @@ export const ButtonsWrapper = styled.div`
   justify-content: flex-end;
 `;
 export const LabelElement = styled.span`
+  text-align: left;
   margin-top: 1 rem;
   font-weight: 900;
   font-size: 1.4rem;
 `;
 
 export const OptionsWrapper = styled.ul`
-  list-style-type: circle; !important;
+  list-style-type: circle !important;
   padding: 0 4rem;
 `;
 
 export const OptionElementWrapper = styled.li`
   margin: 0.5rem 0;
-  display: flex
+  display: flex;
   flex-direction: row;
   align-items: center;
 `;
@@ -95,7 +96,6 @@ export const ImgCross = styled.img`
   margin-bottom: -0.4rem;
 `;
 
-
 export const Select = styled.select`
   border: 1px solid #ddd;
   display: flex;
@@ -105,7 +105,6 @@ export const Select = styled.select`
   color: black;
   padding-left: 0.7em;
 `;
-
 
 export const TitleInput = styled.input`
   border: 1px solid #ddd;
@@ -130,7 +129,6 @@ export const QuestionInput = styled.input`
   padding-left: 0.7em;
   width: 100%;
 `;
-
 
 export const OptionInput = styled.input`
   border: 1px solid #ddd;
@@ -175,4 +173,6 @@ export const Edit = styled.div`
   position: absolute;
 `;
 
-export const ConsturctorForm = styled.form``;
+export const ConsturctorForm = styled.form`
+  text-align: left;
+`;

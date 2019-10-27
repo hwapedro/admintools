@@ -5,11 +5,9 @@ import PropTypes from "prop-types";
 import { TextQuestion } from "../styleLocal";
 
 import Editor from "../../../Shared/Editor";
-import {
-  LabelElement,
-  ConsturctorForm,
-  ButtonWrapper
-} from "../../../GlobalStyles/styleGlobal";
+import { LabelElement, ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
+
+import { ConsturctorForm } from "../styleLocal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import { i18nSelector, i18n } from "../../../../store/utils";
@@ -18,9 +16,9 @@ export default class TextConstructor extends Component {
   constructor(props) {
     super();
     this.state = {
-      name: props.task.info.name || i18n,
-      question: props.task.info.question || i18n,
-      description: props.task.info.description || i18n,
+      name: props.task ? props.task.info.name : i18n,
+      question: props.task ? props.task.info.question : i18n,
+      description: props.task ? props.task.info.description : i18n,
       options: []
     };
   }
@@ -39,13 +37,14 @@ export default class TextConstructor extends Component {
   }
 
   onChange = event => {
-    const { language, name, question } = this.state;
+    const { name, question } = this.state;
+    const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "name":
         this.setState({
           [event.target.name]: {
             ...name,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -54,7 +53,7 @@ export default class TextConstructor extends Component {
         this.setState({
           [event.target.name]: {
             ...question,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
@@ -113,8 +112,8 @@ export default class TextConstructor extends Component {
             label="Title"
             placeholder="Title goes here"
             name="name"
-            value={name}
-            onChange={this.infoChange}
+            value={name[activeLanguage.value]}
+            onChange={this.onChange}
             required={true}
           />
           <LabelElement>Description</LabelElement>
@@ -130,8 +129,8 @@ export default class TextConstructor extends Component {
           <TextQuestion
             name="question"
             placeholder="Question"
-            value={question}
-            onChange={this.infoChange}
+            value={question[activeLanguage.value]}
+            onChange={this.onChange}
           />
 
           <ButtonWrapper>
