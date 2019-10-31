@@ -17,6 +17,7 @@ import OneCourseContainer from "../components/Containers/OneCourseContainer";
 import * as route from "../components/Route/constants";
 
 import "simplemde/dist/simplemde.min.css";
+import './test'
 
 class App extends Component {
   routes = [

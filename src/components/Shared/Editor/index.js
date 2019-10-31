@@ -140,7 +140,6 @@ export default class Editor extends React.PureComponent {
   };
 
   getCursor = () => {
-    // https://codemirror.net/doc/manual.html#api_selection
     if (this.props.getLineAndCursor) {
       this.props.getLineAndCursor(
         this.simpleMde.codemirror.getDoc().getCursor()
@@ -155,7 +154,6 @@ export default class Editor extends React.PureComponent {
   };
 
   addExtraKeys = () => {
-    // https://codemirror.net/doc/manual.html#option_extraKeys
     if (this.props.extraKeys) {
       this.simpleMde.codemirror.setOption("extraKeys", this.props.extraKeys);
     }
