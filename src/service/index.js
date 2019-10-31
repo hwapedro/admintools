@@ -1,5 +1,5 @@
 import request from "superagent";
-// import file from "../photo.PNG"
+import { markdownToHtml } from "../store/utils";
 
 const _apiBase = "http://germangorodnev.com:5000/api/admin";
 
@@ -39,7 +39,7 @@ class AdminService {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, description: description });
+      .send({ title: title, description: markdownToHtml(description) });
     return response.body;
   }
 
@@ -58,7 +58,7 @@ class AdminService {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, description: description });
+      .send({ title: title, description: markdownToHtml(description) });
     return response.body;
   }
 
@@ -125,7 +125,7 @@ class AdminService {
       })
       .send({
         type: type,
-        info: info
+        info: { ...info, description: markdownToHtml(info.description) }
       });
     return response;
   }
@@ -139,7 +139,7 @@ class AdminService {
       })
       .send({
         type: type,
-        info: info
+        info: { ...info, description: markdownToHtml(info.description) }
       });
     return response;
   }
@@ -172,7 +172,7 @@ class AdminService {
       })
       .send({
         title: title,
-        description: description,
+        description: markdownToHtml(description),
         exam: exam,
         courseIndex: courseIndex
       });
@@ -196,7 +196,7 @@ class AdminService {
       })
       .send({
         title: title,
-        description: description,
+        description: markdownToHtml(description),
         exam: exam,
         courseIndex: courseIndex
       });
@@ -267,18 +267,6 @@ class AdminService {
       .send(data);
     return response.body;
   }
-
-  // async changeNews(token, id) {
-  //   let response = await request
-  //     .put(`${_apiBase}/badge/${id}/icon`)
-  //     .set({
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + token
-  //     })
-  //   return response;
-  // }
 }
 
 export default new AdminService();
-// const swapi = new AdminService();
-// const token = localStorage.getItem("token");

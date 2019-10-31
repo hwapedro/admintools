@@ -1,4 +1,7 @@
 import update from "immutability-helper";
+import showdown from "showdown";
+
+const converter = new showdown.Converter({tables: true});
 
 export const startLoading = state => ({
   ...state,
@@ -74,4 +77,11 @@ export const i18nSelector = [
 export const i18n = {
   en: "",
   ru: ""
+};
+
+export const markdownToHtml = data => {
+  for (const text in data) {
+    data[text] = converter.makeHtml(data[text]);
+  }
+  return data;
 };
