@@ -75,6 +75,7 @@ export default class Lesson extends Component {
 
   changeExamProp = exam => {
     this.setState({ exam: !exam });
+
   };
 
   getParams = (lessonId, title, description, exam, courseIndex) => {
@@ -92,22 +93,20 @@ export default class Lesson extends Component {
     event.preventDefault();
     const { changeLesson } = this.props;
     const { title, description, lessonId, exam, courseIndex } = this.state;
-
-    if (title && description)
+      if (title && description)
       changeLesson(lessonId, title, description, exam, name, courseIndex.value);
     this.setState({ changeFlag: false, lessonId: null });
   };
 
   //TEXT HANDLER
   onChange = event => {
-    const { language, title, description } = this.state;
-    const { activeLanguage } = this.props;
+    const { title, description, activeLanguage } = this.state;
     switch (event.target.name) {
       case "title":
         this.setState({
           [event.target.name]: {
             ...title,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
           }
         });
         break;

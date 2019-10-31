@@ -32,6 +32,7 @@ export default class TestConstructor extends Component {
 
   componentDidMount() {
     const { task } = this.props;
+    console.log(this.props.pageId)
     if (task) {
       this.setState({
         ...this.state,
@@ -152,7 +153,7 @@ export default class TestConstructor extends Component {
       question: question,
       options: options
     };
-
+    console.log(pageId)
     if (task) {
       changeTask(task._id, type, info, pageId);
       changeEditFlag();

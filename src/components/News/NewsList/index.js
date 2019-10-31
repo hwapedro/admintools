@@ -51,25 +51,28 @@ class NewsList extends Component {
 
   //TEXT HANDLER
   onChange = event => {
-    const { language, title } = this.state;
-
+    const { title, description } = this.state;
+    const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "title":
         this.setState({
           [event.target.name]: {
             ...title,
-            [language.value]: event.target.value
+            [activeLanguage.value]: event.target.value
+          }
+        });
+        break;
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
+            [activeLanguage.value]: event.target.value
           }
         });
         break;
       default:
         this.setState({ [event.target.name]: event.target.value });
     }
-  };
-
-  //SELECTOR HANDLER
-  handleChange = language => {
-    this.setState({ language: language });
   };
 
   render() {

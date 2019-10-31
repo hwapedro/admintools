@@ -37,7 +37,7 @@ class PageList extends Component {
               <PageHeader>
                 <PageNumber>Page {index + 1}</PageNumber>
                 <ButtonWrapper>
-                  <TaskConstructorContainer />
+                  <TaskConstructorContainer pageId={page._id}/>
                   <ButtonWrapper>
                     <Button
                       buttonStyle={"outlined"}

@@ -37,13 +37,21 @@ export default class TextConstructor extends Component {
   }
 
   onChange = event => {
-    const { name, question } = this.state;
+    const { name, description, question } = this.state;
     const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "name":
         this.setState({
           [event.target.name]: {
             ...name,
+            [activeLanguage.value]: event.target.value
+          }
+        });
+        break;
+      case "description":
+        this.setState({
+          [event.target.name]: {
+            ...description,
             [activeLanguage.value]: event.target.value
           }
         });
@@ -63,16 +71,17 @@ export default class TextConstructor extends Component {
   };
 
   parseAnswer = string => {
-    const { language } = this.props;
+    const { activeLanguage } = this.props;
     const regular = new RegExp(/\~([^~]*?)\~/gi);
     let options = [];
     let answer = i18n;
-    while ((answer[language] = regular.exec(string))) {
-      options.push(answer[1]);
+    while ((answer[activeLanguage] = regular.exec(string))) {
+      options.push(answer[activeLanguage][1]);
     }
     this.setState({
       options: options
     });
+    console.log(this.state.options)
   };
 
   onSubmit = event => {
