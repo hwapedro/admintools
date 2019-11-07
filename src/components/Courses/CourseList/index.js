@@ -48,6 +48,15 @@ class CourseList extends Component {
     this.setState({ changeFlag: false, courseIndex: null });
   };
 
+  showConstructor = () => {
+    const { changeFlag } = this.state;
+    if (changeFlag) {
+      this.setState({
+        changeFlag: !changeFlag
+      });
+    }
+  };
+
   deleteItem = courseIndex => {
     const { delCourse } = this.props;
     delCourse(courseIndex, name);
@@ -156,7 +165,7 @@ class CourseList extends Component {
         }
       });
     return (
-      <Wrapper>
+      <Wrapper onClick={this.showConstructor}>
         {courses.length === 0 || list.length === 0 ? (
           <EmptyMessage>There is nothing here yet</EmptyMessage>
         ) : (

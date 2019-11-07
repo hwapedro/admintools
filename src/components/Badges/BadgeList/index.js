@@ -58,6 +58,14 @@ class BadgeList extends Component {
     });
   };
 
+  showConstructor = () => {
+    const { changeFlag } = this.state;
+    if (changeFlag) {
+      this.setState({
+        changeFlag: !changeFlag
+      });
+    }
+  };
 
   deleteItem = badgeIndex => {
     const { delBadge } = this.props;
@@ -193,7 +201,7 @@ class BadgeList extends Component {
         }
       });
     return (
-      <Wrapper>
+      <Wrapper onClick={this.showConstructor}>
         <ElementsWrapper>{list}</ElementsWrapper>
       </Wrapper>
     );

@@ -165,7 +165,7 @@ export default class TestConstructor extends Component {
   render() {
     const { options, name, description, question } = this.state;
     const { activeLanguage, handleLangChange } = this.props;
-    console.log(description, activeLanguage);
+    
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>

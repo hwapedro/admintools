@@ -38,11 +38,11 @@ export default class TaskContainer extends Component {
     const { lessonId, taskId, lesson, error, loading, changeTask } = this.props;
     let page, task;
 
-    lesson.pages.map(pageElemnt =>
-      pageElemnt.tasks.map(taskElemet => {
+    lesson.pages.map(pageElement =>
+      pageElement.tasks.map(taskElemet => {
         if (taskElemet._id === taskId) {
           task = taskElemet;
-          page = pageElemnt;
+          page = pageElement;
         }
       })
     );

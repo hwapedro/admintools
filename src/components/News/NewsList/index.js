@@ -75,6 +75,15 @@ class NewsList extends Component {
     }
   };
 
+  showConstructor = () => {
+    const { changeFlag } = this.state;
+    if (changeFlag) {
+      this.setState({
+        changeFlag: !changeFlag
+      });
+    }
+  };
+
   render() {
     const { news, search, activeLanguage, handleLangChange } = this.props;
     const { _id, changeFlag, title, description } = this.state;
@@ -141,7 +150,7 @@ class NewsList extends Component {
         }
       });
     return (
-      <Wrapper>
+      <Wrapper onClick={this.showConstructor}>
         {news.length === 0 || list.length === 0 ? (
           <EmptyMessage>There is nothing here yet</EmptyMessage>
         ) : (

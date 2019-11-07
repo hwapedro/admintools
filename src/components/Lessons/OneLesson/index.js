@@ -75,7 +75,6 @@ export default class Lesson extends Component {
 
   changeExamProp = exam => {
     this.setState({ exam: !exam });
-
   };
 
   getParams = (lessonId, title, description, exam, courseIndex) => {
@@ -93,9 +92,18 @@ export default class Lesson extends Component {
     event.preventDefault();
     const { changeLesson } = this.props;
     const { title, description, lessonId, exam, courseIndex } = this.state;
-      if (title && description)
+    if (title && description)
       changeLesson(lessonId, title, description, exam, name, courseIndex.value);
     this.setState({ changeFlag: false, lessonId: null });
+  };
+
+  showConstructor = () => {
+    const { changeFlag } = this.state;
+    if (changeFlag) {
+      this.setState({
+        changeFlag: !changeFlag
+      });
+    }
   };
 
   //TEXT HANDLER
@@ -135,7 +143,14 @@ export default class Lesson extends Component {
 
   render() {
     const { lesson, loading, deletePage, deleteTask, error } = this.props;
-    const { changeFlag, courseIndex, title, description, exam, activeLanguage } = this.state;
+    const {
+      changeFlag,
+      courseIndex,
+      title,
+      description,
+      exam,
+      activeLanguage
+    } = this.state;
 
     return (
       <>
@@ -151,7 +166,7 @@ export default class Lesson extends Component {
           </>
         )}
         {!error && !loading && (
-          <Wrapper>
+          <Wrapper onClick={this.showConstructor}>
             {changeFlag ? (
               <>
                 <ElementWrapper>
