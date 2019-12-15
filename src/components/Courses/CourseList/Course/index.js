@@ -36,6 +36,8 @@ export default function Course({
           <TitleSpan> {course.courseIndex}</TitleSpan>
           <LabelElement>Course name :</LabelElement>
           <TitleSpan> {course.title[activeLanguage.value]}</TitleSpan>
+          <LabelElement>Course annotation :</LabelElement>
+          <TitleSpan> {course.annotation[activeLanguage.value]}</TitleSpan>
           <LabelElement>Course description : </LabelElement>
           <DescriptionSpan
             dangerouslySetInnerHTML={{
@@ -49,7 +51,7 @@ export default function Course({
             <Button
               buttonStyle={"outlined"}
               onClick={() =>
-                getParams(course.courseIndex, course.title, course.description)
+                getParams(course.courseIndex, course.title, course.annotation, course.description)
               }
             >
               CHANGE COURSE

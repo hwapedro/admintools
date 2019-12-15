@@ -70,6 +70,29 @@ class AdminService {
     return response.body;
   }
 
+  //COURSE BLOCK
+
+  async addCourse(title, annotation, description, token ) {
+    let response = await request
+      .post(`${_apiBase}/course/create`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({ title: title, annotation: annotation, description: markdownToHtml(description) });
+    return response.body;
+  }
+
+  async changeCourse(index, title, annotation, description, token) {
+    let response = await request
+      .put(`${_apiBase}/course/${index}`)
+      .set({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      })
+      .send({ title: title, annotation: annotation, description: markdownToHtml(description) });
+    return response.body;
+  }
   //LESSON PAGE
 
   async getAllPages(token, id) {

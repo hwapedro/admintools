@@ -24,27 +24,29 @@ const name = "course";
 class CourseList extends Component {
   state = {
     title: null,
+    annotation: null,
     description: null,
     changeFlag: false,
     courseIndex: null
   };
 
-  getParams = (courseIndex, title, description) => {
+  getParams = (courseIndex, title, annotation, description) => {
     this.setState({
       changeFlag: true,
       courseIndex: courseIndex,
       title: title,
-      description: description,
+      annotation: annotation,
+      description: description
     });
   };
 
   setParams = event => {
     event.preventDefault();
-    const { title, description, courseIndex } = this.state;
+    const { title, annotation, description, courseIndex } = this.state;
     const { changeCourse } = this.props;
 
     if (title && description)
-      changeCourse(courseIndex, title, description, name);
+      changeCourse(courseIndex, title, annotation, description, name);
     this.setState({ changeFlag: false, courseIndex: null });
   };
 
@@ -64,13 +66,21 @@ class CourseList extends Component {
 
   //TEXT HANDLER
   onChange = event => {
-    const { title, description } = this.state;
+    const { title, annotation, description } = this.state;
     const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "title":
         this.setState({
           [event.target.name]: {
             ...title,
+            [activeLanguage.value]: event.target.value
+          }
+        });
+        break;
+      case "annotation":
+        this.setState({
+          [event.target.name]: {
+            ...annotation,
             [activeLanguage.value]: event.target.value
           }
         });
@@ -88,7 +98,6 @@ class CourseList extends Component {
     }
   };
 
-
   goTo = id => {
     this.props.setLoading(true);
     this.props.history.push(`/course/${id}`);
@@ -100,7 +109,8 @@ class CourseList extends Component {
       changeFlag,
       courseIndex,
       title,
-      description,
+      annotation,
+      description
     } = this.state;
 
     let list = courses
@@ -131,6 +141,14 @@ class CourseList extends Component {
                   placeholder="Title goes here"
                   name="title"
                   value={title[activeLanguage.value]}
+                  onChange={this.onChange}
+                  required={true}
+                />
+                <CustomInput
+                  label="Annotation"
+                  placeholder="Title goes here"
+                  name="annotation"
+                  value={annotation[activeLanguage.value]}
                   onChange={this.onChange}
                   required={true}
                 />

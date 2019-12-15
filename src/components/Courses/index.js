@@ -75,8 +75,8 @@ export default class Courses extends Component {
               }}
             >
               <CourseConstructor
-                addCourses={(title, description, name) =>
-                  addCourses(title, description, name)
+                addCourses={(title, description) =>
+                  addCourses(title, description)
                 }
                 getAllCourses={name => getAllCourses(name)}
                 handleLangChange={activeLanguage =>
@@ -88,8 +88,8 @@ export default class Courses extends Component {
               />
 
               <CoursesList
-                changeCourse={(courseIndex, title, description, name) =>
-                  changeCourse(courseIndex, title, description, name)
+                changeCourse={(courseIndex, title, annotation, description, name) =>
+                  changeCourse(courseIndex, title, annotation, description, name)
                 }
                 delCourse={(courseIndex, name) => delCourse(courseIndex, name)}
                 setLoading={loading => setLoading(loading)}

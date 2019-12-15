@@ -19,11 +19,10 @@ import {
 } from "../../GlobalStyles/styleGlobal";
 import { i18nSelector } from "../../../store/utils";
 
-const name = "course";
-
 export default class CourseCounstructor extends Component {
   state = {
     title: null,
+    annotation: null,
     description: null,
     constructor: false
   };
@@ -33,6 +32,7 @@ export default class CourseCounstructor extends Component {
     i18nSelector.forEach(el => (i18nStart = { ...i18nStart, [el.value]: "" }));
     this.setState({
       title: i18nStart,
+      annotation: i18nStart,
       description: i18nStart
     });
   }
@@ -47,13 +47,13 @@ export default class CourseCounstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { addCourses } = this.props;
-    const { title, description } = this.state;
+    const { title, annotation, description } = this.state;
     this.showConstructor();
-    addCourses(title, description, name);
+    addCourses(title, annotation, description );
   };
 
   onChange = event => {
-    const { title, description } = this.state;
+    const { title, annotation, description } = this.state;
     const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "title":
@@ -64,6 +64,14 @@ export default class CourseCounstructor extends Component {
           }
         });
         break;
+      case "annotation":
+        this.setState({
+          [event.target.name]: {
+            ...annotation,
+            [activeLanguage.value]: event.target.value
+          }
+        });
+      break;
       case "description":
         this.setState({
           [event.target.name]: {
@@ -79,7 +87,7 @@ export default class CourseCounstructor extends Component {
 
   render() {
     const { onChange, value, activeLanguage, handleLangChange } = this.props;
-    const { title, constructor, description } = this.state;
+    const { title, constructor, annotation, description } = this.state;
     return (
       <Wrapper>
         <ButtonWrapperConstructor>
@@ -111,6 +119,15 @@ export default class CourseCounstructor extends Component {
                     placeholder="Title goes here"
                     name="title"
                     value={title[activeLanguage.value]}
+                    onChange={this.onChange}
+                    required={true}
+                    maxLenght="100"
+                  />
+                  <CustomInput
+                    label="Annotation"
+                    placeholder="Title goes here"
+                    name="annotation"
+                    value={annotation[activeLanguage.value]}
                     onChange={this.onChange}
                     required={true}
                   />

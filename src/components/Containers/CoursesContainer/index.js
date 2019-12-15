@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Courses from "../../Courses";
-import CoursesModule from "../../../store/modules/CoursesModule"
-import ViewModule from '../../../store/modules/ViewModule'
+import CoursesModule from "../../../store/modules/CoursesModule";
+import ViewModule from "../../../store/modules/ViewModule";
 
 const mapStateToProps = state => ({
   courses: CoursesModule.getAllCourses(state),
@@ -10,22 +10,23 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addCourses: (title, description, name) =>
-    dispatch(CoursesModule.addElement(title, description, name)),
+  addCourses: (title, annotation, description) =>
+    dispatch(CoursesModule.addElement(title, annotation, description)),
 
-  delCourse: (courseIndex, name) => dispatch(CoursesModule.deletElement(courseIndex, name)),
+  delCourse: (courseIndex, name) =>
+    dispatch(CoursesModule.deletElement(courseIndex, name)),
 
   getAllCourses: name => dispatch(CoursesModule.getAllElements(name)),
 
-  changeCourse: (courseIndex, title, description, name) =>
-    dispatch(CoursesModule.changeElement(courseIndex, title, description, name)),
+  changeCourse: (courseIndex, title, annotation, description, name) =>
+    dispatch(
+      CoursesModule.changeElement(courseIndex, title, annotation, description, name)
+    ),
 
-  changeDnD: (id1, id2) => dispatch(CoursesModule.changeDnD(id1, id2, 'courses')),
-  
-  setLoading: loading => dispatch (ViewModule.setLoading(loading))
+  changeDnD: (id1, id2) =>
+    dispatch(CoursesModule.changeDnD(id1, id2, "courses")),
+
+  setLoading: loading => dispatch(ViewModule.setLoading(loading))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Courses);
+export default connect(mapStateToProps, mapDispatchToProps)(Courses);

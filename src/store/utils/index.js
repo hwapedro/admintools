@@ -70,14 +70,14 @@ export const getBase64 = file => {
 export const i18nSelector = [
   { label: "Russian", value: "ru" },
   { label: "English", value: "en" }
-  // { label: "Spanish", value: "sp" },
-  // { label: "German", value: "ge" }
+
 ];
 
 export const i18n = {
   en: "",
   ru: ""
 };
+// end i18n
 
 export const markdownToHtml = data => {
   for (const text in data) {

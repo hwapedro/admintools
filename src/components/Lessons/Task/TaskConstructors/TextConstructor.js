@@ -81,7 +81,6 @@ export default class TextConstructor extends Component {
     this.setState({
       options: options
     });
-    console.log(this.state.options)
   };
 
   onSubmit = event => {

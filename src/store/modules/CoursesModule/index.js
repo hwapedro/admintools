@@ -125,10 +125,10 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  addElement = (title, description, name) => dispatch => {
+  addElement = (title, annotation, description ) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.add(title, description, token, name)
+    AdminService.addCourse(title, annotation, description, token )
       .then(response => {
         dispatch({
           type: this.ADD_COURSE_SUCCESS,
@@ -153,9 +153,9 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  changeElement = (index, title, description, name) => dispatch => {
+  changeElement = (index, title, annotation, description, name) => dispatch => {
     dispatch(ViewModule.setLoading(true));
-    AdminService.change(index, title, description, token, name)
+    AdminService.changeCourse(index, title, annotation, description, token)
       .then(async response => {
         switch (name) {
           case "course":
