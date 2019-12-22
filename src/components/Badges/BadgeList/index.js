@@ -201,7 +201,7 @@ class BadgeList extends Component {
         }
       });
     return (
-      <Wrapper onClick={this.showConstructor}>
+      <Wrapper>
         <ElementsWrapper>{list}</ElementsWrapper>
       </Wrapper>
     );

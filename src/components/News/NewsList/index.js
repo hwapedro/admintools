@@ -150,7 +150,7 @@ class NewsList extends Component {
         }
       });
     return (
-      <Wrapper onClick={this.showConstructor}>
+      <Wrapper>
         {news.length === 0 || list.length === 0 ? (
           <EmptyMessage>There is nothing here yet</EmptyMessage>
         ) : (

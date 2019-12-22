@@ -166,7 +166,7 @@ export default class Lesson extends Component {
           </>
         )}
         {!error && !loading && (
-          <Wrapper onClick={this.showConstructor}>
+          <Wrapper>
             {changeFlag ? (
               <>
                 <ElementWrapper>

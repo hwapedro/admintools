@@ -183,7 +183,7 @@ class CourseList extends Component {
         }
       });
     return (
-      <Wrapper onClick={this.showConstructor}>
+      <Wrapper>
         {courses.length === 0 || list.length === 0 ? (
           <EmptyMessage>There is nothing here yet</EmptyMessage>
         ) : (
