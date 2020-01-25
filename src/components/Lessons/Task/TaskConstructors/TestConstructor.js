@@ -11,35 +11,33 @@ import {
   ConsturctorForm
 } from "../styleLocal";
 
-import Editor from "../../../Shared/Editor";
-import { LabelElement, ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
+import { ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
 import Button from "../../../Shared/Button";
 import CustomInput from "../../../Shared/Input";
 import { i18nSelector, i18n } from "../../../../store/utils";
 
-const type = "test";
+const type = "select";
 
 export default class TestConstructor extends Component {
   constructor(props) {
     super();
     this.state = {
-      name: props.task ? props.task.info.name : i18n,
       question: props.task ? props.task.info.question : i18n,
-      description: props.task ? props.task.info.description : i18n,
-      options: []
+      points: props.task ? props.task.info.points : 0,
+      choices: [],
+      answer: []
     };
   }
 
   componentDidMount() {
     const { task } = this.props;
-    console.log(this.props.pageId)
     if (task) {
       this.setState({
         ...this.state,
-        name: task.info.name,
         question: task.info.question,
-        options: task.info.options,
-        description: task.info.description
+        choices: task.info.choices,
+        points: task.info.points,
+        answer: task.answer
       });
     } else {
       let i18nStart = {};
@@ -48,85 +46,67 @@ export default class TestConstructor extends Component {
       );
       this.setState({
         name: i18nStart,
-        description: i18nStart,
         question: i18nStart
       });
     }
   }
 
-  addOption = () => {
-    const { options } = this.state;
-    const answer = i18n;
-    const right = false;
-    const index = options.length;
+  addChoice = () => {
+    const { choices } = this.state;
+    const c = i18n;
+    const i = choices.length;
     this.setState({
-      options: [...options, { answer, right, index }]
+      choices: [...choices, { c, i }]
     });
   };
 
-  deleteOption = index => {
-    const { options } = this.state;
-    let newOptions = options.filter(option => option.index !== index);
+  deleteChoice = index => {
+    const { choices } = this.state;
+    let newOptions = choices.filter(option => option.i !== index);
     this.setState({
-      options: newOptions
+      choices: newOptions
     });
   };
 
   answerChange = (id, event) => {
-    const { options } = this.state;
+    const { choices } = this.state;
     const { activeLanguage } = this.props;
-    let newOptions = options.map(option =>
-      id === option.index
+    let newOptions = choices.map(el =>
+      id === el.i
         ? {
-            ...option,
-            answer: {
-              ...option.answer,
+            ...el,
+            c: {
+              ...el.c,
               [activeLanguage.value]: event.target.value
             }
           }
-        : option
+        : el
     );
 
     this.setState({
-      options: newOptions
+      choices: newOptions
     });
   };
 
   setRight = (id, event) => {
-    const { options } = this.state;
-    let newOptions = options.map(option =>
-      id === option.index
-        ? {
-            answer: option.answer,
-            right: event.target.checked,
-            index: option.index
-          }
-        : option
-    );
-
-    this.setState({
-      options: newOptions
-    });
+    const { answer } = this.state;
+    if (event.target.checked) {
+      const newAnswer = answer;
+      newAnswer.push(id);
+      this.setState({ answer: newAnswer });
+    } else {
+      const newAnswer = answer.filter(el => el !== id);
+      this.setState({ answer: newAnswer });
+    }
   };
 
   onChange = event => {
-    const { name, question, description } = this.state;
+    const { question } = this.state;
     const { activeLanguage } = this.props;
     switch (event.target.name) {
-      case "name":
+      case "points":
         this.setState({
-          [event.target.name]: {
-            ...name,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
-      case "description":
-        this.setState({
-          [event.target.name]: {
-            ...description,
-            [activeLanguage.value]: event.target.value
-          }
+          points: event.target.value
         });
         break;
       case "question":
@@ -145,27 +125,26 @@ export default class TestConstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
-    const { options, name, description, question } = this.state;
+    const { points, question, choices, answer } = this.state;
 
     const info = {
-      name: name,
-      description: description,
+      points: points,
       question: question,
-      options: options
+      choices: choices
     };
-    console.log(pageId)
+
     if (task) {
-      changeTask(task._id, type, info, pageId);
+      changeTask(task._id, type, info, pageId, answer);
       changeEditFlag();
     } else {
-      addTask(pageId, type, info);
+      addTask(pageId, type, info, answer);
     }
   };
 
   render() {
-    const { options, name, description, question } = this.state;
+    const { choices, points, question, answer } = this.state;
     const { activeLanguage, handleLangChange } = this.props;
-    
+
     return (
       <>
         <ConsturctorForm onSubmit={this.onSubmit}>
@@ -175,22 +154,13 @@ export default class TestConstructor extends Component {
             options={i18nSelector}
             maxMenuHeight={100}
           />
+     
           <CustomInput
-            label="Title"
-            placeholder="Title goes here"
-            name="name"
-            value={name[activeLanguage.value]}
+            label="Amount of point"
+            name="points"
+            value={points}
             onChange={this.onChange}
-            required={true}
-          />
-
-          <LabelElement>Description</LabelElement>
-
-          <Editor
-            onChange={this.onChange}
-            name="description"
-            value={description[activeLanguage.value]}
-            language={activeLanguage.value}
+            required={false}
           />
           <CustomInput
             label="Question"
@@ -201,33 +171,32 @@ export default class TestConstructor extends Component {
             required={false}
           />
           <ButtonWrapper>
-            <Button buttonStyle={"outlined"} onClick={this.addOption}>
+            <Button buttonStyle={"outlined"} onClick={this.addChoice}>
               Add answer option
             </Button>
           </ButtonWrapper>
 
           <div>
-            {options.length !== 0 &&
-              options.map((el, index) => {
+            {choices.length !== 0 &&
+              choices.map(el => {
                 return (
-                  <OptionsWrapper className="form-check" key={el.index}>
+                  <OptionsWrapper className="form-check" key={el.i}>
                     <OptionElementWrapper>
                       <OptionInput
                         name="answer"
-                        value={el.answer[activeLanguage.value]}
-                        onChange={e => this.answerChange(el.index, e)}
+                        value={el.c[activeLanguage.value]}
+                        onChange={e => this.answerChange(el.i, e)}
                         label="Answer"
                         placeholder="Answer"
                       />
                       <CheckboxInput
                         type="checkbox"
-                        value={el.right}
-                        checked={el.right}
-                        onChange={e => this.setRight(el.index, e)}
+                        value={answer.includes(el.i)}
+                        onChange={e => this.setRight(el.i, e)}
                       />
                       <Button
                         buttonStyle={"outlined"}
-                        onClick={() => this.deleteOption(el.index)}
+                        onClick={() => this.deleteChoice(el.i)}
                       >
                         Delete option
                       </Button>

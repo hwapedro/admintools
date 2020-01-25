@@ -4,22 +4,19 @@ import PropTypes from "prop-types";
 
 import { TextQuestion } from "../styleLocal";
 
-import Editor from "../../../Shared/Editor";
 import { LabelElement, ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
 
 import { ConsturctorForm } from "../styleLocal";
 import Button from "../../../Shared/Button";
-import CustomInput from "../../../Shared/Input";
 import { i18nSelector, i18n } from "../../../../store/utils";
 
 export default class TextConstructor extends Component {
   constructor(props) {
     super();
     this.state = {
-      name: props.task ? props.task.info.name : i18n,
-      question: props.task ? props.task.info.question : i18n,
-      description: props.task ? props.task.info.description : i18n,
-      options: []
+      text: props.task ? props.task.info.text : i18n,
+      points: props.task ? props.task.info.points : 0,
+      answer: []
     };
   }
 
@@ -28,39 +25,26 @@ export default class TextConstructor extends Component {
     if (task) {
       this.setState({
         ...this.state,
-        name: task.info.name,
-        question: task.info.question,
-        options: task.info.options,
-        description: task.info.description
+        text: task.info.text,
+        answer: task.info.answer,
       });
     }
   }
 
   onChange = event => {
-    const { name, description, question } = this.state;
+    const { text } = this.state;
     const { activeLanguage } = this.props;
     switch (event.target.name) {
-      case "name":
+      case "points":
         this.setState({
-          [event.target.name]: {
-            ...name,
-            [activeLanguage.value]: event.target.value
-          }
+          points: event.target.value
         });
         break;
-      case "description":
-        this.setState({
-          [event.target.name]: {
-            ...description,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
-      case "question":
+      case "text":
         this.parseAnswer(event.target.value);
         this.setState({
           [event.target.name]: {
-            ...question,
+            ...text,
             [activeLanguage.value]: event.target.value
           }
         });
@@ -73,38 +57,35 @@ export default class TextConstructor extends Component {
   parseAnswer = string => {
     const { activeLanguage } = this.props;
     const regular = new RegExp(/\~([^~]*?)\~/gi);
-    let options = [];
+    let newAnswer = [];
     let answer = i18n;
     while ((answer[activeLanguage] = regular.exec(string))) {
-      options.push(answer[activeLanguage][1]);
+      newAnswer.push(answer[activeLanguage][1]);
     }
     this.setState({
-      options: options
+      answer: newAnswer
     });
   };
 
   onSubmit = event => {
     event.preventDefault();
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
-    const { name, question, options, description } = this.state;
+    const { text, answer, points } = this.state;
     const type = "text";
-
     const info = {
-      name: name,
-      description: description,
-      question: question,
-      options: options
+      points: points,
+      text: text,
     };
     if (task) {
-      changeTask(task._id, type, info, pageId);
+      changeTask(task._id, type, info, pageId, answer);
       changeEditFlag();
     } else {
-      addTask(pageId, type, info);
+      addTask(pageId, type, info, answer);
     }
   };
 
   render() {
-    const { name, question, description } = this.state;
+    const { text } = this.state;
     const { activeLanguage, handleLangChange } = this.props;
 
     return (
@@ -116,28 +97,13 @@ export default class TextConstructor extends Component {
             options={i18nSelector}
             maxMenuHeight={100}
           />
-          <CustomInput
-            label="Title"
-            placeholder="Title goes here"
-            name="name"
-            value={name[activeLanguage.value]}
-            onChange={this.onChange}
-            required={true}
-          />
-          <LabelElement>Description</LabelElement>
-          <Editor
-            onChange={this.onChange}
-            name="description"
-            value={description[activeLanguage.value]}
-            language={activeLanguage.value}
-          />
-          <LabelElement>Question</LabelElement>
+          <LabelElement>Text</LabelElement>
           <br />
           <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
           <TextQuestion
-            name="question"
+            name="text"
             placeholder="Question"
-            value={question[activeLanguage.value]}
+            value={text[activeLanguage.value]}
             onChange={this.onChange}
           />
 

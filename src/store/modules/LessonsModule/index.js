@@ -248,10 +248,10 @@ class LessonModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  addTask = (pageId, type, info) => dispatch => {
+  addTask = (pageId, type, info, answer) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.createTask(token, pageId, type, info)
+    AdminService.createTask(token, pageId, type, info, answer)
       .then(response => {
         dispatch({
           type: this.ADD_TASK_SUCCESS,
@@ -263,10 +263,10 @@ class LessonModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  changeTask = (taskId, type, info, pageId) => dispatch => {
+  changeTask = (taskId, type, info, pageId, answer) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.changeTask(token, taskId, type, info)
+    AdminService.changeTask(token, taskId, type, info, answer)
       .then(response => {
         dispatch({
           type: this.CHANGE_TASK_SUCCESS,

@@ -43,7 +43,7 @@ export default class Courses extends Component {
     } = this.props;
 
     const { search, activeLanguage } = this.state;
-
+    
     return (
       <>
         {error && (

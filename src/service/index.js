@@ -72,14 +72,18 @@ class AdminService {
 
   //COURSE BLOCK
 
-  async addCourse(title, annotation, description, token ) {
+  async addCourse(title, annotation, description, token) {
     let response = await request
       .post(`${_apiBase}/course/create`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, annotation: annotation, description: markdownToHtml(description) });
+      .send({
+        title: title,
+        annotation: annotation,
+        description: markdownToHtml(description)
+      });
     return response.body;
   }
 
@@ -90,7 +94,11 @@ class AdminService {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
       })
-      .send({ title: title, annotation: annotation, description: markdownToHtml(description) });
+      .send({
+        title: title,
+        annotation: annotation,
+        description: markdownToHtml(description)
+      });
     return response.body;
   }
   //LESSON PAGE
@@ -139,7 +147,7 @@ class AdminService {
     return response;
   }
 
-  async createTask(token, pageId, type, info) {
+  async createTask(token, pageId, type, info, answer) {
     let response = await request
       .post(`${_apiBase}/task/create?page=${pageId}`)
       .set({
@@ -148,12 +156,13 @@ class AdminService {
       })
       .send({
         type: type,
-        info: { ...info, description: markdownToHtml(info.description) }
+        info: info,
+        answer: answer
       });
     return response;
   }
 
-  async changeTask(token, taskId, type, info) {
+  async changeTask(token, taskId, type, info, answer) {
     let response = await request
       .put(`${_apiBase}/task/${taskId}`)
       .set({
@@ -162,7 +171,8 @@ class AdminService {
       })
       .send({
         type: type,
-        info: { ...info, description: markdownToHtml(info.description) }
+        info: info, 
+        answer: answer
       });
     return response;
   }
