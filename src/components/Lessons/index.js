@@ -17,7 +17,7 @@ export default class Lessons extends Component {
 
   componentDidMount() {
     const { getAllLessons } = this.props;
-    getAllLessons(name);
+    getAllLessons();
   }
 
   handleLangChange = activeLanguage => {
@@ -29,7 +29,14 @@ export default class Lessons extends Component {
   };
 
   render() {
-    const { error, loading, lessons, addLesson, delLesson, setLoading } = this.props;
+    const {
+      error,
+      loading,
+      lessons,
+      addLesson,
+      delLesson,
+      setLoading
+    } = this.props;
     const { search, activeLanguage } = this.state;
     return (
       <>
@@ -47,8 +54,8 @@ export default class Lessons extends Component {
         {!error && !loading && (
           <>
             <LessonConstructor
-              addLesson={(title, description, exam, name, courseIndex, flag) =>
-                addLesson(title, description, exam, name, courseIndex, flag)
+              addLesson={(title, description, exam, courseIndex, flag) =>
+                addLesson(title, description, exam, courseIndex, flag)
               }
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
@@ -56,18 +63,14 @@ export default class Lessons extends Component {
               onChange={this.onChange}
               value={search}
               activeLanguage={activeLanguage}
-              
             />
             <LessonList
               onChange={this.onChange}
-              delLesson={(lessonsIndex, name, flag) =>
-                delLesson(lessonsIndex, name, flag)
-              }
+              delLesson={(lessonsIndex, flag) => delLesson(lessonsIndex, flag)}
               setLoading={loading => setLoading(loading)}
               lessons={lessons}
               search={search}
               activeLanguage={activeLanguage}
-              
             />
           </>
         )}
@@ -83,7 +86,7 @@ Lessons.defaultProps = {
   addLesson() {},
   delLesson() {},
   getAllLessons() {},
-  setLoading() {},
+  setLoading() {}
 };
 
 Lessons.propTypes = {

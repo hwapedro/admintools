@@ -1,14 +1,9 @@
 import DuckModule from "simple-duck";
-import AdminService from "../../../service";
+import CourseService from "../../../service/course";
 import { DND } from "../../utils";
-import {
-  DELETE_LESSON_SUCCESS,
-  ADD_LESSON_SUCCESS
-} from "../../constants";
+import { DELETE_LESSON_SUCCESS, ADD_LESSON_SUCCESS } from "../../constants";
 
 import ViewModule from "../ViewModule";
-
-const token = localStorage.getItem("token");
 
 const initialState = {
   courses: [],
@@ -107,14 +102,15 @@ class CoursesModule extends DuckModule {
           };
         }
         return { ...state };
+      default:
+        return super.reduce(state, action);
     }
-    return super.reduce(state, action);
   };
 
-  getAllElements = name => dispatch => {
+  getAllElements = () => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.getAll(token, name)
+    CourseService.getAll()
       .then(response => {
         dispatch({
           type: this.GETALL_COURSE_SUCCESS,
@@ -125,10 +121,10 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  addElement = (title, annotation, description ) => dispatch => {
+  addElement = (title, annotation, description) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.addCourse(title, annotation, description, token )
+    CourseService.add(title, annotation, description)
       .then(response => {
         dispatch({
           type: this.ADD_COURSE_SUCCESS,
@@ -139,10 +135,10 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  deletElement = (index, name) => dispatch => {
+  deletElement = index => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.delet(index, token, name)
+    CourseService.delete(index)
       .then(() => {
         dispatch({
           type: this.DELETE_COURSE_SUCCESS,
@@ -153,21 +149,15 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  changeElement = (index, title, annotation, description, name) => dispatch => {
+  changeElement = (index, title, annotation, description) => dispatch => {
     dispatch(ViewModule.setLoading(true));
-    AdminService.changeCourse(index, title, annotation, description, token)
-      .then(async response => {
-        switch (name) {
-          case "course":
-            dispatch({
-              type: this.CHANGE_COURSE_SUCCESS,
-              course: response.course
-            });
-            break;
-          default:
-            break;
-        }
-      })
+    CourseService.change(index, title, annotation, description)
+      .then(async response =>
+        dispatch({
+          type: this.CHANGE_COURSE_SUCCESS,
+          course: response.course
+        })
+      )
       .then(() => dispatch(ViewModule.setLoading(false)))
       .catch(error => dispatch(ViewModule.setError(true)));
   };
@@ -175,21 +165,20 @@ class CoursesModule extends DuckModule {
   changeDnD = (id1, id2, name, courseIndex = 0) => dispatch => {
     dispatch(ViewModule.setLoading(true));
     if (name === "lessons") {
-      AdminService.DragAndDropLesson(token, id1, id2, courseIndex)
+      CourseService.DragAndDropLesson(id1, id2, courseIndex)
         .then(() => {
           dispatch({
             type: this.CHANGE_DND_SUCCESS,
             payload: {
               id1,
-              id2,
-              name
+              id2
             }
           });
         })
         .then(() => dispatch(ViewModule.setLoading(false)))
         .catch(error => dispatch(ViewModule.setError(true)));
     } else
-      AdminService.DragAndDropCourse(token, id1, id2)
+      CourseService.dragAndDrop(id1, id2, name)
         .then(() => {
           dispatch({
             type: this.CHANGE_DND_SUCCESS,
@@ -206,7 +195,7 @@ class CoursesModule extends DuckModule {
 
   getOneCourse = id => async dispatch => {
     dispatch(ViewModule.setLoading(true));
-    AdminService.getOneCourse(token, id)
+    CourseService.getOne(id)
       .then(response => {
         dispatch({
           type: this.GET_COURSE_SUCCESS,

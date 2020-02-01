@@ -5,10 +5,8 @@ import { withRouter } from "react-router-dom";
 import { Droppable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import {
-  ElementsWrapper,
-} from "../styleLocal";
-import { Wrapper, EmptyMessage } from "../../GlobalStyles/styleGlobal"
+import { ElementsWrapper } from "../styleLocal";
+import { Wrapper, EmptyMessage } from "../../GlobalStyles/styleGlobal";
 
 import Lesson from "./Lesson";
 
@@ -22,22 +20,32 @@ class LessonsList extends Component {
   };
 
   deleteItem = _id => {
-    const { delLesson,course } = this.props;
+    const { delLesson, course } = this.props;
     const flag = course ? "course" : name;
-    delLesson(_id, name, flag);
+    delLesson(_id, flag);
   };
 
   goTo = id => {
-    this.props.setLoading(true)
+    this.props.setLoading(true);
     this.props.history.push(`/lesson/${id}`);
   };
 
   render() {
-    const { lessons, search, course, changeDndLesson, activeLanguage } = this.props;
-  
+    const {
+      lessons,
+      search,
+      course,
+      changeDndLesson,
+      activeLanguage
+    } = this.props;
+
     let list = lessons
       .filter(lesson => {
-        if (lesson.title[activeLanguage.value].toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+        if (
+          lesson.title[activeLanguage.value]
+            .toLowerCase()
+            .indexOf(search.toLowerCase()) !== -1
+        ) {
           return true;
         }
         return false;
@@ -101,7 +109,7 @@ LessonsList.defaultProps = {
   loading: false,
   error: false,
   course: null,
-  
+
   delLesson() {}
 };
 

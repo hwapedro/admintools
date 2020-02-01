@@ -67,7 +67,7 @@ class LessonConstructor extends Component {
     });
     const index = course ? course.courseIndex : courseIndex.value;
     const flag = course ? "course" : name;
-    addLesson(title, description, exam, name, index, flag);
+    addLesson(title, description, exam, index, flag);
   };
 
   //TEXT HANDLER

@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import Lessons from "../../Lessons";
 
 import ViewModule from "../../../store/modules/ViewModule";
-import LessonsModule from "../../../store/modules/LessonsModule";
+import LessonsModule from "../../../store/modules/LessonModule";
 
 const mapStateToProps = state => ({
   lessons: LessonsModule.getLessons(state),
@@ -11,20 +11,17 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLesson: (title, description, exam, name, courseIndex, flag) =>
+  addLesson: (title, description, exam, courseIndex, flag) =>
     dispatch(
-      LessonsModule.addLesson(title, description, exam, name, courseIndex, flag)
+      LessonsModule.addLesson(title, description, exam, courseIndex, flag)
     ),
 
-  delLesson: (lessonsIndex, name, flag) =>
-    dispatch(LessonsModule.deleteLesson(lessonsIndex, name, flag)),
+  delLesson: (lessonsIndex, flag) =>
+    dispatch(LessonsModule.deleteLesson(lessonsIndex, flag)),
 
-  getAllLessons: name => dispatch(LessonsModule.getAllLessons(name)),
+  getAllLessons: () => dispatch(LessonsModule.getAllLessons()),
 
-  setLoading: loading => dispatch (ViewModule.setLoading(loading))
+  setLoading: loading => dispatch(ViewModule.setLoading(loading))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Lessons);
+export default connect(mapStateToProps, mapDispatchToProps)(Lessons);

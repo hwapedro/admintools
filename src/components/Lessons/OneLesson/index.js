@@ -68,6 +68,7 @@ export default class Lesson extends Component {
         break;
       case "language":
         this.setState({ activeLanguage: value });
+        break;
       default:
         return;
     }
@@ -142,7 +143,14 @@ export default class Lesson extends Component {
   };
 
   render() {
-    const { lesson, loading, deletePage, deleteTask, error } = this.props;
+    const {
+      lesson,
+      pages,
+      loading,
+      deletePage,
+      deleteTask,
+      error
+    } = this.props;
     const {
       changeFlag,
       courseIndex,
@@ -151,6 +159,8 @@ export default class Lesson extends Component {
       exam,
       activeLanguage
     } = this.state;
+
+    const pagesFixMe = !pages.length ? lesson.pages : pages;
 
     return (
       <>
@@ -274,7 +284,7 @@ export default class Lesson extends Component {
             ) : (
               <PageList
                 lessonId={lesson._id}
-                pages={lesson.pages}
+                pages={pagesFixMe}
                 id={lesson._id}
                 deletePage={deletePage}
                 deleteTask={deleteTask}
@@ -289,6 +299,7 @@ export default class Lesson extends Component {
 }
 
 Lesson.defaultProps = {
+  pages: [],
   lesson: {},
   loading: false,
   error: false,
@@ -298,6 +309,7 @@ Lesson.defaultProps = {
 };
 
 Lesson.propTypes = {
+  pages: PropTypes.array,
   lesson: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.bool,
