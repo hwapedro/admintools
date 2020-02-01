@@ -15,37 +15,24 @@ class TaskModule extends DuckModule {
   reduce = (state = initialState, action) => {
     switch (action.type) {
       case this.CHANGE_TASK_SUCCESS:
-        return {
-          ...state,
-          pages: state.pages.map(page =>
-            page._id === action.pageId
-              ? {
-                  ...page,
-                  tasks: page.tasks.map(task =>
-                    task._id === action.taskId ? action.task : task
-                  )
-                }
-              : page
-          )
-        };
+        return action.task;
+
       case this.SET_TASK:
-        return action.payload;
+        return action.task;
 
       default:
         return super.reduce(state, action);
     }
   };
 
-  changeTask = (taskId, type, info, pageId, answer) => dispatch => {
+  change = (taskId, type, info, answer) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    TaskService.changeTask(taskId, type, info, answer)
+    TaskService.change(taskId, type, info, answer)
       .then(response => {
         dispatch({
           type: this.CHANGE_TASK_SUCCESS,
-          task: response.body.task,
-          taskId: taskId,
-          pageId: pageId
+          task: response.body.task
         });
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
@@ -55,14 +42,13 @@ class TaskModule extends DuckModule {
   setTask = task => dispatch => {
     dispatch({
       type: this.SET_TASK,
-      payload: task
+      task: task
     });
   };
 
   getTask = state => {
-    return this.getRoot(state)
-  }
-    
+    return this.getRoot(state);
+  };
 }
 
 export default new TaskModule("/TASK/", state => state.task);

@@ -5,8 +5,6 @@ import ViewModule from "../ViewModule";
 import PageModule from "../PageModule"
 
 const initialState = {
-  loading: false,
-  error: null,
   lessons: [],
   lesson: { pages: [] }
 };

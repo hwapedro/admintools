@@ -9,7 +9,7 @@ const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>
     dispatch(PageModule.addTask(pageid, type, info, answer)),
   changeTask: (taskId, type, info, pageId, answer) =>
-    dispatch(TaskModule.changeTask(taskId, type, info, pageId, answer))
+    dispatch(TaskModule.change(taskId, type, info, answer))
 });
 
 export default connect(null, mapDispatchToProps)(TaskConstructor);

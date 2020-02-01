@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import Select from "react-select";
 import PropTypes from "prop-types";
 
-import { TextQuestion } from "../styleLocal";
 
-import { LabelElement, ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
+import { LabelElement, ButtonWrapper } from "../../../../GlobalStyles/styleGlobal";
 
-import { ConsturctorForm } from "../styleLocal";
-import Button from "../../../Shared/Button";
-import { i18nSelector, i18n } from "../../../../store/utils";
+import { TextQuestion, ConsturctorForm } from "../../styleLocal";
+import Button from "../../../../Shared/Button";
+import { i18nSelector, i18n } from "../../../../../store/utils";
 
 export default class TextConstructor extends Component {
   constructor(props) {

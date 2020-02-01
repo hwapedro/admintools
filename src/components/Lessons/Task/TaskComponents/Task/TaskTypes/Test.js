@@ -18,7 +18,7 @@ import {
 import Button from "../../../../../Shared/Button";
 import checkMark from "../../../../../../img/good.png";
 import redCross from "../../../../../../img/bad.png";
-import TestConstructor from "../../../TaskConstructors/TestConstructor";
+import TestConstructor from "../../../TaskConstructors/TestConstructor/";
 
 class Test extends Component {
   render() {
@@ -33,7 +33,7 @@ class Test extends Component {
       activeLanguage,
       handleLangChange
     } = this.props;
-    console.log(pageId,lessonId)
+  
     return (
       <TaskWrapper>
         <>
@@ -63,10 +63,11 @@ class Test extends Component {
               <LabelElement>Answer options:</LabelElement>
               <OptionsWrapper>
                 {task.info.choices.map(option => {
+                    console.log(task.answer.find(answ => answ === option.i) !== undefined)
                   return (
                     <OptionElementWrapper key={option.i}>
                       <OptionSpan>{option.c[activeLanguage.value]}</OptionSpan>
-                      {task.answer.find(answ => answ === option.i + 1) !== undefined ? (
+                      {task.answer.find(answ => answ === option.i) !== undefined ? (
                         <ImgMark
                           width="15px"
                           height="15px"

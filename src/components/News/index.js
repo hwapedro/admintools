@@ -17,7 +17,7 @@ export default class News extends Component {
 
   componentDidMount() {
     const { getAllNews } = this.props;
-    getAllNews(name);
+    getAllNews();
   }
 
   handleLangChange = activeLanguage => {
@@ -56,8 +56,8 @@ export default class News extends Component {
         {!error && !loading && (
           <>
             <NewsConstructor
-              addNews={(title, description, name) =>
-                addNews(title, description, name)
+              addNews={(title, description) =>
+                addNews(title, description)
               }
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
@@ -67,10 +67,10 @@ export default class News extends Component {
               activeLanguage={activeLanguage}
             />
             <NewsList
-              changeArticle={(articleIndex, title, description, name) =>
-                changeArticle(articleIndex, title, description, name)
+              changeArticle={(articleIndex, title, description) =>
+                changeArticle(articleIndex, title, description)
               }
-              delArticle={(index, name) => delArticle(index, name)}
+              delArticle={(index) => delArticle(index)}
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
               }

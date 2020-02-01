@@ -30,7 +30,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(PageModule.addPage(id, text, tasks, needToComplete)),
   deletePage: id => dispatch(PageModule.deletePage(id)),
   deleteTask: (pageId, taskid) =>
-    dispatch(PageModule.deleteTask(pageId, taskid)),
+    dispatch(PageModule.delete(pageId, taskid)),
   setTask: task => dispatch(TaskModule.setTask(task))
 });
 

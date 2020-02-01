@@ -10,7 +10,7 @@ import {
 } from "../../../styleLocal";
 
 import Button from "../../../../../Shared/Button";
-import TextConstructor from "../../../TaskConstructors/TextConstructor";
+import TextConstructor from "../../../TaskConstructors/TextConstructor/";
 
 class Text extends Component {
   render() {

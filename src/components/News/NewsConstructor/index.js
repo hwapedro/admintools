@@ -42,7 +42,7 @@ class SetArticle extends Component {
     const { addNews } = this.props;
     const { title, description } = this.state;
 
-    addNews(title, description, name);
+    addNews(title, description);
     this.showConstructor();
     this.setState({
       constructor: !this.state.constructor

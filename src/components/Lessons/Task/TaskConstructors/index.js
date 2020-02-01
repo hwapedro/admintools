@@ -7,8 +7,8 @@ import {
 } from "../../../GlobalStyles/styleGlobal";
 
 import Button from "../../../Shared/Button";
-import TestConstructor from "./TestConstructor";
-import TextConstructor from "./TextConstructor";
+import TestConstructor from "./TestConstructor/";
+import TextConstructor from "./TextConstructor/";
 
 const options = [
   { value: "test", label: "Test" },
@@ -55,8 +55,8 @@ export default class TaskConstructor extends Component {
             addTask={(pageid, type, info, answer) =>
               addTask(pageid, type, info, answer)
             }
-            changeTask={(taskId, type, info, pageId) =>
-              changeTask(taskId, type, info, pageId)
+            changeTask={(taskId, type, info, answer) =>
+              changeTask(taskId, type, info, answer)
             }
           />
         );
@@ -71,8 +71,8 @@ export default class TaskConstructor extends Component {
             addTask={(pageid, type, info, answer) =>
               addTask(pageid, type, info, answer)
             }
-            changeTask={(taskId, type, info, pageId) =>
-              changeTask(taskId, type, info, pageId)
+            changeTask={(taskId, type, info, answer) =>
+              changeTask(taskId, type, info, answer)
             }
           />
         );

@@ -1,9 +1,7 @@
 import DuckModule from "simple-duck";
-import AdminService from "../../../service";
 
+import NewsService from "../../../service/news";
 import ViewModule from "../ViewModule";
-
-const token = localStorage.getItem("token");
 
 const initialState = {
   news: []
@@ -49,10 +47,10 @@ class CoursesModule extends DuckModule {
     return super.reduce(state, action);
   };
 
-  getAllNews = name => dispatch => {
+  getAll = name => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.getAll(token, name)
+    NewsService.getAll()
       .then(response => {
         dispatch({
           type: this.GETALL_NEWS_SUCCESS,
@@ -63,10 +61,10 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  addNews = (title, description, name) => dispatch => {
+  add = (title, description) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.add(title, description, token, name)
+    NewsService.add(title, description)
       .then(response => {
         dispatch({
           type: this.ADD_NEWS_SUCCESS,
@@ -77,10 +75,10 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  delArticle = (index, name) => dispatch => {
+  delete = (index) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.delet(index, token, name)
+    NewsService.delete(index)
       .then(() => {
         dispatch({
           type: this.DELETE_NEWS_SUCCESS,
@@ -91,10 +89,10 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  changeArticle = (index, title, description, name) => dispatch => {
+  change= (index, title, description) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.change(index, title, description, token, name)
+    NewsService.change(index, title, description)
       .then(async response => {
         dispatch({
           type: this.CHANGE_NEWS_SUCCESS,

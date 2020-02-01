@@ -2,27 +2,23 @@ import { connect } from "react-redux";
 
 import News from "../../components/News";
 import NewsModule from "../../store/modules/NewsModule";
-import ViewModule from '../../store/modules/ViewModule'
+import ViewModule from "../../store/modules/ViewModule";
 
 const mapStateToProps = state => ({
-    news: NewsModule.getNews(state),
-    loading: ViewModule.isLoading(state),
-    error: ViewModule.isError(state)
-  });
-
-const mapDispatchToProps = dispatch => ({
-  addNews: (title, description, name) =>
-    dispatch(NewsModule.addNews(title, description, name)),
-
-  delArticle: (index, name) => dispatch(NewsModule.delArticle(index, name)),
-
-  getAllNews: name => dispatch(NewsModule.getAllNews(name)),
-
-  changeArticle: (articleIndex, title, description, name) =>
-    dispatch(NewsModule.changeArticle(articleIndex, title, description, name))
+  news: NewsModule.getNews(state),
+  loading: ViewModule.isLoading(state),
+  error: ViewModule.isError(state)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(News);
+const mapDispatchToProps = dispatch => ({
+  addNews: (title, description) => dispatch(NewsModule.add(title, description)),
+
+  delArticle: index => dispatch(NewsModule.delete(index)),
+
+  getAllNews: () => dispatch(NewsModule.getAll()),
+
+  changeArticle: (articleIndex, title, description) =>
+    dispatch(NewsModule.change(articleIndex, title, description))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(News);

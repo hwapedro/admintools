@@ -18,7 +18,8 @@ export class TaskService extends BaseService {
     return response;
   }
 
-  async changeTask(taskId, type, info, answer) {
+  async change(taskId, type, info, answer) {
+    console.log(taskId, type, info, answer)
     let response = await request
       .put(`${this.apiEndpoint}/task/${taskId}`)
       .set({
@@ -33,7 +34,7 @@ export class TaskService extends BaseService {
     return response;
   }
 
-  async deleteTask(id, taskid) {
+  async delete(id, taskid) {
     let response = await request
       .del(`${this.apiEndpoint}/page/${id}/removeTask/${taskid}`)
       .set({

@@ -9,12 +9,12 @@ import {
   OptionInput,
   CheckboxInput,
   ConsturctorForm
-} from "../styleLocal";
+} from "../../styleLocal";
 
-import { ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
-import Button from "../../../Shared/Button";
-import CustomInput from "../../../Shared/Input";
-import { i18nSelector, i18n } from "../../../../store/utils";
+import { ButtonWrapper } from "../../../../GlobalStyles/styleGlobal";
+import Button from "../../../../Shared/Button";
+import CustomInput from "../../../../Shared/Input";
+import { i18nSelector, i18n } from "../../../../../store/utils";
 
 const type = "select";
 
@@ -134,7 +134,7 @@ export default class TestConstructor extends Component {
     };
 
     if (task) {
-      changeTask(task._id, type, info, pageId, answer);
+      changeTask(task._id, type, info, answer);
       changeEditFlag();
     } else {
       addTask(pageId, type, info, answer);
@@ -144,6 +144,7 @@ export default class TestConstructor extends Component {
   render() {
     const { choices, points, question, answer } = this.state;
     const { activeLanguage, handleLangChange } = this.props;
+   
 
     return (
       <>
@@ -179,6 +180,7 @@ export default class TestConstructor extends Component {
           <div>
             {choices.length !== 0 &&
               choices.map(el => {
+                 console.log(answer, answer.includes(el.i))
                 return (
                   <OptionsWrapper className="form-check" key={el.i}>
                     <OptionElementWrapper>
@@ -191,7 +193,7 @@ export default class TestConstructor extends Component {
                       />
                       <CheckboxInput
                         type="checkbox"
-                        value={answer.includes(el.i)}
+                        checked={answer.includes(el.i)}
                         onChange={e => this.setRight(el.i, e)}
                       />
                       <Button
