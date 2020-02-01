@@ -1,9 +1,10 @@
 import { connect } from "react-redux";
-import Lesson from "../../Lessons/OneLesson";
 
-import ViewModule from "../../../store/modules/ViewModule";
-import LessonModule from "../../../store/modules/LessonModule";
-import PageModule from "../../../store/modules/PageModule";
+import Lesson from "../../components/Lessons/OneLesson";
+import ViewModule from "../../store/modules/ViewModule";
+import LessonModule from "../../store/modules/LessonModule";
+import PageModule from "../../store/modules/PageModule";
+import TaskModule from "../../store/modules/TaskModule";
 
 const mapStateToProps = state => ({
   lesson: LessonModule.getOneLesson(state),
@@ -29,7 +30,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(PageModule.addPage(id, text, tasks, needToComplete)),
   deletePage: id => dispatch(PageModule.deletePage(id)),
   deleteTask: (pageId, taskid) =>
-    dispatch(LessonModule.deleteTask(pageId, taskid))
+    dispatch(PageModule.deleteTask(pageId, taskid)),
+  setTask: task => dispatch(TaskModule.setTask(task))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lesson);

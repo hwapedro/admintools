@@ -5,5 +5,5 @@ export const news = "/news";
 export const course = "/course/:id";
 export const lesson = "/lesson/:id";
 export const pages = "/page/:id";
-export const task = "/task/:lessonId/:taskId"
+export const task = "/task/:lessonId/:pageId/:taskId"
 export const register = "/register";

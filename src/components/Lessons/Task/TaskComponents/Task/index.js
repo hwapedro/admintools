@@ -16,9 +16,8 @@ class Task extends Component {
 
   constSwitch = () => {
     const {
-      lesson,
       task,
-      page,
+      pageId,
       lessonId,
       taskEditFlag,
       changeEditFlag,
@@ -29,13 +28,12 @@ class Task extends Component {
     const { activeLanguage } = this.state;
 
     switch (task.type) {
-      case "test":
+      case "select":
         return (
           <Test
             task={task}
-            page={page}
+            pageId={pageId}
             lessonId={lessonId}
-            lesson={lesson}
             taskEditFlag={taskEditFlag}
             changeEditFlag={changeEditFlag}
             deleteTask={deleteTask}
@@ -50,9 +48,8 @@ class Task extends Component {
         return (
           <Text
             task={task}
-            page={page}
+            pageId={pageId}
             lessonId={lessonId}
-            lesson={lesson}
             taskEditFlag={taskEditFlag}
             changeEditFlag={changeEditFlag}
             deleteTask={deleteTask}
@@ -97,9 +94,8 @@ class Task extends Component {
 }
 
 Task.defaultProps = {
-  lesson: {},
   task: {},
-  page: {},
+  pageId: null,
   lessonId: null,
   taskEditFlag: false,
   changeEditFlag() {},
@@ -109,7 +105,7 @@ Task.defaultProps = {
 Task.propTypes = {
   lesson: PropTypes.object,
   task: PropTypes.object,
-  page: PropTypes.object,
+  pageId: PropTypes.string.isRequired,
   lessonId: PropTypes.string.isRequired,
   taskEditFlag: PropTypes.bool,
   changeEditFlag: PropTypes.func,

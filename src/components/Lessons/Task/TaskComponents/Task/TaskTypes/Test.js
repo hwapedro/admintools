@@ -21,11 +21,10 @@ import redCross from "../../../../../../img/bad.png";
 import TestConstructor from "../../../TaskConstructors/TestConstructor";
 
 class Test extends Component {
-
   render() {
     const {
       task,
-      page,
+      pageId,
       deleteTask,
       changeEditFlag,
       taskEditFlag,
@@ -34,7 +33,7 @@ class Test extends Component {
       activeLanguage,
       handleLangChange
     } = this.props;
-
+    console.log(pageId,lessonId)
     return (
       <TaskWrapper>
         <>
@@ -42,7 +41,7 @@ class Test extends Component {
             <TaskElementWrapper>
               <TestConstructor
                 task={task}
-                pageId={page._id}
+                pageId={pageId}
                 changeEditFlag={changeEditFlag}
                 changeTask={changeTask}
                 activeLanguage={activeLanguage}
@@ -51,23 +50,23 @@ class Test extends Component {
             </TaskElementWrapper>
           ) : (
             <TaskElementWrapper key={task._id}>
-              <LabelElement>Title:</LabelElement>
+              {/* <LabelElement>Title:</LabelElement>
               <TitleSpan>{task.info.name[activeLanguage.value]}</TitleSpan>
               <LabelElement>Description:</LabelElement>
               <TitleSpan
                 dangerouslySetInnerHTML={{
                   __html: task.info.description[activeLanguage.value]
                 }}
-              />
+              /> */}
               <LabelElement>Question:</LabelElement>
               <TitleSpan>{task.info.question[activeLanguage.value]}</TitleSpan>
               <LabelElement>Answer options:</LabelElement>
               <OptionsWrapper>
-                {task.info.options.map(answ => {
+                {task.info.choices.map(option => {
                   return (
-                    <OptionElementWrapper key={answ.index}>
-                      <OptionSpan>{answ.answer[activeLanguage.value]}</OptionSpan>
-                      {answ.right ? (
+                    <OptionElementWrapper key={option.i}>
+                      <OptionSpan>{option.c[activeLanguage.value]}</OptionSpan>
+                      {task.answer.find(answ => answ === option.i + 1) !== undefined ? (
                         <ImgMark
                           width="15px"
                           height="15px"
@@ -100,7 +99,7 @@ class Test extends Component {
                     buttonStyle={"outlined"}
                     onClick={() => {
                       if (window.confirm("ARE YOU SURE ?")) {
-                        deleteTask(page._id, task._id, lessonId)
+                        deleteTask(pageId, task._id, lessonId);
                       }
                     }}
                   >
@@ -117,7 +116,7 @@ class Test extends Component {
 }
 Test.defaultProps = {
   task: {},
-  page: {},
+  pageId: null,
   lessonId: null,
   taskEditFlag: false,
   changeEditFlag() {},
@@ -126,7 +125,7 @@ Test.defaultProps = {
 
 Test.propTypes = {
   task: PropTypes.object,
-  page: PropTypes.object,
+  pageId: PropTypes.string.isRequired,
   lessonId: PropTypes.string.isRequired,
   taskEditFlag: PropTypes.bool,
   changeEditFlag: PropTypes.func,

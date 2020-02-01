@@ -2,22 +2,22 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
-import CoursesContainer from "../components/Containers/CoursesContainer";
-import LessonsContainer from "../components/Containers/LessonsContainer";
-import BadgesContainer from "../components/Containers/BadgesContainer";
-import TasksContainer from "../components/Containers/TaskContainer"
-import LessonContainer from "../components/Containers/LessonContainer";
-import NewsContainer from "../components/Containers/NewsContainer";
+import CoursesContainer from "../containers/CoursesContainer";
+import LessonsContainer from "../containers/LessonsContainer";
+import BadgesContainer from "../containers/BadgesContainer";
+import TasksContainer from "../containers/TaskContainer";
+import LessonContainer from "../containers/LessonContainer";
+import NewsContainer from "../containers/NewsContainer";
+import OneCourseContainer from "../containers/OneCourseContainer";
 
 import Layout from "./hoc/Layout";
 import LoginScreen from "../components/Authorization/LoginScreen";
 import RegistrationScreen from "../components/Authorization/RegistrationScreen";
-import OneCourseContainer from "../components/Containers/OneCourseContainer";
 
 import * as route from "../components/Route/constants";
 
 import "simplemde/dist/simplemde.min.css";
-import './test'
+import "./test";
 
 class App extends Component {
   routes = [
@@ -54,10 +54,11 @@ class App extends Component {
             <Route
               path={route.task}
               render={({ match, history }) => {
-                const { lessonId, taskId } = match.params;
+                const { lessonId, pageId, taskId } = match.params;
                 return (
                   <TasksContainer
                     lessonId={lessonId}
+                    pageId={pageId}
                     taskId={taskId}
                     history={history}
                   />

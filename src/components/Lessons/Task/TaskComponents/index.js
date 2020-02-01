@@ -14,8 +14,8 @@ export default class TaskContainer extends Component {
   };
 
   componentDidMount() {
-    const { getLesson, lessonId } = this.props;
-    getLesson(lessonId);
+    const { lessonId } = this.props;
+    //todo get task
   }
 
   goBack = id => {
@@ -35,17 +35,7 @@ export default class TaskContainer extends Component {
 
   render() {
     const { taskEditFlag } = this.state;
-    const { lessonId, taskId, lesson, error, loading, changeTask } = this.props;
-    let page, task;
-
-    lesson.pages.map(pageElement =>
-      pageElement.tasks.map(taskElemet => {
-        if (taskElemet._id === taskId) {
-          task = taskElemet;
-          page = pageElement;
-        }
-      })
-    );
+    const { pageId, lessonId, taskId, error, loading, changeTask, task } = this.props;
 
     return (
       <>
@@ -64,17 +54,16 @@ export default class TaskContainer extends Component {
           <Wrapper>
             <Button
               buttonStyle={"outlined"}
-              onClick={() => this.goBack(this.props.lesson._id)}
+              onClick={() => this.goBack(lessonId)}
             >
               Back
             </Button>
 
             {task && (
               <Task
-                page={page}
+                pageId={pageId}
                 task={task}
                 lessonId={lessonId}
-                lesson={lesson}
                 taskEditFlag={taskEditFlag}
                 deleteTask={this.deleteTask}
                 changeEditFlag={this.changeEditFlag}
@@ -91,18 +80,18 @@ export default class TaskContainer extends Component {
 }
 
 TaskContainer.defaultProps = {
-  lesson: {},
   loading: false,
   error: false,
+  task: {},
 
   getLesson() {},
   deleteTask() {}
 };
 
 TaskContainer.propTypes = {
-  lesson: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.bool,
+  task: PropTypes.object,
 
   getLesson: PropTypes.func,
   deleteTask: PropTypes.func

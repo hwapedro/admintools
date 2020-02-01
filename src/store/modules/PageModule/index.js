@@ -1,6 +1,8 @@
 import DuckModule from "simple-duck";
+
 import ViewModule from "../ViewModule";
 import PageService from "../../../service/page";
+import TaskService from "../../../service/task";
 
 const initialState = {
   pages: []
@@ -11,12 +13,14 @@ class PageModule extends DuckModule {
     super(prefix, rootSelector);
     this.ADD_PAGE_SUCCESS = `${this.prefix}ADD_PAGE_SUCCESS`;
     this.DELETE_PAGE_SUCCESS = `${this.prefix}ADD_PAGE_SUCCESS`;
+    this.SET_PAGE = `${this.prefix}SET_PAGE`;
+    this.ADD_TASK_SUCCESS = `${this.prefix}ADD_TASK_SUCCESS`;
+    this.DELETE_TASK_SUCCESS = `${this.prefix}DELETE_TASK_SUCCESS`;
   }
 
   reduce = (state = initialState, action) => {
     switch (action.type) {
       case this.ADD_PAGE_SUCCESS:
-        console.log(action.lesson.pages);
         return {
           ...state,
           pages: [...action.lesson.pages]
@@ -26,6 +30,28 @@ class PageModule extends DuckModule {
         return {
           ...state,
           pages: [...action.lesson.pages]
+        };
+
+      case this.SET_PAGE:
+        return {
+          ...state,
+          pages: [...action.payload]
+        };
+
+      case this.ADD_TASK_SUCCESS:
+        return {
+          ...state,
+          pages: state.pages.map(page =>
+            page._id === action.pageId
+              ? { ...page, tasks: [...page.tasks, action.task] }
+              : page
+          )
+        };
+
+      case this.DELETE_TASK_SUCCESS:
+        return {
+          ...state,
+          pages: action.pages
         };
 
       default:
@@ -60,9 +86,43 @@ class PageModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
+  addTask = (pageId, type, info, answer) => dispatch => {
+    dispatch(ViewModule.setLoading(true));
+
+    TaskService.createTask(pageId, type, info, answer)
+      .then(response => {
+        dispatch({
+          type: this.ADD_TASK_SUCCESS,
+          task: response.body.task,
+          pageId: pageId
+        });
+      })
+      .then(() => dispatch(ViewModule.setLoading(false)))
+      .catch(error => dispatch(ViewModule.setError(true)));
+  };
+
+  deleteTask = (pageId, taskid) => dispatch => {
+    dispatch(ViewModule.setLoading(true));
+    TaskService.deleteTask(pageId, taskid)
+      .then(response => {
+        dispatch({
+          type: this.DELETE_TASK_SUCCESS,
+          pages: response.body.lesson.pages
+        });
+      })
+      .then(() => dispatch(ViewModule.setLoading(false)))
+      .catch(error => dispatch(ViewModule.setError(true)));
+  };
+
   getPages = state => {
-    console.log(this.getRoot(state), state);
     return this.getRoot(state).pages;
+  };
+
+  setPages = pages => dispatch => {
+    dispatch({
+      type: this.SET_PAGE,
+      payload: pages
+    });
   };
 }
 

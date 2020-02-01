@@ -3,12 +3,12 @@ import request from "superagent";
 import { BaseService } from "./base";
 
 export class TaskService extends BaseService {
-  async createTask(token, pageId, type, info, answer) {
+  async createTask(pageId, type, info, answer) {
     let response = await request
       .post(`${this.apiEndpoint}/task/create?page=${pageId}`)
       .set({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + this.token
       })
       .send({
         type: type,
@@ -18,12 +18,12 @@ export class TaskService extends BaseService {
     return response;
   }
 
-  async changeTask(token, taskId, type, info, answer) {
+  async changeTask(taskId, type, info, answer) {
     let response = await request
       .put(`${this.apiEndpoint}/task/${taskId}`)
       .set({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + this.token
       })
       .send({
         type: type,
@@ -33,13 +33,15 @@ export class TaskService extends BaseService {
     return response;
   }
 
-  async deleteTask(token, id, taskid) {
+  async deleteTask(id, taskid) {
     let response = await request
       .del(`${this.apiEndpoint}/page/${id}/removeTask/${taskid}`)
       .set({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + this.token
       });
     return response;
   }
 }
+
+export default new TaskService()

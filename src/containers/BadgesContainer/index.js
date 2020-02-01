@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
-import Badges from "../../Badges";
-import BadgesModule from "../../../store/modules/BadgesModule"
-import ViewModule from '../../../store/modules/ViewModule'
+
+import Badges from "../../components/Badges";
+import BadgesModule from "../../store/modules/BadgesModule"
+import ViewModule from '../../store/modules/ViewModule'
 
 const mapStateToProps = state => ({
     badges: BadgesModule.getBadges(state),

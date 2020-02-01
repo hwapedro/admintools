@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import News from "../../News";
 
-import NewsModule from "../../../store/modules/NewsModule";
-import ViewModule from '../../../store/modules/ViewModule'
+import News from "../../components/News";
+import NewsModule from "../../store/modules/NewsModule";
+import ViewModule from '../../store/modules/ViewModule'
 
 const mapStateToProps = state => ({
     news: NewsModule.getNews(state),

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import PageNav from "../PageNav";
 import Button from "../../Shared/Button";
 import TaskList from "../Task/TaskList";
-import TaskConstructorContainer from "../../Containers/TaskConstructorContainer";
+import TaskConstructorContainer from "../../../containers/TaskConstructorContainer";
 
 import {
   PageNumber,
@@ -26,7 +26,14 @@ class PageList extends Component {
 
   render() {
     const { pageNumber } = this.state;
-    const { lessonId, pages, deletePage, deleteTask, activeLanguage } = this.props;
+    const {
+      lessonId,
+      pages,
+      deletePage,
+      deleteTask,
+      setTask,
+      activeLanguage
+    } = this.props;
 
     let list;
     if (pages) {
@@ -37,7 +44,7 @@ class PageList extends Component {
               <PageHeader>
                 <PageNumber>Page {index + 1}</PageNumber>
                 <ButtonWrapper>
-                  <TaskConstructorContainer pageId={page._id}/>
+                  <TaskConstructorContainer pageId={page._id} />
                   <ButtonWrapper>
                     <Button
                       buttonStyle={"outlined"}
@@ -51,6 +58,7 @@ class PageList extends Component {
               <TaskList
                 lessonId={lessonId}
                 page={page}
+                setTask={setTask}
                 deleteTask={deleteTask}
                 activeLanguage={activeLanguage}
               />
@@ -63,7 +71,11 @@ class PageList extends Component {
     return (
       <>
         <PageMenu>
-          <PageNav amount={pages} changePage={this.changePage} pageNumber={pageNumber}/>
+          <PageNav
+            amount={pages}
+            changePage={this.changePage}
+            pageNumber={pageNumber}
+          />
         </PageMenu>
         <ElementWrapper>{list}</ElementWrapper>
       </>
@@ -76,7 +88,8 @@ PageList.defaultProps = {
   lessonId: null,
 
   deletePage() {},
-  deleteTask() {}
+  deleteTask() {},
+  setTask() {}
 };
 
 PageList.propTypes = {
@@ -84,7 +97,8 @@ PageList.propTypes = {
   lessonId: PropTypes.string.isRequired,
 
   deletePage: PropTypes.func,
-  deleteTask: PropTypes.func
+  deleteTask: PropTypes.func,
+  setTask: PropTypes.func
 };
 
 export default withRouter(PageList);

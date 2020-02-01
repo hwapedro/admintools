@@ -149,6 +149,7 @@ export default class Lesson extends Component {
       loading,
       deletePage,
       deleteTask,
+      setTask,
       error
     } = this.props;
     const {
@@ -159,8 +160,6 @@ export default class Lesson extends Component {
       exam,
       activeLanguage
     } = this.state;
-
-    const pagesFixMe = !pages.length ? lesson.pages : pages;
 
     return (
       <>
@@ -284,11 +283,12 @@ export default class Lesson extends Component {
             ) : (
               <PageList
                 lessonId={lesson._id}
-                pages={pagesFixMe}
+                pages={pages}
                 id={lesson._id}
                 deletePage={deletePage}
                 deleteTask={deleteTask}
                 activeLanguage={activeLanguage}
+                setTask={setTask}
               />
             )}
           </Wrapper>
@@ -305,7 +305,8 @@ Lesson.defaultProps = {
   error: false,
 
   getLesson() {},
-  changeLesson() {}
+  changeLesson() {},
+  setTask() {}
 };
 
 Lesson.propTypes = {
@@ -315,5 +316,6 @@ Lesson.propTypes = {
   error: PropTypes.bool,
 
   getLesson: PropTypes.func,
-  changeLesson: PropTypes.func
+  changeLesson: PropTypes.func,
+  setTask: PropTypes.func
 };

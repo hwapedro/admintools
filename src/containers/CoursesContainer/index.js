@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
-import Courses from "../../Courses";
-import CoursesModule from "../../../store/modules/CoursesModule";
-import ViewModule from "../../../store/modules/ViewModule";
+
+import Courses from "../../components/Courses";
+import CoursesModule from "../../store/modules/CoursesModule";
+import ViewModule from "../../store/modules/ViewModule";
 
 const mapStateToProps = state => ({
   courses: CoursesModule.getAllCourses(state),

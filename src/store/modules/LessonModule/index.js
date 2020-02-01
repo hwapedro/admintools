@@ -2,6 +2,7 @@ import DuckModule from "simple-duck";
 import LessonService from "../../../service/lesson";
 import { DND } from "../../utils";
 import ViewModule from "../ViewModule";
+import PageModule from "../PageModule"
 
 const initialState = {
   loading: false,
@@ -19,9 +20,6 @@ class LessonModule extends DuckModule {
     this.ADD_LESSON_SUCCESS = `${this.prefix}ADD_LESSON_SUCCESS`;
     this.GET_LESSON_SUCCESS = `${this.prefix}GET_LESSON_SUCCESS`;
     this.CHANGE_DND_LESSON_SUCCESS = `${this.prefix}CHANGE_DND_LESSON_SUCCESS`;
-    this.ADD_TASK_SUCCESS = `${this.prefix}ADD_TASK_SUCCESS`;
-    this.CHANGE_TASK_SUCCESS = `${this.prefix}CHANGE_TASK_SUCCESS`;
-    this.DELETE_TASK_SUCCESS = `${this.prefix}DELETE_TASK_SUCCESS`;
   }
 
   reduce = (state = initialState, action) => {
@@ -68,43 +66,6 @@ class LessonModule extends DuckModule {
       case this.CHANGE_DND_LESSON_SUCCESS:
         return DND(state, action.payload.id1, action.payload.id2, "lessons");
 
-      case this.ADD_TASK_SUCCESS:
-        return {
-          ...state,
-          lesson: {
-            ...state.lesson,
-            pages: state.lesson.pages.map(page =>
-              page._id === action.pageId
-                ? { ...page, tasks: [...page.tasks, action.task] }
-                : page
-            )
-          }
-        };
-
-      case this.CHANGE_TASK_SUCCESS:
-        return {
-          ...state,
-
-          lesson: {
-            ...state.lesson,
-            pages: state.lesson.pages.map(page =>
-              page._id === action.pageId
-                ? {
-                    ...page,
-                    tasks: page.tasks.map(task =>
-                      task._id === action.taskId ? action.task : task
-                    )
-                  }
-                : page
-            )
-          }
-        };
-
-      case this.DELETE_TASK_SUCCESS:
-        return {
-          ...state,
-          lesson: { ...action.lesson, pages: action.lesson.pages }
-        };
       default:
         return super.reduce(state, action);
     }
@@ -112,7 +73,7 @@ class LessonModule extends DuckModule {
 
   getAllLessons = () => dispatch => {
     dispatch(ViewModule.setLoading(true));
-
+    
     LessonService.getAll()
       .then(response => {
         dispatch({
@@ -143,6 +104,7 @@ class LessonModule extends DuckModule {
 
     LessonService.getOne(id)
       .then(response => {
+        dispatch(PageModule.setPages(response.lesson.pages))
         dispatch({
           type: this.GET_LESSON_SUCCESS,
           lesson: response.lesson
@@ -176,51 +138,6 @@ class LessonModule extends DuckModule {
           type: this.DELETE_LESSON_SUCCESS,
           index: index,
           flag
-        });
-      })
-      .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
-  };
-
-  addTask = (pageId, type, info, answer) => dispatch => {
-    dispatch(ViewModule.setLoading(true));
-
-    LessonService.createTask(pageId, type, info, answer)
-      .then(response => {
-        dispatch({
-          type: this.ADD_TASK_SUCCESS,
-          task: response.body.task,
-          pageId: pageId
-        });
-      })
-      .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
-  };
-
-  changeTask = (taskId, type, info, pageId, answer) => dispatch => {
-    dispatch(ViewModule.setLoading(true));
-
-    LessonService.changeTask(taskId, type, info, answer)
-      .then(response => {
-        dispatch({
-          type: this.CHANGE_TASK_SUCCESS,
-          task: response.body.task,
-          taskId: taskId,
-          pageId: pageId
-        });
-      })
-      .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
-  };
-
-  deleteTask = (pageId, taskid) => dispatch => {
-    dispatch(ViewModule.setLoading(true));
-    LessonService.deleteTask(pageId, taskid)
-      .then(response => {
-        dispatch({
-          type: this.DELETE_TASK_SUCCESS,
-          lesson: response.body.lesson,
-          pageId: pageId
         });
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
