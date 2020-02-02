@@ -12,17 +12,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addCourses: (title, annotation, description) =>
-    dispatch(CoursesModule.addElement(title, annotation, description)),
+    dispatch(CoursesModule.add(title, annotation, description)),
 
-  delCourse: (courseIndex, name) =>
-    dispatch(CoursesModule.deletElement(courseIndex, name)),
+  delCourse: (courseIndex, name) => dispatch(CoursesModule.delete(courseIndex)),
 
-  getAllCourses: name => dispatch(CoursesModule.getAllElements(name)),
+  getAllCourses: () => dispatch(CoursesModule.getAll()),
 
-  changeCourse: (courseIndex, title, annotation, description, name) =>
-    dispatch(
-      CoursesModule.changeElement(courseIndex, title, annotation, description, name)
-    ),
+  changeCourse: (courseIndex, title, annotation, description) =>
+    dispatch(CoursesModule.change(courseIndex, title, annotation, description)),
 
   changeDnD: (id1, id2) =>
     dispatch(CoursesModule.changeDnD(id1, id2, "courses")),

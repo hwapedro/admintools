@@ -1,30 +1,20 @@
 import React from "react";
-import { connect } from "react-redux";
-import { login } from "../../../store/actions/actionLogin";
-import { withRouter } from "react-router-dom";
 import styled from "styled-components";
-
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import AuthorizationInput from "../AuthorizationInput";
-import Button from '../../Shared/Button'
-
+import Button from "../../Shared/Button";
 
 const signInSchema = Yup.object().shape({
   username: Yup.string().required("Обязательно для заполнения"),
   password: Yup.string().required("Обязательно для заполнения")
 });
 
-class LoginScreen extends React.Component {
-  componentDidMount() {
-    let token = localStorage.getItem("token");
-    if (token !== null) {
-      this.props.history.push("/courses");
-    }
-  }
+export default class LoginScreen extends React.Component {
 
   setLogin = async ({ username, password }) => {
+    console.log(this.props);
     const { login } = this.props;
     await login(username, password);
   };
@@ -35,10 +25,6 @@ class LoginScreen extends React.Component {
 
   render() {
     const { loading, error } = this.props;
-
-    if (loading) {
-      return <div>loading...</div>;
-    }
 
     return (
       <Wrapper>
@@ -67,14 +53,16 @@ class LoginScreen extends React.Component {
               <ErrorMessage name="password" component={Error} />
 
               <ButtonWrapper>
-                <Button buttonStyle={"outlined"} type="submit">SIGN IN</Button>
+                <Button buttonStyle={"outlined"} type="submit">
+                  SIGN IN
+                </Button>
               </ButtonWrapper>
 
-              <ButtonWrapper>
+              {/* <ButtonWrapper>
                 <button onClick={this.toRegister}>
                   Not registered yet? Sign up now!
                 </button>
-              </ButtonWrapper>
+              </ButtonWrapper> */}
             </Form>
           )}
         />
@@ -83,23 +71,6 @@ class LoginScreen extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  token: state.Auth.token,
-  loading: false,
-  error: false
-});
-
-const mapDispatchToProps = dispatch => ({
-  login: (username, password) => dispatch(login(username, password))
-});
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(LoginScreen)
-);
 
 export const Wrapper = styled.div`
   padding-top: 5rem;

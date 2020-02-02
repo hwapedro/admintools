@@ -36,9 +36,10 @@ export default class BadgeConstructor extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { createBadge } = this.props;
+    const { addBadge } = this.props;
     const { title, description, icon } = this.state;
-    createBadge(title, description, icon);
+    console.log(icon)
+    addBadge(title, description, icon);
   };
 
   onChange = event => {

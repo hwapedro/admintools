@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
+import AuthorizationContainer from "../containers/AuthorizationContainer";
 import CoursesContainer from "../containers/CoursesContainer";
 import LessonsContainer from "../containers/LessonsContainer";
 import BadgesContainer from "../containers/BadgesContainer";
@@ -11,8 +12,8 @@ import NewsContainer from "../containers/NewsContainer";
 import OneCourseContainer from "../containers/OneCourseContainer";
 
 import Layout from "./hoc/Layout";
-import LoginScreen from "../components/Authorization/LoginScreen";
-import RegistrationScreen from "../components/Authorization/RegistrationScreen";
+import { NoMatch } from "../components/NoMatch";
+// import RegistrationScreen from "../components/Authorization/RegistrationScreen";
 
 import * as route from "../components/Route/constants";
 
@@ -28,27 +29,57 @@ class App extends Component {
   ];
 
   render() {
-    return (
-      <Switch>
-        <Route path="/" exact component={LoginScreen} />
-        <Route path={route.register} exact component={RegistrationScreen} />
+    console.log(
+      localStorage.getItem("token"),
+      localStorage.getItem("token") === null
+    );
+
+    if (localStorage.getItem("token") == null) {
+      return (
+        <Switch>
+          <Route exact path="/login" exact component={AuthorizationContainer} />
+          <Route render={() => <Redirect to="/login" />} />
+        </Switch>
+      );
+    } else
+      return (
         <Wrapper>
-          <Layout className="container">
+          <Switch>
+            {/* <Route path={route.register} exact component={RegistrationScreen} /> */}
+
+            <Route path="/login" render={() => <Redirect to="/" />} />
             {this.routes.map(({ path, Component }) => (
-              <Route key={path} exact path={path} component={Component} />
+              <Route
+                key={path}
+                exact
+                path={path}
+                render={() => (
+                  <Layout className="container">
+                    <Component />
+                  </Layout>
+                )}
+              />
             ))}
             <Route
               path={route.lesson}
               render={({ match }) => {
                 const { id } = match.params;
-                return <LessonContainer itemId={id} />;
+                return (
+                  <Layout className="container">
+                    <LessonContainer itemId={id} />
+                  </Layout>
+                );
               }}
             />
             <Route
               path={route.course}
               render={({ match }) => {
                 const { id } = match.params;
-                return <OneCourseContainer itemId={id} />;
+                return (
+                  <Layout className="container">
+                    <OneCourseContainer itemId={id} />
+                  </Layout>
+                );
               }}
             />
             <Route
@@ -56,26 +87,22 @@ class App extends Component {
               render={({ match, history }) => {
                 const { lessonId, pageId, taskId } = match.params;
                 return (
-                  <TasksContainer
-                    lessonId={lessonId}
-                    pageId={pageId}
-                    taskId={taskId}
-                    history={history}
-                  />
+                  <Layout className="container">
+                    {" "}
+                    <TasksContainer
+                      lessonId={lessonId}
+                      pageId={pageId}
+                      taskId={taskId}
+                      history={history}
+                    />
+                  </Layout>
                 );
               }}
             />
-          </Layout>
+            <Route component={NoMatch} />
+          </Switch>
         </Wrapper>
-        {/* <Layout 
-                <Route path={route.courses} component={Courses} />
-                <Route path={route.lessons} component={Lessons} />
-                <Route path={route.badges} component={Badges} />
-
-               
-              </Layout> */}
-      </Switch>
-    );
+      );
   }
 }
 

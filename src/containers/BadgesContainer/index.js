@@ -11,14 +11,14 @@ const mapStateToProps = state => ({
   });
   
   const mapDispatchToProps = dispatch => ({
-    createBadge: (title, description, icon) =>
-      dispatch(BadgesModule.createBadge(title, description, icon)),
+    addBadge: (title, description, icon) =>
+      dispatch(BadgesModule.add(title, description, icon)),
   
-    delBadge: (courseIndex, name) => dispatch(BadgesModule.deletElement(courseIndex, name)),
+    deleteBadge: (badgeIndex) => dispatch(BadgesModule.delete(badgeIndex)),
   
-    getAllBadges: name => dispatch(BadgesModule.getAllBadges(name)),
+    getAllBadges: () => dispatch(BadgesModule.getAll()),
   
-    changeBadge: (token, index, title, description, icon) => dispatch(BadgesModule.changeBadge(token, index, title, description, icon))
+    changeBadge: (index, title, description, icon) => dispatch(BadgesModule.change(index, title, description, icon))
   });
   
   export default connect(

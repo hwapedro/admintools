@@ -1,10 +1,7 @@
 import DuckModule from "simple-duck";
-import AdminService from "../../../service";
-import { DND } from "../../utils";
-import { DELETE_LESSON_SUCCESS, ADD_LESSON_SUCCESS } from "../../constants";
-import ViewModule from "../ViewModule";
 
-const token = localStorage.getItem("token");
+import BadgeService from "../../../service/badge";
+import ViewModule from "../ViewModule";
 
 const initialState = {
   badges: []
@@ -28,7 +25,7 @@ class BadgesModule extends DuckModule {
         };
 
       case this.GETALL_BADGE_SUCCESS:
-        console.log(action)
+        console.log(action);
         return {
           ...state,
           badges: action.badges
@@ -49,18 +46,14 @@ class BadgesModule extends DuckModule {
         };
 
       default:
-        return {
-          ...state
-        };
+        return super.reduce(state, action);
     }
-    return super.reduce(state, action);
   };
 
-  deletElement = (index, name) => dispatch => {
+  delete = index => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-
-    AdminService.delet(index, token, name)
+    BadgeService.delete(index)
       .then(() => {
         dispatch({
           type: this.DELETE_BADGE_SUCCESS,
@@ -71,11 +64,10 @@ class BadgesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  getAllBadges = name => dispatch => {
+  getAll = () => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-
-    AdminService.getAll(token, name)
+    BadgeService.getAll()
       .then(response => {
         dispatch({
           type: this.GETALL_BADGE_SUCCESS,
@@ -86,10 +78,10 @@ class BadgesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  changeBadge = (index, title, description, icon) => dispatch => {
+  change = (index, title, description, icon) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.changeBadge(token, index, { title, description, icon })
+    BadgeService.change(index, { title, description, icon })
       .then(response => {
         dispatch({
           type: this.CHANGE_BADGE_SUCCESS,
@@ -100,10 +92,10 @@ class BadgesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  createBadge = (title, description, icon) => dispatch => {
+  add = (title, description, icon) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    AdminService.createBadge(token, { title, description, icon })
+    BadgeService.add({ title, description, icon })
       .then(response => {
         dispatch({
           type: this.ADD_BADGE_SUCCESS,
@@ -117,7 +109,6 @@ class BadgesModule extends DuckModule {
   getBadges = state => {
     return this.getRoot(state).badges;
   };
-
 }
 
 export default new BadgesModule("/BADGES/", state => state.Badges);

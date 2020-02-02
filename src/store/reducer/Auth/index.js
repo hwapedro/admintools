@@ -1,10 +1,5 @@
 import {
-  FETCH_LOGIN_REQUEST,
-  FETCH_LOGIN_SUCCESS,
-  FETCH_LOGIN_FAILURE,
-  FETCH_REGISTER_REQUEST,
-  FETCH_REGISTER_SUCCESS,
-  FETCH_REGISTER_FAILURE
+
 } from "../../constants";
 
 import { getError } from "../../utils";

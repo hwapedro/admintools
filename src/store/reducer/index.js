@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 
-import Auth from "./Auth";
-
+import AuthModule from "../modules/AuthModule";
 import CoursesModule from "../modules/CoursesModule";
 import ViewModule from "../modules/ViewModule";
 import LessonModule from "../modules/LessonModule";
@@ -10,6 +9,7 @@ import NewsModule from "../modules/NewsModule";
 import PageModule from "../modules/PageModule";
 import TaskModule from "../modules/TaskModule";
 
+const auth = LessonModule.reduce;
 const lesson = LessonModule.reduce;
 const News = NewsModule.reduce;
 const Courses = CoursesModule.reduce;
@@ -19,7 +19,7 @@ const page = PageModule.reduce;
 const task = TaskModule.reduce;
 
 export default combineReducers({
-  Auth,
+  auth,
   Courses,
   lesson,
   page,

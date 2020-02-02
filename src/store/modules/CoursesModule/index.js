@@ -107,7 +107,7 @@ class CoursesModule extends DuckModule {
     }
   };
 
-  getAllElements = () => dispatch => {
+  getAll = () => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
     CourseService.getAll()
@@ -121,7 +121,7 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  addElement = (title, annotation, description) => dispatch => {
+  add = (title, annotation, description) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
     CourseService.add(title, annotation, description)
@@ -135,7 +135,7 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  deletElement = index => dispatch => {
+  delete = index => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
     CourseService.delete(index)
@@ -149,7 +149,7 @@ class CoursesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  changeElement = (index, title, annotation, description) => dispatch => {
+  change = (index, title, annotation, description) => dispatch => {
     dispatch(ViewModule.setLoading(true));
     CourseService.change(index, title, annotation, description)
       .then(async response =>

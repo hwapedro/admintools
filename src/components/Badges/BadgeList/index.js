@@ -30,7 +30,8 @@ class BadgeList extends Component {
     title: null,
     description: null,
     changeFlag: false,
-    badgeIndex: null
+    badgeIndex: null,
+    icon: null
   };
 
   //
@@ -39,22 +40,21 @@ class BadgeList extends Component {
       changeFlag: true,
       badgeIndex: badgeIndex,
       title: title,
-      description: description,
+      description: description
     });
   };
 
   setParams = event => {
     event.preventDefault();
     const { changeBadge } = this.props;
-    const { title, description, badgeIndex } = this.state;
-    const icon = localStorage.getItem("icon");
+    const { title, description, badgeIndex, icon } = this.state;
     changeBadge(badgeIndex, title, description, icon);
     this.setState({ changeFlag: false, badgeIndex: null });
   };
 
   setPicture = event => {
     getBase64(event.target.files[0]).then(icon => {
-      localStorage.setItem("icon", icon);
+      this.setState({ icon: icon });
     });
   };
 
@@ -67,16 +67,10 @@ class BadgeList extends Component {
     }
   };
 
-  deleteItem = badgeIndex => {
-    const { delBadge } = this.props;
-    delBadge(badgeIndex, name);
-  };
-
-
   onChange = event => {
     const { title, description } = this.state;
-    const { activeLanguage } = this.props
-    
+    const { activeLanguage } = this.props;
+
     switch (event.target.name) {
       case "description":
         this.setState({
@@ -96,12 +90,19 @@ class BadgeList extends Component {
         break;
       default:
         this.setState({ [event.target.name]: event.target.value });
-      }
+    }
   };
 
   render() {
-    const { badges, search, activeLanguage, handleLangChange } = this.props;
+    const {
+      badges,
+      search,
+      activeLanguage,
+      handleLangChange,
+      deleteBadge
+    } = this.props;
     const { title, description } = this.state;
+
     let list = badges
       .filter(badge => {
         if (
@@ -169,7 +170,9 @@ class BadgeList extends Component {
                 <LabelElement>Name of badge :</LabelElement>
                 <TitleSpan> {badge.title[activeLanguage.value]}</TitleSpan>
                 <LabelElement>Description of badge : </LabelElement>
-                <DescriptionSpan>{badge.description[activeLanguage.value]}</DescriptionSpan>
+                <DescriptionSpan>
+                  {badge.description[activeLanguage.value]}
+                </DescriptionSpan>
                 <ButtonWrapper>
                   <Button
                     buttonStyle={"outlined"}
@@ -188,7 +191,7 @@ class BadgeList extends Component {
                     buttonStyle={"outlined"}
                     onClick={() => {
                       if (window.confirm("Delete the item?")) {
-                        this.deleteItem(badge._id);
+                        deleteBadge(badge._id);
                       }
                     }}
                   >

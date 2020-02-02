@@ -10,7 +10,7 @@ const name = "badge";
 export default class Badge extends Component {
   state = {
     search: "",
-    activeLanguage: {label: "Russian", value: "ru"}
+    activeLanguage: { label: "Russian", value: "ru" }
   };
 
   componentDidMount() {
@@ -31,9 +31,9 @@ export default class Badge extends Component {
       loading,
       badges,
       changeBadge,
-      createBadge,
+      addBadge,
       getAllBadges,
-      delBadge,
+      deleteBadge,
       error
     } = this.props;
 
@@ -54,25 +54,27 @@ export default class Badge extends Component {
         {!error && !loading && (
           <>
             <BadgeConstructor
-             value={search}
-              createBadge={(title, description, name) =>
-                createBadge(title, description, name)
-              }
-              getAllBadges={name => getAllBadges(name)}
+              value={search}
+              addBadge={(title, description, icon) => addBadge(title, description, icon)}
+              getAllBadges={() => getAllBadges()}
               onChange={this.onChange}
               activeLanguage={activeLanguage}
-              handleLangChange={activeLanguage => this.handleLangChange(activeLanguage)}
+              handleLangChange={activeLanguage =>
+                this.handleLangChange(activeLanguage)
+              }
             />
 
             <BadgesList
               badges={badges}
               search={search}
-              changeBadge={(courseIndex, title, description, name, icon) =>
-                changeBadge(courseIndex, title, description, name, icon)
+              changeBadge={(badgeIndex, title, description, icon) =>
+                changeBadge(badgeIndex, title, description, icon)
               }
               activeLanguage={activeLanguage}
-              handleLangChange={activeLanguage => this.handleLangChange(activeLanguage)}
-              delBadge={(courseIndex, name) => delBadge(courseIndex, name)}
+              handleLangChange={activeLanguage =>
+                this.handleLangChange(activeLanguage)
+              }
+              deleteBadge={badgeIndex => deleteBadge(badgeIndex)}
             />
           </>
         )}
@@ -86,10 +88,9 @@ Badge.defaultProps = {
   loading: false,
   error: false,
   addBadge() {},
-  delBadge() {},
+  deleteBadge() {},
   getAllBadges() {},
-  changeBadge() {},
-  changeIconBadge() {}
+  changeBadge() {}
 };
 
 Badge.propTypes = {
@@ -98,9 +99,7 @@ Badge.propTypes = {
   error: PropTypes.bool,
 
   addBadge: PropTypes.func,
-  delBadge: PropTypes.func,
+  deleteBadge: PropTypes.func,
   getAllBadges: PropTypes.func,
-  changeBadge: PropTypes.func,
-  changeIconBadge: PropTypes.func
+  changeBadge: PropTypes.func
 };
-
