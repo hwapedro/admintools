@@ -37,8 +37,8 @@ class App extends Component {
     if (localStorage.getItem("token") == null) {
       return (
         <Switch>
-          <Route exact path="/login" exact component={AuthorizationContainer} />
-          <Route render={() => <Redirect to="/login" />} />
+          <Route path="/login" component={AuthorizationContainer} />
+          <Route render={() => <Redirect to={"/login"} />} />
         </Switch>
       );
     } else
@@ -47,7 +47,7 @@ class App extends Component {
           <Switch>
             {/* <Route path={route.register} exact component={RegistrationScreen} /> */}
 
-            <Route path="/login" render={() => <Redirect to="/" />} />
+            <Route path="/login" render={() => <Redirect to={"/"} />} />
             {this.routes.map(({ path, Component }) => (
               <Route
                 key={path}

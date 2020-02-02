@@ -34,7 +34,7 @@ const NoMatchBox = styled.div`
 
 const NoMatchTitle = styled.div`
   font-size: 90px;
-  text-align: center
+  text-align: center;
   margin-bottom: 35px;
   text-transform: uppercase;
 `;

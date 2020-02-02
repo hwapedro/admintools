@@ -42,7 +42,7 @@ class Menu extends Component {
               color={'white'}
               onClick={() => {
                 localStorage.removeItem("token");
-                this.props.history.push("/");
+                this.props.history.push("/login");
               }}
             >
               Sign out
