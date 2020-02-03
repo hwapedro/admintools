@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Button from "../../../Shared/Button";
+import { SmartContainer } from "../../../Shared/SmartContainer";
 
 import {
   ElementWrapper,
@@ -11,21 +12,20 @@ import {
 } from "../../styleLocal.js";
 import { LabelElement } from "../../../GlobalStyles/styleGlobal";
 
-export default function Article({ news, getParams, deleteItem, activeLanguage }) {
+export default function Article({
+  news,
+  getParams,
+  deleteItem,
+  activeLanguage
+}) {
   return (
     <ElementWrapper>
-      <LabelElement>Name of article :</LabelElement>
-      <TitleSpan> {news.title[activeLanguage.value]}</TitleSpan>
-      <LabelElement>Description of article : </LabelElement>
-      <DescriptionSpan
-        dangerouslySetInnerHTML={{
-          __html: news.description[activeLanguage.value]
-        }}
+      <SmartContainer
+        name="Article"
+        title={news.title[activeLanguage.value]}
+        description={news.description[activeLanguage.value]}
+        publish={new Date(news.date).toLocaleString()}
       />
-      <LabelElement>Published : </LabelElement>
-      <DescriptionSpan>
-        <pre>{new Date(news.date).toLocaleString()}</pre>
-      </DescriptionSpan>
       <ButtonWrapper>
         <Button
           buttonStyle={"outlined"}

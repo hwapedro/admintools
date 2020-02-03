@@ -2,12 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Draggable } from "react-beautiful-dnd";
 
+import { SmartContainer } from "../../../Shared/SmartContainer";
 import Button from "../../../Shared/Button";
 
-import { TitleSpan, DescriptionSpan } from "../../styleLocal.js";
 import {
   ButtonWrapper,
-  LabelElement,
   ElementWrapper
 } from "../../../GlobalStyles/styleGlobal";
 
@@ -32,17 +31,12 @@ export default function Course({
           {...provided.dragHandleProps}
           key={course.courseIndex}
         >
-          <LabelElement>Course number :</LabelElement>
-          <TitleSpan> {course.courseIndex}</TitleSpan>
-          <LabelElement>Course name :</LabelElement>
-          <TitleSpan> {course.title[activeLanguage.value]}</TitleSpan>
-          <LabelElement>Course annotation :</LabelElement>
-          <TitleSpan> {course.annotation[activeLanguage.value]}</TitleSpan>
-          <LabelElement>Course description : </LabelElement>
-          <DescriptionSpan
-            dangerouslySetInnerHTML={{
-              __html: course.description[activeLanguage.value]
-            }}
+          <SmartContainer
+            name="Course"
+            index={course.courseIndex}
+            title={course.title[activeLanguage.value]}
+            annotation={course.annotation[activeLanguage.value]}
+            description={course.description[activeLanguage.value]}
           />
           <ButtonWrapper>
             <Button buttonStyle={"outlined"} onClick={() => goTo(course._id)}>
@@ -51,7 +45,12 @@ export default function Course({
             <Button
               buttonStyle={"outlined"}
               onClick={() =>
-                getParams(course.courseIndex, course.title, course.annotation, course.description)
+                getParams(
+                  course.courseIndex,
+                  course.title,
+                  course.annotation,
+                  course.description
+                )
               }
             >
               CHANGE COURSE

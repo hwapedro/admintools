@@ -115,8 +115,6 @@ class CourseList extends Component {
    
     let list = courses
       .filter(course => {
-        console.log(course.title[activeLanguage.value])
-        console.log(search)
         if (
           course.title[activeLanguage.value]
             .toLowerCase()

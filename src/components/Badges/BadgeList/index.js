@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import ButtonMaterial from "@material-ui/core/Button";
+
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
+import { SmartContainer } from "../../Shared/SmartContainer";
 
 import {
   DescriptionSpan,
@@ -167,12 +169,11 @@ class BadgeList extends Component {
                 <BadgeImg src={badge.icon} alt="icon" />
               </BadgeWrapper>
               <InfoWrapper>
-                <LabelElement>Name of badge :</LabelElement>
-                <TitleSpan> {badge.title[activeLanguage.value]}</TitleSpan>
-                <LabelElement>Description of badge : </LabelElement>
-                <DescriptionSpan>
-                  {badge.description[activeLanguage.value]}
-                </DescriptionSpan>
+                <SmartContainer
+                  name="Badge "
+                  title={badge.title[activeLanguage.value]}
+                  description={badge.description[activeLanguage.value]}
+                />
                 <ButtonWrapper>
                   <Button
                     buttonStyle={"outlined"}

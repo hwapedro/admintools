@@ -2,47 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../../Shared/Button";
 
-import {
-  DescriptionSpan,
-  ElementWrapper,
-  ExamPropContainer,
-  ImgMark,
-  ImgCross
-} from "../../styleLocal.js";
+import { ElementWrapper } from "../../styleLocal.js";
 
-import {
-  ButtonWrapper,
-  LabelElement,
-  TitleSpan
-} from "../../../GlobalStyles/styleGlobal";
+import { ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
 
 import LessonContainer from "./LessonContainer";
+import { SmartContainer } from "../../../Shared/SmartContainer";
 
-import checkMark from "../../../../img/good.png";
-import redCross from "../../../../img/bad.png";
-
-export default function Lesson({ lesson, deleteItem, index, goTo, course, activeLanguage }) {
+export default function Lesson({
+  lesson,
+  deleteItem,
+  index,
+  goTo,
+  course,
+  activeLanguage
+}) {
   if (!course) {
     return (
       <ElementWrapper key={lesson._id}>
-        <LabelElement>Name of Lesson :</LabelElement>
-        <TitleSpan> {lesson.title[activeLanguage.value]}</TitleSpan>
-        <LabelElement>Description of Lesson : </LabelElement>
-        <DescriptionSpan
-          dangerouslySetInnerHTML={{
-            __html: lesson.description[activeLanguage.value]
-          }}
+        <SmartContainer
+          name="Lesson"
+          title={lesson.title[activeLanguage.value]}
+          description={lesson.description[activeLanguage.value]}
+          exam={lesson.exam}
+          courseIndex={lesson.courseIndex}
         />
-        <ExamPropContainer>
-          <LabelElement>EXAM :</LabelElement>
-          {lesson.exam ? (
-            <ImgMark src={checkMark} />
-          ) : (
-            <ImgCross src={redCross} />
-          )}
-        </ExamPropContainer>
-        <LabelElement>Course Index :</LabelElement>
-        <TitleSpan> {lesson.courseIndex}</TitleSpan>
         <ButtonWrapper>
           <Button buttonStyle={"outlined"} onClick={() => goTo(lesson._id)}>
             CHANGE Lesson
@@ -63,22 +47,12 @@ export default function Lesson({ lesson, deleteItem, index, goTo, course, active
   } else {
     return (
       <LessonContainer lesson={lesson} index={index}>
-        <LabelElement>Name of Lesson :</LabelElement>
-        <TitleSpan> {lesson.title[activeLanguage.value]}</TitleSpan>
-        <LabelElement>Description of Lesson : </LabelElement>
-        <DescriptionSpan
-          dangerouslySetInnerHTML={{
-            __html: lesson.description[activeLanguage.value]
-          }}
+        <SmartContainer
+          name="Lesson"
+          title={lesson.title[activeLanguage.value]}
+          description={lesson.description[activeLanguage.value]}
+          exam={lesson.exam}
         />
-        <ExamPropContainer>
-          <LabelElement>EXAM :</LabelElement>
-          {lesson.exam ? (
-            <ImgMark src={checkMark} />
-          ) : (
-            <ImgCross src={redCross} />
-          )}
-        </ExamPropContainer>
         <ButtonWrapper>
           <Button buttonStyle={"outlined"} onClick={() => goTo(lesson._id)}>
             CHANGE Lesson
@@ -103,7 +77,7 @@ Lesson.defaultProps = {
   lesson: {},
   course: null,
   index: null,
-  
+
   goTo() {},
   deleteItem() {}
 };

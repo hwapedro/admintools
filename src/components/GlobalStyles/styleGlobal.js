@@ -19,7 +19,7 @@ export const ConsturctorWrapper = styled.div`
   z-index: 101;
   margin-top: -200px;
   margin-left: -330px;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3);
 `;
 
 export const ConsturctorForm = styled.form``;

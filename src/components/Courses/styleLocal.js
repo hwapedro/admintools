@@ -38,7 +38,7 @@ export const ElementWrapper = styled.li`
   background-color: ${props => props.theme.courses};
   margin-top: 2rem;
   padding: 1rem;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3);
 `;
 
 export const SignInButton = styled.button`
@@ -90,7 +90,7 @@ export const ConsturctorWrapper = styled.div`
   z-index: 101;
   margin-top: -200px;
   margin-left: -330px;
-  box-shadow: 0px 2px 4px rgb(0,0,0,0.3)
+  box-shadow: 0px 2px 4px rgb(0,0,0,0.3);
 `;
 
 export const ConsturctorForm = styled.form``;
@@ -105,12 +105,6 @@ export const TitleInput = styled.input`
   color: black;
   padding-left: 0.7em;
   width:100%;
-`;
-
-export const LabelElement = styled.span`
-  margin-top: 2rem;
-  font-weight: 900;
-  font-size: 1.8rem;
 `;
 
 export const ButtonWrapper = styled.div`
