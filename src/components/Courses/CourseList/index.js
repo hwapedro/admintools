@@ -8,6 +8,7 @@ import Course from "./Course";
 import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
 import Editor from "../../Shared/Editor";
+import { SmartConstructor } from "../../Shared/SmartConstructor";
 
 import { ElementsWrapper } from "../styleLocal";
 import {
@@ -112,7 +113,7 @@ class CourseList extends Component {
       annotation,
       description
     } = this.state;
-   
+
     let list = courses
       .filter(course => {
         if (
@@ -129,6 +130,12 @@ class CourseList extends Component {
           return (
             <ElementWrapper key={course.courseIndex}>
               <form onSubmit={this.setParams}>
+                <SmartConstructor
+                  select={{
+                    activeLanguage: activeLanguage,
+                    handleLangChange: handleLangChange
+                  }}
+                />
                 <LabelElement>Choose language</LabelElement>
                 <Select
                   value={activeLanguage}
