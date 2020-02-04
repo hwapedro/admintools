@@ -1,7 +1,6 @@
 import DuckModule from "simple-duck";
 import CourseService from "../../../service/course";
 import { DND } from "../../utils";
-import { DELETE_LESSON_SUCCESS, ADD_LESSON_SUCCESS } from "../../constants";
 
 import ViewModule from "../ViewModule";
 
@@ -21,6 +20,7 @@ class CoursesModule extends DuckModule {
     this.ADD_LESSON_SUCCESS = `${this.prefix}ADD_LESSON_SUCCESS`;
     this.CHANGE_DND_LESSON_SUCCESS = `${this.prefix}CHANGE_DND_LESSON_SUCCESS`;
     this.CHANGE_DND_SUCCESS = `${this.prefix}CHANGE_DND_SUCCESS`;
+    this.DELETE_LESSON_SUCCESS = `${this.prefix}DELETE_LESSON_SUCCESS`;
   }
 
   reduce = (state = initialState, action) => {
@@ -71,7 +71,7 @@ class CoursesModule extends DuckModule {
           course: action.course
         };
 
-      case ADD_LESSON_SUCCESS:
+      case this.ADD_LESSON_SUCCESS:
         if (action.flag === "course") {
           return {
             ...state,
@@ -85,7 +85,7 @@ class CoursesModule extends DuckModule {
         }
         return { ...state };
 
-      case DELETE_LESSON_SUCCESS:
+      case this.DELETE_LESSON_SUCCESS:
         if (action.flag === "course") {
           return {
             ...state,

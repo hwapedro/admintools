@@ -5,7 +5,6 @@ import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
 
 export const SmartContainer = ({ name, ...props }) => {
-  console.log(name, props);
   const content = Object.keys(props).map((key, index) => {
     if (key === "exam") {
       return (

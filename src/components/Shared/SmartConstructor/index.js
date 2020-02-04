@@ -2,18 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import Select from "react-select";
 
+import CustomInput from "../../Shared/Input";
 import Button from "../../Shared/Button";
+import Editor from "../../Shared/Editor";
 import { i18nSelector } from "../../../store/utils";
 
-export const SmartConstructor = props => {
+export const SmartConstructor = ({
+  modal,
+  showConstructor,
+  onChange,
+  onSubmit,
+  activeLanguage,
+  ...props
+}) => {
   console.log(props);
   const content = Object.keys(props).map((key, index) => {
     if (key === "select") {
       return (
         <div key={index}>
-          <LabelElement>Choose language</LabelElement>
+          <LabelElement>choose language</LabelElement>
           <Select
-            value={props[key].activeLanguage}
+            value={activeLanguage}
             onChange={props[key].handleLangChange}
             options={i18nSelector}
             maxMenuHeight={100}
@@ -21,26 +30,98 @@ export const SmartConstructor = props => {
         </div>
       );
     }
+    if (key === "description") {
+      return (
+        <div key={index}>
+          <LabelElement>{key}</LabelElement>
+          <Editor
+            onChange={onChange}
+            name={key}
+            value={props[key]}
+            language={activeLanguage.value}
+          />
+        </div>
+      );
+    }
 
     return (
       <div key={index}>
-        <ConsturctorWrapper></ConsturctorWrapper>
+        <CustomInput
+          label={key}
+          placeholder={`write ${key}`}
+          name={key}
+          value={props[key]}
+          onChange={onChange}
+          required={true}
+          maxLenght="100"
+        />
       </div>
     );
   });
 
   return (
     <>
-      <DarkGround onClick={this.showConstructor} />
-      {content}
-      <ButtonWrapper>
-        <Button buttonStyle={"outlined"} type="submit">
-          ADD NEW COURSE
-        </Button>
-      </ButtonWrapper>
+      {modal ? (
+        <>
+          <DarkGround onClick={showConstructor} />
+          <ConsturctorWrapper>
+            <ConsturctorForm onSubmit={onSubmit}>
+              {content}
+              <ButtonWrapper>
+                <Button buttonStyle={"outlined"} type="submit">
+                  ADD
+                </Button>
+              </ButtonWrapper>
+            </ConsturctorForm>
+          </ConsturctorWrapper>
+        </>
+      ) : (
+        <ConsturctorForm onSubmit={onSubmit}>
+          {content}
+          <ButtonWrapper>
+            <Button buttonStyle={"outlined"} type="submit">
+              CONFIRM
+            </Button>
+          </ButtonWrapper>
+        </ConsturctorForm>
+      )}
     </>
   );
 };
+{
+  /* <ConsturctorForm onSubmit={this.onSubmit}>
+  <CustomInput
+    label="Title"
+    placeholder="Title goes here"
+    name="title"
+    value={title[activeLanguage.value]}
+    onChange={this.onChange}
+    required={true}
+    maxLenght="100"
+  />
+  <CustomInput
+    label="Annotation"
+    placeholder="Title goes here"
+    name="annotation"
+    value={annotation[activeLanguage.value]}
+    onChange={this.onChange}
+    required={true}
+  />
+  <LabelElement>Description</LabelElement>
+  <Editor
+    onChange={this.onChange}
+    name="description"
+    value={description[activeLanguage.value]}
+    language={activeLanguage.value}
+  />
+
+  <ButtonWrapper>
+    <Button buttonStyle={"outlined"} type="submit">
+      ADD NEW COURSE
+    </Button>
+  </ButtonWrapper>
+</ConsturctorForm>; */
+}
 
 export const Wrapper = styled.div`
   padding-top: 1rem;

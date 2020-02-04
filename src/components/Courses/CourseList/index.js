@@ -41,7 +41,7 @@ class CourseList extends Component {
     });
   };
 
-  setParams = event => {
+  onSubmit = event => {
     event.preventDefault();
     const { title, annotation, description, courseIndex } = this.state;
     const { changeCourse } = this.props;
@@ -129,50 +129,18 @@ class CourseList extends Component {
         if (changeFlag && course.courseIndex === courseIndex) {
           return (
             <ElementWrapper key={course.courseIndex}>
-              <form onSubmit={this.setParams}>
-                <SmartConstructor
-                  select={{
-                    activeLanguage: activeLanguage,
-                    handleLangChange: handleLangChange
-                  }}
-                />
-                <LabelElement>Choose language</LabelElement>
-                <Select
-                  value={activeLanguage}
-                  onChange={handleLangChange}
-                  options={i18nSelector}
-                  maxMenuHeight={100}
-                />
-                <CustomInput
-                  label="Title"
-                  placeholder="Title goes here"
-                  name="title"
-                  value={title[activeLanguage.value]}
-                  onChange={this.onChange}
-                  required={true}
-                />
-                <CustomInput
-                  label="Annotation"
-                  placeholder="Title goes here"
-                  name="annotation"
-                  value={annotation[activeLanguage.value]}
-                  onChange={this.onChange}
-                  required={true}
-                />
-                <LabelElement>Description of course : </LabelElement>
-                <Editor
-                  onChange={this.onChange}
-                  name="description"
-                  value={description[activeLanguage.value]}
-                  language={activeLanguage.value}
-                />
-
-                <ButtonWrapper>
-                  <Button buttonStyle={"outlined"} type="submit">
-                    CONFIRM
-                  </Button>
-                </ButtonWrapper>
-              </form>
+              <SmartConstructor
+                showConstructor={this.showConstructor}
+                onSubmit={this.onSubmit}
+                onChange={this.onChange}
+                activeLanguage={activeLanguage}
+                select={{
+                  handleLangChange: handleLangChange
+                }}
+                title={title[activeLanguage.value]}
+                annotation={annotation[activeLanguage.value]}
+                description={description[activeLanguage.value]}
+              />
             </ElementWrapper>
           );
         } else {
