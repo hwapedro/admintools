@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 
 import Search from "../../Search";
 import Button from "../../Shared/Button";
-import CustomInput from "../../Shared/Input";
-import Editor from "../../Shared/Editor";
 
 import { ButtonWrapperConstructor } from "../styleLocal";
 import { SmartConstructor } from "../../Shared/SmartConstructor";

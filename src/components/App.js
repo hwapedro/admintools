@@ -18,7 +18,6 @@ import { NoMatch } from "../components/NoMatch";
 import * as route from "../components/Route/constants";
 
 import "simplemde/dist/simplemde.min.css";
-import "./test";
 
 class App extends Component {
   routes = [
@@ -29,11 +28,6 @@ class App extends Component {
   ];
 
   render() {
-    console.log(
-      localStorage.getItem("token"),
-      localStorage.getItem("token") === null
-    );
-
     if (localStorage.getItem("token") == null) {
       return (
         <Switch>

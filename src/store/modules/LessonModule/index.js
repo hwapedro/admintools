@@ -83,7 +83,7 @@ class LessonModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  changeLesson = (index, title, description, exam, courseIndex) => dispatch => {
+  change = (index, title, description, exam, courseIndex) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
     LessonService.change(index, title, description, exam, courseIndex)
@@ -99,7 +99,7 @@ class LessonModule extends DuckModule {
 
   getLesson = id => dispatch => {
     dispatch(ViewModule.setLoading(true));
-
+  
     LessonService.getOne(id)
       .then(response => {
         dispatch(PageModule.setPages(response.lesson.pages))

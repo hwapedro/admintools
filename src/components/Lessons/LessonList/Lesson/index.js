@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Button from "../../../Shared/Button";
 
 import { ElementWrapper } from "../../styleLocal.js";
-
 import { ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
 
 import LessonContainer from "./LessonContainer";

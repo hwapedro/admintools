@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 
 import Article from "./Article";
-import Editor from "../../Shared/Editor";
 import Button from "../../Shared/Button";
-import CustomInput from "../../Shared/Input";
+
+import { SmartConstructor } from "../../Shared/SmartConstructor";
 
 import { ElementWrapper, ElementsWrapper, EmptyMessage } from "../styleLocal";
 
@@ -35,7 +35,7 @@ class NewsList extends Component {
     });
   };
 
-  setParams = event => {
+  onSubmit = event => {
     event.preventDefault();
     const { title, description, _id } = this.state;
     const { changeArticle } = this.props;
@@ -103,37 +103,17 @@ class NewsList extends Component {
         if (changeFlag && news._id === _id) {
           return (
             <ElementWrapper key={news._id}>
-              <form onSubmit={this.setParams}>
-                <LabelElement>Choose language</LabelElement>
-                <Select
-                  value={activeLanguage}
-                  onChange={handleLangChange}
-                  options={i18nSelector}
-                  maxMenuHeight={100}
-                />
-                <CustomInput
-                  onChange={this.onChange}
-                  placeholder="Title"
-                  label="Title"
-                  name="title"
-                  value={title[activeLanguage.value]}
-                  required={true}
-                />
-                <LabelElement>Description of article : </LabelElement>
-
-                <Editor
-                  onChange={this.onChange}
-                  name="description"
-                  value={description[activeLanguage.value]}
-                  language={activeLanguage.value}
-                />
-
-                <ButtonWrapper>
-                  <Button buttonStyle={"outlined"} type="submit">
-                    CONFIRM
-                  </Button>
-                </ButtonWrapper>
-              </form>
+              <SmartConstructor
+                showConstructor={this.showConstructor}
+                onSubmit={this.onSubmit}
+                onChange={this.onChange}
+                activeLanguage={activeLanguage}
+                select={{
+                  handleLangChange: handleLangChange
+                }}
+                title={title[activeLanguage.value]}
+                description={description[activeLanguage.value]}
+              />
             </ElementWrapper>
           );
         } else {

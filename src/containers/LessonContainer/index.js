@@ -15,14 +15,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getLesson: id => dispatch(LessonModule.getLesson(id)),
-  changeLesson: (lessonsIndex, title, description, exam, name, courseIndex) =>
+  changeLesson: (lessonsIndex, title, description, exam, courseIndex) =>
     dispatch(
-      LessonModule.changeLesson(
+      LessonModule.change(
         lessonsIndex,
         title,
         description,
         exam,
-        name,
         courseIndex
       )
     ),

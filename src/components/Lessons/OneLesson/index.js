@@ -23,6 +23,7 @@ import Button from "../../Shared/Button";
 import CustomInput from "../../Shared/Input";
 import Spinner from "../../Spinner";
 import PageList from "../PageList";
+import { SmartContainer } from "../../Shared/SmartContainer";
 import Error from "../../Error";
 import AdminService from "../../../service";
 import Editor from "../../Shared/Editor";
@@ -48,6 +49,7 @@ export default class Lesson extends Component {
   componentDidMount() {
     const { getLesson, itemId } = this.props;
     const token = localStorage.getItem("token");
+
     getLesson(itemId);
 
     AdminService.getAll(token, "course")
@@ -89,12 +91,12 @@ export default class Lesson extends Component {
     });
   };
 
-  setParams = event => {
+  onSubmit = event => {
     event.preventDefault();
     const { changeLesson } = this.props;
     const { title, description, lessonId, exam, courseIndex } = this.state;
     if (title && description)
-      changeLesson(lessonId, title, description, exam, name, courseIndex.value);
+      changeLesson(lessonId, title, description, exam, courseIndex.value);
     this.setState({ changeFlag: false, lessonId: null });
   };
 
@@ -178,6 +180,18 @@ export default class Lesson extends Component {
           <Wrapper>
             {changeFlag ? (
               <>
+              <SmartConstructor
+              showConstructor={this.showConstructor}
+              onSubmit={this.onSubmit}
+              onChange={this.onChange}
+              modal={true}
+              activeLanguage={activeLanguage}
+              select={{
+                handleLangChange: handleLangChange
+              }}
+              title={title[activeLanguage.value]}
+              description={description[activeLanguage.value]}
+            />
                 <ElementWrapper>
                   <form onSubmit={this.setParams}>
                     <Select
@@ -250,25 +264,13 @@ export default class Lesson extends Component {
                     )
                   }
                 >
-                  <LabelElement>Name of Lesson :</LabelElement>
-                  <TitleSpan> {lesson.title[activeLanguage.value]}</TitleSpan>
-                  <LabelElement>Description of Lesson : </LabelElement>
-                  <DescriptionSpan
-                    dangerouslySetInnerHTML={{
-                      __html: lesson.description[activeLanguage.value]
-                    }}
+                  <SmartContainer
+                    name="Lesson"
+                    title={lesson.title[activeLanguage.value]}
+                    description={lesson.description[activeLanguage.value]}
+                    exam={lesson.exam}
+                    courseIndex={lesson.courseIndex}
                   />
-                  <ExamPropContainer>
-                    <LabelElement>EXAM :</LabelElement>
-                    {lesson.exam ? (
-                      <ImgMark src={checkMark} />
-                    ) : (
-                      <ImgCross src={redCross} />
-                    )}
-                  </ExamPropContainer>
-
-                  <LabelElement>Course Index :</LabelElement>
-                  <TitleSpan> {lesson.courseIndex}</TitleSpan>
                 </ElementWrapper>
 
                 <ButtonWrapper>
@@ -278,7 +280,7 @@ export default class Lesson extends Component {
                 </ButtonWrapper>
               </>
             )}
-            {lesson.pages.length === 0 ? (
+            {pages.length === 0 ? (
               <EmptyMessage>There is nothing here yet</EmptyMessage>
             ) : (
               <PageList

@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import Select from "react-select";
 import PropTypes from "prop-types";
 
-import Editor from "../../Shared/Editor";
 import Search from "../../Search";
 import Button from "../../Shared/Button";
-import CustomInput from "../../Shared/Input";
+import { SmartConstructor } from "../../Shared/SmartConstructor";
 
 import { ButtonWrapperConstructor } from "../styleLocal";
 import {
@@ -50,7 +49,7 @@ class SetArticle extends Component {
   };
 
   onChange = event => {
-    const {  title, description } = this.state;
+    const { title, description } = this.state;
     const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "title":
@@ -102,38 +101,18 @@ class SetArticle extends Component {
         </ButtonWrapperConstructor>
         {constructor && (
           <>
-            <DarkGround onClick={this.showConstructor} />
-            <ConsturctorWrapper>
-              <ConsturctorForm onSubmit={this.onSubmit}>
-                <LabelElement>Choose language</LabelElement>
-                <Select
-                  value={activeLanguage}
-                  onChange={handleLangChange}
-                  options={i18nSelector}
-                  maxMenuHeight={100}
-                />
-                <CustomInput
-                  placeholder="Title"
-                  label="Title"
-                  name="title"
-                  value={title[activeLanguage.value]}
-                  onChange={this.onChange}
-                  required={true}
-                />
-                <LabelElement>Text of article</LabelElement>
-                <Editor
-                  onChange={this.onChange}
-                  name="description"
-                  value={description[activeLanguage.value]}
-                  language={activeLanguage.value}
-                />
-                <ButtonWrapper>
-                  <Button buttonStyle={"outlined"} type="submit">
-                    ADD NEW ARTICLE
-                  </Button>
-                </ButtonWrapper>
-              </ConsturctorForm>
-            </ConsturctorWrapper>
+            <SmartConstructor
+              showConstructor={this.showConstructor}
+              onSubmit={this.onSubmit}
+              onChange={this.onChange}
+              modal={true}
+              activeLanguage={activeLanguage}
+              select={{
+                handleLangChange: handleLangChange
+              }}
+              title={title[activeLanguage.value]}
+              description={description[activeLanguage.value]}
+            />
           </>
         )}
       </Wrapper>
