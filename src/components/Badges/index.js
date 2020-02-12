@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import BadgeConstructor from "./BadgeConstructor";
-import BadgesList from "./BadgeList";
+import BadgeConstructorContainer from "../../containers/BadgesContainer/BadgeConstructorContainer";
+import BadgeListContainer from "../../containers/BadgesContainer/BadgeListContainer";
 import Spinner from "../Spinner";
 import Error from "../Error";
 
@@ -27,16 +27,8 @@ export default class Badge extends Component {
   };
 
   render() {
-    const {
-      loading,
-      badges,
-      changeBadge,
-      addBadge,
-      getAllBadges,
-      deleteBadge,
-      error
-    } = this.props;
-
+    const { loading, error } = this.props;
+    console.log(this.props);
     const { search, activeLanguage } = this.state;
     return (
       <>
@@ -53,10 +45,8 @@ export default class Badge extends Component {
         )}
         {!error && !loading && (
           <>
-            <BadgeConstructor
+            <BadgeConstructorContainer
               value={search}
-              addBadge={(title, description, icon) => addBadge(title, description, icon)}
-              getAllBadges={() => getAllBadges()}
               onChange={this.onChange}
               activeLanguage={activeLanguage}
               handleLangChange={activeLanguage =>
@@ -64,17 +54,12 @@ export default class Badge extends Component {
               }
             />
 
-            <BadgesList
-              badges={badges}
+            <BadgeListContainer
               search={search}
-              changeBadge={(badgeIndex, title, description, icon) =>
-                changeBadge(badgeIndex, title, description, icon)
-              }
               activeLanguage={activeLanguage}
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
               }
-              deleteBadge={badgeIndex => deleteBadge(badgeIndex)}
             />
           </>
         )}

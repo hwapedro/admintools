@@ -8,7 +8,6 @@ import CustomInput from "../../Shared/Input";
 import { SmartContainer } from "../../Shared/SmartContainer";
 
 import {
-  DescriptionSpan,
   DescriptionTextArea,
   ElementWrapper,
   ElementsWrapper,
@@ -19,7 +18,6 @@ import {
 } from "../styleLocal";
 import {
   Wrapper,
-  TitleSpan,
   LabelElement,
   ButtonWrapper
 } from "../../GlobalStyles/styleGlobal";
@@ -104,7 +102,7 @@ class BadgeList extends Component {
       deleteBadge
     } = this.props;
     const { title, description } = this.state;
-
+    console.log(this.props)
     let list = badges
       .filter(badge => {
         if (
@@ -216,16 +214,12 @@ export default BadgeList;
 
 BadgeList.defaultProps = {
   badge: [],
-  loading: false,
-  error: false,
   delBadge() {},
   changeBadge() {}
 };
 
 BadgeList.propTypes = {
   badge: PropTypes.arrayOf(PropTypes.object),
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
 
   delBadge: PropTypes.func,
   changeBadge: PropTypes.func

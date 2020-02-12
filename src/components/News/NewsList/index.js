@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Select from "react-select";
 
 import Article from "./Article";
-import Button from "../../Shared/Button";
 
 import { SmartConstructor } from "../../Shared/SmartConstructor";
 
 import { ElementWrapper, ElementsWrapper, EmptyMessage } from "../styleLocal";
 
-import {
-  Wrapper,
-  LabelElement,
-  ButtonWrapper
-} from "../../GlobalStyles/styleGlobal";
-import { i18nSelector } from "../../../store/utils";
+import { Wrapper } from "../../GlobalStyles/styleGlobal";
 
 const name = "news";
 

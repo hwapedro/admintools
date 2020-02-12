@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import NewsList from "./NewsList";
-import NewsConstructor from "./NewsConstructor";
+import NewsListContainer from "../../containers/NewsContainer/NewsListContainer";
+import NewsConstructorContainer from "../../containers/NewsContainer/NewsConstructorContainer";
 
 import Spinner from "../Spinner";
 import Error from "../Error";
@@ -29,14 +29,7 @@ export default class News extends Component {
   };
 
   render() {
-    const {
-      loading,
-      error,
-      news,
-      delArticle,
-      addNews,
-      changeArticle
-    } = this.props;
+    const { loading, error } = this.props;
     const { search, activeLanguage } = this.state;
 
     return (
@@ -55,10 +48,7 @@ export default class News extends Component {
 
         {!error && !loading && (
           <>
-            <NewsConstructor
-              addNews={(title, description) =>
-                addNews(title, description)
-              }
+            <NewsConstructorContainer
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
               }
@@ -66,15 +56,10 @@ export default class News extends Component {
               value={search}
               activeLanguage={activeLanguage}
             />
-            <NewsList
-              changeArticle={(articleIndex, title, description) =>
-                changeArticle(articleIndex, title, description)
-              }
-              delArticle={(index) => delArticle(index)}
+            <NewsListContainer
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
               }
-              news={news}
               activeLanguage={activeLanguage}
               search={search}
             />

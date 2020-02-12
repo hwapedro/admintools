@@ -106,18 +106,12 @@ export default withRouter(LessonsList);
 
 LessonsList.defaultProps = {
   lessons: [],
-  loading: false,
-  error: false,
   course: null,
-
   delLesson() {}
 };
 
 LessonsList.propTypes = {
   lessons: PropTypes.arrayOf(PropTypes.object),
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
   course: PropTypes.object,
-
   delLesson: PropTypes.func
 };

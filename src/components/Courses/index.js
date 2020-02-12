@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import CourseConstructor from "./CourseConstructor";
-import CoursesList from "./CourseList/";
+// import CourseConstructor from "./CourseConstructor";
+// import CoursesList from "./CourseList/";
+import CourseConstructorContainer from "../../containers/CoursesContainer/CourseConstructorContainer";
+import CourseListContainer from "../../containers/CoursesContainer/CourseListContainer";
 import Spinner from "../Spinner";
 import Error from "../Error";
 
@@ -34,16 +36,11 @@ export default class Courses extends Component {
       loading,
       error,
       courses,
-      changeCourse,
-      addCourses,
-      getAllCourses,
-      delCourse,
-      changeDnD,
-      setLoading
+      changeDnD
     } = this.props;
 
     const { search, activeLanguage } = this.state;
-    
+
     return (
       <>
         {error && (
@@ -74,11 +71,7 @@ export default class Courses extends Component {
                 }
               }}
             >
-              <CourseConstructor
-                addCourses={(title, description) =>
-                  addCourses(title, description)
-                }
-                getAllCourses={name => getAllCourses(name)}
+              <CourseConstructorContainer
                 handleLangChange={activeLanguage =>
                   this.handleLangChange(activeLanguage)
                 }
@@ -87,16 +80,10 @@ export default class Courses extends Component {
                 activeLanguage={activeLanguage}
               />
 
-              <CoursesList
-                changeCourse={(courseIndex, title, annotation, description, name) =>
-                  changeCourse(courseIndex, title, annotation, description, name)
-                }
-                delCourse={(courseIndex, name) => delCourse(courseIndex, name)}
-                setLoading={loading => setLoading(loading)}
+              <CourseListContainer
                 handleLangChange={activeLanguage =>
                   this.handleLangChange(activeLanguage)
                 }
-                courses={courses}
                 search={search}
                 activeLanguage={activeLanguage}
               />

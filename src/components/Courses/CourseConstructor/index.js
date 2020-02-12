@@ -10,11 +10,6 @@ import { SmartConstructor } from "../../Shared/SmartConstructor";
 
 import {
   Wrapper,
-  LabelElement,
-  ButtonWrapper,
-  DarkGround,
-  ConsturctorWrapper,
-  ConsturctorForm,
   SelectWrapper
 } from "../../GlobalStyles/styleGlobal";
 import { i18nSelector } from "../../../store/utils";

@@ -24,6 +24,7 @@ import CustomInput from "../../Shared/Input";
 import Spinner from "../../Spinner";
 import PageList from "../PageList";
 import { SmartContainer } from "../../Shared/SmartContainer";
+import { SmartConstructor } from "../../Shared/SmartConstructor";
 import Error from "../../Error";
 import AdminService from "../../../service";
 import Editor from "../../Shared/Editor";
@@ -187,7 +188,7 @@ export default class Lesson extends Component {
               modal={true}
               activeLanguage={activeLanguage}
               select={{
-                handleLangChange: handleLangChange
+                handleChange: this.handleChange
               }}
               title={title[activeLanguage.value]}
               description={description[activeLanguage.value]}

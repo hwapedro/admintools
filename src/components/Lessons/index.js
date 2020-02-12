@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-//import Search from "../Search";
-import LessonConstructor from "./LessonConstructor";
-import LessonList from "./LessonList/LessonList";
+import LessonConstructorContainer from "../../containers/LessonsContainer/LessonConstructorContainer";
 import Spinner from "../Spinner";
 import Error from "../Error";
+import LessonListContainer from "../../containers/LessonsContainer/LessonListContainer";
 
 const name = "lesson";
 
@@ -29,14 +28,7 @@ export default class Lessons extends Component {
   };
 
   render() {
-    const {
-      error,
-      loading,
-      lessons,
-      addLesson,
-      delLesson,
-      setLoading
-    } = this.props;
+    const { error, loading } = this.props;
     const { search, activeLanguage } = this.state;
     return (
       <>
@@ -53,10 +45,7 @@ export default class Lessons extends Component {
         )}
         {!error && !loading && (
           <>
-            <LessonConstructor
-              addLesson={(title, description, exam, courseIndex, flag) =>
-                addLesson(title, description, exam, courseIndex, flag)
-              }
+            <LessonConstructorContainer
               handleLangChange={activeLanguage =>
                 this.handleLangChange(activeLanguage)
               }
@@ -64,11 +53,8 @@ export default class Lessons extends Component {
               value={search}
               activeLanguage={activeLanguage}
             />
-            <LessonList
+            <LessonListContainer
               onChange={this.onChange}
-              delLesson={(lessonsIndex, flag) => delLesson(lessonsIndex, flag)}
-              setLoading={loading => setLoading(loading)}
-              lessons={lessons}
               search={search}
               activeLanguage={activeLanguage}
             />

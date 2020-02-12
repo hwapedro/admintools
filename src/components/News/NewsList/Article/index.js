@@ -4,13 +4,7 @@ import PropTypes from "prop-types";
 import Button from "../../../Shared/Button";
 import { SmartContainer } from "../../../Shared/SmartContainer";
 
-import {
-  ElementWrapper,
-  TitleSpan,
-  DescriptionSpan,
-  ButtonWrapper
-} from "../../styleLocal.js";
-import { LabelElement } from "../../../GlobalStyles/styleGlobal";
+import { ElementWrapper, ButtonWrapper } from "../../styleLocal.js";
 
 export default function Article({
   news,

@@ -184,7 +184,6 @@ export default withRouter(CourseList);
 
 CourseList.defaultProps = {
   courses: [],
-  error: false,
 
   changeCourse() {},
   delCourse() {}
@@ -192,7 +191,7 @@ CourseList.defaultProps = {
 
 CourseList.propTypes = {
   courses: PropTypes.arrayOf(PropTypes.object),
-  error: PropTypes.bool,
+
   delCourse: PropTypes.func,
   changeCourse: PropTypes.func
 };
