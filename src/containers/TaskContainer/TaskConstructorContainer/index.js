@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 
-import TaskConstructor from "../../components/Lessons/Task/TaskConstructors";
+import TaskConstructor from "../../../components/Lessons/Task/TaskConstructors";
 
-import PageModule from "../../store/modules/PageModule";
-import TaskModule from "../../store/modules/TaskModule";
+import PageModule from "../../../store/modules/PageModule";
+import TaskModule from "../../../store/modules/TaskModule";
 
 const mapDispatchToProps = dispatch => ({
   addTask: (pageid, type, info, answer) =>

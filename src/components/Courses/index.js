@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 
-// import CourseConstructor from "./CourseConstructor";
-// import CoursesList from "./CourseList/";
 import CourseConstructorContainer from "../../containers/CoursesContainer/CourseConstructorContainer";
 import CourseListContainer from "../../containers/CoursesContainer/CourseListContainer";
 import Spinner from "../Spinner";

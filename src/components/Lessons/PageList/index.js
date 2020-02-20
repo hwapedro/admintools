@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import PageNav from "../PageNav";
 import Button from "../../Shared/Button";
 import TaskList from "../Task/TaskList";
-import TaskConstructorContainer from "../../../containers/TaskConstructorContainer";
+import TaskConstructorContainer from "../../../containers/TaskContainer/TaskConstructorContainer";
 
 import {
   PageNumber,
