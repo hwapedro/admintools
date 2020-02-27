@@ -2,7 +2,8 @@ import DuckModule from "simple-duck";
 import LessonService from "../../../service/lesson";
 import { DND } from "../../utils";
 import ViewModule from "../ViewModule";
-import PageModule from "../PageModule"
+import PageModule from "../PageModule";
+import CourseModule from "../CoursesModule";
 
 const initialState = {
   lessons: [],
@@ -71,7 +72,7 @@ class LessonModule extends DuckModule {
 
   getAllLessons = () => dispatch => {
     dispatch(ViewModule.setLoading(true));
-    
+
     LessonService.getAll()
       .then(response => {
         dispatch({
@@ -99,10 +100,10 @@ class LessonModule extends DuckModule {
 
   getLesson = id => dispatch => {
     dispatch(ViewModule.setLoading(true));
-  
+
     LessonService.getOne(id)
       .then(response => {
-        dispatch(PageModule.setPages(response.lesson.pages))
+        dispatch(PageModule.setPages(response.lesson.pages));
         dispatch({
           type: this.GET_LESSON_SUCCESS,
           lesson: response.lesson
@@ -122,6 +123,7 @@ class LessonModule extends DuckModule {
           lessons: response.lesson,
           flag
         });
+        dispatch(CourseModule.setCourseLesson(response.lesson));
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
       .catch(error => dispatch(ViewModule.setError(true)));
@@ -137,6 +139,7 @@ class LessonModule extends DuckModule {
           index: index,
           flag
         });
+        dispatch(CourseModule.deleteLessonsCourse(index));
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
       .catch(error => dispatch(ViewModule.setError(true)));

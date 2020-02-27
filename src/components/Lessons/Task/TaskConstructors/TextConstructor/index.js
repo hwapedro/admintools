@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import Select from "react-select";
 import PropTypes from "prop-types";
 
-
-import { LabelElement, ButtonWrapper } from "../../../../GlobalStyles/styleGlobal";
+import {
+  LabelElement,
+  ButtonWrapper
+} from "../../../../GlobalStyles/styleGlobal";
 
 import { TextQuestion, ConsturctorForm } from "../../styleLocal";
 import Button from "../../../../Shared/Button";
@@ -13,7 +15,7 @@ export default class TextConstructor extends Component {
   constructor(props) {
     super();
     this.state = {
-      text: props.task ? props.task.info.text : i18n,
+      question: props.task ? props.task.info.question : i18n,
       points: props.task ? props.task.info.points : 0,
       answer: []
     };
@@ -24,14 +26,14 @@ export default class TextConstructor extends Component {
     if (task) {
       this.setState({
         ...this.state,
-        text: task.info.text,
-        answer: task.info.answer,
+        question: task.info.question,
+        answer: task.info.answer
       });
     }
   }
 
   onChange = event => {
-    const { text } = this.state;
+    const { question } = this.state;
     const { activeLanguage } = this.props;
     switch (event.target.name) {
       case "points":
@@ -39,11 +41,11 @@ export default class TextConstructor extends Component {
           points: event.target.value
         });
         break;
-      case "text":
+      case "question":
         this.parseAnswer(event.target.value);
         this.setState({
           [event.target.name]: {
-            ...text,
+            ...question,
             [activeLanguage.value]: event.target.value
           }
         });
@@ -69,11 +71,11 @@ export default class TextConstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
-    const { text, answer, points } = this.state;
-    const type = "text";
+    const { question, answer, points } = this.state;
+    const type = "fill";
     const info = {
       points: points,
-      text: text,
+      question: question
     };
     if (task) {
       changeTask(task._id, type, info, pageId, answer);
@@ -84,7 +86,7 @@ export default class TextConstructor extends Component {
   };
 
   render() {
-    const { text } = this.state;
+    const { question } = this.state;
     const { activeLanguage, handleLangChange } = this.props;
 
     return (
@@ -100,9 +102,9 @@ export default class TextConstructor extends Component {
           <br />
           <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
           <TextQuestion
-            name="text"
+            name="question"
             placeholder="Question"
-            value={text[activeLanguage.value]}
+            value={question[activeLanguage.value]}
             onChange={this.onChange}
           />
 

@@ -34,12 +34,14 @@ export default class OneCourse extends Component {
     const {
       addLesson,
       course,
+      lessons,
       delLesson,
       changeDndLesson,
       error,
       loading,
       setLoading
     } = this.props;
+    console.log(lessons);
     const { search, activeLanguage } = this.state;
     return (
       <>
@@ -79,7 +81,7 @@ export default class OneCourse extends Component {
                 delLesson(lessonsIndex, name, flag)
               }
               setLoading={loading => setLoading(loading)}
-              lessons={course.lessons}
+              lessons={lessons}
               search={search}
               course={course}
               changeDndLesson={changeDndLesson}
@@ -94,6 +96,7 @@ export default class OneCourse extends Component {
 
 OneCourse.defaultProps = {
   course: {},
+  lessons: [],
   loading: false,
   error: false,
 
@@ -104,6 +107,7 @@ OneCourse.defaultProps = {
 
 OneCourse.propTypes = {
   course: PropTypes.object,
+  lessons: PropTypes.array,
   loading: PropTypes.bool,
   error: PropTypes.bool,
 

@@ -101,7 +101,7 @@ class PageModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  delete = (pageId, taskid) => dispatch => {
+  deleteTask = (pageId, taskid) => dispatch => {
     dispatch(ViewModule.setLoading(true));
     TaskService.delete(pageId, taskid)
       .then(response => {

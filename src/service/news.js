@@ -4,7 +4,6 @@ import { markdownToHtml } from "../store/utils";
 import { BaseService } from "./base";
 
 export class NewsService extends BaseService {
-
   async getAll() {
     let response = await request.get(`${this.apiEndpoint}/news/all`).set({
       "Content-Type": "application/json",
@@ -35,14 +34,14 @@ export class NewsService extends BaseService {
     return response;
   }
 
-  async change(id, title, text) {
+  async change(id, title, description) {
     let response = await request
       .put(`${this.apiEndpoint}/news/${id}`)
       .set({
         "Content-Type": "application/json",
         Authorization: "Bearer " + this.token
       })
-      .send({ title: title, text: text });
+      .send({ title: title, description: description });
     return response.body;
   }
 }

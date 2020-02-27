@@ -6,7 +6,8 @@ import ViewModule from "../ViewModule";
 
 const initialState = {
   courses: [],
-  course: {}
+  course: {},
+  lessons: []
 };
 
 class CoursesModule extends DuckModule {
@@ -21,6 +22,8 @@ class CoursesModule extends DuckModule {
     this.CHANGE_DND_LESSON_SUCCESS = `${this.prefix}CHANGE_DND_LESSON_SUCCESS`;
     this.CHANGE_DND_SUCCESS = `${this.prefix}CHANGE_DND_SUCCESS`;
     this.DELETE_LESSON_SUCCESS = `${this.prefix}DELETE_LESSON_SUCCESS`;
+    this.SET_COURSE_LESSONS = `${this.prefix}SET_COURSE_LESSONS`;
+    this.DELETE_LESSON_COURSE = `${this.prefix}DELETE_LESSON_COURSE`;
   }
 
   reduce = (state = initialState, action) => {
@@ -68,7 +71,8 @@ class CoursesModule extends DuckModule {
       case this.GET_COURSE_SUCCESS:
         return {
           ...state,
-          course: action.course
+          course: action.course,
+          lessons: action.course.lessons
         };
 
       case this.ADD_LESSON_SUCCESS:
@@ -84,6 +88,22 @@ class CoursesModule extends DuckModule {
           };
         }
         return { ...state };
+
+      case this.SET_COURSE_LESSONS:
+        console.log(action);
+        return {
+          ...state,
+          lessons: [...state.lessons, action.lesson]
+        };
+
+      case this.DELETE_LESSON_COURSE:
+        console.log(
+          state.lessons.filter(lesson => lesson._id !== action.index)
+        );
+        return {
+          ...state,
+          lessons: state.lessons.filter(lesson => lesson._id !== action.index)
+        };
 
       case this.DELETE_LESSON_SUCCESS:
         if (action.flag === "course") {
@@ -101,6 +121,7 @@ class CoursesModule extends DuckModule {
             error: false
           };
         }
+
         return { ...state };
       default:
         return super.reduce(state, action);
@@ -212,6 +233,24 @@ class CoursesModule extends DuckModule {
 
   getCourse = state => {
     return this.getRoot(state).course;
+  };
+
+  getCourseLessons = state => {
+    return this.getRoot(state).lessons;
+  };
+
+  setCourseLesson = lesson => dispatch => {
+    dispatch({
+      type: this.SET_COURSE_LESSONS,
+      lesson: lesson
+    });
+  };
+
+  deleteLessonsCourse = index => dispatch => {
+    dispatch({
+      type: this.DELETE_LESSON_COURSE,
+      index: index
+    });
   };
 }
 

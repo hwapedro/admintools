@@ -7,6 +7,7 @@ import LessonModule from "../../store/modules/LessonModule";
 
 const mapStateToProps = state => ({
   course: CoursesModule.getCourse(state),
+  lessons: CoursesModule.getCourseLessons(state),
   loading: ViewModule.isLoading(state),
   error: ViewModule.isError(state)
 });
