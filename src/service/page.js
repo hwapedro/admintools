@@ -1,54 +1,22 @@
-import request from "superagent";
-
 import { BaseService } from "./base";
 
 export class PageService extends BaseService {
   async getAllPages(id) {
-    let response = await request
-      .get(`${this.apiEndpoint}/lesson/${id}/all`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
-      });
-    return response.body;
+    return this.get(`lesson/${id}/all`);
   }
 
   async changeTextPage(id, text) {
-    let response = await request
-      .put(`${this.apiEndpoint}/page/${id}/text`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
-      })
-      .send({
-        text: text
-      });
-    return response.body;
+    const data = { text };
+    return this.put(`page/${id}/text`, data);
   }
 
   async addPage(id, text, tasks, needToComplete) {
-    let response = await request
-      .put(`${this.apiEndpoint}/lesson/${id}/addPage`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
-      })
-      .send({
-        text: text,
-        tasks: tasks,
-        needToComplete: needToComplete
-      });
-    return response.body;
+    const data = { text, tasks, needToComplete };
+    return this.put(`lesson/${id}/addPage`, data);
   }
 
   async deletePage(id) {
-    let response = await request
-      .del(`${this.apiEndpoint}/page/${id}/deletePage`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
-      });
-    return response;
+    return this.del(`page/${id}/deletePage`);
   }
 }
 

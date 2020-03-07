@@ -29,7 +29,6 @@ class CourseService extends BaseService {
   }
 
   async delete(index) {
-    console.log(index, this);
     return this.del(`course/${index}`);
   }
 

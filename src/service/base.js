@@ -38,7 +38,6 @@ export class BaseService {
   }
 
   async del(url, headers = {}) {
-    console.log(123);
     let response = await request.del(`${apiEndpoint}/${url}`).set({
       "Content-Type": "application/json",
       Authorization: "Bearer " + this.token

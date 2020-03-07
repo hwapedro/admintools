@@ -1,48 +1,27 @@
-import request from "superagent";
 import { markdownToHtml } from "../store/utils";
 
 import { BaseService } from "./base";
 
 export class NewsService extends BaseService {
   async getAll() {
-    let response = await request.get(`${this.apiEndpoint}/news/all`).set({
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + this.token
-    });
-    return response.body;
+    return this.get("news/all");
   }
 
   async add(title, description) {
-    let response = await request
-      .post(`${this.apiEndpoint}/news/create`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
-      })
-      .send({
-        title: title,
-        description: markdownToHtml(description)
-      });
-    return response.body;
+    const data = { title, description: markdownToHtml(description) };
+    return this.post("news/create", data);
   }
 
   async delete(index) {
-    let response = await request.del(`${this.apiEndpoint}/news/${index}`).set({
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + this.token
-    });
-    return response;
+    return this.del(`news/${index}`);
   }
 
   async change(id, title, description) {
-    let response = await request
-      .put(`${this.apiEndpoint}/news/${id}`)
-      .set({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
-      })
-      .send({ title: title, description: description });
-    return response.body;
+    const data = {
+      title,
+      description
+    };
+    return this.put(`news/${id}`, data).body;
   }
 }
 
