@@ -28,7 +28,6 @@ export default class Badge extends Component {
 
   render() {
     const { loading, error } = this.props;
-    console.log(this.props);
     const { search, activeLanguage } = this.state;
     return (
       <>

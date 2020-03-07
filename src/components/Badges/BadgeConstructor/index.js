@@ -38,8 +38,7 @@ export default class BadgeConstructor extends Component {
     event.preventDefault();
     const { addBadge } = this.props;
     const { title, description, icon } = this.state;
-    console.log(icon)
-    addBadge(title, description, icon);
+     addBadge(title, description, icon);
   };
 
   onChange = event => {

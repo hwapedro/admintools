@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import Task from "../../components/Lessons/Task/TaskComponents";
+import Task from "../../components/Lessons/Task/TaskComponents/Task";
 import ViewModule from "../../store/modules/ViewModule";
 import PageModule from "../../store/modules/PageModule";
 import TaskModule from "../../store/modules/TaskModule";

@@ -15,7 +15,7 @@ export const SmartConstructor = ({
   activeLanguage,
   ...props
 }) => {
-  console.log(props);
+ 
   const content = Object.keys(props).map((key, index) => {
     if (key === "select") {
       return (

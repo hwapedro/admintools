@@ -102,8 +102,7 @@ class BadgeList extends Component {
       deleteBadge
     } = this.props;
     const { title, description } = this.state;
-    console.log(this.props)
-    let list = badges
+      let list = badges
       .filter(badge => {
         if (
           badge.title[activeLanguage.value]

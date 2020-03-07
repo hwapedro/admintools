@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 
 import PageNav from "../PageNav";
 import Button from "../../Shared/Button";
-import TaskList from "../Task/TaskList";
+// import TaskList from "../Task/TaskList";
+import TaskListContainer from "../../../containers/TaskContainer/TaskListContainer"
 import TaskConstructorContainer from "../../../containers/TaskContainer/TaskConstructorContainer";
 
 import {
@@ -30,8 +31,6 @@ class PageList extends Component {
       lessonId,
       pages,
       deletePage,
-      deleteTask,
-      setTask,
       activeLanguage
     } = this.props;
 
@@ -55,11 +54,9 @@ class PageList extends Component {
                   </ButtonWrapper>
                 </ButtonWrapper>
               </PageHeader>
-              <TaskList
+              <TaskListContainer
                 lessonId={lessonId}
                 page={page}
-                setTask={setTask}
-                deleteTask={deleteTask}
                 activeLanguage={activeLanguage}
               />
             </div>

@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 
 import { Wrapper } from "../styleLocal";
 
-import Task from "./Task";
+import TaskContainer from "../../../../containers/TaskContainer";
+
 import Button from "../../../Shared/Button";
 import Spinner from "../../../Spinner";
 import Error from "../../../Error";
 
-export default class TaskContainer extends Component {
+export default class Tasks extends Component {
   state = {
     taskEditFlag: false
   };
@@ -35,7 +36,13 @@ export default class TaskContainer extends Component {
 
   render() {
     const { taskEditFlag } = this.state;
-    const { pageId, lessonId, taskId, error, loading, changeTask, task } = this.props;
+    const {
+      pageId,
+      lessonId,
+      error,
+      loading,
+      task
+    } = this.props;
 
     return (
       <>
@@ -60,16 +67,11 @@ export default class TaskContainer extends Component {
             </Button>
 
             {task && (
-              <Task
+              <TaskContainer
                 pageId={pageId}
-                task={task}
                 lessonId={lessonId}
                 taskEditFlag={taskEditFlag}
-                deleteTask={this.deleteTask}
                 changeEditFlag={this.changeEditFlag}
-                changeTask={(taskId, type, info, pageId) =>
-                  changeTask(taskId, type, info, pageId)
-                }
               />
             )}
           </Wrapper>
@@ -79,7 +81,7 @@ export default class TaskContainer extends Component {
   }
 }
 
-TaskContainer.defaultProps = {
+Tasks.defaultProps = {
   loading: false,
   error: false,
   task: {},
@@ -88,7 +90,7 @@ TaskContainer.defaultProps = {
   deleteTask() {}
 };
 
-TaskContainer.propTypes = {
+Tasks.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   task: PropTypes.object,

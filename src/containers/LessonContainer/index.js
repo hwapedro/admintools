@@ -28,9 +28,9 @@ const mapDispatchToProps = dispatch => ({
   addPage: (id, text, tasks, needToComplete) =>
     dispatch(PageModule.addPage(id, text, tasks, needToComplete)),
   deletePage: id => dispatch(PageModule.deletePage(id)),
-  deleteTask: (pageId, taskid) =>
-    dispatch(PageModule.delete(pageId, taskid)),
-  setTask: task => dispatch(TaskModule.setTask(task))
+  // deleteTask: (pageId, taskid) =>
+  //   dispatch(PageModule.delete(pageId, taskid)),
+  // setTask: task => dispatch(TaskModule.setTask(task))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lesson);

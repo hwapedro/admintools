@@ -151,8 +151,6 @@ export default class Lesson extends Component {
       pages,
       loading,
       deletePage,
-      deleteTask,
-      setTask,
       error
     } = this.props;
     const {
@@ -289,9 +287,9 @@ export default class Lesson extends Component {
                 pages={pages}
                 id={lesson._id}
                 deletePage={deletePage}
-                deleteTask={deleteTask}
+
                 activeLanguage={activeLanguage}
-                setTask={setTask}
+
               />
             )}
           </Wrapper>

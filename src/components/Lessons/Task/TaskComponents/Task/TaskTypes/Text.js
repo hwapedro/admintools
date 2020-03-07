@@ -41,19 +41,12 @@ class Text extends Component {
           </TaskElementWrapper>
         ) : (
           <TaskElementWrapper key={task._id}>
-            <LabelElement> Title: </LabelElement>
-            <TitleSpan>{task.info.name[activeLanguage.value]}</TitleSpan>
-            <LabelElement> Description </LabelElement>
-            <TitleSpan
-              dangerouslySetInnerHTML={{
-                __html: task.info.description[activeLanguage.value]
-              }}
-            />
+           
             <LabelElement>Question:</LabelElement>
             <TitleSpan>{task.info.question[activeLanguage.value]}</TitleSpan>
 
             <LabelElement>Answers:</LabelElement>
-            <TitleSpan>{task.info.options.join(" , ")}</TitleSpan>
+            <TitleSpan>{task.answer.join(" , ")}</TitleSpan>
 
             <ButtonsWrapper>
               <Button buttonStyle={"outlined"} onClick={() => changeEditFlag()}>

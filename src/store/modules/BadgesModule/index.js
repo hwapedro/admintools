@@ -25,7 +25,7 @@ class BadgesModule extends DuckModule {
         };
 
       case this.GETALL_BADGE_SUCCESS:
-        console.log(action);
+    
         return {
           ...state,
           badges: action.badges

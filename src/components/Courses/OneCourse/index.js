@@ -41,7 +41,7 @@ export default class OneCourse extends Component {
       loading,
       setLoading
     } = this.props;
-    console.log(lessons);
+ 
     const { search, activeLanguage } = this.state;
     return (
       <>

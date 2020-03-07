@@ -180,7 +180,7 @@ export default class TestConstructor extends Component {
           <div>
             {choices.length !== 0 &&
               choices.map(el => {
-                 console.log(answer, answer.includes(el.i))
+                 
                 return (
                   <OptionsWrapper className="form-check" key={el.i}>
                     <OptionElementWrapper>

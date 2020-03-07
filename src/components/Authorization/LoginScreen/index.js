@@ -14,7 +14,6 @@ const signInSchema = Yup.object().shape({
 export default class LoginScreen extends React.Component {
 
   setLogin = async ({ username, password }) => {
-    console.log(this.props);
     const { login } = this.props;
     await login(username, password);
   };

@@ -23,7 +23,7 @@ let id = 1;
 const TaskList = props => {
   const { lessonId, page, deleteTask, activeLanguage } = props;
   const taskList = page.tasks.map(task => {
-    console.log(page._id, task._id);
+
     return (
       <TaskElementWrapper key={id++}>
         {task.info && (

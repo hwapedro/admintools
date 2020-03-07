@@ -63,7 +63,7 @@ class Test extends Component {
               <LabelElement>Answer options:</LabelElement>
               <OptionsWrapper>
                 {task.info.choices.map(option => {
-                    console.log(task.answer.find(answ => answ === option.i) !== undefined)
+                   
                   return (
                     <OptionElementWrapper key={option.i}>
                       <OptionSpan>{option.c[activeLanguage.value]}</OptionSpan>

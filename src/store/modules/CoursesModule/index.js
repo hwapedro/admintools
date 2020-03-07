@@ -90,17 +90,14 @@ class CoursesModule extends DuckModule {
         return { ...state };
 
       case this.SET_COURSE_LESSONS:
-        console.log(action);
+      
         return {
           ...state,
           lessons: [...state.lessons, action.lesson]
         };
 
       case this.DELETE_LESSON_COURSE:
-        console.log(
-          state.lessons.filter(lesson => lesson._id !== action.index)
-        );
-        return {
+             return {
           ...state,
           lessons: state.lessons.filter(lesson => lesson._id !== action.index)
         };
