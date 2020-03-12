@@ -8,6 +8,7 @@ import {
 } from "../../../../GlobalStyles/styleGlobal";
 
 import { TextQuestion, ConsturctorForm } from "../../styleLocal";
+import CustomInput from "../../../../Shared/Input";
 import Button from "../../../../Shared/Button";
 import { i18nSelector, i18n } from "../../../../../store/utils";
 
@@ -86,7 +87,7 @@ export default class TextConstructor extends Component {
   };
 
   render() {
-    const { question } = this.state;
+    const { question, points } = this.state;
     const { activeLanguage, handleLangChange } = this.props;
 
     return (
@@ -97,6 +98,14 @@ export default class TextConstructor extends Component {
             onChange={handleLangChange}
             options={i18nSelector}
             maxMenuHeight={100}
+          />
+          
+          <CustomInput
+            label="Amount of point"
+            name="points"
+            value={points}
+            onChange={this.onChange}
+            required={false}
           />
           <LabelElement>Text</LabelElement>
           <br />

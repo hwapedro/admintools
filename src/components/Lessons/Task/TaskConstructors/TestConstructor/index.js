@@ -16,7 +16,7 @@ import Button from "../../../../Shared/Button";
 import CustomInput from "../../../../Shared/Input";
 import { i18nSelector, i18n } from "../../../../../store/utils";
 
-const type = "select";
+const type = "test";
 
 export default class TestConstructor extends Component {
   constructor(props) {
