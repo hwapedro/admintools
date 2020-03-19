@@ -7,6 +7,10 @@ import Text from "./TaskTypes/Text";
 
 import { SelectWrapper } from "../../../../GlobalStyles/styleGlobal";
 import { i18nSelector } from "../../../../../store/utils";
+import { Wrapper } from "../../styleLocal";
+import Button from "../../../../Shared/Button";
+import Spinner from "../../../../Spinner";
+import Error from "../../../../Error";
 
 class Task extends Component {
   state = {
@@ -14,29 +18,46 @@ class Task extends Component {
     activeLanguage: { label: "Russian", value: "ru" }
   };
 
+  componentDidMount() {
+    const { taskId, getTask } = this.props;
+    getTask(taskId);
+  }
+
+  handleLangChange = activeLanguage => {
+    this.setState({ activeLanguage });
+  };
+
+  goBack = id => {
+    this.props.setLoading(true);
+    this.props.history.push(`/lesson/${id}`);
+  };
+
+  deleteTask = (pageId, taskId, lessonId) => {
+    const { deleteTask } = this.props;
+    deleteTask(pageId, taskId);
+    this.goBack(lessonId);
+  };
+
+  changeEditFlag = () =>
+    this.setState({
+      taskEditFlag: !this.state.taskEditFlag
+    });
+
   constSwitch = () => {
-    const {
-      task,
-      pageId,
-      lessonId,
-      taskEditFlag,
-      changeEditFlag,
-      deleteTask,
-      changeTask
-    } = this.props;
+    const { task, pageId, lessonId, taskEditFlag, changeTask } = this.props;
 
     const { activeLanguage } = this.state;
 
     switch (task.type) {
-      case "select":
+      case "test":
         return (
           <Test
             task={task}
             pageId={pageId}
             lessonId={lessonId}
             taskEditFlag={taskEditFlag}
-            changeEditFlag={changeEditFlag}
-            deleteTask={deleteTask}
+            changeEditFlag={this.changeEditFlag}
+            deleteTask={this.deleteTask}
             changeTask={changeTask}
             activeLanguage={activeLanguage}
             handleLangChange={activeLanguage =>
@@ -51,8 +72,8 @@ class Task extends Component {
             pageId={pageId}
             lessonId={lessonId}
             taskEditFlag={taskEditFlag}
-            changeEditFlag={changeEditFlag}
-            deleteTask={deleteTask}
+            changeEditFlag={this.changeEditFlag}
+            deleteTask={this.deleteTask}
             changeTask={changeTask}
             activeLanguage={activeLanguage}
             handleLangChange={activeLanguage =>
@@ -65,29 +86,47 @@ class Task extends Component {
     }
   };
 
-  handleLangChange = activeLanguage => {
-    this.setState({ activeLanguage });
-  };
-
   render() {
-    const { task, taskEditFlag } = this.props;
+    const { task, taskEditFlag, lessonId, error, loading } = this.props;
     const { activeLanguage } = this.state;
     return (
       <>
-        {taskEditFlag ? (
-          <></>
-        ) : (
-          <SelectWrapper>
-            <Select
-              value={activeLanguage}
-              onChange={this.handleLangChange}
-              options={i18nSelector}
-              maxMenuHeight={100}
-            />
-          </SelectWrapper>
+        {error && (
+          <>
+            <Error name={"Task"} />
+          </>
         )}
 
-        {task && <>{this.constSwitch()} </>}
+        {loading && (
+          <>
+            <Spinner />
+          </>
+        )}
+
+        {!error && !loading && (
+          <Wrapper>
+            <Button
+              buttonStyle={"outlined"}
+              onClick={() => this.goBack(lessonId)}
+            >
+              Back
+            </Button>
+
+            {taskEditFlag ? (
+              <></>
+            ) : (
+              <SelectWrapper>
+                <Select
+                  value={activeLanguage}
+                  onChange={this.handleLangChange}
+                  options={i18nSelector}
+                  maxMenuHeight={100}
+                />
+              </SelectWrapper>
+            )}
+            {task && <>{this.constSwitch()} </>}
+          </Wrapper>
+        )}
       </>
     );
   }

@@ -136,10 +136,10 @@ export default class Lesson extends Component {
   };
 
   addPage = () => {
-    const { addPage } = this.props;
+    const { addPage, lesson } = this.props;
     addPage(
       this.props.lesson._id,
-      `Page ${this.props.lesson.pages.length + 1}`,
+      `Page ${lesson.pages.length + 1}`,
       [],
       0
     );
@@ -161,7 +161,6 @@ export default class Lesson extends Component {
       exam,
       activeLanguage
     } = this.state;
-
     return (
       <>
         {error && (

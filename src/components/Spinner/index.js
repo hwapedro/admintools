@@ -28,7 +28,7 @@ class Spinner extends Component {
     }
     return (
       <SpinnerWrapper>
-        <Loader type="Oval" color="#000000" height="50" width="50" />
+        <Loader type="Oval" color="#000000" height={50} width={50} />
       </SpinnerWrapper>
     );
   }

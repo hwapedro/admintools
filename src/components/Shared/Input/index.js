@@ -43,7 +43,7 @@ export default function Input({
   );
 }
 
-CustomInput.propTypes = {
+Input.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
@@ -52,7 +52,7 @@ CustomInput.propTypes = {
   onChange: PropTypes.func
 };
 
-CustomInput.defaultProps = {
+Input.defaultProps = {
   name: "",
   value: "",
   label: "",

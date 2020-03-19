@@ -12,10 +12,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getTask: taskId => dispatch(TaskModule.getOneTask(taskId)),
+
   deleteTask: (pageId, taskId) =>
     dispatch(PageModule.deleteTask(pageId, taskId)),
+    
   changeTask: (taskId, type, info, answer) =>
-    dispatch(TaskModule.change(taskId, type, info, answer))
+    dispatch(TaskModule.change(taskId, type, info, answer)),
+
+  setLoading: loading => dispatch(ViewModule.setLoading(loading))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);

@@ -11,8 +11,12 @@ export class TaskService extends BaseService {
     return this.put(`task/${taskId}`, data);
   }
 
-  async delete(id, taskid) {
-    return this.del(`page/${id}/removeTask/${taskid}`);
+  async delete(id, taskId) {
+    return this.del(`page/${id}/removeTask/${taskId}`);
+  }
+
+  async getOne(taskId) {
+    return this.get(`task/${taskId}`);
   }
 }
 

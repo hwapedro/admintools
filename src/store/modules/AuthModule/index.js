@@ -33,14 +33,14 @@ class AuthModule extends DuckModule {
 
   login = (username, password) => dispatch => {
     dispatch(ViewModule.setLoading(true));
-
+  
     AuthService.login(username, password)
       .then(response => {
-        localStorage.setItem("token", response.body.token);
+        localStorage.setItem("token", response.token);
         window.history.go('/');
         dispatch({
           type: this.FETCH_LOGIN_SUCCESS,
-          token: response.body.token
+          token: response.token
         });
   
       })
