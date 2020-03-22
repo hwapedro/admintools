@@ -18,7 +18,10 @@ class TaskModule extends DuckModule {
   reduce = (state = initialState, action) => {
     switch (action.type) {
       case this.CHANGE_TASK_SUCCESS:
-        return action.task;
+        return {
+          ...state,
+          task: action.task
+        };
 
       case this.SET_TASK:
         return action.task;
@@ -27,7 +30,6 @@ class TaskModule extends DuckModule {
         return {
           ...state,
           task: action.task,
-
           loading: false,
           error: false
         };
@@ -56,7 +58,7 @@ class TaskModule extends DuckModule {
       .then(response => {
         dispatch({
           type: this.CHANGE_TASK_SUCCESS,
-          task: response.body.task
+          task: response.task
         });
       })
       .then(() => dispatch(ViewModule.setLoading(false)))

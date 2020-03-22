@@ -34,6 +34,7 @@ export class BaseService {
         Authorization: "Bearer " + this.token
       })
       .send(data);
+
     return response.body;
   }
 

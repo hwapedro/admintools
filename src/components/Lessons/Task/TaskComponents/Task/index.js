@@ -112,9 +112,7 @@ class Task extends Component {
               Back
             </Button>
 
-            {taskEditFlag ? (
-              <></>
-            ) : (
+            {!taskEditFlag && (
               <SelectWrapper>
                 <Select
                   value={activeLanguage}
