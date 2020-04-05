@@ -13,7 +13,7 @@ const name = "course";
 export default class OneCourse extends Component {
   state = {
     search: "",
-    activeLanguage: { label: "Russian", value: "ru" }
+    activeLanguage: { label: "Russian", value: "ru" },
   };
 
   componentDidMount() {
@@ -22,11 +22,11 @@ export default class OneCourse extends Component {
   }
 
   //language selector handler
-  handleLangChange = activeLanguage => {
+  handleLangChange = (activeLanguage) => {
     this.setState({ activeLanguage });
   };
 
-  onChange = event => {
+  onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -39,9 +39,9 @@ export default class OneCourse extends Component {
       changeDndLesson,
       error,
       loading,
-      setLoading
+      setLoading,
     } = this.props;
- 
+
     const { search, activeLanguage } = this.state;
     return (
       <>
@@ -62,7 +62,7 @@ export default class OneCourse extends Component {
               addLesson={(title, description, exam, name, courseIndex, flag) =>
                 addLesson(title, description, exam, name, courseIndex, flag)
               }
-              handleLangChange={activeLanguage =>
+              handleLangChange={(activeLanguage) =>
                 this.handleLangChange(activeLanguage)
               }
               onChange={this.onChange}
@@ -72,15 +72,15 @@ export default class OneCourse extends Component {
             />
             <CourseTitle>
               <OneCourseTitle>
-                Name : {course.title[activeLanguage.value]}
-                <br /> Number : {course.courseIndex}
+                {course.title[activeLanguage.value]}
               </OneCourseTitle>
+              <div>course index {course.courseIndex}</div>
             </CourseTitle>
             <LessonList
               delLesson={(lessonsIndex, name, flag) =>
                 delLesson(lessonsIndex, name, flag)
               }
-              setLoading={loading => setLoading(loading)}
+              setLoading={(loading) => setLoading(loading)}
               lessons={lessons}
               search={search}
               course={course}
@@ -102,7 +102,7 @@ OneCourse.defaultProps = {
 
   addLesson() {},
   delLesson() {},
-  getAllLessons() {}
+  getAllLessons() {},
 };
 
 OneCourse.propTypes = {
@@ -113,5 +113,5 @@ OneCourse.propTypes = {
 
   addCourses: PropTypes.func,
   delLesson: PropTypes.func,
-  getAllLessons: PropTypes.func
+  getAllLessons: PropTypes.func,
 };

@@ -10,7 +10,7 @@ export class BaseService {
   async get(url, headers = {}) {
     const response = await request.get(`${apiEndpoint}/${url}`).set({
       "Content-Type": "application/json",
-      Authorization: "Bearer " + this.token
+      Authorization: "Bearer " + this.token,
     });
     return response.body;
   }
@@ -20,7 +20,7 @@ export class BaseService {
       .post(`${apiEndpoint}/${url}`)
       .set({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
+        Authorization:  `Bearer ${this.token ? this.token : ""}`,
       })
       .send(data);
     return response.body;
@@ -31,7 +31,7 @@ export class BaseService {
       .put(`${apiEndpoint}/${url}`)
       .set({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
+        Authorization: "Bearer " + this.token,
       })
       .send(data);
 
@@ -41,7 +41,7 @@ export class BaseService {
   async del(url, headers = {}) {
     let response = await request.del(`${apiEndpoint}/${url}`).set({
       "Content-Type": "application/json",
-      Authorization: "Bearer " + this.token
+      Authorization: "Bearer " + this.token,
     });
     return response;
   }

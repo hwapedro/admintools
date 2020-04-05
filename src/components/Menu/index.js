@@ -1,67 +1,63 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import {
   Wrapper,
   LinkStyle,
   Title,
-  ButtonWrapper,
-  ButtonSignOut
+  LinkWrapper,
+  WrapperSignOut,
 } from "./styleLocal";
-import Button from "../Shared/Button";
+
 import * as route from "../Route/constants";
 
 class Menu extends Component {
   render() {
+    const { location } = this.props;
+    console.log(route.courses === location.pathname);
     return (
       <>
         <Wrapper>
-          <Title> Admintools </Title>
+          <div>
+            <Title> Admintools </Title>
 
-          <ButtonWrapper>
-            <Link style={LinkStyle} to={route.courses}>
-              <Button buttonStyle={"text"} color={"white"}>
+            <LinkStyle to={route.courses}>
+              <LinkWrapper
+                isCurrentLocation={route.courses === location.pathname}
+              >
                 Courses
-              </Button>
-            </Link>
-          </ButtonWrapper>
+              </LinkWrapper>
+            </LinkStyle>
 
-          <ButtonWrapper>
-            <Link style={LinkStyle} to={route.lessons}>
-              <Button buttonStyle={"text"} color={"white"}>
+            <LinkStyle to={route.lessons}>
+              <LinkWrapper
+                isCurrentLocation={route.lessons === location.pathname}
+              >
                 Lessons
-              </Button>
-            </Link>
-          </ButtonWrapper>
+              </LinkWrapper>
+            </LinkStyle>
 
-          <ButtonWrapper>
-            <Link style={LinkStyle} to={route.badges}>
-              <Button buttonStyle={"text"} color={"white"}>
+            <LinkStyle to={route.badges}>
+              <LinkWrapper
+                isCurrentLocation={route.badges === location.pathname}
+              >
                 Badges
-              </Button>
-            </Link>
-          </ButtonWrapper>
+              </LinkWrapper>
+            </LinkStyle>
 
-          <ButtonWrapper>
-            <Link style={LinkStyle} to={route.news}>
-              <Button buttonStyle={"text"} color={"white"}>
-                News
-              </Button>
-            </Link>
-          </ButtonWrapper>
-
-          <ButtonSignOut>
-            <Button
-              buttonStyle={"text"}
-              color={"white"}
-              onClick={() => {
-                localStorage.removeItem("token");
-                window.history.go("/login");
-              }}
-            >
-              Sign out
-            </Button>
-          </ButtonSignOut>
+            <LinkStyle to={route.news}>
+              <LinkWrapper isCurrentLocation={route.news === location.pathname}>
+                News{" "}
+              </LinkWrapper>
+            </LinkStyle>
+          </div>
+          <WrapperSignOut
+            onClick={() => {
+              localStorage.removeItem("token");
+              window.history.go("/login");
+            }}
+           
+          ></WrapperSignOut>
         </Wrapper>
       </>
     );
@@ -69,8 +65,3 @@ class Menu extends Component {
 }
 
 export default withRouter(Menu);
-
-// const LinkStyle = {
-//   textDecoration: "none",
-//   color: "white"
-// };

@@ -37,5 +37,5 @@ class Spinner extends Component {
 export default Spinner;
 
 const SpinnerWrapper = styled.div`
-  margin: 25% 50% auto ;
+  margin: 30rem auto 50%  ;
 `;

@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import { Draggable } from "react-beautiful-dnd";
 
 import { SmartContainer } from "../../../Shared/SmartContainer";
+import { HashTagsContainer } from "../../../Shared/SmartContainer/HashTagsContainer";
 import Button from "../../../Shared/Button";
 
 import {
   ButtonWrapper,
-  ElementWrapper
+  ElementWrapper,
 } from "../../../GlobalStyles/styleGlobal";
 
 export default function Course({
@@ -16,7 +17,7 @@ export default function Course({
   deleteItem,
   index,
   goTo,
-  activeLanguage
+  activeLanguage,
 }) {
   return (
     <Draggable
@@ -24,49 +25,51 @@ export default function Course({
       draggableId={`draggableId-course-${course.courseIndex}`}
       index={index}
     >
-      {provided => (
+      {(provided) => (
         <ElementWrapper
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           key={course.courseIndex}
         >
-          <SmartContainer
-            name="Course"
-            index={course.courseIndex}
-            title={course.title[activeLanguage.value]}
-            annotation={course.annotation[activeLanguage.value]}
-            description={course.description[activeLanguage.value]}
-          />
-          <ButtonWrapper>
-            <Button buttonStyle={"outlined"} onClick={() => goTo(course._id)}>
-              GO TO
-            </Button>
-            <Button
-              buttonStyle={"outlined"}
-              onClick={() =>
-                getParams(
-                  course.courseIndex,
-                  course.title,
-                  course.annotation,
-                  course.description
-                )
-              }
-            >
-              CHANGE COURSE
-            </Button>
-
-            <Button
-              buttonStyle={"outlined"}
-              onClick={() => {
-                if (window.confirm("ARE YOU SURE ?")) {
-                  deleteItem(course._id);
+          <div style={{ position: "relative" }}>
+            <SmartContainer
+              name="Course"
+              title={course.title[activeLanguage.value]}
+              annotation={course.annotation[activeLanguage.value]}
+              description={course.description[activeLanguage.value]}
+            />
+            <HashTagsContainer course={course.courseIndex} />
+            <ButtonWrapper>
+              <Button buttonStyle={"outlined"} onClick={() => goTo(course._id)}>
+                GO TO
+              </Button>
+              <Button
+                buttonStyle={"outlined"}
+                onClick={() =>
+                  getParams(
+                    course.courseIndex,
+                    course.title,
+                    course.annotation,
+                    course.description
+                  )
                 }
-              }}
-            >
-              DELETE COURSE
-            </Button>
-          </ButtonWrapper>
+              >
+                CHANGE COURSE
+              </Button>
+
+              <Button
+                buttonStyle={"outlined"}
+                onClick={() => {
+                  if (window.confirm("ARE YOU SURE ?")) {
+                    deleteItem(course._id);
+                  }
+                }}
+              >
+                DELETE COURSE
+              </Button>
+            </ButtonWrapper>
+          </div>
         </ElementWrapper>
       )}
     </Draggable>
@@ -79,7 +82,7 @@ Course.defaultProps = {
   error: false,
 
   getParams() {},
-  deleteItem() {}
+  deleteItem() {},
 };
 
 Course.propTypes = {
@@ -88,5 +91,5 @@ Course.propTypes = {
   error: PropTypes.bool,
 
   getParams: PropTypes.func,
-  deleteItem: PropTypes.func
+  deleteItem: PropTypes.func,
 };

@@ -1,8 +1,9 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import checkMark from "../../../img/good.png";
 import redCross from "../../../img/bad.png";
+import { HashTagsContainer } from "./HashTagsContainer";
 
 export const SmartContainer = ({ name, ...props }) => {
   const content = Object.keys(props).map((key, index) => {
@@ -21,50 +22,90 @@ export const SmartContainer = ({ name, ...props }) => {
     if (key === "description") {
       return (
         <div key={index}>
-          <LabelElement>
-            {name} {key} :
-          </LabelElement>
+          <LabelElement>{key}</LabelElement>
           <DescriptionSpan
             dangerouslySetInnerHTML={{
-              __html: props[key]
+              __html: props[key],
             }}
           ></DescriptionSpan>
         </div>
       );
     }
 
+    if (key === "title") {
+      return (
+        <div key={index}>
+          <TitleSpan name={name} label={key}>
+            {props[key]}
+          </TitleSpan>
+        </div>
+      );
+    }
+
     return (
       <div key={index}>
-        <LabelElement>
-          {name} {key} :
+        <LabelElement name={name} label={key}>
+          {key}
         </LabelElement>
         <TitleSpan>{props[key]}</TitleSpan>
       </div>
     );
   });
 
-  return <> {content} </>;
+  return <>{content}</>;
 };
 
 const LabelElement = styled.label`
   display: inline-block;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  font-weight: 900;
-  font-size: 1.8rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.1rem;
+  font-weight: 600;
+  font-size: 1rem;
+
+  ${({ name, label }) => {
+    switch (name) {
+      case "Course":
+        if (label === "title") {
+          return css`
+            content: none;
+            background: #eee;
+            color: white;
+          `;
+        }
+        break;
+      default:
+        break;
+    }
+  }}
 `;
-const TitleSpan = styled.span`
+
+const TitleSpan = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin: 1rem 0;
-  font-size: 1.3rem;
+  font-size: 1rem;
+
+  ${({ name, label }) => {
+    switch (name) {
+      case "Course":
+        if (label === "title") {
+          return css`
+            font-weight: 600;
+            font-size: 2rem;
+          `;
+        }
+        break;
+      default:
+        break;
+    }
+  }}
 `;
 
 const DescriptionSpan = styled.span`
   display: block;
   margin: 1rem 0;
-  font-size: 1.3rem;
+  font-size: 1rem;
 `;
 
 const ImgMark = styled.img`

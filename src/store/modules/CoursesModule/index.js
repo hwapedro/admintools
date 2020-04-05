@@ -7,7 +7,7 @@ import ViewModule from "../ViewModule";
 const initialState = {
   courses: [],
   course: {},
-  lessons: []
+  lessons: [],
 };
 
 class CoursesModule extends DuckModule {
@@ -31,33 +31,33 @@ class CoursesModule extends DuckModule {
       case this.ADD_COURSE_SUCCESS:
         return {
           ...state,
-          courses: [...state.courses, action.courses]
+          courses: [...state.courses, action.courses],
         };
 
       case this.GETALL_COURSE_SUCCESS:
         return {
           ...state,
-          courses: action.courses
+          courses: action.courses,
         };
 
       case this.DELETE_COURSE_SUCCESS:
         return {
           ...state,
           courses: state.courses
-            .filter(courses => courses._id !== action.index)
+            .filter((courses) => courses._id !== action.index)
             .map((course, index) => {
               return { ...course, courseIndex: index + 1 };
-            })
+            }),
         };
 
       case this.CHANGE_COURSE_SUCCESS:
         return {
           ...state,
-          courses: state.courses.map(course =>
+          courses: state.courses.map((course) =>
             action.course.courseIndex === course.courseIndex
               ? action.course
               : course
-          )
+          ),
         };
 
       case this.CHANGE_DND_SUCCESS:
@@ -72,7 +72,7 @@ class CoursesModule extends DuckModule {
         return {
           ...state,
           course: action.course,
-          lessons: action.course.lessons
+          lessons: action.course.lessons,
         };
 
       case this.ADD_LESSON_SUCCESS:
@@ -83,23 +83,24 @@ class CoursesModule extends DuckModule {
             loading: false,
             course: {
               ...state.course,
-              lessons: [...state.course.lessons, action.lessons]
-            }
+              lessons: [...state.course.lessons, action.lessons],
+            },
           };
         }
         return { ...state };
 
       case this.SET_COURSE_LESSONS:
-      
         return {
           ...state,
-          lessons: [...state.lessons, action.lesson]
+          lessons: [...state.lessons, action.lesson],
         };
 
       case this.DELETE_LESSON_COURSE:
-             return {
+        return {
           ...state,
-          lessons: state.lessons.filter(lesson => lesson._id !== action.index)
+          lessons: state.lessons.filter(
+            (lesson) => lesson._id !== action.index
+          ),
         };
 
       case this.DELETE_LESSON_SUCCESS:
@@ -111,11 +112,11 @@ class CoursesModule extends DuckModule {
               lessons:
                 state.course.lessons &&
                 state.course.lessons.filter(
-                  lesson => lesson._id !== action.index
-                )
+                  (lesson) => lesson._id !== action.index
+                ),
             },
             loading: false,
-            error: false
+            error: false,
           };
         }
 
@@ -125,63 +126,63 @@ class CoursesModule extends DuckModule {
     }
   };
 
-  getAll = () => dispatch => {
+  getAll = () => (dispatch) => {
     dispatch(ViewModule.setLoading(true));
 
     CourseService.getAll()
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: this.GETALL_COURSE_SUCCESS,
-          courses: response.courses
+          courses: response.courses,
         });
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
+      .catch((error) => dispatch(ViewModule.setError(true)));
   };
 
-  add = (title, annotation, description) => dispatch => {
+  add = (title, annotation, description) => (dispatch) => {
     dispatch(ViewModule.setLoading(true));
 
     CourseService.add(title, annotation, description)
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: this.ADD_COURSE_SUCCESS,
-          courses: response.course
+          courses: response.course,
         });
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
+      .catch((error) => dispatch(ViewModule.setError(true)));
   };
 
-  delete = index => dispatch => {
+  delete = (index) => (dispatch) => {
     dispatch(ViewModule.setLoading(true));
 
     CourseService.delete(index)
       .then(() => {
         dispatch({
           type: this.DELETE_COURSE_SUCCESS,
-          index: index
+          index: index,
         });
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
+      .catch((error) => dispatch(ViewModule.setError(true)));
   };
 
-  change = (index, title, annotation, description) => dispatch => {
+  change = (index, title, annotation, description) => (dispatch) => {
     dispatch(ViewModule.setLoading(true));
     CourseService.change(index, title, annotation, description)
-      .then(async response =>
+      .then(async (response) =>
         dispatch({
           type: this.CHANGE_COURSE_SUCCESS,
-          course: response.course
+          course: response.course,
         })
       )
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
+      .catch((error) => dispatch(ViewModule.setError(true)));
   };
 
-  changeDnD = (id1, id2, name, courseIndex = 0) => dispatch => {
-    dispatch(ViewModule.setLoading(true));
+  changeDnD = (id1, id2, name, courseIndex = 0) => (dispatch) => {
+    // dispatch(ViewModule.setLoading(true));
     if (name === "lessons") {
       CourseService.DragAndDropLesson(id1, id2, courseIndex)
         .then(() => {
@@ -189,66 +190,64 @@ class CoursesModule extends DuckModule {
             type: this.CHANGE_DND_SUCCESS,
             payload: {
               id1,
-              id2
-            }
-          });
-        })
-        .then(() => dispatch(ViewModule.setLoading(false)))
-        .catch(error => dispatch(ViewModule.setError(true)));
-    } else
-      CourseService.dragAndDrop(id1, id2, name)
-        .then(() => {
-          dispatch({
-            type: this.CHANGE_DND_SUCCESS,
-            payload: {
-              id1,
               id2,
-              name
-            }
+            },
           });
         })
         .then(() => dispatch(ViewModule.setLoading(false)))
-        .catch(error => dispatch(ViewModule.setError(true)));
+        .catch((error) => dispatch(ViewModule.setError(true)));
+    } else
+      dispatch({
+        type: this.CHANGE_DND_SUCCESS,
+        payload: {
+          id1,
+          id2,
+          name,
+        },
+      });
+    CourseService.dragAndDrop(id1, id2, name).catch((error) =>
+      dispatch(ViewModule.setError(true))
+    );
   };
 
-  getOneCourse = id => async dispatch => {
+  getOneCourse = (id) => async (dispatch) => {
     dispatch(ViewModule.setLoading(true));
     CourseService.getOne(id)
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: this.GET_COURSE_SUCCESS,
-          course: response.course
+          course: response.course,
         });
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
+      .catch((error) => dispatch(ViewModule.setError(true)));
   };
 
-  getAllCourses = state => {
+  getAllCourses = (state) => {
     return this.getRoot(state).courses;
   };
 
-  getCourse = state => {
+  getCourse = (state) => {
     return this.getRoot(state).course;
   };
 
-  getCourseLessons = state => {
+  getCourseLessons = (state) => {
     return this.getRoot(state).lessons;
   };
 
-  setCourseLesson = lesson => dispatch => {
+  setCourseLesson = (lesson) => (dispatch) => {
     dispatch({
       type: this.SET_COURSE_LESSONS,
-      lesson: lesson
+      lesson: lesson,
     });
   };
 
-  deleteLessonsCourse = index => dispatch => {
+  deleteLessonsCourse = (index) => (dispatch) => {
     dispatch({
       type: this.DELETE_LESSON_COURSE,
-      index: index
+      index: index,
     });
   };
 }
 
-export default new CoursesModule("/COURSE/", state => state.Courses);
+export default new CoursesModule("/COURSE/", (state) => state.Courses);

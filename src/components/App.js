@@ -47,8 +47,8 @@ class App extends Component {
                 key={path}
                 exact
                 path={path}
-                render={() => (
-                  <Layout className="container">
+                render={(props) => (
+                  <Layout className="container" {...props}>
                     <Component />
                   </Layout>
                 )}
@@ -82,7 +82,6 @@ class App extends Component {
                 const { lessonId, pageId, taskId } = match.params;
                 return (
                   <Layout className="container">
-                    {" "}
                     <TasksContainer
                       lessonId={lessonId}
                       pageId={pageId}

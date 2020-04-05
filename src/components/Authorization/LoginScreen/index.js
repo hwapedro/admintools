@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, setErrors } from "formik";
 import * as Yup from "yup";
 
 import AuthorizationInput from "../AuthorizationInput";
 import Button from "../../Shared/Button";
 
 const signInSchema = Yup.object().shape({
-  username: Yup.string().required("Обязательно для заполнения"),
-  password: Yup.string().required("Обязательно для заполнения")
+  username: Yup.string().required("is required"),
+  password: Yup.string().required("is required")
 });
 
 export default class LoginScreen extends React.Component {
@@ -24,7 +24,7 @@ export default class LoginScreen extends React.Component {
 
   render() {
     const { loading, error } = this.props;
-
+    
     return (
       <Wrapper>
         <Formik
@@ -37,6 +37,7 @@ export default class LoginScreen extends React.Component {
                 name="username"
                 label="username"
                 placeholder="Введите никнейм"
+                disable={loading}
                 invalid={touched.username && errors.username}
                 component={AuthorizationInput}
               />
@@ -46,13 +47,14 @@ export default class LoginScreen extends React.Component {
                 name="password"
                 label="password"
                 placeholder="Введите пароль"
+                disable={loading}
                 invalid={touched.password && errors.password}
                 component={AuthorizationInput}
               />
               <ErrorMessage name="password" component={Error} />
 
               <ButtonWrapper>
-                <Button buttonStyle={"outlined"} type="submit">
+                <Button buttonStyle={"outlined"} type="submit"  disable={loading}>
                   SIGN IN
                 </Button>
               </ButtonWrapper>
