@@ -18,19 +18,8 @@ export default class TextConstructor extends Component {
     this.state = {
       question: props.task ? props.task.info.question : i18n,
       points: props.task ? props.task.info.points : 0,
-      answer: []
+      answer: props.task ? props.task.answer : []
     };
-  }
-
-  componentDidMount() {
-    const { task } = this.props;
-    if (task) {
-      this.setState({
-        ...this.state,
-        question: task.info.question,
-        answer: task.info.answer
-      });
-    }
   }
 
   onChange = event => {

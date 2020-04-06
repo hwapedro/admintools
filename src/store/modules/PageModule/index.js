@@ -93,7 +93,7 @@ class PageModule extends DuckModule {
       .then(response => {
         dispatch({
           type: this.ADD_TASK_SUCCESS,
-          task: response.body.task,
+          task: response.task,
           pageId: pageId
         });
       })

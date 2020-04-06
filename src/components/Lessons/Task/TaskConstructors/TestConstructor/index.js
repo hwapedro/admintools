@@ -23,32 +23,11 @@ export default class TestConstructor extends Component {
     super();
     this.state = {
       question: props.task ? props.task.info.question : i18n,
-      points: props.task ? props.task.info.points : 0,
-      choices: [],
-      answer: []
+      points: props.task ? props.task.info.points : 1,
+      hint: props.task ? props.task.info.hint : i18n,
+      choices: props.task ? props.task.info.choices : [],
+      answer: props.task ? props.task.answer : [],
     };
-  }
-
-  componentDidMount() {
-    const { task } = this.props;
-    if (task) {
-      this.setState({
-        ...this.state,
-        question: task.info.question,
-        choices: task.info.choices,
-        points: task.info.points,
-        answer: task.answer
-      });
-    } else {
-      let i18nStart = {};
-      i18nSelector.forEach(
-        el => (i18nStart = { ...i18nStart, [el.value]: "" })
-      );
-      this.setState({
-        name: i18nStart,
-        question: i18nStart
-      });
-    }
   }
 
   addChoice = () => {
@@ -74,12 +53,12 @@ export default class TestConstructor extends Component {
     let newOptions = choices.map(el =>
       id === el.i
         ? {
-            ...el,
-            c: {
-              ...el.c,
-              [activeLanguage.value]: event.target.value
-            }
+          ...el,
+          c: {
+            ...el.c,
+            [activeLanguage.value]: event.target.value
           }
+        }
         : el
     );
 
@@ -101,8 +80,9 @@ export default class TestConstructor extends Component {
   };
 
   onChange = event => {
-    const { question } = this.state;
+    const { question, hint } = this.state;
     const { activeLanguage } = this.props;
+
     switch (event.target.name) {
       case "points":
         this.setState({
@@ -116,6 +96,13 @@ export default class TestConstructor extends Component {
             [activeLanguage.value]: event.target.value
           }
         });
+      case "hint":
+        this.setState({
+          [event.target.name]: {
+            ...hint,
+            [activeLanguage.value]: event.target.value
+          }
+        });
         break;
       default:
         this.setState({ [event.target.name]: event.target.value });
@@ -125,12 +112,13 @@ export default class TestConstructor extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props;
-    const { points, question, choices, answer } = this.state;
+    const { points, question, choices, answer, hint } = this.state;
 
     const info = {
       points: points,
       question: question,
-      choices: choices
+      choices: choices,
+      hint: hint
     };
 
     if (task) {
@@ -142,9 +130,8 @@ export default class TestConstructor extends Component {
   };
 
   render() {
-    const { choices, points, question, answer } = this.state;
+    const { choices, points, question, answer, hint } = this.state;
     const { activeLanguage, handleLangChange } = this.props;
-   
 
     return (
       <>
@@ -155,7 +142,7 @@ export default class TestConstructor extends Component {
             options={i18nSelector}
             maxMenuHeight={100}
           />
-     
+
           <CustomInput
             label="Amount of point"
             name="points"
@@ -180,7 +167,7 @@ export default class TestConstructor extends Component {
           <div>
             {choices.length !== 0 &&
               choices.map(el => {
-                 
+
                 return (
                   <OptionsWrapper className="form-check" key={el.i}>
                     <OptionElementWrapper>
@@ -207,7 +194,13 @@ export default class TestConstructor extends Component {
                 );
               })}
           </div>
-
+          <CustomInput
+            label="Hint"
+            name="hint"
+            value={hint[activeLanguage.value]}
+            onChange={this.onChange}
+            required={false}
+          />
           <ButtonWrapper>
             <Button buttonStyle={"outlined"} type="submit">
               Save
@@ -220,8 +213,8 @@ export default class TestConstructor extends Component {
 }
 
 TestConstructor.defaultProps = {
-  addTask() {},
-  changeTask() {}
+  addTask() { },
+  changeTask() { }
 };
 
 TestConstructor.propTypes = {

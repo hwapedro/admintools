@@ -86,6 +86,8 @@ class Test extends Component {
                   );
                 })}
               </OptionsWrapper>
+              <LabelElement>Hint:</LabelElement>
+              <TitleSpan>{task.info.hint[activeLanguage.value]}</TitleSpan>
               <ButtonsWrapper>
                 <ButtonWrapper>
                   <Button

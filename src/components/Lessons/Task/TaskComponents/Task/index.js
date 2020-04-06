@@ -45,7 +45,6 @@ class Task extends Component {
 
   constSwitch = () => {
     const { task, pageId, lessonId, changeTask } = this.props;
-
     const { activeLanguage, taskEditFlag } = this.state;
 
     switch (task.type) {
