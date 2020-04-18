@@ -1,30 +1,19 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import {
-  TaskElementWrapper,
-  LabelElement,
-  TitleSpan,
-  ButtonsWrapper,
-  TaskWrapper
-} from "../../../styleLocal";
+import { TaskElementWrapper, LabelElement, TitleSpan, ButtonsWrapper, TaskWrapper } from '../../../styleLocal'
 
-import Button from "../../../../../Shared/Button";
-import TextConstructor from "../../../TaskConstructors/TextConstructor/";
+import Button from '../../../../../Shared/Button'
+import TextConstructor from '../../../TaskConstructors/TextConstructor/'
 
 class Text extends Component {
   render() {
-    const {
-      task,
-      page,
-      deleteTask,
-      changeEditFlag,
-      taskEditFlag,
-      lessonId,
-      changeTask,
-      activeLanguage,
-      handleLangChange
-    } = this.props;
+    const { task, page, deleteTask, changeEditFlag, taskEditFlag, lessonId, changeTask, activeLanguage, handleLangChange } = this.props
+
+    for (let language in task.info.question) {
+      const string = task.info.question[language].split('༼ つ ◕_◕ ༽つ')
+      task.info.question[language] = string.map((el, index) => (string.length - 1 !== index ? el + ` ~${task.answer[language][index]}~` : el)).join('')
+    }
 
     return (
       <TaskWrapper>
@@ -41,22 +30,21 @@ class Text extends Component {
           </TaskElementWrapper>
         ) : (
           <TaskElementWrapper key={task._id}>
-           
             <LabelElement>Question:</LabelElement>
             <TitleSpan>{task.info.question[activeLanguage.value]}</TitleSpan>
 
             <LabelElement>Answers:</LabelElement>
-            <TitleSpan>{task.answer.join(" , ")}</TitleSpan>
+            <TitleSpan>{task.answer[activeLanguage.value].join(' , ')}</TitleSpan>
 
             <ButtonsWrapper>
-              <Button buttonStyle={"outlined"} onClick={() => changeEditFlag()}>
+              <Button buttonStyle={'outlined'} onClick={() => changeEditFlag()}>
                 Edit
               </Button>
               <Button
-                buttonStyle={"outlined"}
+                buttonStyle={'outlined'}
                 onClick={() => {
-                  if (window.confirm("ARE YOU SURE ?")) {
-                    deleteTask(page._id, task._id, lessonId);
+                  if (window.confirm('ARE YOU SURE ?')) {
+                    deleteTask(page._id, task._id, lessonId)
                   }
                 }}
               >
@@ -66,7 +54,7 @@ class Text extends Component {
           </TaskElementWrapper>
         )}
       </TaskWrapper>
-    );
+    )
   }
 }
 
@@ -76,8 +64,8 @@ Text.defaultProps = {
   lessonId: null,
   taskEditFlag: false,
   changeEditFlag() {},
-  deleteTask() {}
-};
+  deleteTask() {},
+}
 
 Text.propTypes = {
   task: PropTypes.object,
@@ -85,7 +73,7 @@ Text.propTypes = {
   lessonId: PropTypes.string.isRequired,
   taskEditFlag: PropTypes.bool,
   changeEditFlag: PropTypes.func,
-  deleteTask: PropTypes.func
-};
+  deleteTask: PropTypes.func,
+}
 
-export default Text;
+export default Text

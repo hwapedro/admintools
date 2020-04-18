@@ -28,10 +28,11 @@ export const LinkWrapper = styled.div`
   border-radius: 5px;
   font-weight: 400;
   font-size: 0.9rem;
+
   ${({ isCurrentLocation }) =>
     isCurrentLocation &&
     css`
-      background: #eee;
+      background-color: #eee;
       color: black;
     `};
 `;

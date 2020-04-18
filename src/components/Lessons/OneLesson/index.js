@@ -1,40 +1,28 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Select from "react-select";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Select from 'react-select'
 
-import {
-  DescriptionSpan,
-  ImgMark,
-  ImgCross,
-  ElementWrapper,
-  ExamPropContainer
-} from "../styleLocal";
+import { DescriptionSpan, ImgMark, ImgCross, ExamPropContainer, ElementWrapper } from '../styleLocal'
+import { Wrapper, LabelElement, ButtonWrapper, EmptyMessage, SelectWrapper } from '../../GlobalStyles/styleGlobal'
 
-import {
-  Wrapper,
-  LabelElement,
-  TitleSpan,
-  ButtonWrapper,
-  EmptyMessage,
-  SelectWrapper
-} from "../../GlobalStyles/styleGlobal";
+import Button from '../../Shared/Button'
+import CustomInput from '../../Shared/Input'
+import Spinner from '../../Spinner'
+import PageList from '../../Pages/PageList'
+import { SmartContainer } from '../../Shared/SmartContainer'
+import { HashTagsContainer } from '../../Shared/SmartContainer/HashTagsContainer'
+import { SmartConstructor } from '../../Shared/SmartConstructor'
+import PageConstructor from '../../Pages/PageConstructor'
+import Error from '../../Error'
+import AdminService from '../../../service'
+import Editor from '../../Shared/Editor'
 
-import Button from "../../Shared/Button";
-import CustomInput from "../../Shared/Input";
-import Spinner from "../../Spinner";
-import PageList from "../PageList";
-import { SmartContainer } from "../../Shared/SmartContainer";
-import { SmartConstructor } from "../../Shared/SmartConstructor";
-import Error from "../../Error";
-import AdminService from "../../../service";
-import Editor from "../../Shared/Editor";
+import checkMark from '../../../img/good.png'
+import redCross from '../../../img/bad.png'
+import { i18nSelector } from '../../../store/utils'
 
-import checkMark from "../../../img/good.png";
-import redCross from "../../../img/bad.png";
-import { i18nSelector } from "../../../store/utils";
-
-const name = "lesson";
-let options = [];
+const name = 'lesson'
+let options = []
 
 export default class Lesson extends Component {
   state = {
@@ -44,42 +32,43 @@ export default class Lesson extends Component {
     courseIndex: { value: null, label: null },
     lessonId: null,
     exam: null,
-    activeLanguage: { label: "Russian", value: "ru" }
-  };
+    activeLanguage: { label: 'Russian', value: 'ru' },
+  }
 
   componentDidMount() {
-    const { getLesson, itemId } = this.props;
-    const token = localStorage.getItem("token");
+    const { getLesson, itemId } = this.props
+    const token = localStorage.getItem('token')
 
-    getLesson(itemId);
+    getLesson(itemId)
 
-    AdminService.getAll(token, "course")
-      .then(response => {
+    AdminService.getAll(token, 'course')
+      .then((response) => {
         options = response.courses.map((element, index) => {
-          const option = index + 1;
-          return { value: option, label: option };
-        });
+          const option = index + 1
+          return { value: option, label: option }
+        })
       })
-      .catch(console.error());
+      .catch(console.error())
   }
 
   //SELECTOR HANDLER
+
   handleChange = (value, selectorType) => {
     switch (selectorType) {
-      case "course":
-        this.setState({ courseIndex: value });
-        break;
-      case "language":
-        this.setState({ activeLanguage: value });
-        break;
+      case 'course':
+        this.setState({ courseIndex: value })
+        break
+      case 'language':
+        this.setState({ activeLanguage: value })
+        break
       default:
-        return;
+        return
     }
-  };
+  }
 
-  changeExamProp = exam => {
-    this.setState({ exam: !exam });
-  };
+  changeExamProp = (exam) => {
+    this.setState({ exam: !exam })
+  }
 
   getParams = (lessonId, title, description, exam, courseIndex) => {
     this.setState({
@@ -88,79 +77,55 @@ export default class Lesson extends Component {
       courseIndex: courseIndex,
       exam: exam,
       title: title,
-      description: description
-    });
-  };
+      description: description,
+    })
+  }
 
-  onSubmit = event => {
-    event.preventDefault();
-    const { changeLesson } = this.props;
-    const { title, description, lessonId, exam, courseIndex } = this.state;
-    if (title && description)
-      changeLesson(lessonId, title, description, exam, courseIndex.value);
-    this.setState({ changeFlag: false, lessonId: null });
-  };
+  onSubmit = (event) => {
+    event.preventDefault()
+    const { changeLesson } = this.props
+    const { title, description, lessonId, exam, courseIndex } = this.state
+    if (title && description) changeLesson(lessonId, title, description, exam, courseIndex.value)
+    this.setState({ changeFlag: false, lessonId: null })
+  }
 
   showConstructor = () => {
-    const { changeFlag } = this.state;
+    const { changeFlag } = this.state
     if (changeFlag) {
       this.setState({
-        changeFlag: !changeFlag
-      });
+        changeFlag: !changeFlag,
+      })
     }
-  };
+  }
 
   //TEXT HANDLER
-  onChange = event => {
-    const { title, description, activeLanguage } = this.state;
+  onChange = (event) => {
+    const { title, description, activeLanguage } = this.state
     switch (event.target.name) {
-      case "title":
+      case 'title':
         this.setState({
           [event.target.name]: {
             ...title,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
-      case "description":
+            [activeLanguage.value]: event.target.value,
+          },
+        })
+        break
+      case 'description':
         this.setState({
           [event.target.name]: {
             ...description,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
+            [activeLanguage.value]: event.target.value,
+          },
+        })
+        break
       default:
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ [event.target.name]: event.target.value })
     }
-  };
-
-  addPage = () => {
-    const { addPage, lesson } = this.props;
-    addPage(
-      this.props.lesson._id,
-      `Page ${lesson.pages.length + 1}`,
-      [],
-      0
-    );
-  };
+  }
 
   render() {
-    const {
-      lesson,
-      pages,
-      loading,
-      deletePage,
-      error
-    } = this.props;
-    const {
-      changeFlag,
-      courseIndex,
-      title,
-      description,
-      exam,
-      activeLanguage
-    } = this.state;
+    const { lesson, pages, loading, deletePage, error, addPage } = this.props
+    const { changeFlag, courseIndex, title, description, exam, activeLanguage } = this.state
     return (
       <>
         {error && (
@@ -178,61 +143,38 @@ export default class Lesson extends Component {
           <Wrapper>
             {changeFlag ? (
               <>
-              <SmartConstructor
-              showConstructor={this.showConstructor}
-              onSubmit={this.onSubmit}
-              onChange={this.onChange}
-              modal={true}
-              activeLanguage={activeLanguage}
-              select={{
-                handleChange: this.handleChange
-              }}
-              title={title[activeLanguage.value]}
-              description={description[activeLanguage.value]}
-            />
+                {/* <SmartConstructor
+                  showConstructor={this.showConstructor}
+                  onSubmit={this.onSubmit}
+                  onChange={this.onChange}
+                  modal={true}
+                  activeLanguage={activeLanguage}
+                  select={{
+                    handleChange: this.handleChange,
+                  }}
+                  title={title[activeLanguage.value]}
+                  description={description[activeLanguage.value]}
+                /> */}
                 <ElementWrapper>
-                  <form onSubmit={this.setParams}>
+                  <form onSubmit={this.onSubmit}>
                     <Select
                       value={activeLanguage}
-                      onChange={(value, {}, selectorType = "language") =>
-                        this.handleChange(value, selectorType)
-                      }
+                      onChange={(value, {}, selectorType = 'language') => this.handleChange(value, selectorType)}
                       options={i18nSelector}
                       maxMenuHeight={100}
                     />
-                    <CustomInput
-                      label="Title"
-                      placeholder="Title goes here"
-                      name="title"
-                      value={title[activeLanguage.value]}
-                      onChange={this.onChange}
-                      required={true}
-                    />
+                    <CustomInput label="Title" placeholder="Title goes here" name="title" value={title[activeLanguage.value]} onChange={this.onChange} required={true} />
                     <LabelElement>Description of Lesson : </LabelElement>
-                    <Editor
-                      onChange={this.onChange}
-                      name="description"
-                      value={description[activeLanguage.value]}
-                      language={activeLanguage.value}
-                    />
+                    <Editor onChange={this.onChange} name="description" value={description[activeLanguage.value]} language={activeLanguage.value} />
                     <ExamPropContainer>
                       <LabelElement>EXAM :</LabelElement>
-                      <ImgMark
-                        src={exam ? checkMark : redCross}
-                        onClick={() => this.changeExamProp(exam)}
-                      />
+                      <ImgMark src={exam ? checkMark : redCross} onClick={() => this.changeExamProp(exam)} />
                     </ExamPropContainer>
                     <LabelElement>Course Index :</LabelElement>
-                    <Select
-                      value={courseIndex}
-                      onChange={(value, {}, selectorType = "course") =>
-                        this.handleChange(value, selectorType)
-                      }
-                      options={options}
-                    />
+                    <Select value={courseIndex} onChange={(value, {}, selectorType = 'course') => this.handleChange(value, selectorType)} options={options} />
 
                     <ButtonWrapper>
-                      <Button buttonStyle={"outlined"} type="submit">
+                      <Button buttonStyle={'outlined'} type="submit">
                         CONFIRM
                       </Button>
                     </ButtonWrapper>
@@ -242,59 +184,41 @@ export default class Lesson extends Component {
             ) : (
               <>
                 <SelectWrapper>
-                  <Select
-                    value={activeLanguage}
-                    onChange={(value, {}, selectorType = "language") =>
-                      this.handleChange(value, selectorType)
-                    }
-                    options={i18nSelector}
-                  />
+                  <Select value={activeLanguage} onChange={(value, {}, selectorType = 'language') => this.handleChange(value, selectorType)} options={i18nSelector} />
                 </SelectWrapper>
-                <ElementWrapper
-                  key={lesson._id}
-                  onClick={() =>
-                    this.getParams(
-                      lesson._id,
-                      lesson.title,
-                      lesson.description,
-                      lesson.exam,
-                      { value: lesson.courseIndex, label: lesson.courseIndex }
-                    )
-                  }
-                >
-                  <SmartContainer
-                    name="Lesson"
-                    title={lesson.title[activeLanguage.value]}
-                    description={lesson.description[activeLanguage.value]}
-                    exam={lesson.exam}
-                    courseIndex={lesson.courseIndex}
-                  />
+                <ElementWrapper key={lesson._id}>
+                  <div style={{ position: 'relative' }}>
+                    <SmartContainer
+                      name="Lesson"
+                      title={lesson.title[activeLanguage.value]}
+                      description={lesson.description[activeLanguage.value]}
+                      exam={lesson.exam}
+                      courseIndex={lesson.courseIndex}
+                    />
+                    <HashTagsContainer course={lesson.courseIndex} exam={lesson.exam} />
+                    <ButtonWrapper>
+                      <Button
+                        buttonStyle={'outlined'}
+                        onClick={() => this.getParams(lesson._id, lesson.title, lesson.description, lesson.exam, { value: lesson.courseIndex, label: lesson.courseIndex })}
+                      >
+                        CHANGE Lesson
+                      </Button>
+                    </ButtonWrapper>
+                  </div>
                 </ElementWrapper>
 
-                <ButtonWrapper>
-                  <Button buttonStyle={"outlined"} onClick={this.addPage}>
-                    Add Page
-                  </Button>
-                </ButtonWrapper>
+                <PageConstructor lessonId={lesson._id} addPage={addPage} />
               </>
             )}
             {pages.length === 0 ? (
               <EmptyMessage>There is nothing here yet</EmptyMessage>
             ) : (
-              <PageList
-                lessonId={lesson._id}
-                pages={pages}
-                id={lesson._id}
-                deletePage={deletePage}
-
-                activeLanguage={activeLanguage}
-
-              />
+              <PageList lessonId={lesson._id} pages={pages} id={lesson._id} deletePage={deletePage} activeLanguage={activeLanguage} />
             )}
           </Wrapper>
         )}
       </>
-    );
+    )
   }
 }
 
@@ -306,8 +230,8 @@ Lesson.defaultProps = {
 
   getLesson() {},
   changeLesson() {},
-  setTask() {}
-};
+  setTask() {},
+}
 
 Lesson.propTypes = {
   pages: PropTypes.array,
@@ -317,5 +241,5 @@ Lesson.propTypes = {
 
   getLesson: PropTypes.func,
   changeLesson: PropTypes.func,
-  setTask: PropTypes.func
-};
+  setTask: PropTypes.func,
+}

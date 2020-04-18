@@ -64,7 +64,7 @@ class Task extends Component {
             }
           />
         );
-      case "text":
+      case "fill":
         return (
           <Text
             task={task}

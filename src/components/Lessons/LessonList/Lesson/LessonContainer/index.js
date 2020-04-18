@@ -1,7 +1,7 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-import { ElementWrapper } from "../../../styleLocal.js";
+import { ElementWrapper } from "../../../../GlobalStyles/styleGlobal";
 
 export default function LessonContainer({ lesson, index, children }) {
   return (

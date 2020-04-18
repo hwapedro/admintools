@@ -1,36 +1,26 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux'
 
-import Lesson from "../../components/Lessons/OneLesson";
-import ViewModule from "../../store/modules/ViewModule";
-import LessonModule from "../../store/modules/LessonModule";
-import PageModule from "../../store/modules/PageModule";
-import TaskModule from "../../store/modules/TaskModule";
+import Lesson from '../../components/Lessons/OneLesson'
+import ViewModule from '../../store/modules/ViewModule'
+import LessonModule from '../../store/modules/LessonModule'
+import PageModule from '../../store/modules/PageModule'
+import TaskModule from '../../store/modules/TaskModule'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   lesson: LessonModule.getOneLesson(state),
   pages: PageModule.getPages(state),
   loading: ViewModule.isLoading(state),
-  error: ViewModule.isError(state)
-});
+  error: ViewModule.isError(state),
+})
 
-const mapDispatchToProps = dispatch => ({
-  getLesson: id => dispatch(LessonModule.getLesson(id)),
-  changeLesson: (lessonsIndex, title, description, exam, courseIndex) =>
-    dispatch(
-      LessonModule.change(
-        lessonsIndex,
-        title,
-        description,
-        exam,
-        courseIndex
-      )
-    ),
-  addPage: (id, text, tasks, needToComplete) =>
-    dispatch(PageModule.addPage(id, text, tasks, needToComplete)),
-  deletePage: id => dispatch(PageModule.deletePage(id)),
+const mapDispatchToProps = (dispatch) => ({
+  getLesson: (id) => dispatch(LessonModule.getLesson(id)),
+  changeLesson: (lessonsIndex, title, description, exam, courseIndex) => dispatch(LessonModule.change(lessonsIndex, title, description, exam, courseIndex)),
+  addPage: (id, title, description, tasks, needToComplete) => dispatch(PageModule.addPage(id, title, description, tasks, needToComplete)),
+  deletePage: (id) => dispatch(PageModule.deletePage(id)),
   // deleteTask: (pageId, taskid) =>
   //   dispatch(PageModule.delete(pageId, taskid)),
   // setTask: task => dispatch(TaskModule.setTask(task))
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Lesson);
+export default connect(mapStateToProps, mapDispatchToProps)(Lesson)

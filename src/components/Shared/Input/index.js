@@ -1,29 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
-import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
+import React from 'react'
+import PropTypes from 'prop-types'
+import TextField from '@material-ui/core/TextField'
+import { withStyles } from '@material-ui/core/styles'
 
-import { Field } from "./style";
-import { LabelElement } from "../../GlobalStyles/styleGlobal";
+import { Field } from './style'
+import { LabelElement } from '../../GlobalStyles/styleGlobal'
 
 const CustomInput = withStyles({
   root: {
-    "& .MuiOutlinedInput-input": {
-      padding: "10px 14px",
-      fontSize: "14px",
-      backgroundColor: "white"
-    }
-  }
-})(TextField);
+    '& .MuiOutlinedInput-input': {
+      padding: '10px 14px',
+      fontSize: '14px',
+      backgroundColor: 'white',
+    },
+  },
+})(TextField)
 
-export default function Input({
-  onChange,
-  name,
-  value,
-  label,
-  placeholder,
-  required
-}) {
+export default function Input({ onChange, name, value, label, placeholder, required, type }) {
   return (
     <Field>
       <LabelElement htmlFor={label}>{label}</LabelElement>
@@ -33,14 +26,15 @@ export default function Input({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        type={type}
         variant="outlined"
         style={{
-          backgroundColor: "eee",
-          width: "auto"
+          backgroundColor: 'eee',
+          width: 'auto',
         }}
       />
     </Field>
-  );
+  )
 }
 
 Input.propTypes = {
@@ -49,13 +43,13 @@ Input.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   required: PropTypes.bool,
-  onChange: PropTypes.func
-};
+  onChange: PropTypes.func,
+}
 
 Input.defaultProps = {
-  name: "",
-  value: "",
-  label: "",
-  placeholder: "",
-  required: false
-};
+  name: '',
+  value: '',
+  label: '',
+  placeholder: '',
+  required: false,
+}

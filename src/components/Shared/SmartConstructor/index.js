@@ -1,47 +1,29 @@
-import React from "react";
-import styled from "styled-components";
-import Select from "react-select";
+import React from 'react'
+import styled from 'styled-components'
+import Select from 'react-select'
 
-import CustomInput from "../../Shared/Input";
-import Button from "../../Shared/Button";
-import Editor from "../../Shared/Editor";
-import { i18nSelector } from "../../../store/utils";
+import CustomInput from '../../Shared/Input'
+import Button from '../../Shared/Button'
+import Editor from '../../Shared/Editor'
+import { i18nSelector } from '../../../store/utils'
 
-export const SmartConstructor = ({
-  modal,
-  showConstructor,
-  onChange,
-  onSubmit,
-  activeLanguage,
-  ...props
-}) => {
- 
+export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, activeLanguage, ...props }) => {
   const content = Object.keys(props).map((key, index) => {
-    if (key === "select") {
+    if (key === 'select') {
       return (
         <div key={index}>
           <LabelElement>choose language</LabelElement>
-          <Select
-            value={activeLanguage}
-            onChange={props[key].handleLangChange}
-            options={i18nSelector}
-            maxMenuHeight={100}
-          />
+          <Select value={activeLanguage} onChange={props[key].handleLangChange} options={i18nSelector} maxMenuHeight={100} />
         </div>
-      );
+      )
     }
-    if (key === "description") {
+    if (key === 'description') {
       return (
         <div key={index}>
           <LabelElement>{key}</LabelElement>
-          <Editor
-            onChange={onChange}
-            name={key}
-            value={props[key]}
-            language={activeLanguage.value}
-          />
+          <Editor onChange={onChange} name={key} value={props[key]} language={activeLanguage.value} />
         </div>
-      );
+      )
     }
 
     return (
@@ -50,14 +32,15 @@ export const SmartConstructor = ({
           label={key}
           placeholder={`write ${key}`}
           name={key}
-          value={props[key]}
+          type={props[key].type ? props[key].type : 'text'}
+          value={props[key].value ? props[key].value : props[key]}
           onChange={onChange}
           required={true}
           maxLenght="100"
         />
       </div>
-    );
-  });
+    )
+  })
 
   return (
     <>
@@ -68,7 +51,7 @@ export const SmartConstructor = ({
             <ConsturctorForm onSubmit={onSubmit}>
               {content}
               <ButtonWrapper>
-                <Button buttonStyle={"outlined"} type="submit">
+                <Button buttonStyle={'outlined'} type="submit">
                   ADD
                 </Button>
               </ButtonWrapper>
@@ -79,15 +62,15 @@ export const SmartConstructor = ({
         <ConsturctorForm onSubmit={onSubmit}>
           {content}
           <ButtonWrapper>
-            <Button buttonStyle={"outlined"} type="submit">
+            <Button buttonStyle={'outlined'} type="submit">
               CONFIRM
             </Button>
           </ButtonWrapper>
         </ConsturctorForm>
       )}
     </>
-  );
-};
+  )
+}
 {
   /* <ConsturctorForm onSubmit={this.onSubmit}>
   <CustomInput
@@ -129,10 +112,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
+`
 
 export const ConsturctorWrapper = styled.div`
-  background: ${props => props.theme.courses};
+  background: ${(props) => props.theme.courses};
   padding: 1.5rem;
   position: absolute;
   width: 700px;
@@ -143,9 +126,9 @@ export const ConsturctorWrapper = styled.div`
   margin-top: -200px;
   margin-left: -330px;
   box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
-`;
+`
 
-export const ConsturctorForm = styled.form``;
+export const ConsturctorForm = styled.form``
 
 export const DarkGround = styled.div`
   background: #000;
@@ -156,7 +139,7 @@ export const DarkGround = styled.div`
   z-index: 100;
   top: 0;
   left: 0;
-`;
+`
 
 export const TitleSpan = styled.span`
   display: flex;
@@ -164,7 +147,7 @@ export const TitleSpan = styled.span`
   align-items: center;
   margin: 1rem 0;
   font-size: 1.3rem;
-`;
+`
 
 export const LabelElement = styled.label`
   display: inline-block;
@@ -172,21 +155,21 @@ export const LabelElement = styled.label`
   margin-bottom: 0.5rem;
   font-weight: 900;
   font-size: 1.8rem;
-`;
+`
 
 export const ElementWrapper = styled.li`
-  background-color: ${props => props.theme.courses};
+  background-color: ${(props) => props.theme.courses};
   margin-top: 2rem;
   padding: 1rem;
   box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
-`;
+`
 
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
   margin-top: 0.5rem;
-`;
+`
 
 export const EmptyMessage = styled.div`
   text-transform: uppercase;
@@ -194,8 +177,8 @@ export const EmptyMessage = styled.div`
   font-size: 2.5rem;
   top: 50%;
   margin-top: 5rem;
-`;
+`
 
 export const SelectWrapper = styled.div`
   width: 10rem;
-`;
+`

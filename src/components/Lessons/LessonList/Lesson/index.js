@@ -1,91 +1,70 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Button from "../../../Shared/Button";
+import React from 'react'
+import PropTypes from 'prop-types'
+import Button from '../../../Shared/Button'
 
-import { ElementWrapper } from "../../styleLocal.js";
-import { ButtonWrapper } from "../../../GlobalStyles/styleGlobal";
+import { ElementWrapper } from '../../../GlobalStyles/styleGlobal'
+import { ButtonWrapper } from '../../../GlobalStyles/styleGlobal'
 
-import LessonContainer from "./LessonContainer";
-import { SmartContainer } from "../../../Shared/SmartContainer";
+import LessonContainer from './LessonContainer'
+import { SmartContainer } from '../../../Shared/SmartContainer'
+import { HashTagsContainer } from '../../../Shared/SmartContainer/HashTagsContainer'
 
-export default function Lesson({
-  lesson,
-  deleteItem,
-  index,
-  goTo,
-  course,
-  activeLanguage
-}) {
-  if (!course) {
-    return (
-      <ElementWrapper key={lesson._id}>
-        <SmartContainer
-          name="Lesson"
-          title={lesson.title[activeLanguage.value]}
-          description={lesson.description[activeLanguage.value]}
-          exam={lesson.exam}
-          courseIndex={lesson.courseIndex}
-        />
-        <ButtonWrapper>
-          <Button buttonStyle={"outlined"} onClick={() => goTo(lesson._id)}>
-            CHANGE Lesson
-          </Button>
-          <Button
-            buttonStyle={"outlined"}
-            onClick={() => {
-              if (window.confirm("Delete the item?")) {
-                deleteItem(lesson._id);
-              }
-            }}
-          >
-            DELETE Lesson
-          </Button>
-        </ButtonWrapper>
-      </ElementWrapper>
-    );
-  } else {
+const LessonSwitcher = ({ lesson, deleteItem, goTo, activeLanguage }) => (
+  <div style={{ position: 'relative' }}>
+    <SmartContainer name="Lesson" title={lesson.title[activeLanguage.value]} description={lesson.description[activeLanguage.value]} />
+    <HashTagsContainer course={lesson.courseIndex} exam={lesson.exam} />
+    <ButtonWrapper>
+      <Button buttonStyle={'outlined'} onClick={() => goTo(lesson._id)}>
+        CHANGE Lesson
+      </Button>
+      <Button
+        buttonStyle={'outlined'}
+        onClick={() => {
+          if (window.confirm('Delete the item?')) {
+            deleteItem(lesson._id)
+          }
+        }}
+      >
+        DELETE Lesson
+      </Button>
+    </ButtonWrapper>
+  </div>
+)
+
+const Lesson = ({ lesson, deleteItem, index, goTo, course, activeLanguage }) => {
+  if (course) {
     return (
       <LessonContainer lesson={lesson} index={index}>
-        <SmartContainer
-          name="Lesson"
-          title={lesson.title[activeLanguage.value]}
-          description={lesson.description[activeLanguage.value]}
-          exam={lesson.exam}
-        />
-        <ButtonWrapper>
-          <Button buttonStyle={"outlined"} onClick={() => goTo(lesson._id)}>
-            CHANGE Lesson
-          </Button>
-          <Button
-            buttonStyle={"outlined"}
-            onClick={() => {
-              if (window.confirm("Delete the item?")) {
-                deleteItem(lesson._id);
-              }
-            }}
-          >
-            DELETE Lesson
-          </Button>
-        </ButtonWrapper>
+        <LessonSwitcher lesson={lesson} deleteItem={deleteItem} goTo={goTo} activeLanguage={activeLanguage} />
       </LessonContainer>
-    );
+    )
+  } else {
+    return (
+      <ElementWrapper key={lesson._id}>
+        <LessonSwitcher lesson={lesson} deleteItem={deleteItem} goTo={goTo} activeLanguage={activeLanguage} />
+      </ElementWrapper>
+    )
   }
 }
 
 Lesson.defaultProps = {
   lesson: {},
+  activeLanguage: {},
   course: null,
   index: null,
 
   goTo() {},
-  deleteItem() {}
-};
+  deleteItem() {},
+}
 
 Lesson.propTypes = {
   lesson: PropTypes.object,
+  activeLanguage: PropTypes.object,
   course: PropTypes.object,
   index: PropTypes.number,
 
   goTo: PropTypes.func,
-  deleteItem: PropTypes.func
-};
+  deleteItem: PropTypes.func,
+}
+
+export default Lesson

@@ -1,26 +1,16 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Select from "react-select";
-import { Droppable } from "react-beautiful-dnd";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import Course from "./Course";
-import Button from "../../Shared/Button";
-import CustomInput from "../../Shared/Input";
-import Editor from "../../Shared/Editor";
-import { SmartConstructor } from "../../Shared/SmartConstructor";
+import { Droppable } from 'react-beautiful-dnd'
+import { withRouter } from 'react-router-dom'
 
-import { ElementsWrapper } from "../styleLocal";
-import {
-  Wrapper,
-  EmptyMessage,
-  LabelElement,
-  ElementWrapper,
-  ButtonWrapper
-} from "../../GlobalStyles/styleGlobal";
-import { i18nSelector } from "../../../store/utils";
+import Course from './Course'
+import { SmartConstructor } from '../../Shared/SmartConstructor'
 
-const name = "course";
+import { ElementsWrapper } from '../styleLocal'
+import { Wrapper, EmptyMessage, ElementWrapper } from '../../GlobalStyles/styleGlobal'
+
+const name = 'course'
 
 class CourseList extends Component {
   state = {
@@ -28,8 +18,8 @@ class CourseList extends Component {
     annotation: null,
     description: null,
     changeFlag: false,
-    courseIndex: null
-  };
+    courseIndex: null,
+  }
 
   getParams = (courseIndex, title, annotation, description) => {
     this.setState({
@@ -37,93 +27,82 @@ class CourseList extends Component {
       courseIndex: courseIndex,
       title: title,
       annotation: annotation,
-      description: description
-    });
-  };
+      description: description,
+    })
+  }
 
-  onSubmit = event => {
-    event.preventDefault();
-    const { title, annotation, description, courseIndex } = this.state;
-    const { changeCourse } = this.props;
+  onSubmit = (event) => {
+    event.preventDefault()
+    const { title, annotation, description, courseIndex } = this.state
+    const { changeCourse } = this.props
 
-    if (title && description)
-      changeCourse(courseIndex, title, annotation, description, name);
-    this.setState({ changeFlag: false, courseIndex: null });
-  };
+    if (title && description) changeCourse(courseIndex, title, annotation, description, name)
+    this.setState({ changeFlag: false, courseIndex: null })
+  }
 
   showConstructor = () => {
-    const { changeFlag } = this.state;
+    const { changeFlag } = this.state
     if (changeFlag) {
       this.setState({
-        changeFlag: !changeFlag
-      });
+        changeFlag: !changeFlag,
+      })
     }
-  };
+  }
 
-  deleteItem = courseIndex => {
-    const { delCourse } = this.props;
-    delCourse(courseIndex, name);
-  };
+  deleteItem = (courseIndex) => {
+    const { delCourse } = this.props
+    delCourse(courseIndex, name)
+  }
 
   //TEXT HANDLER
-  onChange = event => {
-    const { title, annotation, description } = this.state;
-    const { activeLanguage } = this.props;
+  onChange = (event) => {
+    const { title, annotation, description } = this.state
+    const { activeLanguage } = this.props
     switch (event.target.name) {
-      case "title":
+      case 'title':
         this.setState({
           [event.target.name]: {
             ...title,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
-      case "annotation":
+            [activeLanguage.value]: event.target.value,
+          },
+        })
+        break
+      case 'annotation':
         this.setState({
           [event.target.name]: {
             ...annotation,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
-      case "description":
+            [activeLanguage.value]: event.target.value,
+          },
+        })
+        break
+      case 'description':
         this.setState({
           [event.target.name]: {
             ...description,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
+            [activeLanguage.value]: event.target.value,
+          },
+        })
+        break
       default:
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ [event.target.name]: event.target.value })
     }
-  };
+  }
 
-  goTo = id => {
-    this.props.setLoading(true);
-    this.props.history.push(`/course/${id}`);
-  };
+  goTo = (id) => {
+    this.props.setLoading(true)
+    this.props.history.push(`/course/${id}`)
+  }
 
   render() {
-    const { courses, search, activeLanguage, handleLangChange } = this.props;
-    const {
-      changeFlag,
-      courseIndex,
-      title,
-      annotation,
-      description
-    } = this.state;
+    const { courses, search, activeLanguage, handleLangChange } = this.props
+    const { changeFlag, courseIndex, title, annotation, description } = this.state
 
     let list = courses
-      .filter(course => {
-        if (
-          course.title[activeLanguage.value]
-            .toLowerCase()
-            .indexOf(search.toLowerCase()) !== -1
-        ) {
-          return true;
+      .filter((course) => {
+        if (course.title[activeLanguage.value].toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+          return true
         }
-        return false;
+        return false
       })
       .map((course, index) => {
         if (changeFlag && course.courseIndex === courseIndex) {
@@ -135,14 +114,14 @@ class CourseList extends Component {
                 onChange={this.onChange}
                 activeLanguage={activeLanguage}
                 select={{
-                  handleLangChange: handleLangChange
+                  handleLangChange: handleLangChange,
                 }}
                 title={title[activeLanguage.value]}
                 annotation={annotation[activeLanguage.value]}
                 description={description[activeLanguage.value]}
               />
             </ElementWrapper>
-          );
+          )
         } else {
           return (
             <Course
@@ -154,21 +133,17 @@ class CourseList extends Component {
               goTo={this.goTo}
               activeLanguage={activeLanguage}
             />
-          );
+          )
         }
-      });
+      })
     return (
       <Wrapper>
         {courses.length === 0 || list.length === 0 ? (
           <EmptyMessage>There is nothing here yet</EmptyMessage>
         ) : (
           <Droppable droppableId="droppable">
-            {provided => (
-              <ElementsWrapper
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
+            {(provided) => (
+              <ElementsWrapper ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                 {list}
                 {provided.placeholder}
               </ElementsWrapper>
@@ -176,22 +151,22 @@ class CourseList extends Component {
           </Droppable>
         )}
       </Wrapper>
-    );
+    )
   }
 }
 
-export default withRouter(CourseList);
+export default withRouter(CourseList)
 
 CourseList.defaultProps = {
   courses: [],
 
   changeCourse() {},
-  delCourse() {}
-};
+  delCourse() {},
+}
 
 CourseList.propTypes = {
   courses: PropTypes.arrayOf(PropTypes.object),
 
   delCourse: PropTypes.func,
-  changeCourse: PropTypes.func
-};
+  changeCourse: PropTypes.func,
+}

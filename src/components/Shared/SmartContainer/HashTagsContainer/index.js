@@ -1,41 +1,47 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React from 'react'
+import styled, { css } from 'styled-components'
 
 export const HashTagsContainer = (props) => {
-  const content = Object.keys(props).map((key, index) => {
-    // if (key === "exam") {
-    //   return <div key={index}></div>;
-    // }
-    if (key === "course") {
-      return (
-        <HashTagsWrapper key={index}>
-          <HashTags label={key}>
-            {key} {props[key]}
-          </HashTags>
-        </HashTagsWrapper>
-      );
-    }
-  });
+  const content = Object.keys(props).map((key) => (
+    <HashTags label={key} value={props[key]}>
+      {key} {props[key]}
+    </HashTags>
+  ))
 
-  return <> {content} </>;
-};
+  return (
+    <Wrapper>
+      <HashTagsWrapper> {content} </HashTagsWrapper>
+    </Wrapper>
+  )
+}
 
 const HashTags = styled.div`
-  ${({ name, label }) => {
-    if (label === "course") {
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 1.2rem;
+  font-size: 1rem;
+  margin-right: 5px;
+  ${({ value, label }) => {
+    if (label === 'course') {
       return css`
-        font-size: 1rem;
         color: #2aa8a1;
         border: 1px solid #2aa8a1;
-        border-radius: 15px;
-        padding: 5px 10px;
-        font-size: 1.2rem;
-        bottom: 5px;
-        position: absolute;
-      `;
+      `
+    }
+    if (label === 'exam') {
+      if (value) {
+        return css`
+          color: #2aa8a1;
+          border: 1px solid #2aa8a1;
+        `
+      }
+      return css`
+        color: #eb5757;
+        border: 1px solid #eb5757;
+      `
     }
   }}
-`;
+`
 
 const HashTagsWrapper = styled.div`
   display: flex;
@@ -43,4 +49,9 @@ const HashTagsWrapper = styled.div`
   align-items: center;
   margin: 1rem 0;
   font-size: 1.3rem;
-`;
+`
+
+const Wrapper = styled.div`
+  bottom: -15px;
+  position: absolute;
+`
