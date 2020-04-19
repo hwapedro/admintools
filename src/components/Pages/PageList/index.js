@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 
 import PageNav from '../PageNav'
 import Button from '../../Shared/Button'
-// import TaskList from "../Task/TaskList";
 import TaskListContainer from '../../../containers/TaskContainer/TaskListContainer'
 import TaskConstructorContainer from '../../../containers/TaskContainer/TaskConstructorContainer'
 
@@ -45,6 +44,7 @@ class PageList extends Component {
             </div>
           )
         }
+        return null
       })
     }
 

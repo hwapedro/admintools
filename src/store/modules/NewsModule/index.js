@@ -1,19 +1,19 @@
-import DuckModule from "simple-duck";
+import DuckModule from 'simple-duck'
 
-import NewsService from "../../../service/news";
-import ViewModule from "../ViewModule";
+import NewsService from '../../../service/news'
+import ViewModule from '../ViewModule'
 
 const initialState = {
-  news: []
-};
+  news: [],
+}
 
 class CoursesModule extends DuckModule {
   constructor(prefix, rootSelector) {
-    super(prefix, rootSelector);
-    this.ADD_NEWS_SUCCESS = `${this.prefix}ADD_NEWS_SUCCESS`;
-    this.GETALL_NEWS_SUCCESS = `${this.prefix}GETALL_NEWS_SUCCESS`;
-    this.CHANGE_NEWS_SUCCESS = `${this.prefix}CHANGE_NEWS_SUCCESS`;
-    this.DELETE_NEWS_SUCCESS = `${this.prefix}DELETE_NEWS_SUCCESS`;
+    super(prefix, rootSelector)
+    this.ADD_NEWS_SUCCESS = `${this.prefix}ADD_NEWS_SUCCESS`
+    this.GETALL_NEWS_SUCCESS = `${this.prefix}GETALL_NEWS_SUCCESS`
+    this.CHANGE_NEWS_SUCCESS = `${this.prefix}CHANGE_NEWS_SUCCESS`
+    this.DELETE_NEWS_SUCCESS = `${this.prefix}DELETE_NEWS_SUCCESS`
   }
 
   reduce = (state = initialState, action) => {
@@ -21,92 +21,90 @@ class CoursesModule extends DuckModule {
       case this.ADD_NEWS_SUCCESS:
         return {
           ...state,
-          news: [...state.news, action.news]
-        };
+          news: [...state.news, action.news],
+        }
 
       case this.GETALL_NEWS_SUCCESS:
         return {
           ...state,
-          news: action.news
-        };
+          news: action.news,
+        }
 
       case this.CHANGE_NEWS_SUCCESS:
         return {
           ...state,
-          news: state.news.map(article =>
-            action.article._id === article._id ? action.article : article
-          )
-        };
+          news: state.news.map((article) => (action.article._id === article._id ? action.article : article)),
+        }
 
       case this.DELETE_NEWS_SUCCESS:
         return {
           ...state,
-          news: state.news.filter(news => news._id !== action.index)
-        };
+          news: state.news.filter((news) => news._id !== action.index),
+        }
+      default:
+        return super.reduce(state, action)
     }
-    return super.reduce(state, action);
-  };
+  }
 
-  getAll = name => dispatch => {
-    dispatch(ViewModule.setLoading(true));
+  getAll = (name) => (dispatch) => {
+    dispatch(ViewModule.setLoading(true))
 
     NewsService.getAll()
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: this.GETALL_NEWS_SUCCESS,
-          news: response.articles
-        });
+          news: response.articles,
+        })
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
-  };
+      .catch((error) => dispatch(ViewModule.setError(true)))
+  }
 
-  add = (title, description) => dispatch => {
-    dispatch(ViewModule.setLoading(true));
+  add = (title, description) => (dispatch) => {
+    dispatch(ViewModule.setLoading(true))
 
     NewsService.add(title, description)
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: this.ADD_NEWS_SUCCESS,
-          news: response.article
-        });
+          news: response.article,
+        })
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
-  };
+      .catch((error) => dispatch(ViewModule.setError(true)))
+  }
 
-  delete = (index) => dispatch => {
-    dispatch(ViewModule.setLoading(true));
+  delete = (index) => (dispatch) => {
+    dispatch(ViewModule.setLoading(true))
 
     NewsService.delete(index)
       .then(() => {
         dispatch({
           type: this.DELETE_NEWS_SUCCESS,
-          index: index
-        });
+          index: index,
+        })
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
-  };
+      .catch((error) => dispatch(ViewModule.setError(true)))
+  }
 
-  change= (index, title, description) => dispatch => {
-    dispatch(ViewModule.setLoading(true));
+  change = (index, title, description) => (dispatch) => {
+    dispatch(ViewModule.setLoading(true))
 
     NewsService.change(index, title, description)
-      .then(async response => {
+      .then(async (response) => {
         dispatch({
           type: this.CHANGE_NEWS_SUCCESS,
-          article: response.article
-        });
+          article: response.article,
+        })
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch(error => dispatch(ViewModule.setError(true)));
-  };
+      .catch((error) => dispatch(ViewModule.setError(true)))
+  }
 
-  getNews = state => {
-    return this.getRoot(state).news;
-  };
-
+  getNews = (state) => {
+    return this.getRoot(state).news
+  }
 }
 
-export default new CoursesModule("/NEWS/", state => state.News);
+export default new CoursesModule('/NEWS/', (state) => state.News)

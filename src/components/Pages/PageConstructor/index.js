@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
-import PropTypes, { number } from 'prop-types'
-import Select from 'react-select'
+import PropTypes from 'prop-types'
 
-import { Wrapper, LabelElement, ButtonWrapper, EmptyMessage, SelectWrapper } from '../../GlobalStyles/styleGlobal'
+import { Wrapper, ButtonWrapper } from '../../GlobalStyles/styleGlobal'
 
 import Button from '../../Shared/Button'
-import CustomInput from '../../Shared/Input'
 import Spinner from '../../Spinner'
-import PageList from '../../Pages/PageList'
-import { SmartContainer } from '../../Shared/SmartContainer'
-import { HashTagsContainer } from '../../Shared/SmartContainer/HashTagsContainer'
 import { SmartConstructor } from '../../Shared/SmartConstructor'
 import Error from '../../Error'
-import AdminService from '../../../service'
-import Editor from '../../Shared/Editor'
 
 import { i18nSelector } from '../../../store/utils'
 
@@ -130,7 +123,7 @@ export default class PageConstructor extends Component {
                   }}
                   taskOnPage={{
                     value: taskOnPage,
-                    type: 'number'
+                    type: 'number',
                   }}
                   title={title[activeLanguage.value]}
                   description={description[activeLanguage.value]}

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Formik, Form, Field, ErrorMessage, setErrors } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import AuthorizationInput from "../AuthorizationInput";

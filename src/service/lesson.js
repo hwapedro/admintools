@@ -1,28 +1,29 @@
-import { markdownToHtml } from "../store/utils";
+import { markdownToHtml } from '../store/utils'
 
-import { BaseService } from "./base";
+import { BaseService } from './base'
 
 class LessonService extends BaseService {
   async getAll() {
-    return this.get("lesson/all");
+    return this.get('lesson/all')
   }
 
   async getOne(lessonId) {
-    return this.get(`lesson/${lessonId}`);
+    return this.get(`lesson/${lessonId}`)
   }
 
-  async add(title, description, exam, courseIndex) {
+  async add(title, description, difficulty, exam, courseIndex) {
     const data = {
       title,
       description: markdownToHtml(description),
+      difficulty,
       exam,
-      courseIndex
-    };
-    return this.post("lesson/create", data);
+      courseIndex,
+    }
+    return this.post('lesson/create', data)
   }
 
   async delete(index) {
-    return this.del(`lesson/${index}`);
+    return this.del(`lesson/${index}`)
   }
 
   async change(lessonId, title, description, exam, courseIndex) {
@@ -30,16 +31,16 @@ class LessonService extends BaseService {
       title,
       description: markdownToHtml(description),
       exam,
-      courseIndex
-    };
-    return this.put(`lesson/${lessonId}`, data);
+      courseIndex,
+    }
+    return this.put(`lesson/${lessonId}`, data)
   }
 
   async DragAndDropLesson(i1, i2, courseIndex) {
-    const data = { i1, i2, courseIndex };
+    const data = { i1, i2, courseIndex }
 
-    return this.put("lesson/dragged", data).body;
+    return this.put('lesson/dragged', data).body
   }
 }
 
-export default new LessonService();
+export default new LessonService()

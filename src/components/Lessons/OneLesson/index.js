@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 
-import { DescriptionSpan, ImgMark, ImgCross, ExamPropContainer, ElementWrapper } from '../styleLocal'
-import { Wrapper, LabelElement, ButtonWrapper, EmptyMessage, SelectWrapper } from '../../GlobalStyles/styleGlobal'
+import { ElementWrapper } from '../styleLocal'
+import { Wrapper, ButtonWrapper, EmptyMessage, SelectWrapper } from '../../GlobalStyles/styleGlobal'
 
 import Button from '../../Shared/Button'
-import CustomInput from '../../Shared/Input'
 import Spinner from '../../Spinner'
 import PageList from '../../Pages/PageList'
 import { SmartContainer } from '../../Shared/SmartContainer'
@@ -15,11 +14,8 @@ import { SmartConstructor } from '../../Shared/SmartConstructor'
 import PageConstructor from '../../Pages/PageConstructor'
 import Error from '../../Error'
 import AdminService from '../../../service'
-import Editor from '../../Shared/Editor'
 
-import checkMark from '../../../img/good.png'
-import redCross from '../../../img/bad.png'
-import { i18nSelector } from '../../../store/utils'
+import { i18nSelector, lessonDifficulties } from '../../../store/utils'
 
 const name = 'lesson'
 let options = []
@@ -53,6 +49,18 @@ export default class Lesson extends Component {
 
   //SELECTOR HANDLER
 
+  handleChange = (value) => {
+    this.setState({ courseIndex: value })
+  }
+
+  handleDifficultiesChange = (difficulty) => {
+    this.setState({ difficulty })
+  }
+
+  handleLangChange = (activeLanguage) => {
+    this.setState({ activeLanguage })
+  }
+
   handleChange = (value, selectorType) => {
     switch (selectorType) {
       case 'course':
@@ -66,11 +74,11 @@ export default class Lesson extends Component {
     }
   }
 
-  changeExamProp = (exam) => {
-    this.setState({ exam: !exam })
+  changeExamProp = (flag) => {
+    this.setState({ exam: flag })
   }
 
-  getParams = (lessonId, title, description, exam, courseIndex) => {
+  getParams = (lessonId, title, description, exam, difficulty, courseIndex) => {
     this.setState({
       lessonId: lessonId,
       changeFlag: true,
@@ -78,6 +86,7 @@ export default class Lesson extends Component {
       exam: exam,
       title: title,
       description: description,
+      difficulty: difficulty,
     })
   }
 
@@ -125,7 +134,7 @@ export default class Lesson extends Component {
 
   render() {
     const { lesson, pages, loading, deletePage, error, addPage } = this.props
-    const { changeFlag, courseIndex, title, description, exam, activeLanguage } = this.state
+    const { changeFlag, courseIndex, title, description, exam, activeLanguage, difficulty } = this.state
     return (
       <>
         {error && (
@@ -142,64 +151,52 @@ export default class Lesson extends Component {
         {!error && !loading && (
           <Wrapper>
             {changeFlag ? (
-              <>
-                {/* <SmartConstructor
+              <ElementWrapper>
+                <SmartConstructor
                   showConstructor={this.showConstructor}
                   onSubmit={this.onSubmit}
                   onChange={this.onChange}
-                  modal={true}
                   activeLanguage={activeLanguage}
+                  difficulty={difficulty}
+                  courseIndex={courseIndex}
+                  allCourseIndex={options}
+                  changeExamProp={this.changeExamProp}
                   select={{
+                    handleLangChange: this.handleLangChange,
+                  }}
+                  difficulties={{
+                    handleDifficultiesChange: this.handleDifficultiesChange,
+                  }}
+                  courseindex={{
                     handleChange: this.handleChange,
                   }}
                   title={title[activeLanguage.value]}
                   description={description[activeLanguage.value]}
-                /> */}
-                <ElementWrapper>
-                  <form onSubmit={this.onSubmit}>
-                    <Select
-                      value={activeLanguage}
-                      onChange={(value, {}, selectorType = 'language') => this.handleChange(value, selectorType)}
-                      options={i18nSelector}
-                      maxMenuHeight={100}
-                    />
-                    <CustomInput label="Title" placeholder="Title goes here" name="title" value={title[activeLanguage.value]} onChange={this.onChange} required={true} />
-                    <LabelElement>Description of Lesson : </LabelElement>
-                    <Editor onChange={this.onChange} name="description" value={description[activeLanguage.value]} language={activeLanguage.value} />
-                    <ExamPropContainer>
-                      <LabelElement>EXAM :</LabelElement>
-                      <ImgMark src={exam ? checkMark : redCross} onClick={() => this.changeExamProp(exam)} />
-                    </ExamPropContainer>
-                    <LabelElement>Course Index :</LabelElement>
-                    <Select value={courseIndex} onChange={(value, {}, selectorType = 'course') => this.handleChange(value, selectorType)} options={options} />
-
-                    <ButtonWrapper>
-                      <Button buttonStyle={'outlined'} type="submit">
-                        CONFIRM
-                      </Button>
-                    </ButtonWrapper>
-                  </form>
-                </ElementWrapper>
-              </>
+                  exam={exam}
+                />
+              </ElementWrapper>
             ) : (
               <>
                 <SelectWrapper>
-                  <Select value={activeLanguage} onChange={(value, {}, selectorType = 'language') => this.handleChange(value, selectorType)} options={i18nSelector} />
+                  <Select value={activeLanguage} onChange={() => this.handleLangChange()} options={i18nSelector} />
                 </SelectWrapper>
                 <ElementWrapper key={lesson._id}>
                   <div style={{ position: 'relative' }}>
-                    <SmartContainer
-                      name="Lesson"
-                      title={lesson.title[activeLanguage.value]}
-                      description={lesson.description[activeLanguage.value]}
-                      exam={lesson.exam}
-                      courseIndex={lesson.courseIndex}
-                    />
-                    <HashTagsContainer course={lesson.courseIndex} exam={lesson.exam} />
+                    <SmartContainer name="Lesson" title={lesson.title[activeLanguage.value]} description={lesson.description[activeLanguage.value]} />
+                    <HashTagsContainer course={lesson.courseIndex} exam={lesson.exam} difficulty={lesson.difficulty} />
                     <ButtonWrapper>
                       <Button
                         buttonStyle={'outlined'}
-                        onClick={() => this.getParams(lesson._id, lesson.title, lesson.description, lesson.exam, { value: lesson.courseIndex, label: lesson.courseIndex })}
+                        onClick={() =>
+                          this.getParams(
+                            lesson._id,
+                            lesson.title,
+                            lesson.description,
+                            lesson.exam,
+                            { value: lesson.difficulty, label: lessonDifficulties.find((el) => el.value === lesson.difficulty).label },
+                            { value: lesson.courseIndex, label: lesson.courseIndex }
+                          )
+                        }
                       >
                         CHANGE Lesson
                       </Button>

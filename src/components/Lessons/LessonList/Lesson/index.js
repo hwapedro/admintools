@@ -12,7 +12,7 @@ import { HashTagsContainer } from '../../../Shared/SmartContainer/HashTagsContai
 const LessonSwitcher = ({ lesson, deleteItem, goTo, activeLanguage }) => (
   <div style={{ position: 'relative' }}>
     <SmartContainer name="Lesson" title={lesson.title[activeLanguage.value]} description={lesson.description[activeLanguage.value]} />
-    <HashTagsContainer course={lesson.courseIndex} exam={lesson.exam} />
+    <HashTagsContainer course={lesson.courseIndex} exam={lesson.exam} difficulty={lesson.difficulty}/>
     <ButtonWrapper>
       <Button buttonStyle={'outlined'} onClick={() => goTo(lesson._id)}>
         CHANGE Lesson

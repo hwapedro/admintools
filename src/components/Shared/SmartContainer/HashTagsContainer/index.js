@@ -40,6 +40,32 @@ const HashTags = styled.div`
         border: 1px solid #eb5757;
       `
     }
+    if (label === 'difficulty') {
+      switch (value) {
+        case 1:
+          return css`
+            color: #2aa8a1;
+            border: 1px solid #2aa8a1;
+          `
+        case 2:
+          return css`
+            color: #eda656;
+            border: 1px solid #eda656;
+          `
+        case 3:
+          return css`
+            color: #f57b4e;
+            border: 1px solid #f57b4e;
+          `
+        case 4:
+          return css`
+            color: #eb5757;
+            border: 1px solid #eb5757;
+          `
+        default:
+          return
+      }
+    }
   }}
 `
 

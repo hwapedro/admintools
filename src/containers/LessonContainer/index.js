@@ -4,7 +4,6 @@ import Lesson from '../../components/Lessons/OneLesson'
 import ViewModule from '../../store/modules/ViewModule'
 import LessonModule from '../../store/modules/LessonModule'
 import PageModule from '../../store/modules/PageModule'
-import TaskModule from '../../store/modules/TaskModule'
 
 const mapStateToProps = (state) => ({
   lesson: LessonModule.getOneLesson(state),
@@ -18,9 +17,6 @@ const mapDispatchToProps = (dispatch) => ({
   changeLesson: (lessonsIndex, title, description, exam, courseIndex) => dispatch(LessonModule.change(lessonsIndex, title, description, exam, courseIndex)),
   addPage: (id, title, description, tasks, needToComplete) => dispatch(PageModule.addPage(id, title, description, tasks, needToComplete)),
   deletePage: (id) => dispatch(PageModule.deletePage(id)),
-  // deleteTask: (pageId, taskid) =>
-  //   dispatch(PageModule.delete(pageId, taskid)),
-  // setTask: task => dispatch(TaskModule.setTask(task))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lesson)
