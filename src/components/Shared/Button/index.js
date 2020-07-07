@@ -11,16 +11,17 @@ const ButtonContainer = withStyles({
   }
 })(Button);
 
-function ButtonElement({ onClick, children, type, buttonStyle, color }) {
+function ButtonElement({ onClick, children, type, buttonStyle, color, buttonColor, ...props }) {
   color = color ? "white" : "";
   return (
     <div>
       <ButtonContainer
         type={type}
         variant={`${buttonStyle}`}
-        color="primary"
+        color={buttonColor ? buttonColor : 'primary'}
         onClick={onClick}
         style={{ margin: "0px 3px", color: `${color}` }}
+        {...props}
       >
         {children}
       </ButtonContainer>

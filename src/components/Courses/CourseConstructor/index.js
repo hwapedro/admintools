@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import PropTypes from 'prop-types'
+import AddIcon from '@material-ui/icons/Add'
 
 import Search from '../../Search'
 import Button from '../../Shared/Button'
@@ -87,8 +88,8 @@ export default class CourseCounstructor extends Component {
           <SelectWrapper>
             <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} />
           </SelectWrapper>
-          <Button buttonStyle={'outlined'} onClick={this.showConstructor}>
-            ADD NEW COURSE
+          <Button startIcon={<AddIcon />} buttonStyle={'outlined'} onClick={this.showConstructor}>
+            COURSE
           </Button>
           {constructor && (
             <SmartConstructor

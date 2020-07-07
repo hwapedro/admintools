@@ -20,7 +20,6 @@ export const TaskWrapper = styled.div`
 
 export const TaskElementWrapper = styled.div`
   background-color: ${props => props.theme.courses};
-  background-color: #e9e9e9;
   margin: 1.5rem 0;
   padding: 1rem;
   box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
@@ -32,14 +31,11 @@ export const TaskListWrapper = styled.ul`
 `;
 
 export const TitleSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   margin: 1rem 0;
   font-size: 1.4rem;
   color: black;
-  padding-left: 0.7em;
-  width: 100%;
+  padding-left: 0.2em;
+  display: inline-block
 `;
 
 export const ButtonWrapper = styled.div`
@@ -52,11 +48,13 @@ export const ButtonsWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-end;
 `;
+
 export const LabelElement = styled.span`
-  text-align: left;
-  margin-top: 1 rem;
-  font-weight: 900;
-  font-size: 1.4rem;
+  display: inline-block;
+  margin-top: 0.3rem;
+  margin-right: 0.5rem;
+  font-weight: 600;
+  font-size: 0.8rem;
 `;
 
 export const OptionsWrapper = styled.ul`

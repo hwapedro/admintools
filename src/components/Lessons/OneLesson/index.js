@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
+import CreateIcon from '@material-ui/icons/Create'
 
 import { ElementWrapper } from '../styleLocal'
 import { Wrapper, ButtonWrapper, EmptyMessage, SelectWrapper } from '../../GlobalStyles/styleGlobal'
@@ -93,8 +94,8 @@ export default class Lesson extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     const { changeLesson } = this.props
-    const { title, description, lessonId, exam, courseIndex } = this.state
-    if (title && description) changeLesson(lessonId, title, description, exam, courseIndex.value)
+    const { title, description, lessonId, exam, difficulty, courseIndex } = this.state
+    if (title && description) changeLesson(lessonId, title, description, exam, difficulty.value, courseIndex.value)
     this.setState({ changeFlag: false, lessonId: null })
   }
 
@@ -133,7 +134,7 @@ export default class Lesson extends Component {
   }
 
   render() {
-    const { lesson, pages, loading, deletePage, error, addPage } = this.props
+    const { lesson, pages, loading, deletePage, error, addPage, changePage } = this.props
     const { changeFlag, courseIndex, title, description, exam, activeLanguage, difficulty } = this.state
     return (
       <>
@@ -185,8 +186,10 @@ export default class Lesson extends Component {
                     <SmartContainer name="Lesson" title={lesson.title[activeLanguage.value]} description={lesson.description[activeLanguage.value]} />
                     <HashTagsContainer course={lesson.courseIndex} exam={lesson.exam} difficulty={lesson.difficulty} />
                     <ButtonWrapper>
+                      <PageConstructor lessonId={lesson._id} addPage={addPage} />
                       <Button
                         buttonStyle={'outlined'}
+                        startIcon={<CreateIcon />}
                         onClick={() =>
                           this.getParams(
                             lesson._id,
@@ -198,19 +201,17 @@ export default class Lesson extends Component {
                           )
                         }
                       >
-                        CHANGE Lesson
+                        CHANGE
                       </Button>
                     </ButtonWrapper>
                   </div>
                 </ElementWrapper>
-
-                <PageConstructor lessonId={lesson._id} addPage={addPage} />
               </>
             )}
             {pages.length === 0 ? (
               <EmptyMessage>There is nothing here yet</EmptyMessage>
             ) : (
-              <PageList lessonId={lesson._id} pages={pages} id={lesson._id} deletePage={deletePage} activeLanguage={activeLanguage} />
+              <PageList lessonId={lesson._id} pages={pages} id={lesson._id} changePage={changePage} deletePage={deletePage} activeLanguage={activeLanguage} />
             )}
           </Wrapper>
         )}

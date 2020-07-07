@@ -28,6 +28,7 @@ export default class TestConstructor extends Component {
     const { choices } = this.state
     const c = i18n
     const i = choices.length
+    console.log(choices.length, [...choices, { c, i }])
     this.setState({
       choices: [...choices, { c, i }],
     })
@@ -35,9 +36,18 @@ export default class TestConstructor extends Component {
 
   deleteChoice = (index) => {
     const { choices } = this.state
-    let newOptions = choices.filter((option) => option.i !== index)
+    const newOptions = choices.filter((option) => option.i !== index)
+    const options = newOptions.map((el, elementIndex) => {
+      console.log(index, elementIndex)
+      if (index <= elementIndex) {
+        console.log(el)
+        el.i = el.i - 1
+      }
+      return el
+    })
+    console.log(options)
     this.setState({
-      choices: newOptions,
+      choices: options,
     })
   }
 

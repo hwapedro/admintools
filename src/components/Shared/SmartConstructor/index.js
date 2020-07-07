@@ -58,7 +58,7 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
       <div key={index}>
         <CustomInput
           label={key}
-          placeholder={`write ${key}`}
+          placeholder={`${key}`}
           name={key}
           type={props[key].type ? props[key].type : 'text'}
           value={props[key].value ? props[key].value : props[key]}
@@ -80,7 +80,7 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
               {content}
               <ButtonWrapper>
                 <Button buttonStyle={'outlined'} type="submit">
-                  ADD
+                  CONFIRM
                 </Button>
               </ButtonWrapper>
             </ConsturctorForm>
