@@ -47,7 +47,7 @@ export const LabelElement = styled.label`
   display: inline-block;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  font-weight: 900;
+  font-weight: 500;
   font-size: 1.8rem;
 `;
 

@@ -119,8 +119,8 @@ export default class PageConstructor extends Component {
                   description={description[activeLanguage.value]}
                 />
                 <ButtonWrapper>
-                  <Button buttonStyle={'outlined'} type="submit">
-                    Add Page
+                  <Button startIcon={<AddIcon />} buttonStyle={'outlined'} type="submit">
+                    Page
                   </Button>
                 </ButtonWrapper>
               </Wrapper>

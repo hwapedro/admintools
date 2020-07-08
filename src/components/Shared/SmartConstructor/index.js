@@ -1,14 +1,65 @@
 import React from 'react'
 import styled from 'styled-components'
 import Select from 'react-select'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import { withStyles } from '@material-ui/core/styles';
 
 import CustomInput from '../../Shared/Input'
 import Button from '../../Shared/Button'
 import Editor from '../../Shared/Editor'
 import { i18nSelector, lessonDifficulties } from '../../../store/utils'
 
-import checkMark from '../../../img/good.png'
-import redCross from '../../../img/bad.png'
+const ExamSwitch = withStyles((theme) => ({
+  root: {
+    width: 42,
+    height: 26,
+    padding: 0,
+    marginLeft: '20px'
+  },
+  switchBase: {
+    padding: 1,
+    '&$checked': {
+      transform: 'translateX(16px)',
+      color: theme.palette.common.white,
+      '& + $track': {
+        opacity: 1,
+        border: 'none',
+      },
+    },
+    '&$focusVisible $thumb': {
+      border: '6px solid #fff',
+    },
+  },
+  thumb: {
+    width: 24,
+    height: 24,
+  },
+  track: {
+    borderRadius: 26 / 2,
+    border: `1px solid ${theme.palette.grey[400]}`,
+    backgroundColor: theme.palette.grey[50],
+    opacity: 1,
+    transition: theme.transitions.create(['background-color', 'border']),
+  },
+  checked: {},
+  focusVisible: {},
+}))(({ classes, ...props }) => {
+  return (
+    <Switch
+      focusVisibleClassName={classes.focusVisible}
+      disableRipple
+      classes={{
+        root: classes.root,
+        switchBase: classes.switchBase,
+        thumb: classes.thumb,
+        track: classes.track,
+        checked: classes.checked,
+      }}
+      {...props}
+    />
+  );
+});
 
 export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, activeLanguage, difficulty, courseIndex, allCourseIndex, changeExamProp, ...props }) => {
   const content = Object.keys(props).map((key, index) => {
@@ -47,9 +98,8 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
     if (key === 'exam') {
       return (
         <div key={index}>
-          <LabelElement>Exam :</LabelElement>
-          <ImgMark style={!props[key] ? { filter: 'grayscale(100%)' } : {}} src={checkMark} onClick={() => changeExamProp(true)} />
-          <ImgCross style={props[key] ? { filter: 'grayscale(100%)' } : {}} src={redCross} onClick={() => changeExamProp(false)} />
+          <LabelElement>exam </LabelElement>
+          <FormControlLabel control={<ExamSwitch checked={props[key]} onChange={() => changeExamProp(!props[key])}/>} />
         </div>
       )
     }
@@ -77,12 +127,12 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
           <DarkGround onClick={showConstructor} />
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={onSubmit}>
-              {content}
               <ButtonWrapper>
                 <Button buttonStyle={'outlined'} type="submit">
                   CONFIRM
                 </Button>
               </ButtonWrapper>
+              {content}
             </ConsturctorForm>
           </ConsturctorWrapper>
         </>
@@ -100,7 +150,6 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
   )
 }
 
-
 export const Wrapper = styled.div`
   padding-top: 1rem;
   display: flex;
@@ -111,15 +160,15 @@ export const Wrapper = styled.div`
 
 export const ConsturctorWrapper = styled.div`
   background: ${(props) => props.theme.courses};
-  padding: 1.5rem;
-  position: absolute;
-  width: 700px;
-  height: auto;
-  top: 35%;
-  left: 50%;
+  overflow-y: scroll;
+  width: 30%;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: #fff;
   z-index: 101;
-  margin-top: -200px;
-  margin-left: -330px;
+  position: fixed;
+  padding: 1.5rem;
   box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
 `
 
@@ -148,7 +197,7 @@ export const LabelElement = styled.label`
   display: inline-block;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  font-weight: 900;
+  font-weight: 500;
   font-size: 1.8rem;
 `
 

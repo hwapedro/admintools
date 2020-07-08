@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '../../../Shared/Button'
+import DeleteIcon from '@material-ui/icons/Delete'
+import CreateIcon from '@material-ui/icons/Create'
 
+import Button from '../../../Shared/Button'
 import { ElementWrapper } from '../../../GlobalStyles/styleGlobal'
 import { ButtonWrapper } from '../../../GlobalStyles/styleGlobal'
 
@@ -14,10 +16,12 @@ const LessonSwitcher = ({ lesson, deleteItem, goTo, activeLanguage }) => (
     <SmartContainer name="Lesson" title={lesson.title[activeLanguage.value]} description={lesson.description[activeLanguage.value]} />
     <HashTagsContainer course={lesson.courseIndex} exam={lesson.exam} difficulty={lesson.difficulty}/>
     <ButtonWrapper>
-      <Button buttonStyle={'outlined'} onClick={() => goTo(lesson._id)}>
-        CHANGE Lesson
+      <Button startIcon={<CreateIcon />}  buttonStyle={'outlined'} onClick={() => goTo(lesson._id)}>
+        CHANGE
       </Button>
       <Button
+        startIcon={<DeleteIcon />}
+        buttonColor="secondary"
         buttonStyle={'outlined'}
         onClick={() => {
           if (window.confirm('Delete the item?')) {
@@ -25,7 +29,7 @@ const LessonSwitcher = ({ lesson, deleteItem, goTo, activeLanguage }) => (
           }
         }}
       >
-        DELETE Lesson
+        DELETE
       </Button>
     </ButtonWrapper>
   </div>
