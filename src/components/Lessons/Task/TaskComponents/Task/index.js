@@ -1,54 +1,56 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Select from "react-select";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Select from 'react-select'
 
-import Test from "./TaskTypes/Test";
-import Text from "./TaskTypes/Text";
+import Test from './TaskTypes/Test'
+import Text from './TaskTypes/Text'
 
-import { SelectWrapper } from "../../../../GlobalStyles/styleGlobal";
-import { i18nSelector } from "../../../../../store/utils";
-import { Wrapper } from "../../styleLocal";
-import Button from "../../../../Shared/Button";
-import Spinner from "../../../../Spinner";
-import Error from "../../../../Error";
+import { SelectWrapper } from '../../../../GlobalStyles/styleGlobal'
+import { ButtonWrapper, HeaderWrapper } from './styleLocal'
+
+import { i18nSelector } from '../../../../../store/utils'
+import { Wrapper } from '../../styleLocal'
+import Button from '../../../../Shared/Button'
+import Spinner from '../../../../Spinner'
+import Error from '../../../../Error'
 
 class Task extends Component {
   state = {
     taskEditFlag: false,
-    activeLanguage: { label: "Russian", value: "ru" }
-  };
-
-  componentDidMount() {
-    const { taskId, getTask } = this.props;
-    getTask(taskId);
+    activeLanguage: { label: 'Russian', value: 'ru' },
   }
 
-  handleLangChange = activeLanguage => {
-    this.setState({ activeLanguage });
-  };
+  componentDidMount() {
+    const { taskId, getTask } = this.props
+    getTask(taskId)
+  }
 
-  goBack = id => {
-    this.props.setLoading(true);
-    this.props.history.push(`/lesson/${id}`);
-  };
+  handleLangChange = (activeLanguage) => {
+    this.setState({ activeLanguage })
+  }
+
+  goBack = (id) => {
+    this.props.setLoading(true)
+    this.props.history.push(`/lesson/${id}`)
+  }
 
   deleteTask = (pageId, taskId, lessonId) => {
-    const { deleteTask } = this.props;
-    deleteTask(pageId, taskId);
-    this.goBack(lessonId);
-  };
+    const { deleteTask } = this.props
+    deleteTask(pageId, taskId)
+    this.goBack(lessonId)
+  }
 
   changeEditFlag = () =>
     this.setState({
-      taskEditFlag: !this.state.taskEditFlag
-    });
+      taskEditFlag: !this.state.taskEditFlag,
+    })
 
   constSwitch = () => {
-    const { task, pageId, lessonId, changeTask } = this.props;
-    const { activeLanguage, taskEditFlag } = this.state;
+    const { task, pageId, lessonId, changeTask } = this.props
+    const { activeLanguage, taskEditFlag } = this.state
 
     switch (task.type) {
-      case "test":
+      case 'test':
         return (
           <Test
             task={task}
@@ -59,12 +61,10 @@ class Task extends Component {
             deleteTask={this.deleteTask}
             changeTask={changeTask}
             activeLanguage={activeLanguage}
-            handleLangChange={activeLanguage =>
-              this.handleLangChange(activeLanguage)
-            }
+            handleLangChange={(activeLanguage) => this.handleLangChange(activeLanguage)}
           />
-        );
-      case "fill":
+        )
+      case 'fill':
         return (
           <Text
             task={task}
@@ -75,24 +75,36 @@ class Task extends Component {
             deleteTask={this.deleteTask}
             changeTask={changeTask}
             activeLanguage={activeLanguage}
-            handleLangChange={activeLanguage =>
-              this.handleLangChange(activeLanguage)
-            }
+            handleLangChange={(activeLanguage) => this.handleLangChange(activeLanguage)}
           />
-        );
+        )
+      case 'drag':
+        return (
+          <Test
+            task={task}
+            pageId={pageId}
+            lessonId={lessonId}
+            taskEditFlag={taskEditFlag}
+            changeEditFlag={this.changeEditFlag}
+            deleteTask={this.deleteTask}
+            changeTask={changeTask}
+            activeLanguage={activeLanguage}
+            handleLangChange={(activeLanguage) => this.handleLangChange(activeLanguage)}
+          />
+        )
       default:
-        return <div />;
+        return <div />
     }
-  };
+  }
 
   render() {
-    const { task, taskEditFlag, lessonId, error, loading } = this.props;
-    const { activeLanguage } = this.state;
+    const { task, taskEditFlag, lessonId, error, loading } = this.props
+    const { activeLanguage } = this.state
     return (
       <>
         {error && (
           <>
-            <Error name={"Task"} />
+            <Error name={'Task'} />
           </>
         )}
 
@@ -104,28 +116,24 @@ class Task extends Component {
 
         {!error && !loading && (
           <Wrapper>
-            <Button
-              buttonStyle={"outlined"}
-              onClick={() => this.goBack(lessonId)}
-            >
-              Back
-            </Button>
+            <HeaderWrapper>
+              {!taskEditFlag && (
+                <SelectWrapper>
+                  <Select value={activeLanguage} onChange={this.handleLangChange} options={i18nSelector} maxMenuHeight={100} />
+                </SelectWrapper>
+              )}
+              <ButtonWrapper>
+                <Button buttonStyle={'outlined'} onClick={() => this.goBack(lessonId)}>
+                  Back
+                </Button>
+              </ButtonWrapper>
+            </HeaderWrapper>
 
-            {!taskEditFlag && (
-              <SelectWrapper>
-                <Select
-                  value={activeLanguage}
-                  onChange={this.handleLangChange}
-                  options={i18nSelector}
-                  maxMenuHeight={100}
-                />
-              </SelectWrapper>
-            )}
             {task && <>{this.constSwitch()} </>}
           </Wrapper>
         )}
       </>
-    );
+    )
   }
 }
 
@@ -135,8 +143,8 @@ Task.defaultProps = {
   lessonId: null,
   taskEditFlag: false,
   changeEditFlag() {},
-  deleteTask() {}
-};
+  deleteTask() {},
+}
 
 Task.propTypes = {
   lesson: PropTypes.object,
@@ -145,7 +153,7 @@ Task.propTypes = {
   lessonId: PropTypes.string.isRequired,
   taskEditFlag: PropTypes.bool,
   changeEditFlag: PropTypes.func,
-  deleteTask: PropTypes.func
-};
+  deleteTask: PropTypes.func,
+}
 
-export default Task;
+export default Task

@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import Select from 'react-select'
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import { withStyles } from '@material-ui/core/styles';
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
+import { withStyles } from '@material-ui/core/styles'
+import DeleteIcon from '@material-ui/icons/Delete'
+import MuiAlert from '@material-ui/lab/Alert'
 
 import CustomInput from '../../Shared/Input'
 import Button from '../../Shared/Button'
@@ -15,7 +17,7 @@ const ExamSwitch = withStyles((theme) => ({
     width: 42,
     height: 26,
     padding: 0,
-    marginLeft: '20px'
+    marginLeft: '20px',
   },
   switchBase: {
     padding: 1,
@@ -58,8 +60,8 @@ const ExamSwitch = withStyles((theme) => ({
       }}
       {...props}
     />
-  );
-});
+  )
+})
 
 export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, activeLanguage, difficulty, courseIndex, allCourseIndex, changeExamProp, ...props }) => {
   const content = Object.keys(props).map((key, index) => {
@@ -68,6 +70,14 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
         <div key={index}>
           <LabelElement>choose language</LabelElement>
           <Select value={activeLanguage} onChange={props[key].handleLangChange} options={i18nSelector} maxMenuHeight={200} />
+        </div>
+      )
+    }
+    if (key === 'taskSelect') {
+      return (
+        <div key={index}>
+          <LabelElement>choose task type</LabelElement>
+          <Select value={props[key].taskType} onChange={props[key].selectChange} options={props[key].taskOptions} maxMenuHeight={200} />
         </div>
       )
     }
@@ -99,11 +109,48 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
       return (
         <div key={index}>
           <LabelElement>exam </LabelElement>
-          <FormControlLabel control={<ExamSwitch checked={props[key]} onChange={() => changeExamProp(!props[key])}/>} />
+          <FormControlLabel control={<ExamSwitch checked={props[key]} onChange={() => changeExamProp(!props[key])} />} />
         </div>
       )
     }
 
+    if (key === 'additional') {
+      return (
+        <div key={index} style={{'marginTop': '15px'}}>
+          <MuiAlert style={{'boxShadow': 'none'}} elevation={6} variant="outlined" severity="info">
+            {props[key]}
+          </MuiAlert>
+        </div>
+      )
+    }
+
+    if (key === 'options') {
+      return (
+        <div>
+          <ButtonWrapper>
+            <Button buttonStyle={'outlined'} onClick={props[key].addChoice}>
+              Add answer option
+            </Button>
+          </ButtonWrapper>
+
+          <div>
+            {props[key].data.choices.length !== 0 &&
+              props[key].data.choices.map((el) => {
+                return (
+                  <OptionElementWrapper className="form-check" key={el.i}>
+                    <CustomInput name="option" value={el.c[activeLanguage.value]} onChange={(e) => props[key].answerChange(el.i, e)} placeholder="option" required={true} />
+                    <FormControlLabel control={<ExamSwitch checked={props[key].data.answer.includes(el.i)} onChange={(e) => props[key].setRight(el.i, e)} />} />
+
+                    <Button startIcon={<DeleteIcon />} buttonColor="secondary" buttonStyle={'outlined'} onClick={() => props[key].deleteChoice(el.i)}>
+                      Delete
+                    </Button>
+                  </OptionElementWrapper>
+                )
+              })}
+          </div>
+        </div>
+      )
+    }
     return (
       <div key={index}>
         <CustomInput
@@ -185,14 +232,6 @@ export const DarkGround = styled.div`
   left: 0;
 `
 
-export const TitleSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`
-
 export const LabelElement = styled.label`
   display: inline-block;
   margin-top: 1rem;
@@ -215,27 +254,8 @@ export const ButtonWrapper = styled.div`
   margin-top: 0.5rem;
 `
 
-export const EmptyMessage = styled.div`
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 2.5rem;
-  top: 50%;
-  margin-top: 5rem;
-`
-
-export const SelectWrapper = styled.div`
-  width: 10rem;
-`
-export const ImgMark = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-left: 1rem;
-  margin-bottom: -0.4rem;
-`
-
-export const ImgCross = styled.img`
-  width: 2rem;
-  height: 2rem;
-  margin-left: 1rem;
-  margin-bottom: -0.4rem;
+export const OptionElementWrapper = styled.div`
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: row;
 `

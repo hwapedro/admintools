@@ -115,7 +115,7 @@ export const TitleInput = styled.input`
   padding-left: 0.7em;
   width: 100%;
 `;
-//needs another look at
+
 export const QuestionInput = styled.input`
   border: 1px solid #ddd;
   display: flex;

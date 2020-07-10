@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import DeleteIcon from '@material-ui/icons/Delete'
+import CreateIcon from '@material-ui/icons/Create'
 
-import { TaskElementWrapper, LabelElement, TitleSpan, ButtonsWrapper, TaskWrapper } from '../../../styleLocal'
+import { TaskElementWrapper, LabelElement, ButtonsWrapper } from '../../../styleLocal'
+
+import { TaskWrapper, TitleSpan, ElementWrapper } from '../styleLocal'
 
 import Button from '../../../../../Shared/Button'
 import TextConstructor from '../../../TaskConstructors/TextConstructor/'
@@ -29,18 +33,26 @@ class Text extends Component {
             />
           </TaskElementWrapper>
         ) : (
-          <TaskElementWrapper key={task._id}>
-            <LabelElement>Question:</LabelElement>
-            <TitleSpan>{task.info.question[activeLanguage.value]}</TitleSpan>
-
-            <LabelElement>Answers:</LabelElement>
-            <TitleSpan>{task.answer[activeLanguage.value].join(' , ')}</TitleSpan>
-
+          <TaskWrapper>
+            <ElementWrapper>
+              <LabelElement>type </LabelElement>
+              <TitleSpan>fill</TitleSpan>
+            </ElementWrapper>
+            <ElementWrapper>
+              <LabelElement>question </LabelElement>
+              <TitleSpan>{task.info.question[activeLanguage.value]}</TitleSpan>
+            </ElementWrapper>
+            <ElementWrapper>
+              <LabelElement>Answers:</LabelElement>
+              <TitleSpan>{task.answer[activeLanguage.value].join(' , ')}</TitleSpan>
+            </ElementWrapper>
             <ButtonsWrapper>
-              <Button buttonStyle={'outlined'} onClick={() => changeEditFlag()}>
+              <Button startIcon={<CreateIcon />} buttonStyle={'outlined'} onClick={() => changeEditFlag()}>
                 Edit
               </Button>
               <Button
+                startIcon={<DeleteIcon />}
+                buttonColor="secondary"
                 buttonStyle={'outlined'}
                 onClick={() => {
                   if (window.confirm('ARE YOU SURE ?')) {
@@ -51,7 +63,7 @@ class Text extends Component {
                 Delete
               </Button>
             </ButtonsWrapper>
-          </TaskElementWrapper>
+          </TaskWrapper>
         )}
       </TaskWrapper>
     )

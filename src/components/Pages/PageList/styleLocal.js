@@ -34,7 +34,6 @@ export const PagesWrapper = styled.ul`
 `
 
 export const ButtonWrapper = styled.div`
-  text-align: right;
   display: flex;
   flex-direction: row;
 `

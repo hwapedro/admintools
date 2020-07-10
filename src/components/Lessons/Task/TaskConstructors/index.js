@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import Select from 'react-select'
 import AddIcon from '@material-ui/icons/Add'
-
-import { ConsturctorWrapper, DarkGround } from '../../../GlobalStyles/styleGlobal'
 
 import Button from '../../../Shared/Button'
 import TestConstructor from './TestConstructor/'
@@ -44,7 +41,11 @@ export default class TaskConstructor extends Component {
       case 'test':
         return (
           <TestConstructor
+            showConstructor={this.displayConstructor}
             oldInfo={this.state.info}
+            taskType={displayTaskConstructor}
+            taskOptions={options}
+            selectChange={this.selectChange}
             edited={false}
             pageId={this.props.pageId}
             activeLanguage={activeLanguage}
@@ -56,6 +57,10 @@ export default class TaskConstructor extends Component {
       case 'fill':
         return (
           <TextConstructor
+            showConstructor={this.displayConstructor}
+            taskType={displayTaskConstructor}
+            taskOptions={options}
+            selectChange={this.selectChange}
             pageId={this.props.pageId}
             activeLanguage={activeLanguage}
             handleLangChange={(activeLanguage) => this.handleLangChange(activeLanguage)}
@@ -66,6 +71,10 @@ export default class TaskConstructor extends Component {
       case 'drag':
         return (
           <TestConstructor
+            showConstructor={this.displayConstructor}
+            taskType={displayTaskConstructor}
+            taskOptions={options}
+            selectChange={this.selectChange}
             oldInfo={this.state.info}
             edited={false}
             pageId={this.props.pageId}
@@ -92,20 +101,10 @@ export default class TaskConstructor extends Component {
 
     return (
       <>
-        {displayConstructor ? (
-          <>
-            <DarkGround onClick={this.displayConstructor} />
-            <ConsturctorWrapper style={{ textAlign: 'left' }}>
-              <Select value={displayTaskConstructor} options={options} maxMenuHeight={100} onChange={this.selectChange} />
-
-              {this.constSwitch(displayTaskConstructor)}
-            </ConsturctorWrapper>
-          </>
-        ) : (
-          <Button startIcon={<AddIcon />} buttonStyle={'outlined'} onClick={this.displayConstructor}>
-             Task
-          </Button>
-        )}
+        {displayConstructor && <>{this.constSwitch(displayTaskConstructor)}</>}
+        <Button startIcon={<AddIcon />} buttonStyle={'outlined'} onClick={this.displayConstructor}>
+          Task
+        </Button>
       </>
     )
   }
