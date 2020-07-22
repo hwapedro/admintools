@@ -41,6 +41,7 @@ export default class TaskConstructor extends Component {
       case 'test':
         return (
           <TestConstructor
+            type="test"
             showConstructor={this.displayConstructor}
             oldInfo={this.state.info}
             taskType={displayTaskConstructor}
@@ -71,6 +72,7 @@ export default class TaskConstructor extends Component {
       case 'drag':
         return (
           <TestConstructor
+            type="drag"
             showConstructor={this.displayConstructor}
             taskType={displayTaskConstructor}
             taskOptions={options}

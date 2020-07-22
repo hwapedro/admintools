@@ -1,46 +1,38 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
+import DeleteIcon from '@material-ui/icons/Delete'
+import CreateIcon from '@material-ui/icons/Create'
 
-import Button from "../../../Shared/Button";
-import { SmartContainer } from "../../../Shared/SmartContainer";
+import Button from '../../../Shared/Button'
+import { SmartContainer } from '../../../Shared/SmartContainer'
 
-import { ElementWrapper, ButtonWrapper } from "../../styleLocal.js";
+import { ElementWrapper, ButtonWrapper } from '../../styleLocal.js'
 
-export default function Article({
-  news,
-  getParams,
-  deleteItem,
-  activeLanguage
-}) {
+export default function Article({ news, getParams, deleteItem, activeLanguage }) {
   return (
     <ElementWrapper>
-      <SmartContainer
-        name="Article"
-        title={news.title[activeLanguage.value]}
-        description={news.description[activeLanguage.value]}
-        publish={new Date(news.date).toLocaleString()}
-      />
+      <image src={news.icon}></image>
+      <SmartContainer name="Article" title={news.title[activeLanguage.value]} description={news.description[activeLanguage.value]} publish={new Date(news.date).toLocaleString()} />
       <ButtonWrapper>
-        <Button
-          buttonStyle={"outlined"}
-          onClick={() => getParams(news._id, news.title, news.description)}
-        >
-          CHANGE Article
+        <Button startIcon={<CreateIcon />} buttonStyle={'outlined'} onClick={() => getParams(news._id, news.title, news.description, news.icon)}>
+          Article
         </Button>
 
         <Button
-          buttonStyle={"outlined"}
+          startIcon={<DeleteIcon />}
+          buttonColor="secondary"
+          buttonStyle={'outlined'}
           onClick={() => {
-            if (window.confirm("ARE YOU SURE ?")) {
-              deleteItem(news._id);
+            if (window.confirm('ARE YOU SURE ?')) {
+              deleteItem(news._id)
             }
           }}
         >
-          DELETE Article
+          Article
         </Button>
       </ButtonWrapper>
     </ElementWrapper>
-  );
+  )
 }
 
 Article.defaultProps = {
@@ -49,8 +41,8 @@ Article.defaultProps = {
   error: false,
 
   getParams() {},
-  deleteItem() {}
-};
+  deleteItem() {},
+}
 
 Article.propTypes = {
   news: PropTypes.object,
@@ -58,5 +50,5 @@ Article.propTypes = {
   error: PropTypes.bool,
 
   getParams: PropTypes.func,
-  deleteItem: PropTypes.func
-};
+  deleteItem: PropTypes.func,
+}

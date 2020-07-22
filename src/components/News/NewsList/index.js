@@ -1,96 +1,103 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import Article from "./Article";
+import Article from './Article'
 
-import { SmartConstructor } from "../../Shared/SmartConstructor";
+import { SmartConstructor } from '../../Shared/SmartConstructor'
 
-import { ElementWrapper, ElementsWrapper, EmptyMessage } from "../styleLocal";
+import { ElementWrapper, ElementsWrapper, EmptyMessage } from '../styleLocal'
 
-import { Wrapper } from "../../GlobalStyles/styleGlobal";
+import { Wrapper } from '../../GlobalStyles/styleGlobal'
+import { getBase64 } from '../../../store/utils'
 
-const name = "news";
+const name = 'news'
 
 class NewsList extends Component {
   state = {
     title: null,
     description: null,
+    icon: null,
     changeFlag: false,
-    _id: null
-  };
+    _id: null,
+  }
 
-  getParams = (_id, title, description) => {
+  onChangeIcon = (photo) => {
+    if (photo[0]) {
+      getBase64(photo[0]).then((icon) => {
+        this.setState({ icon: icon })
+      })
+    }
+  }
+
+  getParams = (_id, title, description, icon) => {
     this.setState({
       changeFlag: true,
       _id: _id,
       title: title,
-      description: description
-    });
-  };
+      description: description,
+      icon: icon
+    })
+  }
 
-  onSubmit = event => {
-    event.preventDefault();
-    const { title, description, _id } = this.state;
-    const { changeArticle } = this.props;
+  onSubmit = (event) => {
+    event.preventDefault()
+    const { title, description, _id, icon} = this.state
+    const { changeArticle } = this.props
+    console.log(icon)
+    if (title && description) changeArticle(_id, title, description, icon)
+    this.setState({ changeFlag: false, _id: null })
+  }
 
-    if (title && description) changeArticle(_id, title, description, name);
-    this.setState({ changeFlag: false, _id: null });
-  };
-
-  deleteItem = id => {
-    const { delArticle } = this.props;
-    delArticle(id, name);
-  };
+  deleteItem = (id) => {
+    const { delArticle } = this.props
+    delArticle(id, name)
+  }
 
   //TEXT HANDLER
-  onChange = event => {
-    const { title, description } = this.state;
-    const { activeLanguage } = this.props;
+  onChange = (event) => {
+    const { title, description } = this.state
+    const { activeLanguage } = this.props
     switch (event.target.name) {
-      case "title":
+      case 'title':
         this.setState({
           [event.target.name]: {
             ...title,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
-      case "description":
+            [activeLanguage.value]: event.target.value,
+          },
+        })
+        break
+      case 'description':
         this.setState({
           [event.target.name]: {
             ...description,
-            [activeLanguage.value]: event.target.value
-          }
-        });
-        break;
+            [activeLanguage.value]: event.target.value,
+          },
+        })
+        break
       default:
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ [event.target.name]: event.target.value })
     }
-  };
+  }
 
   showConstructor = () => {
-    const { changeFlag } = this.state;
+    const { changeFlag } = this.state
     if (changeFlag) {
       this.setState({
-        changeFlag: !changeFlag
-      });
+        changeFlag: !changeFlag,
+      })
     }
-  };
+  }
 
   render() {
-    const { news, search, activeLanguage, handleLangChange } = this.props;
-    const { _id, changeFlag, title, description } = this.state;
+    const { news, search, activeLanguage, handleLangChange } = this.props
+    const { _id, changeFlag, title, description, icon } = this.state
 
     let list = news
-      .filter(article => {
-        if (
-          article.title[activeLanguage.value]
-            .toLowerCase()
-            .indexOf(search.toLowerCase()) !== -1
-        ) {
-          return true;
+      .filter((article) => {
+        if (article.title[activeLanguage.value].toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+          return true
         }
-        return false;
+        return false
       })
       .map((news, index) => {
         if (changeFlag && news._id === _id) {
@@ -102,39 +109,26 @@ class NewsList extends Component {
                 onChange={this.onChange}
                 activeLanguage={activeLanguage}
                 select={{
-                  handleLangChange: handleLangChange
+                  handleLangChange: handleLangChange,
                 }}
                 title={title[activeLanguage.value]}
                 description={description[activeLanguage.value]}
+                image={{
+                  value: icon,
+                  onChangeIcon: this.onChangeIcon,
+                }}
               />
             </ElementWrapper>
-          );
+          )
         } else {
-          return (
-            <Article
-              key={news._id}
-              news={news}
-              index={index}
-              getParams={this.getParams}
-              deleteItem={this.deleteItem}
-              activeLanguage={activeLanguage}
-            />
-          );
+          return <Article key={news._id} news={news} index={index} getParams={this.getParams} deleteItem={this.deleteItem} activeLanguage={activeLanguage} />
         }
-      });
-    return (
-      <Wrapper>
-        {news.length === 0 || list.length === 0 ? (
-          <EmptyMessage>There is nothing here yet</EmptyMessage>
-        ) : (
-          <ElementsWrapper>{list}</ElementsWrapper>
-        )}
-      </Wrapper>
-    );
+      })
+    return <Wrapper>{news.length === 0 || list.length === 0 ? <EmptyMessage>There is nothing here yet</EmptyMessage> : <ElementsWrapper>{list}</ElementsWrapper>}</Wrapper>
   }
 }
 
-export default NewsList;
+export default NewsList
 
 NewsList.defaultProps = {
   news: [],
@@ -142,8 +136,8 @@ NewsList.defaultProps = {
   error: false,
 
   delArticle() {},
-  changeArticle() {}
-};
+  changeArticle() {},
+}
 
 NewsList.propTypes = {
   news: PropTypes.arrayOf(PropTypes.object),
@@ -151,5 +145,5 @@ NewsList.propTypes = {
   error: PropTypes.bool,
 
   delArticle: PropTypes.func,
-  changeArticle: PropTypes.func
-};
+  changeArticle: PropTypes.func,
+}

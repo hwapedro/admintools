@@ -5,8 +5,6 @@ import PropTypes from 'prop-types'
 import { SmartConstructor } from '../../../../Shared/SmartConstructor'
 import { i18n } from '../../../../../store/utils'
 
-const type = 'test'
-
 export default class TestConstructor extends Component {
   constructor(props) {
     super()
@@ -105,7 +103,7 @@ export default class TestConstructor extends Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-    const { pageId, addTask, task, changeTask, changeEditFlag } = this.props
+    const { pageId, addTask, task, changeTask, changeEditFlag, type} = this.props
     const { question, choices, answer, hint } = this.state
 
     const info = {

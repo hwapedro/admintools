@@ -6,6 +6,7 @@ import Switch from '@material-ui/core/Switch'
 import { withStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MuiAlert from '@material-ui/lab/Alert'
+import { DropzoneArea } from 'material-ui-dropzone'
 
 import CustomInput from '../../Shared/Input'
 import Button from '../../Shared/Button'
@@ -114,10 +115,26 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
       )
     }
 
+    if (key === 'image') {
+      return (
+        <div>
+          <DropzoneArea
+            onChange={props[key].onChangeIcon}
+            filesLimit={1}
+            showPreviewsInDropzone={false}
+            showPreviews={true}
+            showAlerts={false}
+            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+            maxFileSize={5000000}
+          />
+        </div>
+      )
+    }
+
     if (key === 'additional') {
       return (
-        <div key={index} style={{'marginTop': '15px'}}>
-          <MuiAlert style={{'boxShadow': 'none'}} elevation={6} variant="outlined" severity="info">
+        <div key={index} style={{ marginTop: '15px' }}>
+          <MuiAlert style={{ boxShadow: 'none' }} elevation={6} variant="outlined" severity="info">
             {props[key]}
           </MuiAlert>
         </div>

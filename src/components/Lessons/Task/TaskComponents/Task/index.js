@@ -81,6 +81,7 @@ class Task extends Component {
       case 'drag':
         return (
           <Test
+            type='drag'
             task={task}
             pageId={pageId}
             lessonId={lessonId}
