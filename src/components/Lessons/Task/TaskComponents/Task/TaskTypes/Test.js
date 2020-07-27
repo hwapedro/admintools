@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import DeleteIcon from '@material-ui/icons/Delete'
 import CreateIcon from '@material-ui/icons/Create'
 
-import { TaskElementWrapper, LabelElement, ButtonWrapper, ButtonsWrapper} from '../../../styleLocal'
+import { TaskElementWrapper, LabelElement, ButtonWrapper, ButtonsWrapper } from '../../../styleLocal'
 
 import { OptionSpan, OptionsWrapper, TaskWrapper, TitleSpan, ElementWrapper } from '../styleLocal'
 
@@ -12,7 +12,7 @@ import TestConstructor from '../../../TaskConstructors/TestConstructor/'
 
 class Test extends Component {
   render() {
-    const { task, pageId, deleteTask, changeEditFlag, taskEditFlag, lessonId, changeTask, activeLanguage, handleLangChange } = this.props
+    const { task, pageId, type, deleteTask, changeEditFlag, taskEditFlag, lessonId, changeTask, activeLanguage, handleLangChange } = this.props
 
     return (
       <TaskWrapper>
@@ -20,6 +20,7 @@ class Test extends Component {
           {taskEditFlag ? (
             <TaskElementWrapper>
               <TestConstructor
+                type={type}
                 task={task}
                 pageId={pageId}
                 changeEditFlag={changeEditFlag}
@@ -31,8 +32,8 @@ class Test extends Component {
           ) : (
             <TaskWrapper>
               <ElementWrapper>
-                <LabelElement>type </LabelElement>
-                <TitleSpan>test</TitleSpan>
+                <LabelElement>type</LabelElement>
+                <TitleSpan>{type}</TitleSpan>
               </ElementWrapper>
               <ElementWrapper>
                 <LabelElement>question </LabelElement>
