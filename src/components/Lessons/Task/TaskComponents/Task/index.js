@@ -53,6 +53,7 @@ class Task extends Component {
       case 'test':
         return (
           <Test
+            type="test"
             task={task}
             pageId={pageId}
             lessonId={lessonId}
@@ -67,6 +68,7 @@ class Task extends Component {
       case 'fill':
         return (
           <Text
+            type="test"
             task={task}
             pageId={pageId}
             lessonId={lessonId}
@@ -81,7 +83,7 @@ class Task extends Component {
       case 'drag':
         return (
           <Test
-            type='drag'
+            type="drag"
             task={task}
             pageId={pageId}
             lessonId={lessonId}
