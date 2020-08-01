@@ -55,7 +55,7 @@ export default class TextConstructor extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props
-    const { question, answer, points } = this.state
+    const { question, answer, points, hint } = this.state
     const type = 'fill'
     for (let prop in question) {
       question[prop] = question[prop].replace(regex, '༼ つ ◕_◕ ༽つ')
@@ -64,6 +64,7 @@ export default class TextConstructor extends Component {
     const info = {
       points: points,
       question: question,
+      hint: hint,
     }
 
     if (task) {
