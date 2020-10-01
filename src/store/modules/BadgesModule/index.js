@@ -92,10 +92,10 @@ class BadgesModule extends DuckModule {
       .catch(error => dispatch(ViewModule.setError(true)));
   };
 
-  add = (title, description, icon) => dispatch => {
+  add = (title, description, icon, type) => dispatch => {
     dispatch(ViewModule.setLoading(true));
 
-    BadgeService.add({ title, description, icon })
+    BadgeService.add({ title, description, icon, type })
       .then(response => {
         dispatch({
           type: this.ADD_BADGE_SUCCESS,
