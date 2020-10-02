@@ -9,10 +9,11 @@ const regex = /~((?:.|\n)*?)~/gi
 export default class TextConstructor extends Component {
   constructor(props) {
     super()
+
     this.state = {
-      question: props.task ? props.task.info.question : i18n,
-      answer: props.task ? props.task.answer : i18n,
-      hint: props.task ? props.task.info.hint : i18n,
+      question: props.task && props.task.info.question ? props.task.info.question : i18n,
+      answer: props.task && props.task.answer ? props.task.answer : i18n,
+      hint: props.task && props.task.info.hint ? props.task.info.hint : i18n,
     }
   }
 
