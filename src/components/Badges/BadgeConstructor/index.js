@@ -13,6 +13,7 @@ import { getBase64, i18nSelector } from '../../../store/utils'
 
 export default class BadgeConstructor extends Component {
   state = {
+    type: null,
     title: null,
     description: null,
     constructor: false,
@@ -31,8 +32,7 @@ export default class BadgeConstructor extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     const { addBadge } = this.props
-    const { title, description, icon } = this.state
-    const type = title.ru.toLowerCase().replace(/\s/g, '-')
+    const { type, title, description, icon } = this.state
     addBadge(title, description, icon, type)
   }
 
@@ -93,6 +93,8 @@ export default class BadgeConstructor extends Component {
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={this.onSubmit}>
               <LabelElement>Choose language</LabelElement>
+              <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} maxMenuHeight={100} />
+              <CustomInput label="Type" placeholder="Type is used to give achievements" name="type" value={title[activeLanguage.value]} onChange={this.onChange} required={true} />
               <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} maxMenuHeight={100} />
               <CustomInput label="Title" placeholder="Title goes here" name="title" value={title[activeLanguage.value]} onChange={this.onChange} required={true} />
               <LabelElement>Description</LabelElement>
