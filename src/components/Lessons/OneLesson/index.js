@@ -136,6 +136,7 @@ export default class Lesson extends Component {
   render() {
     const { lesson, pages, loading, deletePage, error, addPage, changePage } = this.props
     const { changeFlag, courseIndex, title, description, exam, activeLanguage, difficulty } = this.state
+    console.log(activeLanguage, )
     return (
       <>
         {error && (
@@ -179,7 +180,7 @@ export default class Lesson extends Component {
             ) : (
               <>
                 <SelectWrapper>
-                  <Select value={activeLanguage} onChange={() => this.handleLangChange()} options={i18nSelector} />
+                  <Select value={activeLanguage} onChange={this.handleLangChange} options={i18nSelector} />
                 </SelectWrapper>
                 <ElementWrapper key={lesson._id}>
                   <div style={{ position: 'relative' }}>

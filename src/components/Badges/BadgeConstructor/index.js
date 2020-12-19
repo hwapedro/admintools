@@ -95,7 +95,7 @@ export default class BadgeConstructor extends Component {
               <LabelElement>Choose language</LabelElement>
               <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} maxMenuHeight={100} />
               <CustomInput label="Type" placeholder="Type is used to give achievements" name="type" value={title[activeLanguage.value]} onChange={this.onChange} required={true} />
-              <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} maxMenuHeight={100} />
+    
               <CustomInput label="Title" placeholder="Title goes here" name="title" value={title[activeLanguage.value]} onChange={this.onChange} required={true} />
               <LabelElement>Description</LabelElement>
               <DescriptionTextArea name="description" placeholder="description" value={description[activeLanguage.value]} type="text" onChange={this.onChange} />
