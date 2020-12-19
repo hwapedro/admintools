@@ -211,7 +211,15 @@ export default class Lesson extends Component {
             {pages.length === 0 ? (
               <EmptyMessage>There is nothing here yet</EmptyMessage>
             ) : (
-              <PageList lessonId={lesson._id} pages={pages} id={lesson._id} changePage={changePage} deletePage={deletePage} activeLanguage={activeLanguage} />
+              <PageList
+                lessonId={lesson._id}
+                pages={pages}
+                id={lesson._id}
+                changePage={changePage}
+                deletePage={deletePage}
+                activeLanguage={activeLanguage}
+                handleLangChange={this.handleLangChange}
+              />
             )}
           </Wrapper>
         )}

@@ -20,7 +20,6 @@ class PageList extends Component {
     description: null,
     pageId: null,
     tasksOnPage: 1,
-    activeLanguage: { label: 'Russian', value: 'ru' },
   }
 
   showConstructor = () => {
@@ -32,7 +31,8 @@ class PageList extends Component {
 
   //TEXT HANDLER
   onChange = (event) => {
-    const { title, description, activeLanguage } = this.state
+    const { title, description } = this.state
+    const { activeLanguage } = this.props
     switch (event.target.name) {
       case 'title':
         this.setState({
@@ -54,12 +54,6 @@ class PageList extends Component {
         this.setState({ [event.target.name]: event.target.value })
     }
   }
-
-    //SELECTOR HANDLER
-    handleLangChange = (activeLanguage) => {
-      this.setState({ activeLanguage })
-    }
-  
 
   getParams = (pageId, title, description, tasksOnPage) => {
     this.setState({
@@ -85,8 +79,7 @@ class PageList extends Component {
 
   render() {
     const { pageNumber, changeFlag, title, description, tasksOnPage } = this.state
-    const { lessonId, pages, deletePage, activeLanguage } = this.props
-
+    const { lessonId, pages, deletePage, activeLanguage, handleLangChange } = this.props
     let list
     if (pages) {
       list = pages.map((page, index) => {
@@ -102,7 +95,7 @@ class PageList extends Component {
                     modal={true}
                     activeLanguage={activeLanguage}
                     select={{
-                      handleLangChange: this.handleLangChange,
+                      handleLangChange: handleLangChange,
                     }}
                     tasksOnPage={{
                       value: tasksOnPage,
