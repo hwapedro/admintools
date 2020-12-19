@@ -19,7 +19,7 @@ const CustomInput = withStyles({
 export default function Input({ onChange, name, value, label, placeholder, required, type }) {
   return (
     <Field>
-      <LabelElement htmlFor={label}>{label}</LabelElement>
+      {label && <LabelElement htmlFor={label}>{label}</LabelElement>}
       <CustomInput
         required={required}
         name={name}

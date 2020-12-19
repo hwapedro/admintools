@@ -26,11 +26,12 @@ class LessonService extends BaseService {
     return this.del(`lesson/${index}`)
   }
 
-  async change(lessonId, title, description, exam, courseIndex) {
+  async change(lessonId, title, description, exam, difficulty, courseIndex) {
     const data = {
       title,
       description: markdownToHtml(description),
       exam,
+      difficulty,
       courseIndex,
     }
     return this.put(`lesson/${lessonId}`, data)

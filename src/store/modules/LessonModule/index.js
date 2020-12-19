@@ -84,10 +84,10 @@ class LessonModule extends DuckModule {
       .catch((error) => dispatch(ViewModule.setError(true)))
   }
 
-  change = (index, title, description, exam, courseIndex) => (dispatch) => {
+  change = (index, title, description, exam, difficulty, courseIndex) => (dispatch) => {
     dispatch(ViewModule.setLoading(true))
 
-    LessonService.change(index, title, description, exam, courseIndex)
+    LessonService.change(index, title, description, exam, difficulty, courseIndex)
       .then((response) => {
         dispatch({
           type: this.CHANGE_LESSON_SUCCESS,

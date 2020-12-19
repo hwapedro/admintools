@@ -1,14 +1,68 @@
 import React from 'react'
 import styled from 'styled-components'
 import Select from 'react-select'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
+import { withStyles } from '@material-ui/core/styles'
+import DeleteIcon from '@material-ui/icons/Delete'
+import MuiAlert from '@material-ui/lab/Alert'
+import { DropzoneArea } from 'material-ui-dropzone'
 
 import CustomInput from '../../Shared/Input'
 import Button from '../../Shared/Button'
 import Editor from '../../Shared/Editor'
 import { i18nSelector, lessonDifficulties } from '../../../store/utils'
 
-import checkMark from '../../../img/good.png'
-import redCross from '../../../img/bad.png'
+const ExamSwitch = withStyles((theme) => ({
+  root: {
+    width: 42,
+    height: 26,
+    padding: 0,
+    marginLeft: '20px',
+  },
+  switchBase: {
+    padding: 1,
+    '&$checked': {
+      transform: 'translateX(16px)',
+      color: theme.palette.common.white,
+      '& + $track': {
+        opacity: 1,
+        border: 'none',
+      },
+    },
+    '&$focusVisible $thumb': {
+      border: '6px solid #fff',
+    },
+  },
+  thumb: {
+    width: 24,
+    height: 24,
+  },
+  track: {
+    borderRadius: 26 / 2,
+    border: `1px solid ${theme.palette.grey[400]}`,
+    backgroundColor: theme.palette.grey[50],
+    opacity: 1,
+    transition: theme.transitions.create(['background-color', 'border']),
+  },
+  checked: {},
+  focusVisible: {},
+}))(({ classes, ...props }) => {
+  return (
+    <Switch
+      focusVisibleClassName={classes.focusVisible}
+      disableRipple
+      classes={{
+        root: classes.root,
+        switchBase: classes.switchBase,
+        thumb: classes.thumb,
+        track: classes.track,
+        checked: classes.checked,
+      }}
+      {...props}
+    />
+  )
+})
 
 export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, activeLanguage, difficulty, courseIndex, allCourseIndex, changeExamProp, ...props }) => {
   const content = Object.keys(props).map((key, index) => {
@@ -17,6 +71,14 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
         <div key={index}>
           <LabelElement>choose language</LabelElement>
           <Select value={activeLanguage} onChange={props[key].handleLangChange} options={i18nSelector} maxMenuHeight={200} />
+        </div>
+      )
+    }
+    if (key === 'taskSelect') {
+      return (
+        <div key={index}>
+          <LabelElement>choose task type</LabelElement>
+          <Select value={props[key].taskType} onChange={props[key].selectChange} options={props[key].taskOptions} maxMenuHeight={200} />
         </div>
       )
     }
@@ -47,18 +109,70 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
     if (key === 'exam') {
       return (
         <div key={index}>
-          <LabelElement>Exam :</LabelElement>
-          <ImgMark style={!props[key] ? { filter: 'grayscale(100%)' } : {}} src={checkMark} onClick={() => changeExamProp(true)} />
-          <ImgCross style={props[key] ? { filter: 'grayscale(100%)' } : {}} src={redCross} onClick={() => changeExamProp(false)} />
+          <LabelElement>exam </LabelElement>
+          <FormControlLabel control={<ExamSwitch checked={props[key]} onChange={() => changeExamProp(!props[key])} />} />
         </div>
       )
     }
 
+    if (key === 'image') {
+      return (
+        <div>
+          <DropzoneArea
+            onChange={props[key].onChangeIcon}
+            filesLimit={1}
+            showPreviewsInDropzone={false}
+            showPreviews={true}
+            showAlerts={false}
+            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+            maxFileSize={5000000}
+          />
+        </div>
+      )
+    }
+
+    if (key === 'additional') {
+      return (
+        <div key={index} style={{ marginTop: '15px' }}>
+          <MuiAlert style={{ boxShadow: 'none' }} elevation={6} variant="outlined" severity="info">
+            {props[key]}
+          </MuiAlert>
+        </div>
+      )
+    }
+
+    if (key === 'options') {
+      return (
+        <div>
+          <ButtonWrapper>
+            <Button buttonStyle={'outlined'} onClick={props[key].addChoice}>
+              Add answer option
+            </Button>
+          </ButtonWrapper>
+
+          <div>
+            {props[key].data.choices.length !== 0 &&
+              props[key].data.choices.map((el) => {
+                return (
+                  <OptionElementWrapper className="form-check" key={el.i}>
+                    <CustomInput name="option" value={el.c[activeLanguage.value]} onChange={(e) => props[key].answerChange(el.i, e)} placeholder="option" required={true} />
+                    <FormControlLabel control={<ExamSwitch checked={props[key].data.answer.includes(el.i)} onChange={(e) => props[key].setRight(el.i, e)} />} />
+
+                    <Button startIcon={<DeleteIcon />} buttonColor="secondary" buttonStyle={'outlined'} onClick={() => props[key].deleteChoice(el.i)}>
+                      Delete
+                    </Button>
+                  </OptionElementWrapper>
+                )
+              })}
+          </div>
+        </div>
+      )
+    }
     return (
       <div key={index}>
         <CustomInput
           label={key}
-          placeholder={`write ${key}`}
+          placeholder={`${key}`}
           name={key}
           type={props[key].type ? props[key].type : 'text'}
           value={props[key].value ? props[key].value : props[key]}
@@ -77,12 +191,12 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
           <DarkGround onClick={showConstructor} />
           <ConsturctorWrapper>
             <ConsturctorForm onSubmit={onSubmit}>
-              {content}
               <ButtonWrapper>
                 <Button buttonStyle={'outlined'} type="submit">
-                  ADD
+                  CONFIRM
                 </Button>
               </ButtonWrapper>
+              {content}
             </ConsturctorForm>
           </ConsturctorWrapper>
         </>
@@ -100,7 +214,6 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
   )
 }
 
-
 export const Wrapper = styled.div`
   padding-top: 1rem;
   display: flex;
@@ -111,15 +224,15 @@ export const Wrapper = styled.div`
 
 export const ConsturctorWrapper = styled.div`
   background: ${(props) => props.theme.courses};
-  padding: 1.5rem;
-  position: absolute;
-  width: 700px;
-  height: auto;
-  top: 35%;
-  left: 50%;
+  overflow-y: scroll;
+  width: 30%;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: #fff;
   z-index: 101;
-  margin-top: -200px;
-  margin-left: -330px;
+  position: fixed;
+  padding: 1.5rem;
   box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.3);
 `
 
@@ -136,19 +249,11 @@ export const DarkGround = styled.div`
   left: 0;
 `
 
-export const TitleSpan = styled.span`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1rem 0;
-  font-size: 1.3rem;
-`
-
 export const LabelElement = styled.label`
   display: inline-block;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  font-weight: 900;
+  font-weight: 500;
   font-size: 1.8rem;
 `
 
@@ -166,27 +271,8 @@ export const ButtonWrapper = styled.div`
   margin-top: 0.5rem;
 `
 
-export const EmptyMessage = styled.div`
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 2.5rem;
-  top: 50%;
-  margin-top: 5rem;
-`
-
-export const SelectWrapper = styled.div`
-  width: 10rem;
-`
-export const ImgMark = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-left: 1rem;
-  margin-bottom: -0.4rem;
-`
-
-export const ImgCross = styled.img`
-  width: 2rem;
-  height: 2rem;
-  margin-left: 1rem;
-  margin-bottom: -0.4rem;
+export const OptionElementWrapper = styled.div`
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: row;
 `

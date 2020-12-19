@@ -14,8 +14,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getLesson: (id) => dispatch(LessonModule.getLesson(id)),
-  changeLesson: (lessonsIndex, title, description, exam, courseIndex) => dispatch(LessonModule.change(lessonsIndex, title, description, exam, courseIndex)),
+  changeLesson: (lessonsIndex, title, description, exam, difficulty, courseIndex) => dispatch(LessonModule.change(lessonsIndex, title, description, exam, difficulty, courseIndex)),
   addPage: (id, title, description, tasks, needToComplete) => dispatch(PageModule.addPage(id, title, description, tasks, needToComplete)),
+  changePage: (id, title, description, needToComplete) => dispatch(PageModule.changePage(id, title, description, needToComplete)),
   deletePage: (id) => dispatch(PageModule.deletePage(id)),
 })
 

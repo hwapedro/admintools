@@ -1,33 +1,32 @@
 import React, { Component } from 'react'
-import Select from 'react-select'
 import PropTypes from 'prop-types'
 
-import { LabelElement, ButtonWrapper } from '../../../../GlobalStyles/styleGlobal'
-
-import { TextQuestion, ConsturctorForm } from '../../styleLocal'
-import CustomInput from '../../../../Shared/Input'
-import Button from '../../../../Shared/Button'
-import { i18nSelector, i18n } from '../../../../../store/utils'
+import { i18n } from '../../../../../store/utils'
+import { SmartConstructor } from '../../../../Shared/SmartConstructor'
 
 const regex = /~((?:.|\n)*?)~/gi
 
 export default class TextConstructor extends Component {
   constructor(props) {
     super()
+
     this.state = {
-      question: props.task ? props.task.info.question : i18n,
-      points: props.task ? props.task.info.points : 0,
-      answer: props.task ? props.task.answer : i18n,
+      question: props.task && props.task.info.question ? props.task.info.question : i18n,
+      answer: props.task && props.task.answer ? props.task.answer : i18n,
+      hint: props.task && props.task.info.hint ? props.task.info.hint : i18n,
     }
   }
 
   onChange = (event) => {
-    const { question } = this.state
+    const { question, hint } = this.state
     const { activeLanguage } = this.props
     switch (event.target.name) {
-      case 'points':
+      case 'hint':
         this.setState({
-          points: event.target.value,
+          [event.target.name]: {
+            ...hint,
+            [activeLanguage.value]: event.target.value,
+          },
         })
         break
       case 'question':
@@ -57,7 +56,7 @@ export default class TextConstructor extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     const { pageId, addTask, task, changeTask, changeEditFlag } = this.props
-    const { question, answer, points } = this.state
+    const { question, answer, points, hint } = this.state
     const type = 'fill'
     for (let prop in question) {
       question[prop] = question[prop].replace(regex, '༼ つ ◕_◕ ༽つ')
@@ -66,6 +65,7 @@ export default class TextConstructor extends Component {
     const info = {
       points: points,
       question: question,
+      hint: hint,
     }
 
     if (task) {
@@ -77,27 +77,28 @@ export default class TextConstructor extends Component {
   }
 
   render() {
-    const { question, points } = this.state
-    const { activeLanguage, handleLangChange } = this.props
+    const { question, hint } = this.state
+    const { activeLanguage, handleLangChange, taskType, taskOptions, selectChange, showConstructor, task } = this.props
 
     return (
-      <>
-        <ConsturctorForm onSubmit={this.onSubmit}>
-          <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} maxMenuHeight={100} />
-
-          <CustomInput label="Amount of point" name="points" value={points} onChange={this.onChange} required={false} />
-          <LabelElement>Text</LabelElement>
-          <br />
-          <LabelElement>Put words in ~ ~ to mark as answer</LabelElement>
-          <TextQuestion name="question" placeholder="Question" value={question[activeLanguage.value]} onChange={this.onChange} />
-
-          <ButtonWrapper>
-            <Button buttonStyle={'outlined'} type="submit">
-              Save
-            </Button>
-          </ButtonWrapper>
-        </ConsturctorForm>
-      </>
+      <SmartConstructor
+        showConstructor={showConstructor}
+        onSubmit={this.onSubmit}
+        onChange={this.onChange}
+        modal={!task}
+        activeLanguage={activeLanguage}
+        taskSelect={{
+          taskType: taskType,
+          taskOptions: taskOptions,
+          selectChange: selectChange,
+        }}
+        select={{
+          handleLangChange: handleLangChange,
+        }}
+        question={question[activeLanguage.value]}
+        hint={hint[activeLanguage.value]}
+        additional={'put words in ~ ~ to mark as answer'}
+      />
     )
   }
 }

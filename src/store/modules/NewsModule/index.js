@@ -60,10 +60,10 @@ class CoursesModule extends DuckModule {
       .catch((error) => dispatch(ViewModule.setError(true)))
   }
 
-  add = (title, description) => (dispatch) => {
+  add = (title, description, icon) => (dispatch) => {
     dispatch(ViewModule.setLoading(true))
 
-    NewsService.add(title, description)
+    NewsService.add(title, description, icon)
       .then((response) => {
         dispatch({
           type: this.ADD_NEWS_SUCCESS,
@@ -88,18 +88,19 @@ class CoursesModule extends DuckModule {
       .catch((error) => dispatch(ViewModule.setError(true)))
   }
 
-  change = (index, title, description) => (dispatch) => {
+  change = (index, title, description, icon) => (dispatch) => {
     dispatch(ViewModule.setLoading(true))
-
-    NewsService.change(index, title, description)
+    
+    NewsService.change(index, title, description, icon)
       .then(async (response) => {
+        console.log(response)
         dispatch({
           type: this.CHANGE_NEWS_SUCCESS,
           article: response.article,
         })
       })
       .then(() => dispatch(ViewModule.setLoading(false)))
-      .catch((error) => dispatch(ViewModule.setError(true)))
+      .catch((error) => {console.log(error); dispatch(ViewModule.setError(true))})
   }
 
   getNews = (state) => {

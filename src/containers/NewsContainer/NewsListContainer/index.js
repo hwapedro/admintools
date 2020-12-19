@@ -10,8 +10,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   delArticle: index => dispatch(NewsModule.delete(index)),
 
-  changeArticle: (articleIndex, title, description) =>
-    dispatch(NewsModule.change(articleIndex, title, description))
+  changeArticle: (articleIndex, title, description, icon) =>
+    dispatch(NewsModule.change(articleIndex, title, description, icon))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsList);

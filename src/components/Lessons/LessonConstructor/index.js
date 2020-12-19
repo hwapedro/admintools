@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
+import AddIcon from '@material-ui/icons/Add'
 
 import Search from '../../Search'
 import { ButtonWrapperConstructor } from '../styleLocal'
@@ -50,7 +51,7 @@ class LessonConstructor extends Component {
 
     const index = course ? course.courseIndex : courseIndex.value
     const flag = course ? 'course' : name
-    console.log(difficulty)
+
     addLesson(title, description, difficulty.value, exam, index, flag)
 
     this.setState({
@@ -118,8 +119,8 @@ class LessonConstructor extends Component {
           <SelectWrapper>
             <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} />
           </SelectWrapper>
-          <Button buttonStyle={'outlined'} onClick={this.showConstructor}>
-            ADD NEW LESSON
+          <Button startIcon={<AddIcon />} buttonStyle={'outlined'} onClick={this.showConstructor}>
+            LESSON
           </Button>
           {constructor && (
             <>

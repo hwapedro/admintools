@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import PropTypes from 'prop-types'
+import AddIcon from '@material-ui/icons/Add'
 
 import Search from '../../Search'
 import Button from '../../Shared/Button'
@@ -8,13 +9,22 @@ import { SmartConstructor } from '../../Shared/SmartConstructor'
 
 import { ButtonWrapperConstructor } from '../styleLocal'
 import { Wrapper, SelectWrapper } from '../../GlobalStyles/styleGlobal'
-import { i18nSelector, i18n } from '../../../store/utils'
+import { getBase64, i18nSelector, i18n } from '../../../store/utils'
 
 class SetArticle extends Component {
   state = {
     title: i18n,
     description: i18n,
+    icon: null,
     constructor: false,
+  }
+
+  onChangeIcon = (photo) => {
+    if (photo[0]) {
+      getBase64(photo[0]).then((icon) => {
+        this.setState({ icon: icon })
+      })
+    }
   }
 
   componentDidMount() {
@@ -29,9 +39,9 @@ class SetArticle extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     const { addNews } = this.props
-    const { title, description } = this.state
+    const { title, description, icon } = this.state
 
-    addNews(title, description)
+    addNews(title, description, icon)
     this.showConstructor()
     this.setState({
       constructor: !this.state.constructor,
@@ -72,7 +82,7 @@ class SetArticle extends Component {
 
   render() {
     const { onChange, value, activeLanguage, handleLangChange } = this.props
-    const { title, constructor, description } = this.state
+    const { title, constructor, description, icon } = this.state
 
     return (
       <Wrapper>
@@ -81,8 +91,8 @@ class SetArticle extends Component {
           <SelectWrapper>
             <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} />
           </SelectWrapper>
-          <Button buttonStyle={'outlined'} onClick={this.showConstructor}>
-            ADD NEW ARTICLE
+          <Button startIcon={<AddIcon />} buttonStyle={'outlined'} onClick={this.showConstructor}>
+            ARTICLE
           </Button>
         </ButtonWrapperConstructor>
         {constructor && (
@@ -98,6 +108,10 @@ class SetArticle extends Component {
               }}
               title={title[activeLanguage.value]}
               description={description[activeLanguage.value]}
+              image={{
+                value: icon,
+                onChangeIcon: this.onChangeIcon,
+              }}
             />
           </>
         )}

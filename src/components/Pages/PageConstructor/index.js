@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import AddIcon from '@material-ui/icons/Add'
 
 import { Wrapper, ButtonWrapper } from '../../GlobalStyles/styleGlobal'
 
@@ -19,7 +20,7 @@ export default class PageConstructor extends Component {
     changeFlag: false,
     lessonId: null,
     exam: null,
-    taskOnPage: 1,
+    tasksOnPage: 1,
     activeLanguage: { label: 'Russian', value: 'ru' },
   }
 
@@ -38,31 +39,20 @@ export default class PageConstructor extends Component {
     this.setState({ activeLanguage })
   }
 
-  getParams = (lessonId, title, description, exam) => {
-    this.setState({
-      //   lessonId: lessonId,
-      changeFlag: true,
-      //   title: title,
-      //   description: description,
-    })
-  }
-
   onSubmit = (event) => {
     event.preventDefault()
-    const { title, description } = this.state
+    const { title, description, tasksOnPage } = this.state
     const { addPage, lessonId } = this.props
-    addPage(lessonId, title, description, [], 0)
+    addPage(lessonId, title, description, [], tasksOnPage)
     this.setState({ changeFlag: false, lessonId: null })
   }
 
   showConstructor = () => {
     const { changeFlag } = this.state
 
-    if (changeFlag) {
-      this.setState({
-        changeFlag: !changeFlag,
-      })
-    }
+    this.setState({
+      changeFlag: !changeFlag,
+    })
   }
 
   //TEXT HANDLER
@@ -94,7 +84,7 @@ export default class PageConstructor extends Component {
 
   render() {
     const { loading, error } = this.props
-    const { title, description, activeLanguage, changeFlag, taskOnPage } = this.state
+    const { title, description, activeLanguage, changeFlag, tasksOnPage } = this.state
     return (
       <>
         {error && (
@@ -121,23 +111,23 @@ export default class PageConstructor extends Component {
                   select={{
                     handleLangChange: this.handleLangChange,
                   }}
-                  taskOnPage={{
-                    value: taskOnPage,
+                  tasksOnPage={{
+                    value: tasksOnPage,
                     type: 'number',
                   }}
                   title={title[activeLanguage.value]}
                   description={description[activeLanguage.value]}
                 />
                 <ButtonWrapper>
-                  <Button buttonStyle={'outlined'} type="submit">
-                    Add Page
+                  <Button startIcon={<AddIcon />} buttonStyle={'outlined'} type="submit">
+                    Page
                   </Button>
                 </ButtonWrapper>
               </Wrapper>
             ) : (
               <ButtonWrapper>
-                <Button buttonStyle={'outlined'} onClick={() => this.getParams()}>
-                  Add Page
+                <Button startIcon={<AddIcon />} buttonStyle={'outlined'} onClick={() => this.showConstructor()}>
+                  Page
                 </Button>
               </ButtonWrapper>
             )}

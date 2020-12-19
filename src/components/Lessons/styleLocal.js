@@ -288,3 +288,7 @@ export const CurrentMenuButton = styled.button`
 `
 
 export const PageNavWrapperStyled = styled.div``
+
+export const PageTitle = styled.span`
+  font-size: 1.2rem;
+`

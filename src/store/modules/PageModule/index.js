@@ -55,9 +55,22 @@ class PageModule extends DuckModule {
     }
   }
 
-  addPage = (id, title, description, tasks, needToComplete) => (dispatch, getState) => {
+  addPage = (id, title, description, tasks, taskOnPage) => (dispatch, getState) => {
     dispatch(ViewModule.setLoading(true))
-    PageService.addPage(id, title, description, tasks, needToComplete)
+    PageService.addPage(id, title, description, tasks, taskOnPage)
+      .then((response) => {
+        dispatch({
+          type: this.ADD_PAGE_SUCCESS,
+          lesson: response.lesson,
+        })
+      })
+      .then(() => dispatch(ViewModule.setLoading(false)))
+      .catch((error) => dispatch(ViewModule.setError(true)))
+  }
+
+  changePage = (id, title, description, taskOnPage) => (dispatch, getState) => {
+    dispatch(ViewModule.setLoading(true))
+    PageService.changePage(id, title, description, taskOnPage)
       .then((response) => {
         dispatch({
           type: this.ADD_PAGE_SUCCESS,

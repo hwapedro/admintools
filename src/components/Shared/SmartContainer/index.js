@@ -87,6 +87,14 @@ const TitleStyled = styled.div`
           `
         }
         break
+        case 'Article':
+        if (label === 'title') {
+          return css`
+            font-weight: 600;
+            font-size: 2rem;
+          `
+        }
+        break
       default:
         break
     }

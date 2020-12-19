@@ -1,23 +1,15 @@
 import React, { Component } from 'react'
-import Select from 'react-select'
 
 import PropTypes from 'prop-types'
 
-import { OptionsWrapper, OptionElementWrapper, OptionInput, CheckboxInput, ConsturctorForm } from '../../styleLocal'
-
-import { ButtonWrapper } from '../../../../GlobalStyles/styleGlobal'
-import Button from '../../../../Shared/Button'
-import CustomInput from '../../../../Shared/Input'
-import { i18nSelector, i18n } from '../../../../../store/utils'
-
-const type = 'test'
+import { SmartConstructor } from '../../../../Shared/SmartConstructor'
+import { i18n } from '../../../../../store/utils'
 
 export default class TestConstructor extends Component {
   constructor(props) {
     super()
     this.state = {
       question: props.task ? props.task.info.question : i18n,
-      points: props.task ? props.task.info.points : 1,
       hint: props.task ? props.task.info.hint : i18n,
       choices: props.task ? props.task.info.choices : [],
       answer: props.task ? props.task.answer : [],
@@ -28,6 +20,7 @@ export default class TestConstructor extends Component {
     const { choices } = this.state
     const c = i18n
     const i = choices.length
+    console.log(choices.length, [...choices, { c, i }])
     this.setState({
       choices: [...choices, { c, i }],
     })
@@ -35,9 +28,18 @@ export default class TestConstructor extends Component {
 
   deleteChoice = (index) => {
     const { choices } = this.state
-    let newOptions = choices.filter((option) => option.i !== index)
+    const newOptions = choices.filter((option) => option.i !== index)
+    const options = newOptions.map((el, elementIndex) => {
+      console.log(index, elementIndex)
+      if (index <= elementIndex) {
+        console.log(el)
+        el.i = el.i - 1
+      }
+      return el
+    })
+    console.log(options)
     this.setState({
-      choices: newOptions,
+      choices: options,
     })
   }
 
@@ -78,11 +80,6 @@ export default class TestConstructor extends Component {
     const { activeLanguage } = this.props
 
     switch (event.target.name) {
-      case 'points':
-        this.setState({
-          points: event.target.value,
-        })
-        break
       case 'question':
         this.setState({
           [event.target.name]: {
@@ -106,11 +103,10 @@ export default class TestConstructor extends Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-    const { pageId, addTask, task, changeTask, changeEditFlag } = this.props
-    const { points, question, choices, answer, hint } = this.state
+    const { pageId, addTask, task, changeTask, changeEditFlag, type} = this.props
+    const { question, choices, answer, hint } = this.state
 
     const info = {
-      points: points,
       question: question,
       choices: choices,
       hint: hint,
@@ -125,45 +121,38 @@ export default class TestConstructor extends Component {
   }
 
   render() {
-    const { choices, points, question, answer, hint } = this.state
-    const { activeLanguage, handleLangChange } = this.props
+    const { choices, question, answer, hint } = this.state
+    const { taskType, taskOptions, selectChange, activeLanguage, handleLangChange, showConstructor, task } = this.props
 
     return (
       <>
-        <ConsturctorForm onSubmit={this.onSubmit}>
-          <Select value={activeLanguage} onChange={handleLangChange} options={i18nSelector} maxMenuHeight={100} />
-
-          <CustomInput label="Amount of point" name="points" value={points} onChange={this.onChange} required={false} />
-          <CustomInput label="Question" placeholder="Who are you?" name="question" value={question[activeLanguage.value]} onChange={this.onChange} required={false} />
-          <ButtonWrapper>
-            <Button buttonStyle={'outlined'} onClick={this.addChoice}>
-              Add answer option
-            </Button>
-          </ButtonWrapper>
-
-          <div>
-            {choices.length !== 0 &&
-              choices.map((el) => {
-                return (
-                  <OptionsWrapper className="form-check" key={el.i}>
-                    <OptionElementWrapper>
-                      <OptionInput name="answer" value={el.c[activeLanguage.value]} onChange={(e) => this.answerChange(el.i, e)} label="Answer" placeholder="Answer" />
-                      <CheckboxInput type="checkbox" checked={answer.includes(el.i)} onChange={(e) => this.setRight(el.i, e)} />
-                      <Button buttonStyle={'outlined'} onClick={() => this.deleteChoice(el.i)}>
-                        Delete option
-                      </Button>
-                    </OptionElementWrapper>
-                  </OptionsWrapper>
-                )
-              })}
-          </div>
-          <CustomInput label="Hint" name="hint" value={hint[activeLanguage.value]} onChange={this.onChange} required={false} />
-          <ButtonWrapper>
-            <Button buttonStyle={'outlined'} type="submit">
-              Save
-            </Button>
-          </ButtonWrapper>
-        </ConsturctorForm>
+        <SmartConstructor
+          showConstructor={showConstructor}
+          onSubmit={this.onSubmit}
+          onChange={this.onChange}
+          modal={!task}
+          activeLanguage={activeLanguage}
+          taskSelect={{
+            taskType: taskType,
+            taskOptions: taskOptions,
+            selectChange: selectChange,
+          }}
+          select={{
+            handleLangChange: handleLangChange,
+          }}
+          question={question[activeLanguage.value]}
+          hint={hint[activeLanguage.value]}
+          options={{
+            addChoice: this.addChoice,
+            answerChange: this.answerChange,
+            setRight: this.setRight,
+            deleteChoice: this.deleteChoice,
+            data: {
+              answer: answer,
+              choices: choices,
+            },
+          }}
+        />
       </>
     )
   }
