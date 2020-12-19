@@ -14,7 +14,6 @@ import * as route from "../Route/constants";
 class Menu extends Component {
   render() {
     const { location } = this.props;
-    console.log(route.courses === location.pathname);
     return (
       <>
         <Wrapper>

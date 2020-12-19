@@ -136,7 +136,6 @@ export default class Lesson extends Component {
   render() {
     const { lesson, pages, loading, deletePage, error, addPage, changePage } = this.props
     const { changeFlag, courseIndex, title, description, exam, activeLanguage, difficulty } = this.state
-    console.log(activeLanguage, )
     return (
       <>
         {error && (

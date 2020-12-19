@@ -11,7 +11,6 @@ export default function PageNav({ pages, changePage, pageNumber, activeLanguage 
   const defaultValue = { label: pageNumber + 1, value: pageNumber }
   const pageOptions = pages.map((el, index) => ({ label: index + 1, value: index }))
   const pagesLength = pages.length - 1
-  console.log(defaultValue, pageOptions)
 
   return (
     <>

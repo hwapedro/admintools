@@ -25,7 +25,6 @@ class PageList extends Component {
 
   showConstructor = () => {
     const { changeFlag } = this.state
-    console.log('lol', changeFlag)
     this.setState({
       changeFlag: !changeFlag,
     })
@@ -56,8 +55,13 @@ class PageList extends Component {
     }
   }
 
+    //SELECTOR HANDLER
+    handleLangChange = (activeLanguage) => {
+      this.setState({ activeLanguage })
+    }
+  
+
   getParams = (pageId, title, description, tasksOnPage) => {
-    console.log(title, description, tasksOnPage)
     this.setState({
       changeFlag: true,
       pageId: pageId,
@@ -82,7 +86,7 @@ class PageList extends Component {
   render() {
     const { pageNumber, changeFlag, title, description, tasksOnPage } = this.state
     const { lessonId, pages, deletePage, activeLanguage } = this.props
-    console.log(tasksOnPage)
+
     let list
     if (pages) {
       list = pages.map((page, index) => {

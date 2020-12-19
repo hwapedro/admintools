@@ -23,7 +23,6 @@ export class BaseService {
         Authorization:  `Bearer ${this.token ? this.token : ""}`,
       })
       .send(data);
-    console.log(response.body)
     return response.body;
   }
 

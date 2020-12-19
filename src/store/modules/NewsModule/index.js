@@ -93,7 +93,6 @@ class CoursesModule extends DuckModule {
     
     NewsService.change(index, title, description, icon)
       .then(async (response) => {
-        console.log(response)
         dispatch({
           type: this.CHANGE_NEWS_SUCCESS,
           article: response.article,

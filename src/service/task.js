@@ -3,7 +3,6 @@ import { BaseService } from "./base";
 export class TaskService extends BaseService {
   async createTask(pageId, type, info, answer) {
     const data = { type, info, answer };
-    console.log(data)
     return this.post(`task/create?page=${pageId}`, data);
   }
 

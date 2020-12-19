@@ -43,7 +43,6 @@ class NewsList extends Component {
     event.preventDefault()
     const { title, description, _id, icon} = this.state
     const { changeArticle } = this.props
-    console.log(icon)
     if (title && description) changeArticle(_id, title, description, icon)
     this.setState({ changeFlag: false, _id: null })
   }
