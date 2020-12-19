@@ -62,19 +62,6 @@ export default class Lesson extends Component {
     this.setState({ activeLanguage })
   }
 
-  handleChange = (value, selectorType) => {
-    switch (selectorType) {
-      case 'course':
-        this.setState({ courseIndex: value })
-        break
-      case 'language':
-        this.setState({ activeLanguage: value })
-        break
-      default:
-        return
-    }
-  }
-
   changeExamProp = (flag) => {
     this.setState({ exam: flag })
   }

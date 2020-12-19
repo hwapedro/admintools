@@ -85,7 +85,7 @@ export const SmartConstructor = ({ modal, showConstructor, onChange, onSubmit, a
     if (key === 'difficulties') {
       return (
         <div key={index}>
-          <LabelElement>choose difficulties</LabelElement>
+          <LabelElement>choose difficulty</LabelElement>
           <Select value={difficulty} onChange={props[key].handleDifficultiesChange} options={lessonDifficulties} maxMenuHeight={200} />
         </div>
       )
